@@ -39,7 +39,7 @@ public class Ball : MonoBehaviour
             rb.AddRelativeForce(new Vector2(50, 0), ForceMode2D.Force);
             int VertForce = rb.velocity.y > 0 ? 50 : -50;
             rb.AddForce(new Vector2(0, VertForce));
-            Debug.Log("R wall hit");
+            //Debug.Log("R wall hit");
         }
         else if (collision.gameObject.name.Equals("Wall9PatchLeft"))
         {
