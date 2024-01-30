@@ -8,6 +8,7 @@ public class GreenGuy : MonoBehaviour
     Rigidbody2D rb;
     public int jumpForce;
     public float leftAndRight;
+    bool canJump = false;
     // Start is called before the first frame update
     void Start()
     {
@@ -27,6 +28,7 @@ public class GreenGuy : MonoBehaviour
             foreach (PlatformEffector2D plat in platforms)
             {
                 plat.rotationalOffset = 180;
+                canJump = false;
             }
         }
         if(Input.GetKeyUp(KeyCode.S))
@@ -34,6 +36,7 @@ public class GreenGuy : MonoBehaviour
             foreach (PlatformEffector2D plat in platforms)
             {
                 plat.rotationalOffset = 0;
+                canJump = true;
             }
         }
         if(Input.GetKey(KeyCode.A))
@@ -43,11 +46,20 @@ public class GreenGuy : MonoBehaviour
         if(Input.GetKey(KeyCode.D))
         {
             transform.Translate(LR, 0, 0, Space.World);
-        }    
-        if (Input.GetKeyDown(KeyCode.W) && rb.velocity.y < 1 && rb.velocity.y > -1)
+        }
+        if (Input.GetKeyDown(KeyCode.W) && canJump && rb.velocity.y < .25 && !Input.GetKey(KeyCode.S))
         {
-            Debug.Log("jump");
+            //Debug.Log("jump");
             rb.AddForce(new Vector2(0, jumpForce));
+            canJump = false;
+        }
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if(collision.gameObject.layer == 7) //platforms
+        {
+            canJump = true;
         }
     }
 }
