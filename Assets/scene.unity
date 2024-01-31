@@ -2457,6 +2457,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   jumpForce: 0
   leftAndRight: 0
+  stunClock: 0
+  stunTime: 2
 --- !u!212 &1568593303
 SpriteRenderer:
   m_ObjectHideFlags: 0
