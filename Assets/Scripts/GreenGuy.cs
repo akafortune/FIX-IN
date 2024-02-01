@@ -30,11 +30,12 @@ public class GreenGuy : MonoBehaviour
                 foreach (PlatformEffector2D plat in platforms)
                 {
                     plat.rotationalOffset = 180;
-                    canJump = false;
                 }
+                canJump = false;
             }
             if (Input.GetKeyUp(KeyCode.S))
             {
+                plat.rotationalOffset = 0;   
                 foreach (PlatformEffector2D plat in platforms)
                 {
                     plat.rotationalOffset = 0;
@@ -55,8 +56,8 @@ public class GreenGuy : MonoBehaviour
                 rb.AddForce(new Vector2(0, jumpForce));
                 canJump = false;
             }
+            canJump = true;
         }
-
         if (canMove == false)
         {
             stunClock += Time.deltaTime;
@@ -66,7 +67,6 @@ public class GreenGuy : MonoBehaviour
         {
             canMove = true;
         }
-
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
