@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class GreenGuy : MonoBehaviour
 {
+    Animator animator;
     PlatformEffector2D[] platforms;
     Rigidbody2D rb;
     public int jumpForce;
@@ -13,6 +14,7 @@ public class GreenGuy : MonoBehaviour
     void Start()
     {
         platforms = GameObject.Find("Platforms").GetComponentsInChildren<PlatformEffector2D>();
+        animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
         jumpForce = 250;
         leftAndRight = 2;
@@ -45,19 +47,25 @@ public class GreenGuy : MonoBehaviour
             {
                 transform.Translate(-LR, 0, 0, Space.World);
                 transform.rotation = Quaternion.Euler(0, 180, 0);
+                animator.SetBool("Walking", true);
             }
             if (Input.GetKey(KeyCode.D))
             {
                 transform.Translate(LR, 0, 0, Space.World);
                 transform.rotation = Quaternion.Euler(0, 0, 0);
+                animator.SetBool("Walking", true);
+            }
+            if (!Input.GetKey(KeyCode.A) && !Input.GetKey(KeyCode.D))
+            {
+                animator.SetBool("Walking", false);
             }
             if (Input.GetKeyDown(KeyCode.W) && canJump && rb.velocity.y < .25 && !Input.GetKey(KeyCode.S))
             {
                 //Debug.Log("jump");
                 rb.AddForce(new Vector2(0, jumpForce));
                 canJump = false;
+                animator.SetTrigger("Jump");
             }
-            canJump = true;
         }
         if (canMove == false)
         {
@@ -75,6 +83,7 @@ public class GreenGuy : MonoBehaviour
         if(collision.gameObject.layer == 7) //platforms
         {
             canJump = true;
+            animator.SetTrigger("Grounded");
         }
 
         if(collision.gameObject.layer == 6) //ball
@@ -83,6 +92,7 @@ public class GreenGuy : MonoBehaviour
             {
                 canMove = false;
                 stunClock = 0;
+                animator.SetTrigger("Stun");
             }
         }
     }

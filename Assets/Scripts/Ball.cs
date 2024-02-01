@@ -63,5 +63,9 @@ public class Ball : MonoBehaviour
                 rb.AddRelativeForce(new Vector2(HorzForce * speedMultiplier, 0), ForceMode2D.Force);
             }
         }
+        else if (collision.gameObject.name.Equals("GreenGuy"))
+        {
+            rb.velocity *= 3;
+        }
     }
 }
