@@ -35,17 +35,19 @@ public class GreenGuy : MonoBehaviour
         {
             foreach (PlatformEffector2D plat in platforms)
             {
-                plat.rotationalOffset = 0;
-                canJump = true;
+                plat.rotationalOffset = 0;   
             }
+            canJump = true;
         }
         if(Input.GetKey(KeyCode.A))
         {
             transform.Translate(-LR, 0, 0, Space.World);
+            transform.rotation = Quaternion.Euler(0, 180, 0);
         }
         if(Input.GetKey(KeyCode.D))
         {
             transform.Translate(LR, 0, 0, Space.World);
+            transform.rotation = Quaternion.Euler(0, 0, 0);
         }
         if (Input.GetKeyDown(KeyCode.W) && canJump && rb.velocity.y < .25 && !Input.GetKey(KeyCode.S))
         {
