@@ -14,7 +14,7 @@ public class Ball : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-        speedMultiplier = 1;
+        speedMultiplier = 1.5;
         int HorzForce = Random.Range(15, 45); // Randomizes angle of ball
         //Debug.Log(HorzForce);
         int StartingDirection = Random.Range(0, 2); // 0 for left, 1 for right
@@ -62,6 +62,10 @@ public class Ball : MonoBehaviour
                 int HorzForce = LastXVelocity > 0 ? -50 : 50;
                 rb.AddRelativeForce(new Vector2(HorzForce * speedMultiplier, 0), ForceMode2D.Force);
             }
+        }
+        else if (collision.gameObject.name.Equals("GreenGuy"))
+        {
+            rb.velocity *= 3;
         }
     }
 }
