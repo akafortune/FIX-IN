@@ -7,8 +7,8 @@ public class GreenGuy : MonoBehaviour
     PlatformEffector2D[] platforms;
     Rigidbody2D rb;
     public int jumpForce;
-    public float leftAndRight;
-    bool canJump = false;
+    public float leftAndRight, stunClock, stunTime = 3;
+    bool canJump = false, canMove = true;
     // Start is called before the first frame update
     void Start()
     {
@@ -23,37 +23,49 @@ public class GreenGuy : MonoBehaviour
     {
         float LR = leftAndRight * Time.deltaTime;
         //Debug.Log(rb.velocity.y);
-        if(Input.GetKeyDown(KeyCode.S))
+        if(canMove)
         {
-            foreach (PlatformEffector2D plat in platforms)
+            if (Input.GetKeyDown(KeyCode.S))
             {
-                plat.rotationalOffset = 180;
+                foreach (PlatformEffector2D plat in platforms)
+                {
+                    plat.rotationalOffset = 180;
+                }
                 canJump = false;
             }
-        }
-        if(Input.GetKeyUp(KeyCode.S))
-        {
-            foreach (PlatformEffector2D plat in platforms)
+            if (Input.GetKeyUp(KeyCode.S))
             {
                 plat.rotationalOffset = 0;   
+                foreach (PlatformEffector2D plat in platforms)
+                {
+                    plat.rotationalOffset = 0;
+                    canJump = true;
+                }
+            }
+            if (Input.GetKey(KeyCode.A))
+            {
+                transform.Translate(-LR, 0, 0, Space.World);
+            }
+            if (Input.GetKey(KeyCode.D))
+            {
+                transform.Translate(LR, 0, 0, Space.World);
+            }
+            if (Input.GetKeyDown(KeyCode.W) && canJump && rb.velocity.y < .25 && !Input.GetKey(KeyCode.S))
+            {
+                //Debug.Log("jump");
+                rb.AddForce(new Vector2(0, jumpForce));
+                canJump = false;
             }
             canJump = true;
         }
-        if(Input.GetKey(KeyCode.A))
+        if (canMove == false)
         {
-            transform.Translate(-LR, 0, 0, Space.World);
-            transform.rotation = Quaternion.Euler(0, 180, 0);
+            stunClock += Time.deltaTime;
         }
-        if(Input.GetKey(KeyCode.D))
+
+        if (stunClock > stunTime)
         {
-            transform.Translate(LR, 0, 0, Space.World);
-            transform.rotation = Quaternion.Euler(0, 0, 0);
-        }
-        if (Input.GetKeyDown(KeyCode.W) && canJump && rb.velocity.y < .25 && !Input.GetKey(KeyCode.S))
-        {
-            //Debug.Log("jump");
-            rb.AddForce(new Vector2(0, jumpForce));
-            canJump = false;
+            canMove = true;
         }
     }
 
@@ -62,6 +74,15 @@ public class GreenGuy : MonoBehaviour
         if(collision.gameObject.layer == 7) //platforms
         {
             canJump = true;
+        }
+
+        if(collision.gameObject.layer == 6) //ball
+        {
+            if(canMove)
+            {
+                canMove = false;
+                stunClock = 0;
+            }
         }
     }
 }
