@@ -123,7 +123,7 @@ public class GreenGuy : MonoBehaviour
         if (fixRay.collider.isTrigger)
         {
             fixRay.collider.gameObject.SendMessage("fixBrick");
-            animator.SetBool("Walking", false);
+            animator.SetTrigger("Fix");
             canMove = false;
             stunClock = 0;
         }
