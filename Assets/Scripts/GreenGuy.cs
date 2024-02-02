@@ -7,13 +7,19 @@ public class GreenGuy : MonoBehaviour
     Animator animator;
     PlatformEffector2D[] platforms;
     Rigidbody2D rb;
+    RaycastHit2D fixRay;
+    public LayerMask layersToHit;
+    public Transform rayOrigin;
+    
     public int jumpForce;
-    public float leftAndRight, stunClock, stunTime = 3;
+    public int fixMod = 1;
+    public float leftAndRight, stunClock, distance, stunTime = 3;
     bool canJump = false, canMove = true;
     // Start is called before the first frame update
     void Start()
     {
         platforms = GameObject.Find("Platforms").GetComponentsInChildren<PlatformEffector2D>();
+        Physics2D.queriesHitTriggers = true; //making it so that ray can detect triggers
         animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
         jumpForce = 250;
@@ -23,6 +29,10 @@ public class GreenGuy : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        fixRay = Physics2D.Raycast(rayOrigin.position, new Vector2(fixMod , -1), distance, layersToHit);
+
+        Debug.DrawLine(rayOrigin.position, rayOrigin.position + new Vector3(fixMod * distance, -1 * distance)); //visualising ray in editor
+
         float LR = leftAndRight * Time.deltaTime;
         //Debug.Log(rb.velocity.y);
         if(canMove)
@@ -45,12 +55,14 @@ public class GreenGuy : MonoBehaviour
             }
             if (Input.GetKey(KeyCode.A))
             {
+                fixMod = -1;
                 transform.Translate(-LR, 0, 0, Space.World);
                 transform.rotation = Quaternion.Euler(0, 180, 0);
                 animator.SetBool("Walking", true);
             }
             if (Input.GetKey(KeyCode.D))
             {
+                fixMod = 1;
                 transform.Translate(LR, 0, 0, Space.World);
                 transform.rotation = Quaternion.Euler(0, 0, 0);
                 animator.SetBool("Walking", true);
@@ -66,7 +78,16 @@ public class GreenGuy : MonoBehaviour
                 canJump = false;
                 animator.SetTrigger("Jump");
             }
+
+            if (Input.GetKeyDown(KeyCode.Space) && canJump)
+            {
+                if (fixRay.collider != null)
+                {
+                    checkCollider();
+                }
+            }
         }
+
         if (canMove == false)
         {
             stunClock += Time.deltaTime;
@@ -94,6 +115,17 @@ public class GreenGuy : MonoBehaviour
                 stunClock = 0;
                 animator.SetTrigger("Stun");
             }
+        }
+    }
+
+    public void checkCollider()
+    {
+        if (fixRay.collider.isTrigger)
+        {
+            fixRay.collider.gameObject.SendMessage("fixBrick");
+            animator.SetBool("Walking", false);
+            canMove = false;
+            stunClock = 0;
         }
     }
 }
