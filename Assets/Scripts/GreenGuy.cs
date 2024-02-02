@@ -45,12 +45,11 @@ public class GreenGuy : MonoBehaviour
                 }
                 canJump = false;
             }
-            if (Input.GetKeyUp(KeyCode.S))
+            if (!Input.GetKey(KeyCode.S))
             {
                 foreach (PlatformEffector2D plat in platforms)
                 {
                     plat.rotationalOffset = 0;
-                    canJump = true;
                 }
             }
             if (Input.GetKey(KeyCode.A))
