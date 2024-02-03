@@ -4,17 +4,19 @@ using UnityEngine;
 
 public class GreenGuy : MonoBehaviour
 {
-    Animator animator;
-    PlatformEffector2D[] platforms;
-    Rigidbody2D rb;
-    RaycastHit2D fixRay;
+    public Animator animator; //
+    public PlatformEffector2D[] platforms; //
+    public Rigidbody2D rb; //
+    public RaycastHit2D fixRay; //
     public LayerMask layersToHit;
     public Transform rayOrigin;
     
     public int jumpForce;
     public int fixMod = 1;
     public float leftAndRight, stunClock, distance, stunTime = 3;
-    bool canJump = false, canMove = true;
+    public bool canJump = false, canMove = true; //
+
+    public BoxCollider2D checkBox;
     // Start is called before the first frame update
     void Start()
     {
@@ -96,15 +98,17 @@ public class GreenGuy : MonoBehaviour
         {
             canMove = true;
         }
+
+
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if(collision.gameObject.layer == 7) //platforms
+        /*if(collision.gameObject.layer == 7) //platforms
         {
             canJump = true;
             animator.SetTrigger("Grounded");
-        }
+        }*/
 
         if(collision.gameObject.layer == 6) //ball
         {
