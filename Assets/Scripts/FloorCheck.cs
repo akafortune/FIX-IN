@@ -10,27 +10,34 @@ public class FloorCheck : MonoBehaviour
 
     public Animator animator;
     // Start is called before the first frame update
+
+    bool flipSwitch;
+    float offsetTimer;
     void Start()
     {
         animator = gameObject.GetComponentInParent<Animator>();
+        flipSwitch = true;
+        offsetTimer = .2f;
     }
 
     // Update is called once per frame
     void Update()
     {
-        Debug.Log(animator.name);
-        //wtf, it both does and does not exist ???? null refrence and outputs correctly. I have no words
-        Debug.Log(animator.GetCurrentAnimatorClipInfo(0)[0].clip.name);
-
-
-        //manage CheckBox
-        if (animator.GetCurrentAnimatorClipInfo(0)[0].clip.name == "Jump")
+        if (flipSwitch == false && offsetTimer > 0)
         {
-            checkBox.offset.Set(0.0f, 0.44f);
+            offsetTimer -= Time.deltaTime;
         }
-        else
+        //manage CheckBox
+        if (animator.GetCurrentAnimatorClipInfo(0)[0].clip.name == "Jump" && flipSwitch)
         {
-            checkBox.offset.Set(0.0f, 0.0f);
+            Debug.Log("UwU");
+            checkBox.offset= new Vector2(0.0f, 0.44f);
+            flipSwitch = false;
+        }
+        else if (offsetTimer <= 0)
+        {
+            Debug.Log("OwO");
+            checkBox.offset= new Vector2(0.0f, 0.19f);
         }
     }
 
@@ -40,6 +47,8 @@ public class FloorCheck : MonoBehaviour
         {
             greenGuy.canJump = true;
             greenGuy.animator.SetTrigger("Grounded");
+            flipSwitch = true;
+            offsetTimer = .2f;
         }
     }
 
