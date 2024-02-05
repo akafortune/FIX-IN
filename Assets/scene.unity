@@ -1463,9 +1463,13 @@ MonoBehaviour:
   leftAndRight: 0
   stunClock: 0
   distance: 0.5
-  stunTime: 1.5
+  stunTime: 2
   canJump: 0
   canMove: 1
+  buildTimer: 2.5
+  buildClock: 0
+  building: 0
+  stunned: 0
   checkBox: {fileID: 1904182647}
 --- !u!212 &612270118
 SpriteRenderer:
@@ -3443,6 +3447,10 @@ MonoBehaviour:
   stunTime: 2
   canJump: 0
   canMove: 1
+  buildTimer: 0
+  buildClock: 0
+  building: 0
+  stunned: 0
   checkBox: {fileID: 0}
 --- !u!212 &1568593303
 SpriteRenderer:
