@@ -25,7 +25,13 @@ public class Brick : MonoBehaviour
         if (collision.gameObject.tag.Equals("Ball"))
         {
             animator.SetBool("IsBroken", true);
-            bc.enabled = false;
+            bc.isTrigger = true;
         }
+    }
+
+    public void fixBrick()
+    {
+        animator.SetBool("IsBroken", false);
+        bc.isTrigger = false;
     }
 }
