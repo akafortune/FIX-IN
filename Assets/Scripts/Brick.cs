@@ -34,4 +34,11 @@ public class Brick : MonoBehaviour
         animator.SetBool("IsBroken", false);
         bc.isTrigger = false;
     }
+
+    public void cancelBrick()
+    {
+        animator.SetTrigger("CancelFix");
+        animator.SetBool("IsBroken", true);
+        bc.isTrigger = true;
+    }
 }

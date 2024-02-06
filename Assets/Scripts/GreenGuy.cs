@@ -13,8 +13,13 @@ public class GreenGuy : MonoBehaviour
     
     public int jumpForce;
     public int fixMod = 1;
-    public float leftAndRight, stunClock, distance, stunTime = 3;
+    public float leftAndRight, stunClock, distance, stunTime;
     public bool canJump = false, canMove = true; //
+
+    public float buildTimer, buildClock = 0;
+
+    public bool building = false, stunned = false;
+
 
     public BoxCollider2D checkBox;
     // Start is called before the first frame update
@@ -89,16 +94,29 @@ public class GreenGuy : MonoBehaviour
             }
         }
 
-        if (canMove == false)
+        if (stunned)
         {
             stunClock += Time.deltaTime;
         }
 
-        if (stunClock > stunTime)
+        if (stunClock > stunTime && stunned)
         {
             canMove = true;
+            animator.SetBool("Stun", false);
+            stunned = false;
         }
 
+        if (building)
+        {
+            buildClock += Time.deltaTime;
+        }
+
+        if (buildClock > buildTimer && building)
+        {
+            canMove = true;
+            animator.SetBool("Swinging", false);
+            building = false;
+        }
 
     }
 
@@ -116,7 +134,14 @@ public class GreenGuy : MonoBehaviour
             {
                 canMove = false;
                 stunClock = 0;
-                animator.SetTrigger("Stun");
+                animator.SetBool("Stun", true);
+                animator.SetTrigger("StunStart");
+                stunned = true;
+                if (building == true)
+                {
+                    BuidlingManagement("Stun");
+                    building = false;
+                }
             }
         }
     }
@@ -127,8 +152,25 @@ public class GreenGuy : MonoBehaviour
         {
             fixRay.collider.gameObject.SendMessage("fixBrick");
             animator.SetTrigger("Fix");
+            animator.SetBool("Swinging", true);
+            building = true;
+            buildClock = 0;
             canMove = false;
-            stunClock = 0;
+        }
+    }
+
+
+    //Building Handler
+
+    public void BuidlingManagement(string input)
+    {
+        if (input == "Stun" && building)
+        {
+            fixRay.collider.gameObject.SendMessage("cancelBrick");
+        }
+        if (input == "Build")
+        {
+            //For when we want to mess with the anim speed of building for the bricks
         }
     }
 }
