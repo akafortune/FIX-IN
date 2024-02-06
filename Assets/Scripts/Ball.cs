@@ -14,7 +14,7 @@ public class Ball : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-        speedMultiplier = 1.5;
+        speedMultiplier = 1.5f;
         int HorzForce = Random.Range(15, 45); // Randomizes angle of ball
         //Debug.Log(HorzForce);
         int StartingDirection = Random.Range(0, 2); // 0 for left, 1 for right
