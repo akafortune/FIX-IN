@@ -11,6 +11,8 @@ public class GreenGuy : MonoBehaviour
     public RaycastHit2D fixRay; //
     public LayerMask layersToHit;
     public Transform rayOrigin;
+
+    public GameObject floorRay;
     
     public int jumpForce;
     public int fixMod = 1;
@@ -104,6 +106,7 @@ public class GreenGuy : MonoBehaviour
                 animator.SetTrigger("Jump");
                 audioSource.clip = jump;
                 audioSource.Play();
+                floorRay.SendMessage("JumpAnimCrt");
             }
 
             if (Input.GetKeyDown(KeyCode.Space) && canJump)
