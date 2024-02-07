@@ -10,6 +10,9 @@ public class Ball : MonoBehaviour
     Rigidbody2D rb;
     public float speedMultiplier;
     float LastXVelocity;
+    public GameObject gameOverMenu;
+    public AudioSource audioSource;
+    public AudioClip wallBounce, paddleBounce, ggBounce, bottomWallBounce;
     // Start is called before the first frame update
     void Start()
     {
@@ -45,6 +48,8 @@ public class Ball : MonoBehaviour
             rb.AddRelativeForce(new Vector2(50, 0), ForceMode2D.Force);
             int VertForce = rb.velocity.y > 0 ? 50 : -50;
             rb.AddForce(new Vector2(0, VertForce * speedMultiplier));
+            audioSource.clip = wallBounce;
+            audioSource.Play();
             //Debug.Log("R wall hit");
         }
         else if (collision.gameObject.name.Equals("Wall9PatchLeft"))
@@ -52,6 +57,8 @@ public class Ball : MonoBehaviour
             rb.AddRelativeForce(new Vector2(-50, 0), ForceMode2D.Force);
             int VertForce = rb.velocity.y > 0 ? 50 : -50;
             rb.AddForce(new Vector2(0, VertForce * speedMultiplier));
+            audioSource.clip = wallBounce;
+            audioSource.Play();
             //Debug.Log("L wall hit");
         }
         else if (collision.gameObject.name.Equals("Paddle"))
@@ -61,11 +68,23 @@ public class Ball : MonoBehaviour
                 //Debug.Log("Fixed X");
                 int HorzForce = LastXVelocity > 0 ? -50 : 50;
                 rb.AddRelativeForce(new Vector2(HorzForce * speedMultiplier, 0), ForceMode2D.Force);
+                audioSource.clip = paddleBounce;
+                audioSource.Play();
+                Debug.Log("Paddle Sound Play");
             }
+        }
+        else if (collision.gameObject.name.Equals("Wall9PatchTop (1)"))
+        {
+            Time.timeScale = 0f;
+            gameOverMenu.SetActive(true);
+            audioSource.clip = bottomWallBounce;
+            audioSource.Play();
         }
         else if (collision.gameObject.name.Equals("GreenGuy"))
         {
             rb.velocity *= 3;
+            audioSource.clip = ggBounce;
+            audioSource.Play();
         }
     }
 }
