@@ -2767,7 +2767,7 @@ MonoBehaviour:
   stunTime: 2
   canJump: 0
   canMove: 1
-  buildTimer: 2.5
+  buildTimer: 0
   buildClock: 0
   building: 0
   stunned: 0
@@ -3058,7 +3058,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 228.15433, y: -107}
+  m_AnchoredPosition: {x: 253, y: -107}
   m_SizeDelta: {x: 150.0839, y: 46.169}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &669196998

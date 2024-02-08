@@ -41,6 +41,7 @@ public class GreenGuy : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         jumpForce = 250;
         leftAndRight = 2;
+        buildTimer = 1.3f;
         highScoreText.text = PlayerPrefs.GetInt("HighScore").ToString();
     }
 
