@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class GreenGuy : MonoBehaviour
@@ -10,13 +11,27 @@ public class GreenGuy : MonoBehaviour
     public RaycastHit2D fixRay; //
     public LayerMask layersToHit;
     public Transform rayOrigin;
+
+    public GameObject floorRay;
     
     public int jumpForce;
     public int fixMod = 1;
-    public float leftAndRight, stunClock, distance, stunTime = 3;
+    public float leftAndRight, stunClock, distance, stunTime;
     public bool canJump = false, canMove = true; //
 
+    public float buildTimer, buildClock = 0;
+
+    public bool building = false, stunned = false;
+
+    private float oneSecond = 1f;
+    public float score;
+    public TextMeshProUGUI scoreText;
+    public TextMeshProUGUI highScoreText;
+
     public BoxCollider2D checkBox;
+
+    public AudioSource audioSource;
+    public AudioClip walk, jump, brickFix; // haven't found a good walk sound yet
     // Start is called before the first frame update
     void Start()
     {
@@ -26,6 +41,7 @@ public class GreenGuy : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         jumpForce = 250;
         leftAndRight = 2;
+        highScoreText.text = PlayerPrefs.GetInt("HighScore").ToString();
     }
 
     // Update is called once per frame
@@ -60,6 +76,11 @@ public class GreenGuy : MonoBehaviour
                 transform.Translate(-LR, 0, 0, Space.World);
                 transform.rotation = Quaternion.Euler(0, 180, 0);
                 animator.SetBool("Walking", true);
+                audioSource.clip = walk;
+                if(!audioSource.isPlaying)
+                {
+                    audioSource.Play();
+                }
             }
             if (Input.GetKey(KeyCode.D))
             {
@@ -67,6 +88,11 @@ public class GreenGuy : MonoBehaviour
                 transform.Translate(LR, 0, 0, Space.World);
                 transform.rotation = Quaternion.Euler(0, 0, 0);
                 animator.SetBool("Walking", true);
+                audioSource.clip = walk;
+                if (!audioSource.isPlaying)
+                {
+                    audioSource.Play();
+                }
             }
             if (!Input.GetKey(KeyCode.A) && !Input.GetKey(KeyCode.D))
             {
@@ -78,6 +104,9 @@ public class GreenGuy : MonoBehaviour
                 rb.AddForce(new Vector2(0, jumpForce));
                 canJump = false;
                 animator.SetTrigger("Jump");
+                audioSource.clip = jump;
+                audioSource.Play();
+                floorRay.SendMessage("JumpAnimCrt");
             }
 
             if (Input.GetKeyDown(KeyCode.Space) && canJump)
@@ -89,17 +118,42 @@ public class GreenGuy : MonoBehaviour
             }
         }
 
-        if (canMove == false)
+        if (stunned)
         {
             stunClock += Time.deltaTime;
         }
 
-        if (stunClock > stunTime)
+        if (stunClock > stunTime && stunned)
         {
             canMove = true;
+            animator.SetBool("Stun", false);
+            stunned = false;
         }
 
+        if (building)
+        {
+            buildClock += Time.deltaTime;
+        }
 
+        if (buildClock > buildTimer && building)
+        {
+            canMove = true;
+            animator.SetBool("Swinging", false);
+            building = false;
+            score += 10;
+        }
+        scoreText.text = ((int)score).ToString();
+        if (score > PlayerPrefs.GetInt("HighScore", 0))
+        {
+            PlayerPrefs.SetInt("HighScore", (int)score);
+            highScoreText.text = PlayerPrefs.GetInt("HighScore").ToString();
+        }
+    }
+
+    private void FixedUpdate()
+    {
+        score += oneSecond * Time.fixedDeltaTime;
+        scoreText.text = ((int)score).ToString();
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -116,7 +170,14 @@ public class GreenGuy : MonoBehaviour
             {
                 canMove = false;
                 stunClock = 0;
-                animator.SetTrigger("Stun");
+                animator.SetBool("Stun", true);
+                animator.SetTrigger("StunStart");
+                stunned = true;
+                if (building == true)
+                {
+                    BuidlingManagement("Stun");
+                    building = false;
+                }
             }
         }
     }
@@ -127,8 +188,27 @@ public class GreenGuy : MonoBehaviour
         {
             fixRay.collider.gameObject.SendMessage("fixBrick");
             animator.SetTrigger("Fix");
+            animator.SetBool("Swinging", true);
+            building = true;
+            buildClock = 0;
             canMove = false;
-            stunClock = 0;
+            audioSource.clip = brickFix;
+            audioSource.Play();
+        }
+    }
+
+
+    //Building Handler
+
+    public void BuidlingManagement(string input)
+    {
+        if (input == "Stun" && building)
+        {
+            fixRay.collider.gameObject.SendMessage("cancelBrick");
+        }
+        if (input == "Build")
+        {
+            //For when we want to mess with the anim speed of building for the bricks
         }
     }
 }

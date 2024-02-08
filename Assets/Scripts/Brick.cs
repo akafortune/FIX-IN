@@ -5,7 +5,9 @@ using UnityEngine;
 public class Brick : MonoBehaviour
 {
     Animator animator;
-    BoxCollider2D bc;
+    BoxCollider2D bc; 
+    public AudioSource audioSource;
+    public AudioClip brickBreak;
     // Start is called before the first frame update
     void Start()
     {
@@ -26,6 +28,8 @@ public class Brick : MonoBehaviour
         {
             animator.SetBool("IsBroken", true);
             bc.isTrigger = true;
+            audioSource.clip = brickBreak;
+            audioSource.Play();
         }
     }
 
@@ -33,5 +37,12 @@ public class Brick : MonoBehaviour
     {
         animator.SetBool("IsBroken", false);
         bc.isTrigger = false;
+    }
+
+    public void cancelBrick()
+    {
+        animator.SetTrigger("CancelFix");
+        animator.SetBool("IsBroken", true);
+        bc.isTrigger = true;
     }
 }
