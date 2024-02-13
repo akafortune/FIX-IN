@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 public class GameOver : MonoBehaviour
 {
     public GameObject gameOverMenu;
+    public GameObject[] otherUI;
 
     // Start is called before the first frame update
     void Start()
@@ -16,7 +17,13 @@ public class GameOver : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if(gameOverMenu.activeSelf)
+        {
+            foreach(GameObject uiObject in otherUI)
+            {
+                uiObject.SetActive(false);
+            }
+        }
     }
 
     public void Retry()
