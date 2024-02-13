@@ -1,7 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using static GreenGuy;
+using static UnityEngine.UI.ContentSizeFitter;
 
 public class FloorCheck : MonoBehaviour
 {
@@ -30,6 +32,7 @@ public class FloorCheck : MonoBehaviour
             clock += Time.deltaTime;
         }
         RaycastHit2D hit = Physics2D.Raycast(gameObject.transform.position, new Vector2(0 , -1), 0.15f, platforms);
+        Debug.DrawLine(transform.position, transform.position + new Vector3(0,-.15f));
         if (hit.collider != null)
         {
             greenGuy.canJump = true;

@@ -16,7 +16,10 @@ public class GreenGuy : MonoBehaviour
     
     public int jumpForce;
     public int fixMod = 1;
-    public float leftAndRight, stunClock, distance, stunTime;
+    public static float speedMod = 1;
+    public float horizontalSpeed = 2f;
+    public float stunClock, distance;
+    public static float stunTime = 2.5f;
     public bool canJump = false, canMove = true; //
 
     public float buildTimer, buildClock = 0;
@@ -40,8 +43,9 @@ public class GreenGuy : MonoBehaviour
         animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
         jumpForce = 250;
-        leftAndRight = 2;
+        horizontalSpeed = 2;
         buildTimer = 1.3f;
+        stunTime = 2.5f;
         highScoreText.text = PlayerPrefs.GetInt("HighScore").ToString();
     }
 
@@ -52,7 +56,7 @@ public class GreenGuy : MonoBehaviour
 
         Debug.DrawLine(rayOrigin.position, rayOrigin.position + new Vector3(fixMod * distance, -1 * distance)); //visualising ray in editor
 
-        float LR = leftAndRight * Time.deltaTime;
+        float adjustedSpeed = horizontalSpeed * Time.deltaTime * speedMod;
         //Debug.Log(rb.velocity.y);
         if(canMove)
         {
@@ -74,7 +78,7 @@ public class GreenGuy : MonoBehaviour
             if (Input.GetKey(KeyCode.A))
             {
                 fixMod = -1;
-                transform.Translate(-LR, 0, 0, Space.World);
+                transform.Translate(-adjustedSpeed, 0, 0, Space.World);
                 transform.rotation = Quaternion.Euler(0, 180, 0);
                 animator.SetBool("Walking", true);
                 audioSource.clip = walk;
@@ -86,7 +90,7 @@ public class GreenGuy : MonoBehaviour
             if (Input.GetKey(KeyCode.D))
             {
                 fixMod = 1;
-                transform.Translate(LR, 0, 0, Space.World);
+                transform.Translate(adjustedSpeed, 0, 0, Space.World);
                 transform.rotation = Quaternion.Euler(0, 0, 0);
                 animator.SetBool("Walking", true);
                 audioSource.clip = walk;
@@ -197,7 +201,7 @@ public class GreenGuy : MonoBehaviour
             audioSource.Play();
         }
     }
-
+     
 
     //Building Handler
 

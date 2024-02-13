@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -35,6 +36,12 @@ public class Pause : MonoBehaviour
     {
         SceneManager.LoadScene("scene");
         Time.timeScale = 1f;
+    }
+
+    public void NewTest()
+    {
+        Ball.newAugment = true;
+        Restart();
     }
 
     public void Quit()
