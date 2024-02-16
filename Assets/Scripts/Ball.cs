@@ -20,7 +20,7 @@ public class Ball : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-        TestVersion = GameObject.Find("TestVersionText").GetComponent<TextMeshProUGUI>();
+        //TestVersion = GameObject.Find("TestVersionText").GetComponent<TextMeshProUGUI>();
         speedMultiplier = 2f;
 
         //GreenGuy.speedMod *= testAugment;
