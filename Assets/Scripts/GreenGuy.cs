@@ -42,7 +42,7 @@ public class GreenGuy : MonoBehaviour
         Physics2D.queriesHitTriggers = true; //making it so that ray can detect triggers
         animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
-        jumpForce = 250;
+        jumpForce = 235;
         horizontalSpeed = 2;
         buildTimer = 1.3f;
         stunTime = 1.7f;
