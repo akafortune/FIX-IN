@@ -21,18 +21,10 @@ public class Ball : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         TestVersion = GameObject.Find("TestVersionText").GetComponent<TextMeshProUGUI>();
-        speedMultiplier = 1.5f;
+        speedMultiplier = 2f;
 
-        if (newAugment)
-        {
-            testAugment = Random.Range(1.0f, 1.5f);
-            newAugment = false;
-        }
-
-        speedMultiplier *= testAugment;
-        GreenGuy.stunTime /= testAugment;
         //GreenGuy.speedMod *= testAugment;
-        TestVersion.text = "Test Version 1." + testAugment.ToString("0.00");
+        //TestVersion.text = "Test Version 1." + testAugment.ToString("0.00");
 
         int HorzForce = Random.Range(15, 45); // Randomizes angle of ball
         //Debug.Log(HorzForce);
@@ -65,8 +57,7 @@ public class Ball : MonoBehaviour
             rb.AddRelativeForce(new Vector2(50, 0), ForceMode2D.Force);
             int VertForce = rb.velocity.y > 0 ? 50 : -50;
             rb.AddForce(new Vector2(0, VertForce * speedMultiplier));
-            audioSource.clip = wallBounce;
-            audioSource.Play();
+            audioSource.PlayOneShot(wallBounce);
             //Debug.Log("R wall hit");
         }
         else if (collision.gameObject.name.Equals("Wall9PatchLeft"))
@@ -74,8 +65,7 @@ public class Ball : MonoBehaviour
             rb.AddRelativeForce(new Vector2(-50, 0), ForceMode2D.Force);
             int VertForce = rb.velocity.y > 0 ? 50 : -50;
             rb.AddForce(new Vector2(0, VertForce * speedMultiplier));
-            audioSource.clip = wallBounce;
-            audioSource.Play();
+            audioSource.PlayOneShot(wallBounce);
             //Debug.Log("L wall hit");
         }
         else if (collision.gameObject.name.Equals("Paddle"))
@@ -85,23 +75,20 @@ public class Ball : MonoBehaviour
                 //Debug.Log("Fixed X");
                 int HorzForce = LastXVelocity > 0 ? -50 : 50;
                 rb.AddRelativeForce(new Vector2(HorzForce * speedMultiplier, 0), ForceMode2D.Force);
-                audioSource.clip = paddleBounce;
-                audioSource.Play();
                 Debug.Log("Paddle Sound Play");
             }
+            audioSource.PlayOneShot(paddleBounce);
         }
         else if (collision.gameObject.name.Equals("Wall9PatchBottom"))
         {
             Time.timeScale = 0f;
             gameOverMenu.SetActive(true);
-            audioSource.clip = bottomWallBounce;
-            audioSource.Play();
+            audioSource.PlayOneShot(bottomWallBounce);
         }
         else if (collision.gameObject.name.Equals("GreenGuy"))
         {
             rb.velocity *= 3;
-            audioSource.clip = ggBounce;
-            audioSource.Play();
+            audioSource.PlayOneShot(ggBounce);
         }
     }
 }

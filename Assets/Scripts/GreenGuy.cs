@@ -45,7 +45,7 @@ public class GreenGuy : MonoBehaviour
         jumpForce = 250;
         horizontalSpeed = 2;
         buildTimer = 1.3f;
-        stunTime = 2.5f;
+        stunTime = 1.7f;
         highScoreText.text = PlayerPrefs.GetInt("HighScore").ToString();
     }
 
@@ -67,13 +67,6 @@ public class GreenGuy : MonoBehaviour
                     plat.rotationalOffset = 180;
                 }
                 canJump = false;
-            }
-            if (!Input.GetKey(KeyCode.S))
-            {
-                foreach (PlatformEffector2D plat in platforms)
-                {
-                    plat.rotationalOffset = 0;
-                }
             }
             if (Input.GetKey(KeyCode.A))
             {
@@ -109,9 +102,12 @@ public class GreenGuy : MonoBehaviour
                 rb.AddForce(new Vector2(0, jumpForce));
                 canJump = false;
                 animator.SetTrigger("Jump");
-                audioSource.clip = jump;
-                audioSource.Play();
+                audioSource.PlayOneShot(jump);
                 floorRay.SendMessage("JumpAnimCrt");
+                foreach(PlatformEffector2D platform in platforms)
+                {
+                    platform.rotationalOffset = 0;
+                }
             }
 
             if (Input.GetKeyDown(KeyCode.Space) && canJump)
@@ -197,8 +193,7 @@ public class GreenGuy : MonoBehaviour
             building = true;
             buildClock = 0;
             canMove = false;
-            audioSource.clip = brickFix;
-            audioSource.Play();
+            audioSource.PlayOneShot(brickFix);
         }
     }
      
