@@ -8,6 +8,7 @@ public class Brick : MonoBehaviour
     BoxCollider2D bc; 
     public AudioSource audioSource;
     public AudioClip brickBreak;
+    static bool canBreak;
     // Start is called before the first frame update
     void Start()
     {
@@ -16,20 +17,21 @@ public class Brick : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
-        
+        canBreak = true;
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
         //Debug.Log("collision");
-        if (collision.gameObject.tag.Equals("Ball"))
+        if (collision.gameObject.tag.Equals("Ball") && canBreak)
         {
             animator.SetBool("IsBroken", true);
             bc.isTrigger = true;
             audioSource.clip = brickBreak;
             audioSource.Play();
+            canBreak = false;
         }
     }
 

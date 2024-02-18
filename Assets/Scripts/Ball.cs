@@ -27,6 +27,7 @@ public class Ball : MonoBehaviour
         //TestVersion.text = "Test Version 1." + testAugment.ToString("0.00");
 
         int HorzForce = Random.Range(15, 45); // Randomizes angle of ball
+        //int HorzForce = 0; //constant ball angle for testing
         //Debug.Log(HorzForce);
         int StartingDirection = Random.Range(0, 2); // 0 for left, 1 for right
         //Debug.Log(StartingDirection);
