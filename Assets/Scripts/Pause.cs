@@ -34,7 +34,7 @@ public class Pause : MonoBehaviour
 
     public void Restart()
     {
-        SceneManager.LoadScene("scene");
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         Time.timeScale = 1f;
     }
 
