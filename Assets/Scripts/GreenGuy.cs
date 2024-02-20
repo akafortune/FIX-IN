@@ -66,7 +66,6 @@ public class GreenGuy : MonoBehaviour
                 {
                     plat.rotationalOffset = 180;
                 }
-                canJump = false;
             }
             if (Input.GetKey(KeyCode.A))
             {

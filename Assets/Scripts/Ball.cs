@@ -12,6 +12,7 @@ public class Ball : MonoBehaviour
     public float speedMultiplier;
     float LastXVelocity;
     static float testAugment;
+    private float mapSizeAugment;
     public static bool newAugment = true;
     public GameObject gameOverMenu;
     public AudioSource audioSource;
@@ -29,9 +30,11 @@ public class Ball : MonoBehaviour
         {
             minAngle = 25;
             maxAngle = 65;
+            mapSizeAugment = 1.5f;
         }
         else
         {
+            mapSizeAugment = 1;
             minAngle = 15;
             maxAngle = 45;
         }
@@ -93,15 +96,13 @@ public class Ball : MonoBehaviour
         }
         else if (collision.gameObject.name.Equals("Paddle"))
         {
-            if (LastXVelocity < 0.5f  && LastXVelocity > -0.5f)
+            if (LastXVelocity < 0.5f * mapSizeAugment  && LastXVelocity > -0.5f * mapSizeAugment)
             {
                 //Debug.Log("Fixed X");
                 int HorzForce = LastXVelocity > 0 ? -50 : 50;
-                rb.AddRelativeForce(new Vector2(HorzForce * speedMultiplier, 0), ForceMode2D.Force);
-                audioSource.clip = paddleBounce;
-                audioSource.Play();
-                Debug.Log("Paddle Sound Play");
+                rb.AddRelativeForce(new Vector2(HorzForce * speedMultiplier * mapSizeAugment, 0), ForceMode2D.Force);
             }
+            audioSource.PlayOneShot(paddleBounce);
         }
         else if (collision.gameObject.name.Equals("Wall9PatchBottom"))
         {
