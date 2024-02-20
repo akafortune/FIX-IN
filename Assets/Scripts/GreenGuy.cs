@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class GreenGuy : MonoBehaviour
@@ -47,6 +48,7 @@ public class GreenGuy : MonoBehaviour
         buildTimer = 1.3f;
         stunTime = 1.7f;
         highScoreText.text = PlayerPrefs.GetInt("HighScore").ToString();
+        canJump = true;
     }
 
     // Update is called once per frame
