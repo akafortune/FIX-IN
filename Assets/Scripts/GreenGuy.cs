@@ -150,6 +150,14 @@ public class GreenGuy : MonoBehaviour
             PlayerPrefs.SetInt("HighScore", (int)score);
             highScoreText.text = PlayerPrefs.GetInt("HighScore").ToString();
         }
+
+        if(fixRay.collider != null)
+        {
+            if (fixRay.collider.isTrigger)
+            {
+                fixRay.collider.SendMessage("ShowIndicator");
+            }
+        }
     }
 
     private void FixedUpdate()
