@@ -109,6 +109,10 @@ public class Ball : MonoBehaviour
             audioSource.Play();
             //Debug.Log("L wall hit");
         }
+        else if (collision.gameObject.name.Equals("Triangle"))
+        {
+            audioSource.PlayOneShot(wallBounce);
+        }
         else if (collision.gameObject.name.Equals("Paddle"))
         {
             if (LastXVelocity < 0.5f * mapSizeAugment  && LastXVelocity > -0.5f * mapSizeAugment)

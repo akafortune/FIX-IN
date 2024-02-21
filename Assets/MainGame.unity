@@ -3034,8 +3034,10 @@ MonoBehaviour:
   horizontalSpeed: 2
   stunClock: 0
   distance: 0.5
+  platformClock: 0
   canJump: 0
   canMove: 1
+  platformRotated: 0
   buildTimer: 0
   buildClock: 0
   building: 0
@@ -3071,7 +3073,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 8f152157dae0ebe4caadf3df5a6e952f, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -5556,8 +5558,10 @@ MonoBehaviour:
   horizontalSpeed: 2
   stunClock: 0
   distance: 0
+  platformClock: 0
   canJump: 0
   canMove: 1
+  platformRotated: 0
   buildTimer: 0
   buildClock: 0
   building: 0
