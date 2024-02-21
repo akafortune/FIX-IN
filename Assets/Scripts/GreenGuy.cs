@@ -1,7 +1,9 @@
+using JetBrains.Annotations;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class GreenGuy : MonoBehaviour
 {
@@ -31,6 +33,10 @@ public class GreenGuy : MonoBehaviour
     public TextMeshProUGUI scoreText;
     public TextMeshProUGUI highScoreText;
 
+    public float yOffset;
+    public GameObject floatingText;
+    public BoxCollider2D headBox;
+
     public BoxCollider2D checkBox;
 
     public AudioSource audioSource;
@@ -47,6 +53,7 @@ public class GreenGuy : MonoBehaviour
         buildTimer = 1.3f;
         stunTime = 1.7f;
         highScoreText.text = PlayerPrefs.GetInt("HighScore").ToString();
+        headBox = GameObject.Find("HeadBox").GetComponentInChildren<BoxCollider2D>();
     }
 
     // Update is called once per frame
@@ -142,6 +149,11 @@ public class GreenGuy : MonoBehaviour
             animator.SetBool("Swinging", false);
             building = false;
             score += 10;
+            // Trigger floating text here
+            if(floatingText != null)
+            { 
+                ShowFloatingText("10");
+            }
         }
         scoreText.text = ((int)score).ToString();
         if (score > PlayerPrefs.GetInt("HighScore", 0))
@@ -193,7 +205,16 @@ public class GreenGuy : MonoBehaviour
             audioSource.PlayOneShot(brickFix);
         }
     }
-     
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.layer == 6)
+        {
+            score += 5;
+            ShowFloatingText("5");
+        }
+    }
+
 
     //Building Handler
 
@@ -207,5 +228,12 @@ public class GreenGuy : MonoBehaviour
         {
             //For when we want to mess with the anim speed of building for the bricks
         }
+    }
+
+    public void ShowFloatingText(string points)
+    {
+        // text pop up should appear in the right direction no matter where the player faces
+        GameObject flText = Instantiate(floatingText, transform.position + new Vector3(0, yOffset, 0), Quaternion.identity);
+        flText.GetComponentInChildren<TextMesh>().text = "+" + points;
     }
 }
