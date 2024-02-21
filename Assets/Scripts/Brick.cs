@@ -14,9 +14,9 @@ public class Brick : MonoBehaviour
     void Start()
     {
         fixIndicator = GetComponentsInChildren<SpriteRenderer>()[1];
+        audioSource = GetComponentInParent<AudioSource>();
         animator = GetComponent<Animator>();
         bc = GetComponent<BoxCollider2D>();
-        audioSource = GetComponentInParent<AudioSource>();
         fixIndicator.enabled = false;
     }
 
