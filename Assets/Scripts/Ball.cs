@@ -35,6 +35,7 @@ public class Ball : MonoBehaviour
         gameTimer = 0f;
         rb = GetComponent<Rigidbody2D>();
         //TestVersion = GameObject.Find("TestVersionText").GetComponent<TextMeshProUGUI>();
+        pauseMenu = GameObject.Find("PauseMenu");
         int minAngle;
         int maxAngle;
         if (SceneManager.GetActiveScene() == SceneManager.GetSceneByBuildIndex(3) || SceneManager.GetActiveScene() == SceneManager.GetSceneByBuildIndex(4))
