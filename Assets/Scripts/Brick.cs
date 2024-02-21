@@ -24,7 +24,7 @@ public class Brick : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
 
         fixIndicator.enabled = false;
