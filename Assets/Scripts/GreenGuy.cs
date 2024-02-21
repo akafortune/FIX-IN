@@ -17,7 +17,7 @@ public class GreenGuy : MonoBehaviour
 
     public GameObject floorRay;
     public Transform SwingDustTransform;
-    ParticleSystem particleSystem;
+    ParticleSystem dustParticle;
     
     public int jumpForce;
     public int fixMod = 1;
@@ -47,8 +47,8 @@ public class GreenGuy : MonoBehaviour
     // Start is called before the first frame update
     private void Awake()
     {
-        particleSystem = GetComponentInChildren<ParticleSystem>();
-        particleSystem.Stop();
+        dustParticle = GetComponentInChildren<ParticleSystem>();
+        dustParticle.Stop();
     }
     void Start()
     {
@@ -243,7 +243,7 @@ public class GreenGuy : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.layer == 6)
+        if (collision.gameObject.layer == 6 && !building)
         {
             score += 5;
             ShowFloatingText("5");
