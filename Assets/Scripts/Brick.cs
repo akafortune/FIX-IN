@@ -13,8 +13,10 @@ public class Brick : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        fixIndicator = GetComponentsInChildren<SpriteRenderer>()[1];
         animator = GetComponent<Animator>();
         bc = GetComponent<BoxCollider2D>();
+        audioSource = GetComponentInParent<AudioSource>();
         fixIndicator.enabled = false;
     }
 
@@ -33,8 +35,7 @@ public class Brick : MonoBehaviour
         {
             animator.SetBool("IsBroken", true);
             bc.isTrigger = true;
-            audioSource.clip = brickBreak;
-            audioSource.Play();
+            audioSource.PlayOneShot(brickBreak);
             canBreak = false;
         }
     }
