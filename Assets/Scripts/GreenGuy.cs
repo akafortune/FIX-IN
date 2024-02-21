@@ -65,7 +65,7 @@ public class GreenGuy : MonoBehaviour
         highScoreText.text = PlayerPrefs.GetInt("HighScore").ToString();
         canJump = true;
         floatingText = (GameObject)Resources.Load("FloatingTextParent");
-        //headBox = GameObject.Find("HeadBox").GetComponentInChildren<BoxCollider2D>();
+        headBox = GameObject.Find("HeadBox").GetComponentInChildren<BoxCollider2D>();
     }
 
     // Update is called once per frame
