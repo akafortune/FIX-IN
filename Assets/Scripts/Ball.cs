@@ -28,6 +28,10 @@ public class Ball : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        StaticspeedMultiplier = 1.5f;
+        RampspeedMultiplier = 1f;
+        augment = 1.3f;
+
         gameTimer = 0f;
         rb = GetComponent<Rigidbody2D>();
         //TestVersion = GameObject.Find("TestVersionText").GetComponent<TextMeshProUGUI>();
@@ -130,17 +134,21 @@ public class Ball : MonoBehaviour
 
     void RampSpeed()
     {
-        float x = (-1f)*(50f/Mathf.Pow(gameTimer, 2f)) + (9f/7f);
-        if (x < 1)
+        if (gameTimer > 30)
         {
-            RampspeedMultiplier = 1;
+            float y = gameTimer-30f;
+            float x = (-1f)*(25f/(Mathf.Pow(y, 2f)+(186f*y)+86.5f)) + (1.3f);
+            if (x < 1)
+            {
+                RampspeedMultiplier = 1;
+            }
+            else
+            {
+                RampspeedMultiplier = x;
+            }
+            FinalspeedMultiplier = StaticspeedMultiplier*RampspeedMultiplier;
+            Debug.Log(GreenGuy.stunTime);
+            GreenGuy.stunTime = 1.7f / (augment + (RampspeedMultiplier/3f));
         }
-        else
-        {
-            RampspeedMultiplier = x;
-        }
-        FinalspeedMultiplier = StaticspeedMultiplier*RampspeedMultiplier;
-        Debug.Log(GreenGuy.stunTime);
-        GreenGuy.stunTime = 1.7f / (augment + (RampspeedMultiplier/3f));
     }
 }

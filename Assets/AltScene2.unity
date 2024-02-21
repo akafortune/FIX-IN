@@ -1362,7 +1362,7 @@ MonoBehaviour:
   StaticspeedMultiplier: 1.5
   RampspeedMultiplier: 1
   FinalspeedMultiplier: 0
-  augment: 1.35
+  augment: 1.3
   gameOverMenu: {fileID: 1613192242}
   audioSource: {fileID: 1236842747}
   wallBounce: {fileID: 8300000, guid: bcda1af0480a8034195adc66c3b59073, type: 3}
