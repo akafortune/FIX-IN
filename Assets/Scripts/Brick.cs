@@ -1,5 +1,8 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
+using UnityEditor;
 using UnityEngine;
 
 public class Brick : MonoBehaviour
@@ -21,7 +24,7 @@ public class Brick : MonoBehaviour
     }
 
     // Update is called once per frame
-    void FixedUpdate()
+    void Update()
     {
 
         fixIndicator.enabled = false;
@@ -31,18 +34,18 @@ public class Brick : MonoBehaviour
     private void OnCollisionEnter2D(Collision2D collision)
     {
         //Debug.Log("collision");
-        if (collision.gameObject.tag.Equals("Ball") && canBreak)
+        if (collision.gameObject.tag.Equals("Ball"))
         {
             animator.SetBool("IsBroken", true);
             bc.isTrigger = true;
             audioSource.clip = brickBreak;
             audioSource.Play();
-            canBreak = false;
         }
     }
 
     public void fixBrick()
     {
+        int iterations = 0;
         animator.SetBool("IsBroken", false);
         bc.isTrigger = false;
     }
