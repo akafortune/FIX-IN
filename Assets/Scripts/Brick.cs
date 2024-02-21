@@ -13,6 +13,8 @@ public class Brick : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        fixIndicator = GetComponentsInChildren<SpriteRenderer>()[1];
+        audioSource = GetComponentInParent<AudioSource>();
         animator = GetComponent<Animator>();
         bc = GetComponent<BoxCollider2D>();
         fixIndicator.enabled = false;
