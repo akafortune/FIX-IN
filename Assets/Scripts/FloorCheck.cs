@@ -13,42 +13,48 @@ public class FloorCheck : MonoBehaviour
 
     public Animator animator;
 
-    float timer = 0.15f;
-    float clock;
+    float clock = 0.2f;
+    float timer = 0.0f;
 
-    bool jumpStart = false;
+    public bool HasJumped;
 
     // Start is called before the first frame update
     void Start()
     {
+        HasJumped = true;
         animator = gameObject.GetComponentInParent<Animator>();
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        if (jumpStart)
-        {
-            clock += Time.deltaTime;
-        }
-        RaycastHit2D hit = Physics2D.Raycast(gameObject.transform.position, new Vector2(0 , -1), 0.15f, platforms);
-        Debug.DrawLine(transform.position, transform.position + new Vector3(0,-.15f));
-        if (hit.collider != null)
-        {
-            greenGuy.canJump = true;
-            if (clock > timer)
-            {
-                greenGuy.animator.SetTrigger("Grounded");
-                clock = 0;
-                jumpStart = false;
-            }
-        }
     }
 
     public void JumpAnimCrt()
     {
-        jumpStart = true;
+        HasJumped = true;
+        timer = 0.0f;
     }
+
+    void Update()
+    {
+        if (HasJumped)
+        {
+            if (timer >= clock)
+            {
+                RaycastHit2D hit = Physics2D.Raycast(gameObject.transform.position, new Vector2(0 , -1), 0.05f, platforms);
+                Debug.DrawLine(transform.position, transform.position + new Vector3(0,-.05f));
+                if (hit.collider != null)
+                {
+                    greenGuy.canJump = true;
+                    greenGuy.animator.SetTrigger("Grounded");
+                    Debug.Log("PizzaTime");
+                    HasJumped = false;
+
+                }
+            }
+            else {timer += Time.deltaTime;}
+        }
+    }
+    void FixedUpdate() { greenGuy.animator.ResetTrigger("Grounded");}
+
+
+
 
 
 

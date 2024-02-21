@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using Random = UnityEngine.Random;
 
 public class Ball : MonoBehaviour
@@ -11,6 +12,7 @@ public class Ball : MonoBehaviour
     public float speedMultiplier;
     float LastXVelocity;
     static float testAugment;
+    private float mapSizeAugment;
     public static bool newAugment = true;
     public GameObject gameOverMenu;
     public AudioSource audioSource;
@@ -21,12 +23,34 @@ public class Ball : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         //TestVersion = GameObject.Find("TestVersionText").GetComponent<TextMeshProUGUI>();
-        speedMultiplier = 2f;
+        speedMultiplier = 1.5f;
+        int minAngle;
+        int maxAngle;
+        if (SceneManager.GetActiveScene() == SceneManager.GetSceneByBuildIndex(3) || SceneManager.GetActiveScene() == SceneManager.GetSceneByBuildIndex(4))
+        {
+            minAngle = 25;
+            maxAngle = 65;
+            mapSizeAugment = 1.5f;
+        }
+        else
+        {
+            mapSizeAugment = 1;
+            minAngle = 15;
+            maxAngle = 45;
+        }
 
+        if (newAugment)
+        {
+            testAugment = Random.Range(1.0f, 1.5f);
+            newAugment = false;
+        }
+
+        speedMultiplier *= testAugment;
+        GreenGuy.stunTime /= testAugment;
         //GreenGuy.speedMod *= testAugment;
         //TestVersion.text = "Test Version 1." + testAugment.ToString("0.00");
 
-        int HorzForce = Random.Range(15, 45); // Randomizes angle of ball
+        int HorzForce = Random.Range(minAngle, maxAngle); // Randomizes angle of ball
         //Debug.Log(HorzForce);
         int StartingDirection = Random.Range(0, 2); // 0 for left, 1 for right
         //Debug.Log(StartingDirection);
@@ -57,7 +81,8 @@ public class Ball : MonoBehaviour
             rb.AddRelativeForce(new Vector2(50, 0), ForceMode2D.Force);
             int VertForce = rb.velocity.y > 0 ? 50 : -50;
             rb.AddForce(new Vector2(0, VertForce * speedMultiplier));
-            audioSource.PlayOneShot(wallBounce);
+            audioSource.clip = wallBounce;
+            audioSource.Play();
             //Debug.Log("R wall hit");
         }
         else if (collision.gameObject.name.Equals("Wall9PatchLeft"))
@@ -65,17 +90,17 @@ public class Ball : MonoBehaviour
             rb.AddRelativeForce(new Vector2(-50, 0), ForceMode2D.Force);
             int VertForce = rb.velocity.y > 0 ? 50 : -50;
             rb.AddForce(new Vector2(0, VertForce * speedMultiplier));
-            audioSource.PlayOneShot(wallBounce);
+            audioSource.clip = wallBounce;
+            audioSource.Play();
             //Debug.Log("L wall hit");
         }
         else if (collision.gameObject.name.Equals("Paddle"))
         {
-            if (LastXVelocity < 0.5f  && LastXVelocity > -0.5f)
+            if (LastXVelocity < 0.5f * mapSizeAugment  && LastXVelocity > -0.5f * mapSizeAugment)
             {
                 //Debug.Log("Fixed X");
                 int HorzForce = LastXVelocity > 0 ? -50 : 50;
-                rb.AddRelativeForce(new Vector2(HorzForce * speedMultiplier, 0), ForceMode2D.Force);
-                Debug.Log("Paddle Sound Play");
+                rb.AddRelativeForce(new Vector2(HorzForce * speedMultiplier * mapSizeAugment, 0), ForceMode2D.Force);
             }
             audioSource.PlayOneShot(paddleBounce);
         }
@@ -83,12 +108,14 @@ public class Ball : MonoBehaviour
         {
             Time.timeScale = 0f;
             gameOverMenu.SetActive(true);
-            audioSource.PlayOneShot(bottomWallBounce);
+            audioSource.clip = bottomWallBounce;
+            audioSource.Play();
         }
         else if (collision.gameObject.name.Equals("GreenGuy"))
         {
             rb.velocity *= 3;
-            audioSource.PlayOneShot(ggBounce);
+            audioSource.clip = ggBounce;
+            audioSource.Play();
         }
     }
 }

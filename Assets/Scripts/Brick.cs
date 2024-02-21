@@ -12,7 +12,9 @@ public class Brick : MonoBehaviour
     public AudioSource audioSource;
     public AudioClip brickBreak;
 
+
     Stopwatch sw = new Stopwatch();
+
     // Start is called before the first frame update
     void Start()
     {

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class GreenGuy : MonoBehaviour
@@ -42,11 +43,12 @@ public class GreenGuy : MonoBehaviour
         Physics2D.queriesHitTriggers = true; //making it so that ray can detect triggers
         animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
-        jumpForce = 250;
+        jumpForce = 235;
         horizontalSpeed = 2;
         buildTimer = 1.3f;
         stunTime = 1.7f;
         highScoreText.text = PlayerPrefs.GetInt("HighScore").ToString();
+        canJump = true;
     }
 
     // Update is called once per frame
@@ -66,7 +68,6 @@ public class GreenGuy : MonoBehaviour
                 {
                     plat.rotationalOffset = 180;
                 }
-                canJump = false;
             }
             if (Input.GetKey(KeyCode.A))
             {
@@ -167,8 +168,6 @@ public class GreenGuy : MonoBehaviour
 
         if(collision.gameObject.layer == 6) //ball
         {
-            if(canMove)
-            {
                 canMove = false;
                 stunClock = 0;
                 animator.SetBool("Stun", true);
@@ -179,7 +178,6 @@ public class GreenGuy : MonoBehaviour
                     BuidlingManagement("Stun");
                     building = false;
                 }
-            }
         }
     }
 
