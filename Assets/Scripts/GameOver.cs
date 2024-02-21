@@ -34,7 +34,6 @@ public class GameOver : MonoBehaviour
 
     public void Quit()
     {
-        Debug.Log("Game will quit");
-        Application.Quit();
+        SceneManager.LoadScene(0);
     }
 }

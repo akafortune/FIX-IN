@@ -45,7 +45,7 @@ public class Pause : MonoBehaviour
 
     public void Quit()
     {
-        Debug.Log("Game will quit");
-        Application.Quit();
+        Time.timeScale = 1f;
+        SceneManager.LoadScene(0);
     }
 }

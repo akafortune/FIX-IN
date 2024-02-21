@@ -23,9 +23,9 @@ public class GreenGuy : MonoBehaviour
     public int fixMod = 1;
     public static float speedMod = 1;
     public float horizontalSpeed = 2f;
-    public float stunClock, distance;
+    public float stunClock, distance, platformClock;
     public static float stunTime = 2.5f;
-    public bool canJump = false, canMove = true; //
+    public bool canJump = false, canMove = true, platformRotated; //
 
     public float buildTimer, buildClock = 0;
 
@@ -76,6 +76,18 @@ public class GreenGuy : MonoBehaviour
         Debug.DrawLine(rayOrigin.position, rayOrigin.position + new Vector3(fixMod * distance, -1 * distance)); //visualising ray in editor
 
         float adjustedSpeed = horizontalSpeed * Time.deltaTime * speedMod;
+        if(platformRotated)
+        {
+            platformClock += Time.deltaTime;
+            if(platformClock > .3f)
+            {
+                platformRotated = false;
+                foreach (PlatformEffector2D plat in platforms)
+                {
+                    plat.rotationalOffset = 0;
+                }
+            }
+        }
         //Debug.Log(rb.velocity.y);
         if(canMove)
         {
@@ -85,6 +97,8 @@ public class GreenGuy : MonoBehaviour
                 {
                     plat.rotationalOffset = 180;
                 }
+                platformRotated = true;
+                platformClock = 0;
             }
             if (Input.GetKey(KeyCode.A))
             {
