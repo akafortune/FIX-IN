@@ -4356,6 +4356,7 @@ MonoBehaviour:
     m_Bits: 256
   rayOrigin: {fileID: 498404325}
   floorRay: {fileID: 1904182644}
+  SwingDustTransform: {fileID: 0}
   jumpForce: 0
   fixMod: 1
   horizontalSpeed: 2
@@ -7749,6 +7750,7 @@ MonoBehaviour:
     m_Bits: 0
   rayOrigin: {fileID: 0}
   floorRay: {fileID: 0}
+  SwingDustTransform: {fileID: 0}
   jumpForce: 0
   fixMod: 1
   horizontalSpeed: 2
@@ -9668,7 +9670,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4634027785079553420, guid: 4d7089c164a6f3d428d5bc606231aedf, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5616421615308157936, guid: 4d7089c164a6f3d428d5bc606231aedf, type: 3}
       propertyPath: m_LocalPosition.x

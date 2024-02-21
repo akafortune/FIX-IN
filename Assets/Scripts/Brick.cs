@@ -12,7 +12,7 @@ public class Brick : MonoBehaviour
     public AudioSource audioSource;
     public AudioClip brickBreak;
     public SpriteRenderer fixIndicator;
-    static bool canBreak;
+    private static bool canBreak;
     // Start is called before the first frame update
     void Start()
     {
@@ -26,7 +26,6 @@ public class Brick : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-
         fixIndicator.enabled = false;
         canBreak = true;
     }
@@ -34,18 +33,18 @@ public class Brick : MonoBehaviour
     private void OnCollisionEnter2D(Collision2D collision)
     {
         //Debug.Log("collision");
-        if (collision.gameObject.tag.Equals("Ball"))
-        {
-            animator.SetBool("IsBroken", true);
-            bc.isTrigger = true;
-            audioSource.clip = brickBreak;
-            audioSource.Play();
-        }
+            if (collision.gameObject.tag.Equals("Ball") && canBreak)
+            {
+                canBreak = false;
+                animator.SetBool("IsBroken", true);
+                bc.isTrigger = true;
+                audioSource.clip = brickBreak;
+                audioSource.Play();
+            }
     }
 
     public void fixBrick()
     {
-        int iterations = 0;
         animator.SetBool("IsBroken", false);
         bc.isTrigger = false;
     }

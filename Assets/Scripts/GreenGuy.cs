@@ -45,12 +45,15 @@ public class GreenGuy : MonoBehaviour
     public AudioSource audioSource;
     public AudioClip walk, jump, brickFix; // haven't found a good walk sound yet
     // Start is called before the first frame update
+    private void Awake()
+    {
+        particleSystem = GetComponentInChildren<ParticleSystem>();
+        particleSystem.Stop();
+    }
     void Start()
     {
         platforms = GameObject.Find("Platforms").GetComponentsInChildren<PlatformEffector2D>();
         SwingDustTransform = GameObject.Find("SwingDust").GetComponent<Transform>();
-        particleSystem = GetComponentInChildren<ParticleSystem>();
-        particleSystem.Stop();
         Physics2D.queriesHitTriggers = true; //making it so that ray can detect triggers
         animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
@@ -58,6 +61,7 @@ public class GreenGuy : MonoBehaviour
         horizontalSpeed = 2;
         buildTimer = 1.3f;
         stunTime = 1.7f;
+        yOffset = .5f;
         highScoreText.text = PlayerPrefs.GetInt("HighScore").ToString();
         canJump = true;
         floatingText = (GameObject)Resources.Load("FloatingTextParent");
