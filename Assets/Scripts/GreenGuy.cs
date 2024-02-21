@@ -55,7 +55,7 @@ public class GreenGuy : MonoBehaviour
         stunTime = 1.7f;
         highScoreText.text = PlayerPrefs.GetInt("HighScore").ToString();
         canJump = true;
-        headBox = GameObject.Find("HeadBox").GetComponentInChildren<BoxCollider2D>();
+        //headBox = GameObject.Find("HeadBox").GetComponentInChildren<BoxCollider2D>();
     }
 
     // Update is called once per frame
