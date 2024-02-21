@@ -40,7 +40,6 @@ public class Pause : MonoBehaviour
 
     public void NewTest()
     {
-        Ball.newAugment = true;
         Restart();
     }
 

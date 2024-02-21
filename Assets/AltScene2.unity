@@ -1362,7 +1362,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 08c4e21b01b1a3843a9d070a30e719eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speedMultiplier: 0
+  StaticspeedMultiplier: 1.5
+  RampspeedMultiplier: 1
+  FinalspeedMultiplier: 0
+  augment: 1.3
   gameOverMenu: {fileID: 1613192242}
   audioSource: {fileID: 1236842747}
   wallBounce: {fileID: 8300000, guid: bcda1af0480a8034195adc66c3b59073, type: 3}
@@ -1370,6 +1373,8 @@ MonoBehaviour:
   ggBounce: {fileID: 8300000, guid: 0dd3689747dfee3419f421373b609ee7, type: 3}
   bottomWallBounce: {fileID: 8300000, guid: ef43e1ee1c20aed42a133493f8f3cb99, type: 3}
   TestVersion: {fileID: 0}
+  pauseMenu: {fileID: 1646893067}
+  gameTimer: 0
 --- !u!50 &290909473
 Rigidbody2D:
   serializedVersion: 4
