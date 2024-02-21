@@ -16,6 +16,8 @@ public class GreenGuy : MonoBehaviour
     public Transform rayOrigin;
 
     public GameObject floorRay;
+    public Transform SwingDustTransform;
+    ParticleSystem particleSystem;
     
     public int jumpForce;
     public int fixMod = 1;
@@ -46,6 +48,9 @@ public class GreenGuy : MonoBehaviour
     void Start()
     {
         platforms = GameObject.Find("Platforms").GetComponentsInChildren<PlatformEffector2D>();
+        SwingDustTransform = GameObject.Find("SwingDust").GetComponent<Transform>();
+        particleSystem = GetComponentInChildren<ParticleSystem>();
+        particleSystem.Stop();
         Physics2D.queriesHitTriggers = true; //making it so that ray can detect triggers
         animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
@@ -55,6 +60,7 @@ public class GreenGuy : MonoBehaviour
         stunTime = 1.7f;
         highScoreText.text = PlayerPrefs.GetInt("HighScore").ToString();
         canJump = true;
+        floatingText = (GameObject)Resources.Load("FloatingTextParent");
         //headBox = GameObject.Find("HeadBox").GetComponentInChildren<BoxCollider2D>();
     }
 
@@ -81,6 +87,7 @@ public class GreenGuy : MonoBehaviour
                 fixMod = -1;
                 transform.Translate(-adjustedSpeed, 0, 0, Space.World);
                 transform.rotation = Quaternion.Euler(0, 180, 0);
+                SwingDustTransform.rotation = Quaternion.Euler(0, 180, 0);
                 animator.SetBool("Walking", true);
                 audioSource.clip = walk;
                 if(!audioSource.isPlaying)
@@ -93,6 +100,7 @@ public class GreenGuy : MonoBehaviour
                 fixMod = 1;
                 transform.Translate(adjustedSpeed, 0, 0, Space.World);
                 transform.rotation = Quaternion.Euler(0, 0, 0);
+                SwingDustTransform.rotation = Quaternion.Euler(0, 180, 0);
                 animator.SetBool("Walking", true);
                 audioSource.clip = walk;
                 if (!audioSource.isPlaying)
