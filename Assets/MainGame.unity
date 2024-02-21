@@ -208,10 +208,20 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 049caf4e27b7e124bb4d71188fd49006, type: 3}
+--- !u!212 &50694580 stripped
+SpriteRenderer:
+  m_CorrespondingSourceObject: {fileID: 1713277567671303438, guid: 48e9e960b5c283046ac3e12ae11524e8, type: 3}
+  m_PrefabInstance: {fileID: 1484993537373596989}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &98376251 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 900775377911562965, guid: 48e9e960b5c283046ac3e12ae11524e8, type: 3}
   m_PrefabInstance: {fileID: 277293586}
+  m_PrefabAsset: {fileID: 0}
+--- !u!212 &131420222 stripped
+SpriteRenderer:
+  m_CorrespondingSourceObject: {fileID: 1713277567671303438, guid: 48e9e960b5c283046ac3e12ae11524e8, type: 3}
+  m_PrefabInstance: {fileID: 1092698671}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &140330706
 GameObject:
@@ -481,6 +491,11 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 165595242}
   m_CullTransparentMesh: 1
+--- !u!212 &185889942 stripped
+SpriteRenderer:
+  m_CorrespondingSourceObject: {fileID: 1713277567671303438, guid: 48e9e960b5c283046ac3e12ae11524e8, type: 3}
+  m_PrefabInstance: {fileID: 503865793}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &236724526
 GameObject:
   m_ObjectHideFlags: 0
@@ -926,6 +941,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   audioSource: {fileID: 1904830577}
   brickBreak: {fileID: 8300000, guid: 827c0a858820367458799bae479d264a, type: 3}
+  fixIndicator: {fileID: 317029512}
 --- !u!1 &290909468
 GameObject:
   m_ObjectHideFlags: 0
@@ -1101,6 +1117,11 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 900775377911562965, guid: 48e9e960b5c283046ac3e12ae11524e8, type: 3}
   m_PrefabInstance: {fileID: 722289497}
   m_PrefabAsset: {fileID: 0}
+--- !u!212 &317029512 stripped
+SpriteRenderer:
+  m_CorrespondingSourceObject: {fileID: 1713277567671303438, guid: 48e9e960b5c283046ac3e12ae11524e8, type: 3}
+  m_PrefabInstance: {fileID: 277293586}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &342140991
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1188,6 +1209,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 342432818}
+  - component: {fileID: 342432819}
   m_Layer: 0
   m_Name: Bricks
   m_TagString: Untagged
@@ -1222,6 +1244,102 @@ Transform:
   - {fileID: 503865794}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!82 &342432819
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 342432817}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 1
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &367644745
 GameObject:
   m_ObjectHideFlags: 0
@@ -1567,6 +1685,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   audioSource: {fileID: 1904830577}
   brickBreak: {fileID: 8300000, guid: 827c0a858820367458799bae479d264a, type: 3}
+  fixIndicator: {fileID: 1626293989}
 --- !u!1 &397082733
 GameObject:
   m_ObjectHideFlags: 0
@@ -1835,6 +1954,11 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 426541621}
   m_CullTransparentMesh: 1
+--- !u!212 &435544003 stripped
+SpriteRenderer:
+  m_CorrespondingSourceObject: {fileID: 1713277567671303438, guid: 48e9e960b5c283046ac3e12ae11524e8, type: 3}
+  m_PrefabInstance: {fileID: 1726391826}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &471307780
 GameObject:
   m_ObjectHideFlags: 0
@@ -2343,6 +2467,11 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 484938615}
   m_CullTransparentMesh: 1
+--- !u!212 &488101179 stripped
+SpriteRenderer:
+  m_CorrespondingSourceObject: {fileID: 1713277567671303438, guid: 48e9e960b5c283046ac3e12ae11524e8, type: 3}
+  m_PrefabInstance: {fileID: 908160712}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &491494992
 GameObject:
   m_ObjectHideFlags: 0
@@ -2982,7 +3111,7 @@ GameObject:
   - component: {fileID: 612270120}
   m_Layer: 0
   m_Name: GreenGuy
-  m_TagString: Untagged
+  m_TagString: GreenGuy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3189,6 +3318,11 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!212 &626677691 stripped
+SpriteRenderer:
+  m_CorrespondingSourceObject: {fileID: 1713277567671303438, guid: 48e9e960b5c283046ac3e12ae11524e8, type: 3}
+  m_PrefabInstance: {fileID: 1124258390}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &657471004
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3823,6 +3957,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   audioSource: {fileID: 1904830577}
   brickBreak: {fileID: 8300000, guid: 827c0a858820367458799bae479d264a, type: 3}
+  fixIndicator: {fileID: 770962747}
+--- !u!212 &723377578 stripped
+SpriteRenderer:
+  m_CorrespondingSourceObject: {fileID: 1713277567671303438, guid: 48e9e960b5c283046ac3e12ae11524e8, type: 3}
+  m_PrefabInstance: {fileID: 993910493}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &740048627
 GameObject:
   m_ObjectHideFlags: 0
@@ -3964,6 +4104,11 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 900775377911562965, guid: 48e9e960b5c283046ac3e12ae11524e8, type: 3}
   m_PrefabInstance: {fileID: 1726391826}
   m_PrefabAsset: {fileID: 0}
+--- !u!212 &770962747 stripped
+SpriteRenderer:
+  m_CorrespondingSourceObject: {fileID: 1713277567671303438, guid: 48e9e960b5c283046ac3e12ae11524e8, type: 3}
+  m_PrefabInstance: {fileID: 722289497}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &848124892 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 900775377911562965, guid: 48e9e960b5c283046ac3e12ae11524e8, type: 3}
@@ -4028,6 +4173,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   audioSource: {fileID: 1904830577}
   brickBreak: {fileID: 8300000, guid: 827c0a858820367458799bae479d264a, type: 3}
+  fixIndicator: {fileID: 185889942}
 --- !u!1 &860033778
 GameObject:
   m_ObjectHideFlags: 0
@@ -4843,6 +4989,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5742842384887440597, guid: 48e9e960b5c283046ac3e12ae11524e8, type: 3}
+      propertyPath: m_SpriteTilingProperty.newSize.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5742842384887440597, guid: 48e9e960b5c283046ac3e12ae11524e8, type: 3}
+      propertyPath: m_SpriteTilingProperty.newSize.y
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6485834273071201943, guid: 48e9e960b5c283046ac3e12ae11524e8, type: 3}
       propertyPath: m_Size.x
       value: 1
@@ -5230,6 +5384,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ca760b86ea0973d45b504c6383d3febe, type: 3}
+--- !u!212 &1334316717 stripped
+SpriteRenderer:
+  m_CorrespondingSourceObject: {fileID: 1713277567671303438, guid: 48e9e960b5c283046ac3e12ae11524e8, type: 3}
+  m_PrefabInstance: {fileID: 657471004}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1369583042
 GameObject:
   m_ObjectHideFlags: 0
@@ -5427,6 +5586,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   audioSource: {fileID: 1904830577}
   brickBreak: {fileID: 8300000, guid: 827c0a858820367458799bae479d264a, type: 3}
+  fixIndicator: {fileID: 1334316717}
 --- !u!1 &1425086210 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 900775377911562965, guid: 48e9e960b5c283046ac3e12ae11524e8, type: 3}
@@ -5491,6 +5651,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   audioSource: {fileID: 1904830577}
   brickBreak: {fileID: 8300000, guid: 827c0a858820367458799bae479d264a, type: 3}
+  fixIndicator: {fileID: 626677691}
 --- !u!1 &1426888459
 GameObject:
   m_ObjectHideFlags: 0
@@ -5837,6 +5998,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   audioSource: {fileID: 1904830577}
   brickBreak: {fileID: 8300000, guid: 827c0a858820367458799bae479d264a, type: 3}
+  fixIndicator: {fileID: 2107994581}
 --- !u!1 &1498483968 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 900775377911562965, guid: 48e9e960b5c283046ac3e12ae11524e8, type: 3}
@@ -5901,6 +6063,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   audioSource: {fileID: 1904830577}
   brickBreak: {fileID: 8300000, guid: 827c0a858820367458799bae479d264a, type: 3}
+  fixIndicator: {fileID: 131420222}
 --- !u!1 &1568593299
 GameObject:
   m_ObjectHideFlags: 0
@@ -6163,6 +6326,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   audioSource: {fileID: 1904830577}
   brickBreak: {fileID: 8300000, guid: 827c0a858820367458799bae479d264a, type: 3}
+  fixIndicator: {fileID: 488101179}
 --- !u!1 &1613192242
 GameObject:
   m_ObjectHideFlags: 0
@@ -6243,6 +6407,11 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1613192242}
   m_CullTransparentMesh: 1
+--- !u!212 &1626293989 stripped
+SpriteRenderer:
+  m_CorrespondingSourceObject: {fileID: 1713277567671303438, guid: 48e9e960b5c283046ac3e12ae11524e8, type: 3}
+  m_PrefabInstance: {fileID: 379338094}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1646893067
 GameObject:
   m_ObjectHideFlags: 0
@@ -6617,6 +6786,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   audioSource: {fileID: 1904830577}
   brickBreak: {fileID: 8300000, guid: 827c0a858820367458799bae479d264a, type: 3}
+  fixIndicator: {fileID: 435544003}
 --- !u!1 &1731691922 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 900775377911562965, guid: 48e9e960b5c283046ac3e12ae11524e8, type: 3}
@@ -6681,6 +6851,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   audioSource: {fileID: 1904830577}
   brickBreak: {fileID: 8300000, guid: 827c0a858820367458799bae479d264a, type: 3}
+  fixIndicator: {fileID: 723377578}
 --- !u!1 &1753550356
 GameObject:
   m_ObjectHideFlags: 0
@@ -7575,6 +7746,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1fe55231e6862c8448221d3e8b1fec40, type: 3}
+--- !u!212 &2107994581 stripped
+SpriteRenderer:
+  m_CorrespondingSourceObject: {fileID: 1713277567671303438, guid: 48e9e960b5c283046ac3e12ae11524e8, type: 3}
+  m_PrefabInstance: {fileID: 1477259798}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &2128559510 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5822184533276868106, guid: 5904d702027796b498b62b8cb0ced0d3, type: 3}
@@ -7856,6 +8032,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   audioSource: {fileID: 1904830577}
   brickBreak: {fileID: 8300000, guid: 827c0a858820367458799bae479d264a, type: 3}
+  fixIndicator: {fileID: 50694580}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
