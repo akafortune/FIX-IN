@@ -1,5 +1,8 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
+using UnityEditor;
 using UnityEngine;
 
 public class Brick : MonoBehaviour
@@ -8,11 +11,14 @@ public class Brick : MonoBehaviour
     BoxCollider2D bc; 
     public AudioSource audioSource;
     public AudioClip brickBreak;
+
+    Stopwatch sw = new Stopwatch();
     // Start is called before the first frame update
     void Start()
     {
         animator = GetComponent<Animator>();
         bc = GetComponent<BoxCollider2D>();
+
     }
 
     // Update is called once per frame
@@ -35,8 +41,22 @@ public class Brick : MonoBehaviour
 
     public void fixBrick()
     {
+        int iterations = 0;
         animator.SetBool("IsBroken", false);
         bc.isTrigger = false;
+        /*sw.Start();
+        while(iterations<2)
+        {
+            if (sw.Elapsed >= TimeSpan.FromSeconds(0.5))
+            {
+                GetComponentInChildren<ParticleSystem>(true).Play();
+                iterations++;
+            }
+
+            sw.Restart();
+        
+        }   
+        */
     }
 
     public void cancelBrick()
