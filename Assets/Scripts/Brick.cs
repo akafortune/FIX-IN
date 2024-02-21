@@ -44,19 +44,6 @@ public class Brick : MonoBehaviour
         int iterations = 0;
         animator.SetBool("IsBroken", false);
         bc.isTrigger = false;
-        /*sw.Start();
-        while(iterations<2)
-        {
-            if (sw.Elapsed >= TimeSpan.FromSeconds(0.5))
-            {
-                GetComponentInChildren<ParticleSystem>(true).Play();
-                iterations++;
-            }
-
-            sw.Restart();
-        
-        }   
-        */
     }
 
     public void cancelBrick()
