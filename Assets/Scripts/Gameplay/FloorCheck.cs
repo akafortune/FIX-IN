@@ -43,7 +43,6 @@ public class FloorCheck : MonoBehaviour
                 {
                     greenGuy.canJump = true;
                     greenGuy.animator.SetTrigger("Grounded");
-                    Debug.Log("PizzaTime");
                     HasJumped = false;
 
                 }

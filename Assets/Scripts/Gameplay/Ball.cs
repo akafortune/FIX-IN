@@ -26,7 +26,7 @@ public class Ball : MonoBehaviour
     public float gameTimer;
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         StaticspeedMultiplier = 1.5f;
         RampspeedMultiplier = 1f;

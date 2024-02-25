@@ -14,7 +14,7 @@ public class Brick : MonoBehaviour
     public SpriteRenderer fixIndicator;
     private static bool canBreak;
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         fixIndicator = GetComponentsInChildren<SpriteRenderer>()[1];
         audioSource = GetComponentInParent<AudioSource>();
@@ -59,5 +59,12 @@ public class Brick : MonoBehaviour
     public void ShowIndicator()
     {
         fixIndicator.enabled = true;
+    }
+
+    public void StartForBuild()
+    {
+        canBreak = false;
+        animator.SetBool("IsBroken", true);
+        bc.isTrigger = true;
     }
 }
