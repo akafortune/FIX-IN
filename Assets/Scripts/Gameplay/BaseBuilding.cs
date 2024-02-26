@@ -19,9 +19,8 @@ public class BaseBuilding : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        resources = 5;
+        resources = 50;
         GameMode = Mode.build;
-        Bricks = GameObject.FindGameObjectsWithTag("Brick");
     }
 
     // Update is called once per frame
@@ -34,6 +33,7 @@ public class BaseBuilding : MonoBehaviour
             ball.SetActive(true);
             paddle.SetActive(true);
             GameMode = Mode.defend;
+            Bricks = GameObject.FindGameObjectsWithTag("Brick");
             foreach(GameObject brick in Bricks)
             {
                 if (brick.GetComponent<Animator>().GetBool("IsBroken"))
