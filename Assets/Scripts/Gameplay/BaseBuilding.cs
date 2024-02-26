@@ -1,14 +1,14 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using TMPro;
 using System;
+using TMPro;
+using UnityEngine;
 
 public class BaseBuilding : MonoBehaviour
 {
 
     public static int resources;
     public TextMeshProUGUI resourcesText;
+    public enum Mode { build, defend };
+    public static Mode GameMode;
 
 
     public GameObject ball;
@@ -18,6 +18,7 @@ public class BaseBuilding : MonoBehaviour
     void Start()
     {
         resources = 50;
+        GameMode = Mode.build;
     }
 
     // Update is called once per frame
@@ -25,10 +26,11 @@ public class BaseBuilding : MonoBehaviour
     {
         resourcesText.text = Convert.ToString(resources);
 
-        if (resources <= 0)
+        if (resources == 0)
         {
             ball.SetActive(true);
             paddle.SetActive(true);
+            GameMode = Mode.defend;
         }
 
     }

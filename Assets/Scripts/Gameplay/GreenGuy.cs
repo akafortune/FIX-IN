@@ -31,7 +31,7 @@ public class GreenGuy : MonoBehaviour
 
     public bool building = false, stunned = false;
 
-    private float oneSecond = 1f;
+   // private float oneSecond = 1f;
     public float score;
     public TextMeshProUGUI scoreText;
     public TextMeshProUGUI highScoreText;
@@ -175,11 +175,14 @@ public class GreenGuy : MonoBehaviour
             canMove = true;
             animator.SetBool("Swinging", false);
             building = false;
-            score += 10;
-            // Trigger floating text here
-            if(floatingText != null)
-            { 
-                ShowFloatingText("10");
+            if (BaseBuilding.GameMode == BaseBuilding.Mode.build)
+            {
+                score += 10;
+                // Trigger floating text here
+                if (floatingText != null)
+                {
+                    ShowFloatingText("10");
+                }
             }
         }
         scoreText.text = ((int)score).ToString();
@@ -200,8 +203,8 @@ public class GreenGuy : MonoBehaviour
 
     private void FixedUpdate()
     {
-        score += oneSecond * Time.fixedDeltaTime;
-        scoreText.text = ((int)score).ToString();
+        //score += oneSecond * Time.fixedDeltaTime;
+        //scoreText.text = ((int)score).ToString();
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -231,13 +234,38 @@ public class GreenGuy : MonoBehaviour
     {
         if (fixRay.collider.isTrigger)
         {
-            fixRay.collider.gameObject.SendMessage("fixBrick");
-            animator.SetTrigger("Fix");
-            animator.SetBool("Swinging", true);
-            building = true;
-            buildClock = 0;
-            canMove = false;
-            audioSource.PlayOneShot(brickFix);
+            string parentBrick = fixRay.collider.transform.parent.gameObject.name;
+            int brickValue = 5;
+
+            switch(parentBrick) //getting the material value of the targeted brick
+            {
+                case "Layer 1":
+                    brickValue = 5;
+                    break;
+                case "Layer 2":
+                    brickValue = 4;
+                    break;
+                case "Layer 3":
+                    brickValue = 3;
+                    break;
+                case "Layer 4":
+                    brickValue = 2;
+                    break;
+                case "Layer 5":
+                    brickValue = 1;
+                    break;
+            }
+            if(BaseBuilding.resources - brickValue >= 0)
+            {
+                BaseBuilding.resources -= brickValue;
+                fixRay.collider.gameObject.SendMessage("fixBrick");
+                animator.SetTrigger("Fix");
+                animator.SetBool("Swinging", true);
+                building = true;
+                buildClock = 0;
+                canMove = false;
+                audioSource.PlayOneShot(brickFix);
+            }
         }
     }
 
