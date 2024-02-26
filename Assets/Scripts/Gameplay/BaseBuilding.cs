@@ -7,7 +7,7 @@ using System;
 public class BaseBuilding : MonoBehaviour
 {
 
-    public int resources;
+    public static int resources;
     public TextMeshProUGUI resourcesText;
 
 
@@ -17,7 +17,7 @@ public class BaseBuilding : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        resources = 50;
     }
 
     // Update is called once per frame
