@@ -175,7 +175,7 @@ public class GreenGuy : MonoBehaviour
             canMove = true;
             animator.SetBool("Swinging", false);
             building = false;
-            if (BaseBuilding.GameMode == BaseBuilding.Mode.build)
+            if (BaseBuilding.GameMode != BaseBuilding.Mode.build)
             {
                 score += 10;
                 // Trigger floating text here
