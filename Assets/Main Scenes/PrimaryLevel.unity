@@ -1197,7 +1197,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd92afb086764874a9e9a1b11f625c6b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  resources: 50
   resourcesText: {fileID: 2122397061}
   ball: {fileID: 290909468}
   paddle: {fileID: 471462421}
@@ -2410,7 +2409,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 39214b8c5b568f04a9838025b48a2d25, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  bb: {fileID: 342432820}
   timeText: {fileID: 959180447}
+  score: 0
+  scoreText: {fileID: 397082735}
 --- !u!114 &549752044
 MonoBehaviour:
   m_ObjectHideFlags: 0
