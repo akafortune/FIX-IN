@@ -66,5 +66,6 @@ public class Brick : MonoBehaviour
         canBreak = false;
         animator.SetBool("IsBroken", true);
         bc.isTrigger = true;
+        animator.Play("BrokenBrick", 0, 0);
     }
 }
