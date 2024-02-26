@@ -12,6 +12,10 @@ public class TimeInGame : MonoBehaviour
     float currentTime;
     public TextMeshProUGUI timeText;
 
+    private float oneSecond = 1f;
+    public float score;
+    public TextMeshProUGUI scoreText;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -27,6 +31,14 @@ public class TimeInGame : MonoBehaviour
             currentTime += Time.deltaTime;
             time = TimeSpan.FromSeconds(currentTime);
             timeText.text = time.ToString(@"mm\:ss");
+        }
+    }
+    void FixedUpdate()
+    {
+        if (resources <= 0)
+        {
+            score += oneSecond * Time.fixedDeltaTime;
+            scoreText.text = ((int)score).ToString();
         }
     }
 
