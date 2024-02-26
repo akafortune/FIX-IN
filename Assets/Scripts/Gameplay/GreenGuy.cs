@@ -21,7 +21,7 @@ public class GreenGuy : MonoBehaviour
     
     public int jumpForce;
     public int fixMod = 1;
-    public static float speedMod = 1;
+    public static float speedMod = 1.5f;
     public float horizontalSpeed = 2f;
     public float stunClock, distance, platformClock;
     public static float stunTime = 2.5f;
