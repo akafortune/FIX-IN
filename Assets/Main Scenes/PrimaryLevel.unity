@@ -5546,7 +5546,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 342432820}
         m_TargetAssemblyTypeName: BaseBuilding, Assembly-CSharp
-        m_MethodName: PrematureStart
+        m_MethodName: BeginRound
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
