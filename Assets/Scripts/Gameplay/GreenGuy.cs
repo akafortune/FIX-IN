@@ -26,7 +26,6 @@ public class GreenGuy : MonoBehaviour
     public float stunClock, distance, platformClock;
     public static float stunTime = 2.5f;
     public bool canJump = false, canMove = true, platformRotated; //
-
     public float buildTimer, buildClock = 0;
 
     public bool building = false, stunned = false;
@@ -175,7 +174,7 @@ public class GreenGuy : MonoBehaviour
             canMove = true;
             animator.SetBool("Swinging", false);
             building = false;
-            if (BaseBuilding.GameMode != BaseBuilding.Mode.build)
+            if (BaseBuilding.GameMode != BaseBuilding.Mode.build && BaseBuilding.lastBrickBuilt)
             {
                 score += 10;
                 // Trigger floating text here
@@ -196,7 +195,10 @@ public class GreenGuy : MonoBehaviour
         {
             if (fixRay.collider.isTrigger)
             {
-                fixRay.collider.SendMessage("ShowIndicator");
+                if (BaseBuilding.GameMode == BaseBuilding.Mode.defend || (BaseBuilding.GameMode == BaseBuilding.Mode.build && BaseBuilding.resources - BrickValue() >= 0))
+                {
+                    fixRay.collider.SendMessage("ShowIndicator");
+                }
             }
         }
     }
@@ -207,6 +209,30 @@ public class GreenGuy : MonoBehaviour
         //scoreText.text = ((int)score).ToString();
     }
 
+    private int BrickValue()
+    {
+        string parentBrick = fixRay.collider.transform.parent.gameObject.name;
+        int brickValue = 0;
+        switch (parentBrick) //getting the material value of the targeted brick
+        {
+            case "Layer 1":
+                brickValue = 5;
+                break;
+            case "Layer 2":
+                brickValue = 4;
+                break;
+            case "Layer 3":
+                brickValue = 3;
+                break;
+            case "Layer 4":
+                brickValue = 2;
+                break;
+            case "Layer 5":
+                brickValue = 1;
+                break;
+        }
+        return brickValue;
+    }
     private void OnCollisionEnter2D(Collision2D collision)
     {
         /*if(collision.gameObject.layer == 7) //platforms
@@ -238,28 +264,9 @@ public class GreenGuy : MonoBehaviour
 
             if (BaseBuilding.GameMode == BaseBuilding.Mode.build)
             {
-                int brickValue = 5;
-                switch(parentBrick) //getting the material value of the targeted brick
+                if(BaseBuilding.resources - BrickValue() >= 0)
                 {
-                    case "Layer 1":
-                        brickValue = 5;
-                        break;
-                    case "Layer 2":
-                        brickValue = 4;
-                        break;
-                    case "Layer 3":
-                        brickValue = 3;
-                        break;
-                    case "Layer 4":
-                        brickValue = 2;
-                        break;
-                   case "Layer 5":
-                        brickValue = 1;
-                        break;
-                }
-                if(BaseBuilding.resources - brickValue >= 0)
-                {
-                    BaseBuilding.resources -= brickValue;
+                    BaseBuilding.resources -= BrickValue();
                     fixRay.collider.gameObject.SendMessage("fixBrick");
                     animator.SetTrigger("Fix");
                     animator.SetBool("Swinging", true);

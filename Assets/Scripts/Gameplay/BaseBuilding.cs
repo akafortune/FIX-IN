@@ -10,7 +10,7 @@ public class BaseBuilding : MonoBehaviour
     public TextMeshProUGUI resourcesText;
     public enum Mode { build, defend };
     public static Mode GameMode;
-
+    public static bool lastBrickBuilt;
     public TextMeshProUGUI countdown;
     bool ctd;
 
@@ -39,6 +39,7 @@ public class BaseBuilding : MonoBehaviour
         BuildUI = GameObject.Find("BuildUI");
         DefendUI = GameObject.Find("DefendUI");
         DefendUI.SetActive(false);
+        lastBrickBuilt = false;
     }
 
     // Update is called once per frame
@@ -83,6 +84,7 @@ public class BaseBuilding : MonoBehaviour
     void StartDefend()
     {
         ball.GetComponent<Ball>().Launch();
+        lastBrickBuilt=true;
     }
 
 
