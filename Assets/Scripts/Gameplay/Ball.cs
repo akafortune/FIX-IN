@@ -33,6 +33,9 @@ public class Ball : MonoBehaviour
 
     private int bricksBroken;
 
+    private TrailRenderer trail;
+    private int hits;
+
     // Start is called before the first frame update
     void Awake()
     {
@@ -43,6 +46,7 @@ public class Ball : MonoBehaviour
         gameTimer = 0f;
         rb = GetComponent<Rigidbody2D>();
         arrow = GameObject.Find("Pointer");
+        trail = GameObject.Find("Trail").GetComponent<TrailRenderer>();
         countdownText = GameObject.Find("Countdown").GetComponent<TextMeshProUGUI>();
         //TestVersion = GameObject.Find("TestVersionText").GetComponent<TextMeshProUGUI>();
         //pauseMenu = GameObject.Find("PauseMenu");
@@ -94,6 +98,7 @@ public class Ball : MonoBehaviour
 
     public void ResetBall()
     {
+        hits = 0;
         gameObject.SetActive(true);
         transform.position = spawnPos;
         transform.eulerAngles = new Vector3(0, 0, 180);
@@ -156,6 +161,24 @@ public class Ball : MonoBehaviour
             ctdTimer -= Time.deltaTime;
             Countdown();
         }
+        Debug.Log(hits);
+        Color tailColor = trail.startColor;
+        switch(hits)
+        {
+            case 0:
+                tailColor = new Color(1, 1, 1);
+                break;
+            case 1:
+                tailColor = new Color(255 / 255f, 244 / 255f, 146 / 255f);
+                break;
+            case 2:
+                tailColor = new Color(255 / 255f, 208 / 255f, 37 / 255f);
+                break;
+            default:
+                tailColor = new Color(255 / 255f, 116 / 255f, 37 / 255f);
+                break;
+        }
+        trail.startColor = tailColor;
     }
 
     private void OnCollisionEnter2D(Collision2D collision) // all of these checks are to keep the ball from bouncing in straight lines
@@ -184,7 +207,8 @@ public class Ball : MonoBehaviour
         }
         else if (collision.gameObject.name.Equals("Paddle"))
         {
-            if (LastXVelocity < 0.5f * mapSizeAugment  && LastXVelocity > -0.5f * mapSizeAugment)
+            hits = 0;
+            if (LastXVelocity < 0.5f * mapSizeAugment && LastXVelocity > -0.5f * mapSizeAugment)
             {
                 //Debug.Log("Fixed X");
                 int HorzForce = LastXVelocity > 0 ? -50 : 50;
@@ -204,6 +228,11 @@ public class Ball : MonoBehaviour
             rb.velocity *= 3;
             audioSource.clip = ggBounce;
             audioSource.Play();
+        }
+        else if (collision.gameObject.tag.Equals("Brick"))
+        {
+            Debug.Log("Hit");
+            hits++;
         }
     }
 
