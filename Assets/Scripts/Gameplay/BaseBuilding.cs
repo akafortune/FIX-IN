@@ -110,5 +110,6 @@ public class BaseBuilding : MonoBehaviour
         BuildUI.SetActive(false);
         paddle.SetActive(true);
         ball.SetActive(true);
+        ball.GetComponent<Ball>().Rotate();
     }
 }

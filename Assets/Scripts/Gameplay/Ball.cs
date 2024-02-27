@@ -18,9 +18,12 @@ public class Ball : MonoBehaviour
     public float augment;
     private float mapSizeAugment;
     public GameObject gameOverMenu;
+    private GameObject arrow;
     public AudioSource audioSource;
     public AudioClip wallBounce, paddleBounce, ggBounce, bottomWallBounce;
     public TextMeshProUGUI TestVersion;
+
+    private int minAngle, maxAngle, HorzForce;
 
     public GameObject pauseMenu;
     public float gameTimer;
@@ -35,21 +38,14 @@ public class Ball : MonoBehaviour
         spawnPos = transform.position;
         gameTimer = 0f;
         rb = GetComponent<Rigidbody2D>();
+        arrow = GameObject.Find("Pointer");
         //TestVersion = GameObject.Find("TestVersionText").GetComponent<TextMeshProUGUI>();
         //pauseMenu = GameObject.Find("PauseMenu");
-        Launch();
-    }
-
-    public void Launch()
-    {
-        transform.position = spawnPos;
-        int minAngle;
-        int maxAngle;
         if (SceneManager.GetActiveScene() == SceneManager.GetSceneByBuildIndex(3) || SceneManager.GetActiveScene() == SceneManager.GetSceneByBuildIndex(4))
         {
+            mapSizeAugment = 1.5f;
             minAngle = 25;
             maxAngle = 65;
-            mapSizeAugment = 1.5f;
         }
         else
         {
@@ -57,22 +53,38 @@ public class Ball : MonoBehaviour
             minAngle = 15;
             maxAngle = 45;
         }
+        Launch();
+    }
 
+    public void Launch()
+    {
+        if(HorzForce == 0)
+        {
+            Rotate();
+        }
+        transform.Rotate(0, 0, -HorzForce);
+        arrow.SetActive(false);
         StaticspeedMultiplier *= augment;
         GreenGuy.stunTime /= augment;
         FinalspeedMultiplier = StaticspeedMultiplier;
         //GreenGuy.speedMod *= augment;
         //TestVersion.text = "Test Version 1." + augment.ToString("0.00");
+        rb.AddRelativeForce(new Vector2(HorzForce * FinalspeedMultiplier, 150 * FinalspeedMultiplier), ForceMode2D.Force);
+        rb.velocity *= 10000f;
+        //Debug.Log(rb.velocity.magnitude);
+    }
 
-        int HorzForce = Random.Range(minAngle, maxAngle); // Randomizes angle of ball
+    public void Rotate()
+    {
+        transform.position = spawnPos;
+        HorzForce = Random.Range(minAngle, maxAngle); // Randomizes angle of ball
         //int HorzForce = 0; // Sets angle of ball to 0
         //Debug.Log(HorzForce);
         int StartingDirection = Random.Range(0, 2); // 0 for left, 1 for right
         //Debug.Log(StartingDirection);
         HorzForce = StartingDirection == 0 ? HorzForce : HorzForce * -1;
-        rb.AddRelativeForce(new Vector2(HorzForce * FinalspeedMultiplier, 150 * FinalspeedMultiplier), ForceMode2D.Force);
-        rb.velocity *= 10000f;
-        //Debug.Log(rb.velocity.magnitude);
+        arrow.SetActive(true);
+        transform.Rotate(0, 0, HorzForce);
     }
 
     void FixedUpdate()
