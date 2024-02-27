@@ -25,7 +25,7 @@ public class BaseBuilding : MonoBehaviour
     void Start()
     {
         Bricks = GameObject.FindGameObjectsWithTag("Brick");
-        resources = 75;
+        resources = 96;
         GameMode = Mode.build;
         ball = GameObject.Find("Ball");
         ball.SetActive(false);

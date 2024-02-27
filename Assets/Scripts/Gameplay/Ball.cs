@@ -36,7 +36,7 @@ public class Ball : MonoBehaviour
     // Start is called before the first frame update
     void Awake()
     {
-        StaticspeedMultiplier = 1.5f;
+        StaticspeedMultiplier = 1.25f;
         RampspeedMultiplier = 1f;
         augment = 1.3f;
         spawnPos = transform.position;
