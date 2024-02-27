@@ -104,7 +104,8 @@ public class GreenGuy : MonoBehaviour
             {
                 fixMod = -1;
                 transform.Translate(-adjustedSpeed, 0, 0, Space.World);
-                transform.rotation = Quaternion.Euler(0, 180, 0);
+                if(!Input.GetKey(KeyCode.D))
+                    transform.rotation = Quaternion.Euler(0, 180, 0);
                 SwingDustTransform.rotation = Quaternion.Euler(0, 180, 0);
                 animator.SetBool("Walking", true);
                 audioSource.clip = walk;
@@ -117,7 +118,8 @@ public class GreenGuy : MonoBehaviour
             {
                 fixMod = 1;
                 transform.Translate(adjustedSpeed, 0, 0, Space.World);
-                transform.rotation = Quaternion.Euler(0, 0, 0);
+                if (!Input.GetKey(KeyCode.A))
+                    transform.rotation = Quaternion.Euler(0, 0, 0);
                 SwingDustTransform.rotation = Quaternion.Euler(0, 180, 0);
                 animator.SetBool("Walking", true);
                 audioSource.clip = walk;
