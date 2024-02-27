@@ -24,6 +24,7 @@ public class Ball : MonoBehaviour
 
     public GameObject pauseMenu;
     public float gameTimer;
+    private Vector3 spawnPos;
 
     // Start is called before the first frame update
     void Awake()
@@ -31,11 +32,17 @@ public class Ball : MonoBehaviour
         StaticspeedMultiplier = 1.5f;
         RampspeedMultiplier = 1f;
         augment = 1.3f;
-
+        spawnPos = transform.position;
         gameTimer = 0f;
         rb = GetComponent<Rigidbody2D>();
         //TestVersion = GameObject.Find("TestVersionText").GetComponent<TextMeshProUGUI>();
         //pauseMenu = GameObject.Find("PauseMenu");
+        Launch();
+    }
+
+    public void Launch()
+    {
+        transform.position = spawnPos;
         int minAngle;
         int maxAngle;
         if (SceneManager.GetActiveScene() == SceneManager.GetSceneByBuildIndex(3) || SceneManager.GetActiveScene() == SceneManager.GetSceneByBuildIndex(4))
@@ -62,8 +69,8 @@ public class Ball : MonoBehaviour
         //Debug.Log(HorzForce);
         int StartingDirection = Random.Range(0, 2); // 0 for left, 1 for right
         //Debug.Log(StartingDirection);
-        HorzForce = StartingDirection == 0 ? HorzForce : HorzForce * -1; 
-        rb.AddRelativeForce(new Vector2(HorzForce*FinalspeedMultiplier, 150*FinalspeedMultiplier), ForceMode2D.Force);
+        HorzForce = StartingDirection == 0 ? HorzForce : HorzForce * -1;
+        rb.AddRelativeForce(new Vector2(HorzForce * FinalspeedMultiplier, 150 * FinalspeedMultiplier), ForceMode2D.Force);
         rb.velocity *= 10000f;
         //Debug.Log(rb.velocity.magnitude);
     }

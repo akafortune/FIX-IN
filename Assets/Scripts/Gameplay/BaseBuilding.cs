@@ -20,6 +20,10 @@ public class BaseBuilding : MonoBehaviour
     public GameObject paddle;
     private GameObject[] Bricks;
 
+    private GameObject BuildUI;
+    private GameObject DefendUI;
+    private GameObject StartButton;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -28,6 +32,13 @@ public class BaseBuilding : MonoBehaviour
         countdown.text = "";
         ctd = false;
         ctdTimer = 3.0f;
+        ball = GameObject.Find("Ball");
+        ball.SetActive(false);
+        paddle = GameObject.Find("Paddle");
+        paddle.SetActive(false);
+        BuildUI = GameObject.Find("BuildUI");
+        DefendUI = GameObject.Find("DefendUI");
+        DefendUI.SetActive(false);
     }
 
     // Update is called once per frame
@@ -37,17 +48,7 @@ public class BaseBuilding : MonoBehaviour
 
         if (resources == 0 && GameMode == Mode.build && !ctd)
         {
-            Bricks = GameObject.FindGameObjectsWithTag("Brick");
-            foreach(GameObject brick in Bricks)
-            {
-                if (brick.GetComponent<Animator>().GetBool("IsBroken"))
-                {
-                    brick.SetActive(false);
-                }
-            }
-            ctdTimer = 3.0f;
-            ctd = true;
-            CountdownToStart();
+            BeginRound();
         }
         else if (ctd)
         {
@@ -81,14 +82,33 @@ public class BaseBuilding : MonoBehaviour
 
     void StartDefend()
     {
-            ball.SetActive(true);
-            paddle.SetActive(true);
-            GameMode = Mode.defend;
+        ball.GetComponent<Ball>().Launch();
     }
 
 
     public void Spend(int value)
     {
         resources -= value;
+    }
+
+    public void BeginRound()
+    {
+        Bricks = GameObject.FindGameObjectsWithTag("Brick");
+        foreach (GameObject brick in Bricks)
+        {
+            if (brick.GetComponent<Animator>().GetBool("IsBroken"))
+            {
+                brick.SetActive(false);
+            }
+        }
+
+        ctdTimer = 3.0f;
+        GameMode = Mode.defend;
+        ctd = true;
+        CountdownToStart();
+        DefendUI.SetActive(true);
+        BuildUI.SetActive(false);
+        paddle.SetActive(true);
+        ball.SetActive(true);
     }
 }

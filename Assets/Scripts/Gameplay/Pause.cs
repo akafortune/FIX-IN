@@ -7,10 +7,13 @@ using UnityEngine.SceneManagement;
 public class Pause : MonoBehaviour
 {
     public GameObject pauseMenu;
+    private GameObject StartButton;
 
     // Start is called before the first frame update
     void Start()
     {
+        pauseMenu = GameObject.Find("PauseMenu");
+        StartButton = GameObject.Find("Start Button");
         pauseMenu.SetActive(false);
     }
 
@@ -22,11 +25,13 @@ public class Pause : MonoBehaviour
             if (pauseMenu.activeSelf)
             {
                 pauseMenu.SetActive(false);
+                StartButton.SetActive(true);
                 Time.timeScale = 1f;
             }
             else
             {
                 pauseMenu.SetActive(true);
+                StartButton.SetActive(false);
                 Time.timeScale = 0f;
             }
         }
