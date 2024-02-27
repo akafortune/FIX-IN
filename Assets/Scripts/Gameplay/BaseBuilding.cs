@@ -15,7 +15,7 @@ public class BaseBuilding : MonoBehaviour
     bool ctd;
 
     float ctdTimer;
-
+    private Animator brickAnimator;
     public GameObject ball;
     public GameObject paddle;
     private GameObject[] Bricks;
@@ -40,6 +40,7 @@ public class BaseBuilding : MonoBehaviour
         DefendUI = GameObject.Find("DefendUI");
         DefendUI.SetActive(false);
         lastBrickBuilt = false;
+        GreenGuy.buildTimer = 0.65f;
     }
 
     // Update is called once per frame
@@ -85,6 +86,7 @@ public class BaseBuilding : MonoBehaviour
     {
         ball.GetComponent<Ball>().Launch();
         lastBrickBuilt=true;
+        GreenGuy.buildTimer = 1.3f;
     }
 
 
@@ -98,6 +100,7 @@ public class BaseBuilding : MonoBehaviour
         Bricks = GameObject.FindGameObjectsWithTag("Brick");
         foreach (GameObject brick in Bricks)
         {
+            brick.GetComponent<Animator>().SetFloat("FixMultiplier",.65f);
             if (brick.GetComponent<Animator>().GetBool("IsBroken"))
             {
                 brick.SetActive(false);

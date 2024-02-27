@@ -26,7 +26,8 @@ public class GreenGuy : MonoBehaviour
     public float stunClock, distance, platformClock;
     public static float stunTime = 2.5f;
     public bool canJump = false, canMove = true, platformRotated; //
-    public float buildTimer, buildClock = 0;
+    public static float buildTimer;
+    public float buildClock = 0;
 
     public bool building = false, stunned = false;
 
@@ -48,6 +49,7 @@ public class GreenGuy : MonoBehaviour
     {
         dustParticle = GetComponentInChildren<ParticleSystem>();
         dustParticle.Stop();
+        buildTimer = 1.3f;
     }
     void Start()
     {
@@ -58,7 +60,6 @@ public class GreenGuy : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         jumpForce = 235;
         horizontalSpeed = 2;
-        buildTimer = 1.3f;
         stunTime = 1.7f;
         yOffset = .5f;
         highScoreText.text = PlayerPrefs.GetInt("HighScore").ToString();
@@ -166,6 +167,10 @@ public class GreenGuy : MonoBehaviour
 
         if (building)
         {
+            if (fixRay.collider.isTrigger)
+            {
+                buildClock = buildTimer;
+            }
             buildClock += Time.deltaTime;
         }
 
@@ -316,7 +321,7 @@ public class GreenGuy : MonoBehaviour
     public void ShowFloatingText(string points)
     {
         // text pop up should appear in the right direction no matter where the player faces
-        GameObject flText = Instantiate(floatingText, transform.position + new Vector3(0, yOffset, 0), Quaternion.identity);
+        GameObject flText = Instantiate(floatingText, transform.position + new Vector3(0, yOffset, 10), Quaternion.identity);
         flText.GetComponentInChildren<TextMesh>().text = "+" + points;
     }
 }

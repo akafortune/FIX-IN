@@ -195,6 +195,10 @@ PrefabInstance:
       propertyPath: m_Size.y
       value: 10
       objectReference: {fileID: 0}
+    - target: {fileID: 3910741722548837868, guid: 049caf4e27b7e124bb4d71188fd49006, type: 3}
+      propertyPath: m_SortingOrder
+      value: 9
+      objectReference: {fileID: 0}
     - target: {fileID: 6744704897839044796, guid: 049caf4e27b7e124bb4d71188fd49006, type: 3}
       propertyPath: m_Name
       value: Wall9PatchRight
@@ -2850,7 +2854,6 @@ MonoBehaviour:
   canJump: 0
   canMove: 1
   platformRotated: 0
-  buildTimer: 0
   buildClock: 0
   building: 0
   stunned: 0
@@ -3967,6 +3970,10 @@ PrefabInstance:
       propertyPath: m_Size.y
       value: 1.3130718
       objectReference: {fileID: 0}
+    - target: {fileID: 3064486694511825682, guid: ca760b86ea0973d45b504c6383d3febe, type: 3}
+      propertyPath: m_SortingOrder
+      value: 9
+      objectReference: {fileID: 0}
     - target: {fileID: 3999822909444247978, guid: ca760b86ea0973d45b504c6383d3febe, type: 3}
       propertyPath: m_Name
       value: Wall9PatchBottom
@@ -4344,6 +4351,10 @@ PrefabInstance:
     - target: {fileID: 3064486694511825682, guid: ca760b86ea0973d45b504c6383d3febe, type: 3}
       propertyPath: m_Size.y
       value: 1.3130718
+      objectReference: {fileID: 0}
+    - target: {fileID: 3064486694511825682, guid: ca760b86ea0973d45b504c6383d3febe, type: 3}
+      propertyPath: m_SortingOrder
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 3999822909444247978, guid: ca760b86ea0973d45b504c6383d3febe, type: 3}
       propertyPath: m_Name
@@ -6708,6 +6719,10 @@ PrefabInstance:
     - target: {fileID: 6030650076041984573, guid: 1fe55231e6862c8448221d3e8b1fec40, type: 3}
       propertyPath: m_Size.y
       value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 6030650076041984573, guid: 1fe55231e6862c8448221d3e8b1fec40, type: 3}
+      propertyPath: m_SortingOrder
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 8582248552342698230, guid: 1fe55231e6862c8448221d3e8b1fec40, type: 3}
       propertyPath: m_Size.y
