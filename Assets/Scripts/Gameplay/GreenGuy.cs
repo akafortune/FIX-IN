@@ -235,29 +235,42 @@ public class GreenGuy : MonoBehaviour
         if (fixRay.collider.isTrigger)
         {
             string parentBrick = fixRay.collider.transform.parent.gameObject.name;
-            int brickValue = 5;
 
-            switch(parentBrick) //getting the material value of the targeted brick
+            if (BaseBuilding.GameMode == BaseBuilding.Mode.build)
             {
-                case "Layer 1":
-                    brickValue = 5;
-                    break;
-                case "Layer 2":
-                    brickValue = 4;
-                    break;
-                case "Layer 3":
-                    brickValue = 3;
-                    break;
-                case "Layer 4":
-                    brickValue = 2;
-                    break;
-                case "Layer 5":
-                    brickValue = 1;
-                    break;
+                int brickValue = 5;
+                switch(parentBrick) //getting the material value of the targeted brick
+                {
+                    case "Layer 1":
+                        brickValue = 5;
+                        break;
+                    case "Layer 2":
+                        brickValue = 4;
+                        break;
+                    case "Layer 3":
+                        brickValue = 3;
+                        break;
+                    case "Layer 4":
+                        brickValue = 2;
+                        break;
+                   case "Layer 5":
+                        brickValue = 1;
+                        break;
+                }
+                if(BaseBuilding.resources - brickValue >= 0)
+                {
+                    BaseBuilding.resources -= brickValue;
+                    fixRay.collider.gameObject.SendMessage("fixBrick");
+                    animator.SetTrigger("Fix");
+                    animator.SetBool("Swinging", true);
+                    building = true;
+                    buildClock = 0;
+                    canMove = false;
+                    audioSource.PlayOneShot(brickFix);
+                }
             }
-            if(BaseBuilding.resources - brickValue >= 0)
+            else
             {
-                BaseBuilding.resources -= brickValue;
                 fixRay.collider.gameObject.SendMessage("fixBrick");
                 animator.SetTrigger("Fix");
                 animator.SetBool("Swinging", true);
