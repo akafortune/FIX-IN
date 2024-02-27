@@ -126,7 +126,7 @@ public class GreenGuy : MonoBehaviour
                     audioSource.Play();
                 }
             }
-            if (!Input.GetKey(KeyCode.A) && !Input.GetKey(KeyCode.D))
+            if ((!Input.GetKey(KeyCode.A) && !Input.GetKey(KeyCode.D)) || (Input.GetKey(KeyCode.A) && Input.GetKey(KeyCode.D)))
             {
                 animator.SetBool("Walking", false);
             }
@@ -144,7 +144,7 @@ public class GreenGuy : MonoBehaviour
                 }
             }
 
-            if (Input.GetKeyDown(KeyCode.Space) && canJump)
+            if (Input.GetKeyDown(KeyCode.Space) && canJump && rb.velocity.y < .25 && rb.velocity.y > -.25)
             {
                 if (fixRay.collider != null)
                 {

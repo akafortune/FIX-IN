@@ -23,7 +23,7 @@ public class BaseBuilding : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        resources = 50;
+        resources = 75;
         GameMode = Mode.build;
         countdown.text = "";
         ctd = false;
