@@ -23,7 +23,7 @@ public class Ball : MonoBehaviour
     public AudioClip wallBounce, paddleBounce, ggBounce, bottomWallBounce;
     public TextMeshProUGUI TestVersion;
 
-    private int minAngle, maxAngle, HorzForce;
+    private int minAngle, maxAngle, ballAngle;
 
     public GameObject pauseMenu;
     public float gameTimer;
@@ -58,18 +58,18 @@ public class Ball : MonoBehaviour
 
     public void Launch()
     {
-        if(HorzForce == 0)
+        if(transform.rotation.eulerAngles.z == 180)
         {
             Rotate();
         }
-        transform.Rotate(0, 0, -HorzForce);
+        //transform.Rotate(0, 0, -HorzForce);
         arrow.SetActive(false);
         StaticspeedMultiplier *= augment;
         GreenGuy.stunTime /= augment;
         FinalspeedMultiplier = StaticspeedMultiplier;
         //GreenGuy.speedMod *= augment;
         //TestVersion.text = "Test Version 1." + augment.ToString("0.00");
-        rb.AddRelativeForce(new Vector2(HorzForce * FinalspeedMultiplier, 150 * FinalspeedMultiplier), ForceMode2D.Force);
+        rb.AddRelativeForce(new Vector2(0, 150 * FinalspeedMultiplier), ForceMode2D.Force);
         rb.velocity *= 10000f;
         //Debug.Log(rb.velocity.magnitude);
     }
@@ -77,14 +77,15 @@ public class Ball : MonoBehaviour
     public void Rotate()
     {
         transform.position = spawnPos;
-        HorzForce = Random.Range(minAngle, maxAngle); // Randomizes angle of ball
+        transform.eulerAngles = new Vector3(0, 0, 180);
+        ballAngle = Random.Range(minAngle, maxAngle+1); // Randomizes angle of ball
         //int HorzForce = 0; // Sets angle of ball to 0
         //Debug.Log(HorzForce);
         int StartingDirection = Random.Range(0, 2); // 0 for left, 1 for right
         //Debug.Log(StartingDirection);
-        HorzForce = StartingDirection == 0 ? HorzForce : HorzForce * -1;
+        ballAngle = StartingDirection == 0 ? ballAngle : ballAngle * -1;
         arrow.SetActive(true);
-        transform.Rotate(0, 0, HorzForce);
+        transform.Rotate(0, 0, ballAngle);
     }
 
     void FixedUpdate()
