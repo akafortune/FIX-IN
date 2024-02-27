@@ -81,7 +81,7 @@ public class BaseBuilding : MonoBehaviour
     {
         foreach (GameObject brick in Bricks)
         {
-            brick.GetComponent<Animator>().SetFloat("FixMultiplier",.65f);
+            //brick.GetComponent<Animator>().SetFloat("FixMultiplier",.65f);
             if (brick.GetComponent<Animator>().GetBool("IsBroken"))
             {
                 brick.SetActive(false);
