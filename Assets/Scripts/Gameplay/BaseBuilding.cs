@@ -27,6 +27,7 @@ public class BaseBuilding : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        Bricks = GameObject.FindGameObjectsWithTag("Brick");
         resources = 75;
         GameMode = Mode.build;
         countdown.text = "";
@@ -97,7 +98,6 @@ public class BaseBuilding : MonoBehaviour
 
     public void BeginRound()
     {
-        Bricks = GameObject.FindGameObjectsWithTag("Brick");
         foreach (GameObject brick in Bricks)
         {
             brick.GetComponent<Animator>().SetFloat("FixMultiplier",.65f);

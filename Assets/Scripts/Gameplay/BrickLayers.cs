@@ -8,7 +8,7 @@ public class BrickLayers : MonoBehaviour
     public Material colorMat;
     public GameObject bricks;
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         for (float f = -4.5f; f < 5f; f+=1f)
         {
