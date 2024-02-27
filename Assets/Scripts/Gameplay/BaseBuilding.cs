@@ -11,10 +11,7 @@ public class BaseBuilding : MonoBehaviour
     public enum Mode { build, defend };
     public static Mode GameMode;
     public static bool lastBrickBuilt;
-    public TextMeshProUGUI countdown;
-    bool ctd;
 
-    float ctdTimer;
     private Animator brickAnimator;
     public GameObject ball;
     public GameObject paddle;
@@ -30,9 +27,6 @@ public class BaseBuilding : MonoBehaviour
         Bricks = GameObject.FindGameObjectsWithTag("Brick");
         resources = 75;
         GameMode = Mode.build;
-        countdown.text = "";
-        ctd = false;
-        ctdTimer = 3.0f;
         ball = GameObject.Find("Ball");
         ball.SetActive(false);
         paddle = GameObject.Find("Paddle");
@@ -49,18 +43,13 @@ public class BaseBuilding : MonoBehaviour
     {
         resourcesText.text = Convert.ToString(resources);
 
-        if (resources == 0 && GameMode == Mode.build && !ctd)
+        if (resources == 0 && GameMode == Mode.build)
         {
             BeginRound();
         }
-        else if (ctd)
-        {
-            ctdTimer -= Time.deltaTime;
-            CountdownToStart();
-        }
-
     }
 
+    /*
     void CountdownToStart()
     {
         if (ctdTimer > 2)
@@ -81,15 +70,7 @@ public class BaseBuilding : MonoBehaviour
             ctd =false;
             StartDefend();
         }
-    }
-
-    void StartDefend()
-    {
-        ball.GetComponent<Ball>().Launch();
-        lastBrickBuilt=true;
-        GreenGuy.buildTimer = 1.3f;
-    }
-
+    }*/
 
     public void Spend(int value)
     {
@@ -106,15 +87,11 @@ public class BaseBuilding : MonoBehaviour
                 brick.SetActive(false);
             }
         }
-
-        ctdTimer = 3.0f;
         GameMode = Mode.defend;
-        ctd = true;
-        CountdownToStart();
         DefendUI.SetActive(true);
         BuildUI.SetActive(false);
         paddle.SetActive(true);
         ball.SetActive(true);
-        ball.GetComponent<Ball>().Rotate();
+        ball.GetComponent<Ball>().LaunchSequence();
     }
 }

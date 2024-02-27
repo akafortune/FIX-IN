@@ -19,6 +19,7 @@ public class BrickLayers : MonoBehaviour
         Debug.Log(gameObject.name);
 
         Material[] mats = Resources.LoadAll<Material>("BrickMats/");
+        bricks = (GameObject)Resources.Load("Brick");
         if (rowNumber %2 == 1)
         {
             colorMatA = mats[0];

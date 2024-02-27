@@ -10,7 +10,9 @@ public class Ball : MonoBehaviour
 {
     Rigidbody2D rb;
     public float StaticspeedMultiplier;
-
+    private float ctdTimer;
+    private bool countingDown;
+    private TextMeshProUGUI countdownText;
     public float RampspeedMultiplier; //multiplier applies to static
 
     public float FinalspeedMultiplier;
@@ -29,6 +31,8 @@ public class Ball : MonoBehaviour
     public float gameTimer;
     private Vector3 spawnPos;
 
+    private int bricksBroken;
+
     // Start is called before the first frame update
     void Awake()
     {
@@ -39,6 +43,7 @@ public class Ball : MonoBehaviour
         gameTimer = 0f;
         rb = GetComponent<Rigidbody2D>();
         arrow = GameObject.Find("Pointer");
+        countdownText = GameObject.Find("Countdown").GetComponent<TextMeshProUGUI>();
         //TestVersion = GameObject.Find("TestVersionText").GetComponent<TextMeshProUGUI>();
         //pauseMenu = GameObject.Find("PauseMenu");
         if (SceneManager.GetActiveScene() == SceneManager.GetSceneByBuildIndex(3) || SceneManager.GetActiveScene() == SceneManager.GetSceneByBuildIndex(4))
@@ -53,11 +58,12 @@ public class Ball : MonoBehaviour
             minAngle = 15;
             maxAngle = 45;
         }
-        Launch();
+        ctdTimer = 3.0f;
     }
 
     public void Launch()
     {
+        BaseBuilding.lastBrickBuilt = true;
         if(transform.rotation.eulerAngles.z == 180)
         {
             Rotate();
@@ -76,8 +82,6 @@ public class Ball : MonoBehaviour
 
     public void Rotate()
     {
-        transform.position = spawnPos;
-        transform.eulerAngles = new Vector3(0, 0, 180);
         ballAngle = Random.Range(minAngle, maxAngle+1); // Randomizes angle of ball
         //int HorzForce = 0; // Sets angle of ball to 0
         //Debug.Log(HorzForce);
@@ -86,6 +90,42 @@ public class Ball : MonoBehaviour
         ballAngle = StartingDirection == 0 ? ballAngle : ballAngle * -1;
         arrow.SetActive(true);
         transform.Rotate(0, 0, ballAngle);
+    }
+
+    public void ResetBall()
+    {
+        gameObject.SetActive(true);
+        transform.position = spawnPos;
+        transform.eulerAngles = new Vector3(0, 0, 180);
+    }
+
+    public void LaunchSequence()
+    {
+        ResetBall();
+        Rotate();
+        countingDown = true;
+    }
+
+    void Countdown()
+    {
+        if (ctdTimer > 2)
+        {
+            countdownText.text = "3";
+        }
+        else if (ctdTimer > 1)
+        {
+            countdownText.text = "2";
+        }
+        else if (ctdTimer > 0)
+        {
+            countdownText.text = "1";
+        }
+        else
+        {
+            countdownText.text = "";
+            countingDown = false;
+            Launch();
+        }
     }
 
     void FixedUpdate()
@@ -106,6 +146,15 @@ public class Ball : MonoBehaviour
         {
             gameTimer += Time.fixedDeltaTime;
             RampSpeed();
+        }
+    }
+
+    void Update()
+    {
+        if (countingDown)
+        {
+            ctdTimer -= Time.deltaTime;
+            Countdown();
         }
     }
 
