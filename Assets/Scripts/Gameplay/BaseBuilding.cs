@@ -94,4 +94,22 @@ public class BaseBuilding : MonoBehaviour
         ball.SetActive(true);
         ball.GetComponent<Ball>().LaunchSequence();
     }
+
+    public void SkipBuild()
+    {
+        Brick[] Layer1 = GameObject.Find("Layer 1").GetComponentsInChildren<Brick>();
+        Brick[] Layer2 = GameObject.Find("Layer 2").GetComponentsInChildren<Brick>();
+
+        BuildLayer(Layer1);
+        BuildLayer(Layer2);
+        BeginRound();
+    }
+
+    public void BuildLayer(Brick[] array)
+    {
+        foreach(Brick brick in array)
+        {
+            brick.fixBrick();
+        }
+    }
 }
