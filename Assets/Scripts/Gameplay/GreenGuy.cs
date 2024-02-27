@@ -79,7 +79,7 @@ public class GreenGuy : MonoBehaviour
         if(platformRotated)
         {
             platformClock += Time.deltaTime;
-            if(platformClock > .3f)
+            if(platformClock > .25f)
             {
                 platformRotated = false;
                 foreach (PlatformEffector2D plat in platforms)
@@ -130,7 +130,7 @@ public class GreenGuy : MonoBehaviour
             {
                 animator.SetBool("Walking", false);
             }
-            if (Input.GetKeyDown(KeyCode.W) && canJump && rb.velocity.y < .25 && !Input.GetKey(KeyCode.S))
+            if (Input.GetKeyDown(KeyCode.W) && canJump && rb.velocity.y < .25 && rb.velocity.y > -.25 && !Input.GetKey(KeyCode.S))
             {
                 //Debug.Log("jump");
                 rb.AddForce(new Vector2(0, jumpForce));
