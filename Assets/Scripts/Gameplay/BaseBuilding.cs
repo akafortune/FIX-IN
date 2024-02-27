@@ -11,6 +11,10 @@ public class BaseBuilding : MonoBehaviour
     public enum Mode { build, defend };
     public static Mode GameMode;
 
+    public TextMeshProUGUI countdown;
+    bool ctd;
+
+    float ctdTimer;
 
     public GameObject ball;
     public GameObject paddle;
@@ -21,6 +25,9 @@ public class BaseBuilding : MonoBehaviour
     {
         resources = 50;
         GameMode = Mode.build;
+        countdown.text = "";
+        ctd = false;
+        ctdTimer = 3.0f;
     }
 
     // Update is called once per frame
@@ -28,11 +35,8 @@ public class BaseBuilding : MonoBehaviour
     {
         resourcesText.text = Convert.ToString(resources);
 
-        if (resources == 0 && GameMode == Mode.build)
+        if (resources == 0 && GameMode == Mode.build && !ctd)
         {
-            ball.SetActive(true);
-            paddle.SetActive(true);
-            GameMode = Mode.defend;
             Bricks = GameObject.FindGameObjectsWithTag("Brick");
             foreach(GameObject brick in Bricks)
             {
@@ -40,9 +44,46 @@ public class BaseBuilding : MonoBehaviour
                 {
                     brick.SetActive(false);
                 }
-            }    
+            }
+            ctdTimer = 3.0f;
+            ctd = true;
+            CountdownToStart();
+        }
+        else if (ctd)
+        {
+            ctdTimer -= Time.deltaTime;
+            CountdownToStart();
         }
 
+    }
+
+    void CountdownToStart()
+    {
+        if (ctdTimer > 2)
+        {
+            countdown.text = "3";
+        }
+        else if (ctdTimer > 1)
+        {
+            countdown.text = "2";
+        }
+        else if (ctdTimer > 0)
+        {
+            countdown.text = "1";
+        }
+        else
+        {
+            countdown.text = "";
+            ctd =false;
+            StartDefend();
+        }
+    }
+
+    void StartDefend()
+    {
+            ball.SetActive(true);
+            paddle.SetActive(true);
+            GameMode = Mode.defend;
     }
 
 
