@@ -99,8 +99,10 @@ public class Ball : MonoBehaviour
     public void ResetBall()
     {
         hits = 0;
+        rb.velocity = Vector3.zero;
         gameObject.SetActive(true);
         transform.position = spawnPos;
+        trail.Clear();
         transform.eulerAngles = new Vector3(0, 0, 180);
     }
 
@@ -109,6 +111,7 @@ public class Ball : MonoBehaviour
         ResetBall();
         Rotate();
         countingDown = true;
+        ctdTimer = 3;
     }
 
     void Countdown()
@@ -174,8 +177,11 @@ public class Ball : MonoBehaviour
             case 2:
                 tailColor = new Color(255 / 255f, 208 / 255f, 37 / 255f);
                 break;
-            default:
+            case 3:
                 tailColor = new Color(255 / 255f, 116 / 255f, 37 / 255f);
+                break;
+            default:
+                LaunchSequence();
                 break;
         }
         trail.startColor = tailColor;
