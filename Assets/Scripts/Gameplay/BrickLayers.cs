@@ -15,8 +15,6 @@ public class BrickLayers : MonoBehaviour
     {
         int brickNumber = 1;
         int rowNumber = name.ToCharArray()[name.Length-1] -48; //correcting for weird char shenanigans
-        Debug.Log(rowNumber);
-        Debug.Log(gameObject.name);
 
         Material[] mats = Resources.LoadAll<Material>("BrickMats/");
         bricks = (GameObject)Resources.Load("Brick");

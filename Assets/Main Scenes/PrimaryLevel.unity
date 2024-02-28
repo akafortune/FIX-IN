@@ -1059,6 +1059,7 @@ MonoBehaviour:
   bottomWallBounce: {fileID: 8300000, guid: ef43e1ee1c20aed42a133493f8f3cb99, type: 3}
   countDownSound: {fileID: 0}
   launchSound: {fileID: 0}
+  ballExplode: {fileID: 0}
   TestVersion: {fileID: 0}
   pauseMenu: {fileID: 1646893067}
   gameTimer: 0
@@ -2491,7 +2492,6 @@ RectTransform:
   - {fileID: 257888896}
   - {fileID: 618872636}
   - {fileID: 592490942}
-  - {fileID: 1454479066}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -2996,6 +2996,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 1454479066}
   - {fileID: 2007356674}
   - {fileID: 669196997}
   - {fileID: 959180446}
@@ -9514,7 +9515,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Explode Ball
+  m_text: Explode Ball (Dev)
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -9541,8 +9542,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 24
-  m_fontSizeBase: 24
+  m_fontSize: 14
+  m_fontSizeBase: 14
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -10001,7 +10002,7 @@ GameObject:
   - component: {fileID: 1454479068}
   - component: {fileID: 1454479067}
   m_Layer: 5
-  m_Name: Button
+  m_Name: Explode Ball (Dev)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -10014,17 +10015,17 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1454479065}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1312035099}
-  m_Father: {fileID: 549752040}
+  m_Father: {fileID: 618872636}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 328, y: 67}
+  m_AnchoredPosition: {x: 345.50003, y: 124.54225}
   m_SizeDelta: {x: 100, y: 60}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1454479067
@@ -11942,6 +11943,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1602230969079112670, guid: affa5fa49af88fa4aa843c6e84f82e31, type: 3}
+      propertyPath: m_SortingOrder
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 2237152516666922605, guid: affa5fa49af88fa4aa843c6e84f82e31, type: 3}
       propertyPath: m_Name
       value: BallPop

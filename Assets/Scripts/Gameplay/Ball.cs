@@ -271,7 +271,7 @@ public class Ball : MonoBehaviour
         }
         else if (collision.gameObject.tag.Equals("Brick"))
         {
-            Debug.Log("Hit");
+            //Debug.Log("Hit");
             hits++;
         }
     }
@@ -291,7 +291,7 @@ public class Ball : MonoBehaviour
                 RampspeedMultiplier = x;
             }
             FinalspeedMultiplier = StaticspeedMultiplier * RampspeedMultiplier;
-            Debug.Log(GreenGuy.stunTime);
+            //Debug.Log(GreenGuy.stunTime);
             GreenGuy.stunTime = 1.7f / (augment + (RampspeedMultiplier / 3f));
         }
     }
