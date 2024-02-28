@@ -7,10 +7,13 @@ public class GameOver : MonoBehaviour
 {
     public GameObject gameOverMenu;
     public GameObject[] otherUI;
+    private GameObject gameOverBackground;
 
     // Start is called before the first frame update
     void Start()
     {
+        gameOverBackground = GameObject.Find("Game_Over_GG");
+        gameOverBackground.SetActive(false);
         gameOverMenu.SetActive(false);
     }
 
@@ -19,6 +22,7 @@ public class GameOver : MonoBehaviour
     {
         if(gameOverMenu.activeSelf)
         {
+            gameOverBackground.SetActive(true);
             foreach(GameObject uiObject in otherUI)
             {
                 uiObject.SetActive(false);
