@@ -3,11 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-using static BaseBuilding;
 
 public class TimeInGame : MonoBehaviour
 {
-    public BaseBuilding bb;
 
     float currentTime;
     public TextMeshProUGUI timeText;
@@ -25,7 +23,7 @@ public class TimeInGame : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (resources <= 0)
+        if (BaseBuilding.GameMode == BaseBuilding.Mode.defend)
         {
             TimeSpan time;
             currentTime += Time.deltaTime;
@@ -35,7 +33,7 @@ public class TimeInGame : MonoBehaviour
     }
     void FixedUpdate()
     {
-        if (resources <= 0)
+        if (BaseBuilding.GameMode == BaseBuilding.Mode.defend)
         {
             score += oneSecond * Time.fixedDeltaTime;
             scoreText.text = ((int)score).ToString();
