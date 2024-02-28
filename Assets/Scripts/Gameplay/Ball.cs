@@ -12,17 +12,19 @@ public class Ball : MonoBehaviour
     public float StaticspeedMultiplier;
     private float ctdTimer;
     private bool countingDown;
+    private bool[] countDownAudioPlayed;
     private TextMeshProUGUI countdownText;
     public float RampspeedMultiplier; //multiplier applies to static
 
     public float FinalspeedMultiplier;
     float LastXVelocity;
+    [SerializeField] float velocity;
     public float augment;
     private float mapSizeAugment;
     public GameObject gameOverMenu;
     private GameObject arrow;
     public AudioSource audioSource;
-    public AudioClip wallBounce, paddleBounce, ggBounce, bottomWallBounce;
+    public AudioClip wallBounce, paddleBounce, ggBounce, bottomWallBounce, countDownSound, launchSound;
     public TextMeshProUGUI TestVersion;
 
     private int minAngle, maxAngle, ballAngle;
@@ -35,19 +37,28 @@ public class Ball : MonoBehaviour
 
     private TrailRenderer trail;
     private int hits;
+    private GameObject explodingParticle;
+    private Vector3 particleLocation;
 
     // Start is called before the first frame update
     void Awake()
     {
+        countDownAudioPlayed = new bool[3];
         StaticspeedMultiplier = 1.25f;
         RampspeedMultiplier = 1f;
         augment = 1.3f;
         spawnPos = transform.position;
+        particleLocation = transform.position;
         gameTimer = 0f;
         rb = GetComponent<Rigidbody2D>();
+        explodingParticle = GameObject.Find("BallPop");
+        explodingParticle.SetActive(false);
         arrow = GameObject.Find("Pointer");
+        arrow.SetActive(false);
         trail = GameObject.Find("Trail").GetComponent<TrailRenderer>();
         countdownText = GameObject.Find("Countdown").GetComponent<TextMeshProUGUI>();
+        countDownSound = (AudioClip) Resources.Load("SFX/Countdown");
+        launchSound = (AudioClip) Resources.Load("SFX/Launch");
         //TestVersion = GameObject.Find("TestVersionText").GetComponent<TextMeshProUGUI>();
         //pauseMenu = GameObject.Find("PauseMenu");
         if (SceneManager.GetActiveScene() == SceneManager.GetSceneByBuildIndex(3) || SceneManager.GetActiveScene() == SceneManager.GetSceneByBuildIndex(4))
@@ -63,45 +74,49 @@ public class Ball : MonoBehaviour
             maxAngle = 45;
         }
         ctdTimer = 3.0f;
+        StaticspeedMultiplier *= augment;
+        GreenGuy.stunTime /= augment;
+        FinalspeedMultiplier = StaticspeedMultiplier;
     }
 
     public void Launch()
     {
+        explodingParticle.transform.position = transform.position;
+        explodingParticle.SetActive(false);
         BaseBuilding.lastBrickBuilt = true;
-        if(transform.rotation.eulerAngles.z == 180)
+        if (transform.rotation.eulerAngles.z == 180)
         {
             Rotate();
         }
         //transform.Rotate(0, 0, -HorzForce);
         arrow.SetActive(false);
-        StaticspeedMultiplier *= augment;
-        GreenGuy.stunTime /= augment;
-        FinalspeedMultiplier = StaticspeedMultiplier;
         //GreenGuy.speedMod *= augment;
         //TestVersion.text = "Test Version 1." + augment.ToString("0.00");
         rb.AddRelativeForce(new Vector2(0, 150 * FinalspeedMultiplier), ForceMode2D.Force);
+        audioSource.PlayOneShot(launchSound);
         rb.velocity *= 10000f;
         //Debug.Log(rb.velocity.magnitude);
     }
 
     public void Rotate()
     {
-        ballAngle = Random.Range(minAngle, maxAngle+1); // Randomizes angle of ball
+        ballAngle = Random.Range(minAngle, maxAngle + 1); // Randomizes angle of ball
         //int HorzForce = 0; // Sets angle of ball to 0
         //Debug.Log(HorzForce);
         int StartingDirection = Random.Range(0, 2); // 0 for left, 1 for right
         //Debug.Log(StartingDirection);
         ballAngle = StartingDirection == 0 ? ballAngle : ballAngle * -1;
-        arrow.SetActive(true);
         transform.Rotate(0, 0, ballAngle);
     }
 
     public void ResetBall()
     {
+        countDownAudioPlayed = new bool[3];
         hits = 0;
         rb.velocity = Vector3.zero;
         gameObject.SetActive(true);
         transform.position = spawnPos;
+        explodingParticle.transform.position = particleLocation;
         trail.Clear();
         transform.eulerAngles = new Vector3(0, 0, 180);
     }
@@ -111,21 +126,41 @@ public class Ball : MonoBehaviour
         ResetBall();
         Rotate();
         countingDown = true;
-        ctdTimer = 3;
+        ctdTimer = 3.5f;
     }
 
     void Countdown()
     {
-        if (ctdTimer > 2)
+        if(ctdTimer > 3)
         {
+            //waiting a second to play audio
+        }
+        else if (ctdTimer > 2)
+        {
+            if(!countDownAudioPlayed[0])
+            {
+                arrow.SetActive(true);
+                audioSource.PlayOneShot(countDownSound);
+                countDownAudioPlayed[0] = true;
+            }
             countdownText.text = "3";
         }
         else if (ctdTimer > 1)
         {
+            if (!countDownAudioPlayed[1])
+            {
+                audioSource.PlayOneShot(countDownSound);
+                countDownAudioPlayed[1] = true;
+            }
             countdownText.text = "2";
         }
         else if (ctdTimer > 0)
         {
+            if (!countDownAudioPlayed[2])
+            {
+                audioSource.PlayOneShot(countDownSound);
+                countDownAudioPlayed[2] = true;
+            }
             countdownText.text = "1";
         }
         else
@@ -139,14 +174,15 @@ public class Ball : MonoBehaviour
     void FixedUpdate()
     {
         LastXVelocity = rb.velocity.x;
+        velocity = rb.velocity.magnitude;
         //Debug.Log(rb.velocity.x);
-        while(rb.velocity.magnitude > 3.5 * FinalspeedMultiplier) // Prevents ball from going apeshit and flying off the map
+        while (rb.velocity.magnitude > 3.5 * FinalspeedMultiplier) // Prevents ball from going apeshit and flying off the map
         {
             rb.velocity = rb.velocity * 0.99f;
         }
         //while(rb.velocity.magnitude > 2.0)
         //{
-          //  rb.velocity = rb.velocity * 1.01f;
+        //  rb.velocity = rb.velocity * 1.01f;
         //}
 
         //Speed Ramping
@@ -164,9 +200,8 @@ public class Ball : MonoBehaviour
             ctdTimer -= Time.deltaTime;
             Countdown();
         }
-        Debug.Log(hits);
         Color tailColor = trail.startColor;
-        switch(hits)
+        switch (hits)
         {
             case 0:
                 tailColor = new Color(1, 1, 1);
@@ -181,6 +216,8 @@ public class Ball : MonoBehaviour
                 tailColor = new Color(255 / 255f, 116 / 255f, 37 / 255f);
                 break;
             default:
+                explodingParticle.SetActive(true);
+                particleLocation = transform.position;
                 LaunchSequence();
                 break;
         }
@@ -194,8 +231,7 @@ public class Ball : MonoBehaviour
             rb.AddRelativeForce(new Vector2(50, 0), ForceMode2D.Force);
             int VertForce = rb.velocity.y > 0 ? 50 : -50;
             rb.AddForce(new Vector2(0, VertForce * FinalspeedMultiplier));
-            audioSource.clip = wallBounce;
-            audioSource.Play();
+            audioSource.PlayOneShot(wallBounce);
             //Debug.Log("R wall hit");
         }
         else if (collision.gameObject.name.Equals("Wall9PatchLeft"))
@@ -203,8 +239,7 @@ public class Ball : MonoBehaviour
             rb.AddRelativeForce(new Vector2(-50, 0), ForceMode2D.Force);
             int VertForce = rb.velocity.y > 0 ? 50 : -50;
             rb.AddForce(new Vector2(0, VertForce * FinalspeedMultiplier));
-            audioSource.clip = wallBounce;
-            audioSource.Play();
+            audioSource.PlayOneShot(wallBounce);
             //Debug.Log("L wall hit");
         }
         else if (collision.gameObject.name.Equals("Triangle"))
@@ -226,14 +261,12 @@ public class Ball : MonoBehaviour
         {
             Time.timeScale = 0f;
             gameOverMenu.SetActive(true);
-            audioSource.clip = bottomWallBounce;
-            audioSource.Play();
+            audioSource.PlayOneShot(bottomWallBounce);
         }
         else if (collision.gameObject.name.Equals("GreenGuy"))
         {
             rb.velocity *= 3;
-            audioSource.clip = ggBounce;
-            audioSource.Play();
+            audioSource.PlayOneShot(ggBounce);
         }
         else if (collision.gameObject.tag.Equals("Brick"))
         {
@@ -246,8 +279,8 @@ public class Ball : MonoBehaviour
     {
         if (gameTimer > 30)
         {
-            float y = gameTimer-30f;
-            float x = (-1f)*(25f/(Mathf.Pow(y, 2f)+(186f*y)+86.5f)) + (1.3f);
+            float y = gameTimer - 30f;
+            float x = (-1f) * (25f / (Mathf.Pow(y, 2f) + (186f * y) + 86.5f)) + (1.3f);
             if (x < 1)
             {
                 RampspeedMultiplier = 1;
@@ -256,9 +289,14 @@ public class Ball : MonoBehaviour
             {
                 RampspeedMultiplier = x;
             }
-            FinalspeedMultiplier = StaticspeedMultiplier*RampspeedMultiplier;
+            FinalspeedMultiplier = StaticspeedMultiplier * RampspeedMultiplier;
             Debug.Log(GreenGuy.stunTime);
-            GreenGuy.stunTime = 1.7f / (augment + (RampspeedMultiplier/3f));
+            GreenGuy.stunTime = 1.7f / (augment + (RampspeedMultiplier / 3f));
         }
+    }
+
+    public void Explode()
+    {
+        hits = 4;
     }
 }
