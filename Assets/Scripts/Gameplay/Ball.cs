@@ -24,7 +24,7 @@ public class Ball : MonoBehaviour
     public GameObject gameOverMenu;
     private GameObject arrow;
     public AudioSource audioSource;
-    public AudioClip wallBounce, paddleBounce, ggBounce, bottomWallBounce, countDownSound, launchSound;
+    public AudioClip wallBounce, paddleBounce, ggBounce, bottomWallBounce, countDownSound, launchSound, ballExplode;
     public TextMeshProUGUI TestVersion;
 
     private int minAngle, maxAngle, ballAngle;
@@ -217,6 +217,7 @@ public class Ball : MonoBehaviour
                 break;
             default:
                 explodingParticle.SetActive(true);
+                audioSource.PlayOneShot(ballExplode);
                 particleLocation = transform.position;
                 LaunchSequence();
                 break;
