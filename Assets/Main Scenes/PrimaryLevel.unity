@@ -1055,10 +1055,10 @@ MonoBehaviour:
   wallBounce: {fileID: 8300000, guid: bcda1af0480a8034195adc66c3b59073, type: 3}
   paddleBounce: {fileID: 8300000, guid: b1a3d57a4a9edd64ea83e6d4d6ac665f, type: 3}
   ggBounce: {fileID: 8300000, guid: 0dd3689747dfee3419f421373b609ee7, type: 3}
-  bottomWallBounce: {fileID: 8300000, guid: ef43e1ee1c20aed42a133493f8f3cb99, type: 3}
+  bottomWallBounce: {fileID: 8300000, guid: d97f7457c486e6c40af0c24d70f4cbfe, type: 3}
   countDownSound: {fileID: 0}
   launchSound: {fileID: 0}
-  ballExplode: {fileID: 0}
+  ballExplode: {fileID: 8300000, guid: 49148fc9d244c90419e21d53f91f0614, type: 3}
   TestVersion: {fileID: 0}
   pauseMenu: {fileID: 1646893067}
   gameTimer: 0
