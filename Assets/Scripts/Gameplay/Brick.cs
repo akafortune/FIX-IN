@@ -36,6 +36,7 @@ public class Brick : MonoBehaviour
             if (collision.gameObject.tag.Equals("Ball") && canBreak)
             {
                 canBreak = false;
+                Ball.hits++;
                 animator.SetBool("IsBroken", true);
                 bc.isTrigger = true;
                 audioSource.clip = brickBreak;

@@ -3951,7 +3951,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -373.1612, y: -210.16539, z: 0}
-  m_LocalScale: {x: 0.9469894, y: 0.9469894, z: 0.9469894}
+  m_LocalScale: {x: 1.0725602, y: 1.0725602, z: 1.0725602}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1613192243}
@@ -9603,8 +9603,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Explode Ball (Dev)
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 4ad620d3dcf9ac841be4135ff9e36539, type: 2}
+  m_sharedMaterial: {fileID: 9051377406654761677, guid: 4ad620d3dcf9ac841be4135ff9e36539, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -10112,7 +10112,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 345.50003, y: 124.54225}
-  m_SizeDelta: {x: 100, y: 60}
+  m_SizeDelta: {x: 100, y: 70}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1454479067
 MonoBehaviour:

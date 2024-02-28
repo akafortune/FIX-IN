@@ -18,7 +18,6 @@ public class Ball : MonoBehaviour
 
     public float FinalspeedMultiplier;
     float LastXVelocity;
-    [SerializeField] float velocity;
     public float augment;
     private float mapSizeAugment;
     public GameObject gameOverMenu;
@@ -36,7 +35,7 @@ public class Ball : MonoBehaviour
     private int bricksBroken;
 
     private TrailRenderer trail;
-    private int hits;
+    public static int hits;
     private GameObject explodingParticle;
     private Vector3 particleLocation;
 
@@ -170,7 +169,6 @@ public class Ball : MonoBehaviour
     void FixedUpdate() //physics fuckery
     {
         LastXVelocity = rb.velocity.x;
-        velocity = rb.velocity.magnitude;
         //Debug.Log(rb.velocity.x);
         while (rb.velocity.magnitude > 3.5 * FinalspeedMultiplier) // Prevents ball from going apeshit and flying off the map
         {
@@ -265,11 +263,6 @@ public class Ball : MonoBehaviour
         {
             rb.velocity *= 100;
             audioSource.PlayOneShot(ggBounce);
-        }
-        else if (collision.gameObject.tag.Equals("Brick"))
-        {
-            //Debug.Log("Hit");
-            hits++;
         }
     }
 
