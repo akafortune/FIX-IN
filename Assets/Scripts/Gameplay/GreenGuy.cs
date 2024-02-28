@@ -58,7 +58,7 @@ public class GreenGuy : MonoBehaviour
         Physics2D.queriesHitTriggers = true; //making it so that ray can detect triggers
         animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
-        jumpForce = 235;
+        jumpForce = 235 * (int)rb.mass;
         horizontalSpeed = 2;
         stunTime = 1.7f;
         yOffset = .5f;
@@ -79,7 +79,7 @@ public class GreenGuy : MonoBehaviour
         if(platformRotated)
         {
             platformClock += Time.deltaTime;
-            if(platformClock > .25f)
+            if(platformClock > .3f)
             {
                 platformRotated = false;
                 foreach (PlatformEffector2D plat in platforms)
@@ -240,6 +240,7 @@ public class GreenGuy : MonoBehaviour
         }
         return brickValue;
     }
+
     private void OnCollisionEnter2D(Collision2D collision)
     {
         /*if(collision.gameObject.layer == 7) //platforms

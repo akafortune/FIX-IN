@@ -79,35 +79,13 @@ public class Ball : MonoBehaviour
         FinalspeedMultiplier = StaticspeedMultiplier;
     }
 
-    public void Launch()
+    public void LaunchSequence()
     {
-        explodingParticle.transform.position = transform.position;
-        explodingParticle.SetActive(false);
-        BaseBuilding.lastBrickBuilt = true;
-        if (transform.rotation.eulerAngles.z == 180)
-        {
-            Rotate();
-        }
-        //transform.Rotate(0, 0, -HorzForce);
-        arrow.SetActive(false);
-        //GreenGuy.speedMod *= augment;
-        //TestVersion.text = "Test Version 1." + augment.ToString("0.00");
-        rb.AddRelativeForce(new Vector2(0, 150 * FinalspeedMultiplier), ForceMode2D.Force);
-        audioSource.PlayOneShot(launchSound);
-        rb.velocity *= 10000f;
-        //Debug.Log(rb.velocity.magnitude);
-    }
-
-    public void Rotate()
-    {
-        ballAngle = Random.Range(minAngle, maxAngle + 1); // Randomizes angle of ball
-        //int HorzForce = 0; // Sets angle of ball to 0
-        //Debug.Log(HorzForce);
-        int StartingDirection = Random.Range(0, 2); // 0 for left, 1 for right
-        //Debug.Log(StartingDirection);
-        ballAngle = StartingDirection == 0 ? ballAngle : ballAngle * -1;
-        transform.Rotate(0, 0, ballAngle);
-    }
+        ResetBall();
+        Rotate();
+        countingDown = true;
+        ctdTimer = 3.5f;
+    } //Sets the following 4 methods in motion
 
     public void ResetBall()
     {
@@ -119,25 +97,28 @@ public class Ball : MonoBehaviour
         explodingParticle.transform.position = particleLocation;
         trail.Clear();
         transform.eulerAngles = new Vector3(0, 0, 180);
-    }
+    } //Puts the ball back where it started
 
-    public void LaunchSequence()
+    public void Rotate()
     {
-        ResetBall();
-        Rotate();
-        countingDown = true;
-        ctdTimer = 3.5f;
-    }
+        ballAngle = Random.Range(minAngle, maxAngle + 1); // Randomizes angle of ball
+        //int HorzForce = 0; // Sets angle of ball to 0
+        //Debug.Log(HorzForce);
+        int StartingDirection = Random.Range(0, 2); // 0 for left, 1 for right
+        //Debug.Log(StartingDirection);
+        ballAngle = StartingDirection == 0 ? ballAngle : ballAngle * -1;
+        transform.Rotate(0, 0, ballAngle);
+    } //Sets the ball to random angle
 
     void Countdown()
     {
-        if(ctdTimer > 3)
+        if (ctdTimer > 3)
         {
             //waiting a second to play audio
         }
         else if (ctdTimer > 2)
         {
-            if(!countDownAudioPlayed[0])
+            if (!countDownAudioPlayed[0])
             {
                 arrow.SetActive(true);
                 audioSource.PlayOneShot(countDownSound);
@@ -169,9 +150,24 @@ public class Ball : MonoBehaviour
             countingDown = false;
             Launch();
         }
-    }
+    } //Begins launch countdown and activates indicator arrow
 
-    void FixedUpdate()
+    public void Launch()
+    {
+        explodingParticle.transform.position = transform.position;
+        explodingParticle.SetActive(false);
+        BaseBuilding.lastBrickBuilt = true;
+        //transform.Rotate(0, 0, -HorzForce);
+        arrow.SetActive(false);
+        //GreenGuy.speedMod *= augment;
+        //TestVersion.text = "Test Version 1." + augment.ToString("0.00");
+        rb.AddRelativeForce(new Vector2(0, 150 * FinalspeedMultiplier), ForceMode2D.Force);
+        audioSource.PlayOneShot(launchSound);
+        rb.velocity *= 10000f;
+        //Debug.Log(rb.velocity.magnitude);
+    } //Makes the ball start
+
+    void FixedUpdate() //physics fuckery
     {
         LastXVelocity = rb.velocity.x;
         velocity = rb.velocity.magnitude;
@@ -193,7 +189,7 @@ public class Ball : MonoBehaviour
         }
     }
 
-    void Update()
+    void Update() // Countdown and Trail color changes
     {
         if (countingDown)
         {
@@ -204,17 +200,18 @@ public class Ball : MonoBehaviour
         switch (hits)
         {
             case 0:
+            case 1:
                 tailColor = new Color(1, 1, 1);
                 break;
-            case 1:
-                tailColor = new Color(255 / 255f, 244 / 255f, 146 / 255f);
-                break;
             case 2:
-                tailColor = new Color(255 / 255f, 208 / 255f, 37 / 255f);
+                tailColor = new Color(255 / 255f, 244 / 255f, 146 / 255f);
                 break;
             case 3:
                 tailColor = new Color(255 / 255f, 116 / 255f, 37 / 255f);
                 break;
+            //case 4:
+            //    tailColor = new Color();
+            //    break;
             default:
                 explodingParticle.SetActive(true);
                 audioSource.PlayOneShot(ballExplode);
@@ -266,7 +263,7 @@ public class Ball : MonoBehaviour
         }
         else if (collision.gameObject.name.Equals("GreenGuy"))
         {
-            rb.velocity *= 3;
+            rb.velocity *= 100;
             audioSource.PlayOneShot(ggBounce);
         }
         else if (collision.gameObject.tag.Equals("Brick"))
@@ -298,6 +295,6 @@ public class Ball : MonoBehaviour
 
     public void Explode()
     {
-        hits = 4;
+        hits = 5;
     }
 }

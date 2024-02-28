@@ -2773,7 +2773,7 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 1
+  m_Mass: 3
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 1
@@ -3044,7 +3044,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 345.5, y: -48.457745}
+  m_AnchoredPosition: {x: 345.5, y: -50}
   m_SizeDelta: {x: 120, y: 46.169}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &669196998
@@ -4025,7 +4025,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &959180446
 RectTransform:
   m_ObjectHideFlags: 0
@@ -11861,7 +11861,7 @@ TrailRenderer:
       m_RotationOrder: 4
     colorGradient:
       serializedVersion: 2
-      key0: {r: 1, g: 0.95702136, b: 0.5707547, a: 1}
+      key0: {r: 1, g: 0.81594795, b: 0.1462264, a: 1}
       key1: {r: 1, g: 1, b: 1, a: 0}
       key2: {r: 0, g: 0, b: 0, a: 0}
       key3: {r: 0, g: 0, b: 0, a: 0}
@@ -12162,7 +12162,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -304.49997, y: -59.457756}
+  m_AnchoredPosition: {x: -305, y: -50}
   m_SizeDelta: {x: 94.7138, y: 46.169}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2007356675
