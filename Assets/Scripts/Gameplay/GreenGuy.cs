@@ -146,7 +146,7 @@ public class GreenGuy : MonoBehaviour
                 }
             }
 
-            if (Input.GetKeyDown(KeyCode.Space) && canJump && rb.velocity.y < .25 && rb.velocity.y > -.25)
+            if (Input.GetKeyDown(KeyCode.Space) && canJump && rb.velocity.y < .25 && rb.velocity.y >= 0)
             {
                 if (fixRay.collider != null)
                 {
