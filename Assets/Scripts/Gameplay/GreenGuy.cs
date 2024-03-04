@@ -91,7 +91,7 @@ public class GreenGuy : MonoBehaviour
         //Debug.Log(rb.velocity.y);
         if(canMove && Time.timeScale != 0)
         {
-            if (Input.GetKeyDown(KeyCode.S))
+            if (Input.GetButtonDown("Drop"))
             {
                 foreach (PlatformEffector2D plat in platforms)
                 {
@@ -137,7 +137,7 @@ public class GreenGuy : MonoBehaviour
             {
                 animator.SetBool("Walking", false);
             }
-            if (Input.GetKeyDown(KeyCode.W) && canJump && rb.velocity.y < .25 && rb.velocity.y > -.25 && !Input.GetKey(KeyCode.S))
+            if (Input.GetButtonDown("Jump") && canJump && rb.velocity.y < .25 && rb.velocity.y > -.25 && !Input.GetKey(KeyCode.S))
             {
                 //Debug.Log("jump");
                 rb.AddForce(new Vector2(0, jumpForce));
@@ -151,7 +151,7 @@ public class GreenGuy : MonoBehaviour
                 }
             }
 
-            if (Input.GetKeyDown(KeyCode.Space) && canJump && rb.velocity.y < .25 && rb.velocity.y >= 0)
+            if (Input.GetButtonDown("SwingTool") && canJump && rb.velocity.y < .25 && rb.velocity.y >= 0)
             {
                 if (fixRay.collider != null)
                 {
