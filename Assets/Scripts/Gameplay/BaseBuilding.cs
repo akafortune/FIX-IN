@@ -42,11 +42,6 @@ public class BaseBuilding : MonoBehaviour
     void Update()
     {
         resourcesText.text = Convert.ToString(resources);
-
-        if (resources == 0 && GameMode == Mode.build)
-        {
-            BeginRound();
-        }
     }
 
     /*
