@@ -23,6 +23,7 @@ public class GameOver : MonoBehaviour
         if(gameOverMenu.activeSelf)
         {
             gameOverBackground.SetActive(true);
+            gameOverBackground.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 1);
             foreach(GameObject uiObject in otherUI)
             {
                 uiObject.SetActive(false);
