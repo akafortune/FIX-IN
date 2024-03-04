@@ -205,8 +205,12 @@ public class GreenGuy : MonoBehaviour
             {
                 if (BaseBuilding.GameMode == BaseBuilding.Mode.defend || (BaseBuilding.GameMode == BaseBuilding.Mode.build && BaseBuilding.resources - BrickValue() >= 0))
                 {
-                    fixRay.collider.SendMessage("ShowIndicator");
+                    fixRay.collider.SendMessage("ShowFixIndicator");
                 }
+            }
+            if (!fixRay.collider.isTrigger && BaseBuilding.GameMode == BaseBuilding.Mode.build && fixRay.collider.gameObject.name.Contains("Brick"))
+            {
+                fixRay.collider.SendMessage("ShowBreakIndicator");
             }
         }
     }
@@ -276,24 +280,22 @@ public class GreenGuy : MonoBehaviour
                 if(BaseBuilding.resources - BrickValue() >= 0)
                 {
                     BaseBuilding.resources -= BrickValue();
-                    fixRay.collider.gameObject.SendMessage("fixBrick");
-                    animator.SetTrigger("Fix");
-                    animator.SetBool("Swinging", true);
-                    building = true;
-                    buildClock = 0;
-                    canMove = false;
-                    audioSource.PlayOneShot(brickFix);
                 }
             }
-            else
+            fixRay.collider.gameObject.SendMessage("fixBrick");
+            animator.SetTrigger("Fix");
+            animator.SetBool("Swinging", true);
+            building = true;
+            buildClock = 0;
+            canMove = false;
+            audioSource.PlayOneShot(brickFix);
+        }
+        else
+        {
+            if(BaseBuilding.GameMode == BaseBuilding.Mode.build) //destroying bricks in build mode
             {
-                fixRay.collider.gameObject.SendMessage("fixBrick");
-                animator.SetTrigger("Fix");
-                animator.SetBool("Swinging", true);
-                building = true;
-                buildClock = 0;
-                canMove = false;
-                audioSource.PlayOneShot(brickFix);
+                fixRay.collider.gameObject.SendMessage("cancelBrick");
+                BaseBuilding.resources += BrickValue();
             }
         }
     }

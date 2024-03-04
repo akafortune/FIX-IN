@@ -12,11 +12,13 @@ public class Brick : MonoBehaviour
     public AudioSource audioSource;
     public AudioClip brickBreak;
     public SpriteRenderer fixIndicator;
+    public SpriteRenderer breakIndicator;
     private static bool canBreak;
     // Start is called before the first frame update
     void Awake()
     {
         fixIndicator = GetComponentsInChildren<SpriteRenderer>()[1];
+        breakIndicator = GetComponentsInChildren<SpriteRenderer>()[2];
         audioSource = GetComponentInParent<AudioSource>();
         animator = GetComponent<Animator>();
         bc = GetComponent<BoxCollider2D>();
@@ -27,6 +29,7 @@ public class Brick : MonoBehaviour
     void FixedUpdate()
     {
         fixIndicator.enabled = false;
+        breakIndicator.enabled = false;
         canBreak = true;
     }
 
@@ -57,9 +60,14 @@ public class Brick : MonoBehaviour
         bc.isTrigger = true;
     }
 
-    public void ShowIndicator()
+    public void ShowFixIndicator()
     {
         fixIndicator.enabled = true;
+    }
+
+    public void ShowBreakIndicator()
+    {
+        breakIndicator.enabled = true;
     }
 
     public void StartForBuild()
