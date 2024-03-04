@@ -23,7 +23,4 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/HowToPlay.unity
     guid: e0ed670e23347a84b9151ef98a3b308b
-  - enabled: 1
-    path: Assets/TwistHowToPlay.unity
-    guid: 5b64ef0ae9020c84cbca4e5c6eb7f834
   m_configObjects: {}

@@ -89,7 +89,7 @@ public class GreenGuy : MonoBehaviour
             }
         }
         //Debug.Log(rb.velocity.y);
-        if(canMove)
+        if(canMove && Time.timeScale != 0)
         {
             if (Input.GetKeyDown(KeyCode.S))
             {
@@ -102,11 +102,14 @@ public class GreenGuy : MonoBehaviour
             }
             if (Input.GetKey(KeyCode.A))
             {
-                fixMod = -1;
                 transform.Translate(-adjustedSpeed, 0, 0, Space.World);
-                if(!Input.GetKey(KeyCode.D))
+                
+                if (!Input.GetKey(KeyCode.D))
+                {
+                    fixMod = -1;
                     transform.rotation = Quaternion.Euler(0, 180, 0);
-                SwingDustTransform.rotation = Quaternion.Euler(0, 180, 0);
+                    SwingDustTransform.rotation = Quaternion.Euler(0, 180, 0);
+                }
                 animator.SetBool("Walking", true);
                 audioSource.clip = walk;
                 if(!audioSource.isPlaying)
@@ -116,11 +119,13 @@ public class GreenGuy : MonoBehaviour
             }
             if (Input.GetKey(KeyCode.D))
             {
-                fixMod = 1;
                 transform.Translate(adjustedSpeed, 0, 0, Space.World);
                 if (!Input.GetKey(KeyCode.A))
+                {
+                    fixMod = 1;
                     transform.rotation = Quaternion.Euler(0, 0, 0);
-                SwingDustTransform.rotation = Quaternion.Euler(0, 180, 0);
+                    SwingDustTransform.rotation = Quaternion.Euler(0, 180, 0);
+                }
                 animator.SetBool("Walking", true);
                 audioSource.clip = walk;
                 if (!audioSource.isPlaying)
@@ -169,10 +174,6 @@ public class GreenGuy : MonoBehaviour
 
         if (building)
         {
-            if (fixRay.collider.isTrigger)
-            {
-                buildClock = buildTimer;
-            }
             buildClock += Time.deltaTime;
         }
 
