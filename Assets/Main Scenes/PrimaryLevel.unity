@@ -133,7 +133,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2114326681859184676, guid: 049caf4e27b7e124bb4d71188fd49006, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: 0.14
       objectReference: {fileID: 0}
     - target: {fileID: 2114326681859184676, guid: 049caf4e27b7e124bb4d71188fd49006, type: 3}
       propertyPath: m_LocalPosition.y
@@ -189,7 +189,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3910741722548837868, guid: 049caf4e27b7e124bb4d71188fd49006, type: 3}
       propertyPath: m_Size.x
-      value: 1.207845
+      value: 1.4
       objectReference: {fileID: 0}
     - target: {fileID: 3910741722548837868, guid: 049caf4e27b7e124bb4d71188fd49006, type: 3}
       propertyPath: m_Size.y
@@ -2553,7 +2553,7 @@ Transform:
   m_GameObject: {fileID: 498404324}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.74, y: -0.11, z: 0}
+  m_LocalPosition: {x: 0.91, y: 0.07, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2962,6 +2962,7 @@ MonoBehaviour:
   walk: {fileID: 0}
   jump: {fileID: 8300000, guid: 8243244011a62dd4297efa44fd0daeb3, type: 3}
   brickFix: {fileID: 8300000, guid: ae87c38fedc94b94899ced0ba060a997, type: 3}
+  brickBreak: {fileID: 8300000, guid: 827c0a858820367458799bae479d264a, type: 3}
 --- !u!212 &612270118
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -3541,7 +3542,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 50, y: -23.0845}
+  m_AnchoredPosition: {x: 57, y: -23.0845}
   m_SizeDelta: {x: 94.713806, y: 46.169006}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &765229168
@@ -12035,7 +12036,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -97.54225}
+  m_AnchoredPosition: {x: 13, y: -97.54225}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1935175537
@@ -12728,7 +12729,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 43114389470100216, guid: 1fe55231e6862c8448221d3e8b1fec40, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -10.6195
+      value: -10.75
       objectReference: {fileID: 0}
     - target: {fileID: 43114389470100216, guid: 1fe55231e6862c8448221d3e8b1fec40, type: 3}
       propertyPath: m_LocalPosition.y
@@ -12780,7 +12781,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6030650076041984573, guid: 1fe55231e6862c8448221d3e8b1fec40, type: 3}
       propertyPath: m_Size.x
-      value: 1.2078449
+      value: 1.4
       objectReference: {fileID: 0}
     - target: {fileID: 6030650076041984573, guid: 1fe55231e6862c8448221d3e8b1fec40, type: 3}
       propertyPath: m_Size.y

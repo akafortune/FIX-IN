@@ -43,7 +43,7 @@ public class GreenGuy : MonoBehaviour
     public BoxCollider2D checkBox;
 
     public AudioSource audioSource;
-    public AudioClip walk, jump, brickFix; // haven't found a good walk sound yet
+    public AudioClip walk, jump, brickFix, brickBreak; // haven't found a good walk sound yet
 
     private GameObject pickaxe, hammer;
     // Start is called before the first frame update
@@ -313,7 +313,7 @@ public class GreenGuy : MonoBehaviour
                 building = true;
                 buildClock = 0;
                 canMove = false;
-                audioSource.PlayOneShot(brickFix);
+                audioSource.PlayOneShot(brickBreak);
                 BaseBuilding.resources += BrickValue();
             }
         }

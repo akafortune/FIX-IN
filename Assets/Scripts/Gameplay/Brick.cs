@@ -42,8 +42,7 @@ public class Brick : MonoBehaviour
                 Ball.hits++;
                 animator.SetBool("IsBroken", true);
                 bc.isTrigger = true;
-                audioSource.clip = brickBreak;
-                audioSource.Play();
+                audioSource.PlayOneShot(brickBreak);
             }
     }
 
