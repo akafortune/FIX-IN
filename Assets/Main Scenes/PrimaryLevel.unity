@@ -503,6 +503,7 @@ MonoBehaviour:
   colorMatA: {fileID: 0}
   colorMatB: {fileID: 0}
   bricks: {fileID: 900775377911562965, guid: 48e9e960b5c283046ac3e12ae11524e8, type: 3}
+  brickValue: 0
 --- !u!1 &165595242
 GameObject:
   m_ObjectHideFlags: 0
@@ -684,6 +685,7 @@ MonoBehaviour:
   colorMatA: {fileID: 0}
   colorMatB: {fileID: 0}
   bricks: {fileID: 900775377911562965, guid: 48e9e960b5c283046ac3e12ae11524e8, type: 3}
+  brickValue: 0
 --- !u!1 &236724526
 GameObject:
   m_ObjectHideFlags: 0
@@ -1313,6 +1315,7 @@ MonoBehaviour:
   resourcesText: {fileID: 2122397061}
   ball: {fileID: 290909468}
   paddle: {fileID: 471462421}
+  roundTime: 10
 --- !u!1 &367644745
 GameObject:
   m_ObjectHideFlags: 0
@@ -4392,6 +4395,7 @@ MonoBehaviour:
   colorMatA: {fileID: 0}
   colorMatB: {fileID: 0}
   bricks: {fileID: 900775377911562965, guid: 48e9e960b5c283046ac3e12ae11524e8, type: 3}
+  brickValue: 0
 --- !u!1 &1236842746
 GameObject:
   m_ObjectHideFlags: 0
@@ -4567,6 +4571,7 @@ MonoBehaviour:
   colorMatA: {fileID: 0}
   colorMatB: {fileID: 0}
   bricks: {fileID: 900775377911562965, guid: 48e9e960b5c283046ac3e12ae11524e8, type: 3}
+  brickValue: 0
 --- !u!1001 &1259053909
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5400,6 +5405,7 @@ MonoBehaviour:
   colorMatA: {fileID: 0}
   colorMatB: {fileID: 0}
   bricks: {fileID: 900775377911562965, guid: 48e9e960b5c283046ac3e12ae11524e8, type: 3}
+  brickValue: 0
 --- !u!1 &1680106070
 GameObject:
   m_ObjectHideFlags: 0

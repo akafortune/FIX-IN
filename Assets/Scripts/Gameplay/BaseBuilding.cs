@@ -5,7 +5,6 @@ using UnityEngine;
 
 public class BaseBuilding : MonoBehaviour
 {
-
     public static int resources;
     public TextMeshProUGUI resourcesText;
     public enum Mode { build, defend };
@@ -20,6 +19,10 @@ public class BaseBuilding : MonoBehaviour
     private GameObject BuildUI;
     private GameObject DefendUI;
     private GameObject StartButton;
+
+    public float roundTime;
+    float roundClock = 0;
+
 
     // Start is called before the first frame update
     void Start()
@@ -46,6 +49,17 @@ public class BaseBuilding : MonoBehaviour
         if (resources == 0 && GameMode == Mode.build)
         {
             BeginRound();
+        }
+
+        if(GameMode == Mode.defend)
+        {
+            roundClock += Time.deltaTime;
+
+            if(roundClock >= roundTime)
+            {
+                roundClock = 0;
+                endRound();
+            }
         }
     }
 
@@ -79,6 +93,7 @@ public class BaseBuilding : MonoBehaviour
 
     public void BeginRound()
     {
+        Bricks = GameObject.FindGameObjectsWithTag("Brick");
         foreach (GameObject brick in Bricks)
         {
             //brick.GetComponent<Animator>().SetFloat("FixMultiplier",.65f);
@@ -93,6 +108,19 @@ public class BaseBuilding : MonoBehaviour
         paddle.SetActive(true);
         ball.SetActive(true);
         ball.GetComponent<Ball>().LaunchSequence();
+    }
+    
+    public void endRound()
+    {
+        foreach(GameObject brick in Bricks)
+        {
+            brick.SetActive(true);
+        }
+        GameMode = Mode.build;
+        DefendUI.SetActive(false);
+        BuildUI.SetActive(true);
+        paddle.SetActive(false);
+        ball.SetActive(false);
     }
 
     public void SkipBuild()

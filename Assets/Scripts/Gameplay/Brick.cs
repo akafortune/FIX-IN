@@ -8,7 +8,7 @@ using UnityEngine;
 public class Brick : MonoBehaviour
 {
     Animator animator;
-    BoxCollider2D bc; 
+    BoxCollider2D bc;
     public AudioSource audioSource;
     public AudioClip brickBreak;
     public SpriteRenderer fixIndicator;
@@ -40,6 +40,7 @@ public class Brick : MonoBehaviour
                 bc.isTrigger = true;
                 audioSource.clip = brickBreak;
                 audioSource.Play();
+                BaseBuilding.resources += this.transform.parent.GetComponent<BrickLayers>().brickValue;
             }
     }
 

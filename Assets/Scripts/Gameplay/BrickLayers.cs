@@ -10,6 +10,7 @@ public class BrickLayers : MonoBehaviour
     public Material colorMatA;
     public Material colorMatB;
     public GameObject bricks;
+    public int brickValue;
     // Start is called before the first frame update
     void Awake()
     {
