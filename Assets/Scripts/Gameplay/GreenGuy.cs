@@ -182,7 +182,7 @@ public class GreenGuy : MonoBehaviour
         {
             buildClock += Time.deltaTime;
         }
-        if(!animator.GetBool("Swinging"))
+        if(!animator.GetBool("Swinging") || animator.GetBool("Stun"))
         {
             hammer.SetActive(false);
             pickaxe.SetActive(false);
