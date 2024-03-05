@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 0d91fb5af455dde469fd582bb827d742
+guid: 5cb6db69227005641865c6484bdbb22e
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -48,7 +48,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 16
+  spritePixelsToUnits: 100
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -110,7 +110,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Pickaxe_0
+      name: PickaxeIcon_0
       rect:
         serializedVersion: 2
         x: 0
@@ -124,14 +124,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 47a5991555097144a8242cdb5a4114bf
-      internalID: 1624422574
+      spriteID: b5539e5c105bb5d449b7488deac5769f
+      internalID: 1981216068
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Pickaxe_1
+      name: PickaxeIcon_1
       rect:
         serializedVersion: 2
         x: 16
@@ -145,8 +145,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 7f36384a36728e649a97a85ad890c53c
-      internalID: -1565774240
+      spriteID: a73245056c5b008498b21a647ad581c2
+      internalID: -222968274
       vertices: []
       indices: 
       edges: []
@@ -162,8 +162,8 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      Pickaxe_0: 1624422574
-      Pickaxe_1: -1565774240
+      PickaxeIcon_0: 1981216068
+      PickaxeIcon_1: -222968274
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
