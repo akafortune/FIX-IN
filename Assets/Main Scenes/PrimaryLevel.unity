@@ -1186,6 +1186,7 @@ MonoBehaviour:
   augment: 1.3
   gameOverMenu: {fileID: 1613192242}
   audioSource: {fileID: 1236842747}
+  songSource: {fileID: 617274883}
   wallBounce: {fileID: 8300000, guid: bcda1af0480a8034195adc66c3b59073, type: 3}
   paddleBounce: {fileID: 8300000, guid: b1a3d57a4a9edd64ea83e6d4d6ac665f, type: 3}
   ggBounce: {fileID: 8300000, guid: 0dd3689747dfee3419f421373b609ee7, type: 3}
@@ -1193,6 +1194,7 @@ MonoBehaviour:
   countDownSound: {fileID: 0}
   launchSound: {fileID: 0}
   ballExplode: {fileID: 8300000, guid: 49148fc9d244c90419e21d53f91f0614, type: 3}
+  defendSong: {fileID: 8300000, guid: 6a6627762098e8e47804b1675a75f037, type: 3}
   TestVersion: {fileID: 0}
   pauseMenu: {fileID: 1646893067}
   gameTimer: 0
@@ -2681,6 +2683,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pauseMenu: {fileID: 1646893067}
+  songSource: {fileID: 617274883}
 --- !u!114 &549752043
 MonoBehaviour:
   m_ObjectHideFlags: 0
