@@ -77,4 +77,9 @@ public class Brick : MonoBehaviour
         bc.isTrigger = true;
         animator.Play("BrokenBrick", 0, 0);
     }
+
+    public bool isBuilt()
+    {
+        return !animator.GetBool("IsBroken");
+    }
 }

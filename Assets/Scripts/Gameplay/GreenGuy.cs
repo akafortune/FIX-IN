@@ -44,6 +44,8 @@ public class GreenGuy : MonoBehaviour
 
     public AudioSource audioSource;
     public AudioClip walk, jump, brickFix; // haven't found a good walk sound yet
+
+    private GameObject pickaxe, hammer;
     // Start is called before the first frame update
     private void Awake()
     {
@@ -66,6 +68,10 @@ public class GreenGuy : MonoBehaviour
         canJump = true;
         floatingText = (GameObject)Resources.Load("FloatingTextParent");
         headBox = GameObject.Find("HeadBox").GetComponentInChildren<BoxCollider2D>();
+        hammer = GameObject.Find("Hammer");
+        hammer.SetActive(false);
+        pickaxe = GameObject.Find("Pickaxe");
+        pickaxe.SetActive(false);
     }
 
     // Update is called once per frame
@@ -176,6 +182,11 @@ public class GreenGuy : MonoBehaviour
         {
             buildClock += Time.deltaTime;
         }
+        if(!animator.GetBool("Swinging"))
+        {
+            hammer.SetActive(false);
+            pickaxe.SetActive(false);
+        }
 
         if (buildClock > buildTimer && building)
         {
@@ -285,6 +296,7 @@ public class GreenGuy : MonoBehaviour
             fixRay.collider.gameObject.SendMessage("fixBrick");
             animator.SetTrigger("Fix");
             animator.SetBool("Swinging", true);
+            hammer.SetActive(true);
             building = true;
             buildClock = 0;
             canMove = false;
@@ -295,6 +307,13 @@ public class GreenGuy : MonoBehaviour
             if(BaseBuilding.GameMode == BaseBuilding.Mode.build) //destroying bricks in build mode
             {
                 fixRay.collider.gameObject.SendMessage("cancelBrick");
+                animator.SetTrigger("Fix");
+                animator.SetBool("Swinging", true);
+                pickaxe.SetActive(true);
+                building = true;
+                buildClock = 0;
+                canMove = false;
+                audioSource.PlayOneShot(brickFix);
                 BaseBuilding.resources += BrickValue();
             }
         }

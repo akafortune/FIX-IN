@@ -1,4 +1,5 @@
 using System;
+using System.IO;
 using System.Linq;
 using TMPro;
 using UnityEngine;
@@ -11,20 +12,23 @@ public class BaseBuilding : MonoBehaviour
     public enum Mode { build, defend };
     public static Mode GameMode;
     public static bool lastBrickBuilt;
+    private bool firstRound;
 
     private Animator brickAnimator;
     public GameObject ball;
     public GameObject paddle;
-    private GameObject[] Bricks;
+    public GameObject[] Bricks;
 
     private GameObject BuildUI;
     private GameObject DefendUI;
     private GameObject StartButton;
+    private GameObject RebuildButton;
 
     // Start is called before the first frame update
     void Start()
     {
-        Bricks = GameObject.FindGameObjectsWithTag("Brick");
+        firstRound = true;
+        Bricks = getBrickArray();
         resources = 96;
         GameMode = Mode.build;
         ball = GameObject.Find("Ball");
@@ -33,9 +37,54 @@ public class BaseBuilding : MonoBehaviour
         paddle.SetActive(false);
         BuildUI = GameObject.Find("BuildUI");
         DefendUI = GameObject.Find("DefendUI");
+        RebuildButton = GameObject.Find("Rebuild Button");
         DefendUI.SetActive(false);
         lastBrickBuilt = false;
         GreenGuy.buildTimer = 0.65f;
+
+        if (!Directory.Exists(Application.persistentDataPath + "/SaveData"))
+        {
+            Directory.CreateDirectory(Application.persistentDataPath + "/SaveData");
+        }
+        if (!File.Exists(Application.persistentDataPath + "/SaveData/lastRound1.txt"))
+        {
+            StreamWriter sw = new StreamWriter(Application.persistentDataPath + "/SaveData/lastRound1.txt");
+            sw.WriteLine(resources);
+            sw.Close();
+        }
+
+        StreamReader sr = new StreamReader(Application.persistentDataPath + "/SaveData/lastRound1.txt");
+        int savedResources = Convert.ToInt32(sr.ReadLine());
+        sr.Close();
+        if(resources == savedResources)
+        {
+            RebuildButton.SetActive(false);
+        }
+    }
+
+    private GameObject[] getBrickArray()
+    {
+        Transform[] array1 = GameObject.Find("Layer 1").GetComponentsInChildren<Transform>();
+        Transform[] array2 = GameObject.Find("Layer 2").GetComponentsInChildren<Transform>();
+        Transform[] array3 = GameObject.Find("Layer 3").GetComponentsInChildren<Transform>();
+        Transform[] array4 = GameObject.Find("Layer 4").GetComponentsInChildren<Transform>();
+        Transform[] array5 = GameObject.Find("Layer 5").GetComponentsInChildren<Transform>();
+
+        Transform[] combinedArray;
+
+        combinedArray = array1.Concat(array2).Concat(array3).Concat(array4).Concat(array5).ToArray();
+        int index = 0;
+        GameObject[] finalArray = new GameObject[50];
+        foreach (Transform t in combinedArray)
+        {
+            if (t.gameObject.name.Equals("Brick(Clone)"))
+            {
+                finalArray[index] = t.gameObject;
+                index++;
+            }
+        }
+
+        return finalArray;
     }
 
     // Update is called once per frame
@@ -74,6 +123,16 @@ public class BaseBuilding : MonoBehaviour
 
     public void BeginRound()
     {
+        if(firstRound)
+        {
+            StreamWriter sw = new StreamWriter(Application.persistentDataPath + "/SaveData/lastRound1.txt");
+            sw.WriteLine(resources);
+            foreach(GameObject brick in Bricks)
+            {
+                sw.Write(brick.GetComponent<Brick>().isBuilt() + ",");
+            }
+            sw.Close();
+        }
         foreach (GameObject brick in Bricks)
         {
             //brick.GetComponent<Animator>().SetFloat("FixMultiplier",.65f);
@@ -106,5 +165,23 @@ public class BaseBuilding : MonoBehaviour
         {
             brick.fixBrick();
         }
+    }
+
+    public void BuildLast()
+    {
+        StreamReader sr = new StreamReader(Application.persistentDataPath + "/SaveData/lastRound1.txt");
+        resources = Convert.ToInt32(sr.ReadLine());
+        string[] brickArrangement = sr.ReadLine().Split(',');
+        int index = 0;
+        foreach(GameObject brick in Bricks)
+        {
+            if (Convert.ToBoolean(brickArrangement[index]))
+                brick.GetComponent<Brick>().fixBrick();
+            else
+                brick.GetComponent<Brick>().cancelBrick();
+            index++;
+        }
+        sr.Close();
+        RebuildButton.SetActive(false);
     }
 }
