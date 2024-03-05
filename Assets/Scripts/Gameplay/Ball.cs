@@ -22,8 +22,8 @@ public class Ball : MonoBehaviour
     private float mapSizeAugment;
     public GameObject gameOverMenu;
     private GameObject arrow;
-    public AudioSource audioSource;
-    public AudioClip wallBounce, paddleBounce, ggBounce, bottomWallBounce, countDownSound, launchSound, ballExplode;
+    public AudioSource audioSource, songSource;
+    public AudioClip wallBounce, paddleBounce, ggBounce, bottomWallBounce, countDownSound, launchSound, ballExplode, defendSong;
     public TextMeshProUGUI TestVersion;
 
     private int minAngle, maxAngle, ballAngle;
@@ -80,6 +80,7 @@ public class Ball : MonoBehaviour
 
     public void LaunchSequence()
     {
+        songSource.Pause();
         ResetBall();
         Rotate();
         countingDown = true;
@@ -153,6 +154,8 @@ public class Ball : MonoBehaviour
 
     public void Launch()
     {
+        songSource.clip = defendSong;
+        songSource.Play();
         explodingParticle.transform.position = transform.position;
         explodingParticle.SetActive(false);
         BaseBuilding.lastBrickBuilt = true;
@@ -258,6 +261,7 @@ public class Ball : MonoBehaviour
             Time.timeScale = 0f;
             gameOverMenu.SetActive(true);
             audioSource.PlayOneShot(bottomWallBounce);
+            songSource.Pause();
         }
         else if (collision.gameObject.name.Equals("GreenGuy"))
         {
