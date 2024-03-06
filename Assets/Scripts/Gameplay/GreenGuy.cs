@@ -302,6 +302,9 @@ public class GreenGuy : MonoBehaviour
             }
             if (colorSwap)
             {fixRay.collider.gameObject.GetComponent<SpriteRenderer>().color = red;}
+            else
+            {fixRay.collider.gameObject.GetComponent<SpriteRenderer>().color = blue;}
+            colorSwap = !colorSwap;
             fixRay.collider.gameObject.SendMessage("fixBrick");
             animator.SetTrigger("Fix");
             animator.SetBool("Swinging", true);

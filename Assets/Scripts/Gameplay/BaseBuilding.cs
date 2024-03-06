@@ -239,6 +239,7 @@ public class BaseBuilding : MonoBehaviour
                 brick.GetComponent<Brick>().fixBrick();
                 if (colorSwap) {brick.GetComponent<SpriteRenderer>().color = red;}
                 else {brick.GetComponent<SpriteRenderer>().color = blue;}
+                colorSwap = !colorSwap;
                 }
             else
                 brick.GetComponent<Brick>().cancelBrick();
