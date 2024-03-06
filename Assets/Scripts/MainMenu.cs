@@ -24,6 +24,7 @@ public class MainMenu : MonoBehaviour
         {
             canvas.SetActive(false);
             loadScreen.SetActive(true);
+            loadScreen.gameObject.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 1);
         }    
         SceneManager.LoadScene(scene); 
     }
