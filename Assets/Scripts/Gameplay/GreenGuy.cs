@@ -210,7 +210,7 @@ public class GreenGuy : MonoBehaviour
             highScoreText.text = PlayerPrefs.GetInt("HighScore").ToString();
         }
 
-        if(fixRay.collider != null)
+        if(fixRay.collider != null && canJump && rb.velocity.y < .25 && rb.velocity.y > -.25)
         {
             if (fixRay.collider.isTrigger)
             {
