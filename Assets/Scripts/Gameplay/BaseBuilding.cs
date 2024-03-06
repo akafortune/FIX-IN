@@ -10,9 +10,11 @@ public class BaseBuilding : MonoBehaviour
     public static int resources;
     public TextMeshProUGUI resourcesText;
     public enum Mode { build, defend };
+    public float roundTime;
     public static Mode GameMode;
     public static bool lastBrickBuilt;
     private bool firstRound;
+    private float roundClock = 0;
 
     private Animator brickAnimator;
     public GameObject ball;
@@ -29,7 +31,7 @@ public class BaseBuilding : MonoBehaviour
     {
         firstRound = true;
         Bricks = getBrickArray();
-        resources = 96;
+        resources = 45;
         GameMode = Mode.build;
         ball = GameObject.Find("Ball");
         ball.SetActive(false);
@@ -41,6 +43,7 @@ public class BaseBuilding : MonoBehaviour
         DefendUI.SetActive(false);
         lastBrickBuilt = false;
         GreenGuy.buildTimer = 0.65f;
+        roundTime = 60;
 
         if (!Directory.Exists(Application.persistentDataPath + "/SaveData"))
         {
@@ -56,7 +59,7 @@ public class BaseBuilding : MonoBehaviour
         StreamReader sr = new StreamReader(Application.persistentDataPath + "/SaveData/lastRound1.txt");
         int savedResources = Convert.ToInt32(sr.ReadLine());
         sr.Close();
-        if(resources == savedResources)
+        if (resources == savedResources)
         {
             RebuildButton.SetActive(false);
         }
@@ -90,7 +93,19 @@ public class BaseBuilding : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        Debug.Log(resources);
         resourcesText.text = Convert.ToString(resources);
+
+        if(GameMode == Mode.defend)
+        {
+            roundClock += Time.deltaTime;
+
+            if(roundClock >= roundTime)
+            {
+                BeginBuild();
+                roundClock = 0;
+            }
+        }
     }
 
     /*
@@ -116,7 +131,7 @@ public class BaseBuilding : MonoBehaviour
         }
     }*/
 
-    public void Spend(int value)
+    public static void Spend(int value)
     {
         resources -= value;
     }
@@ -138,7 +153,7 @@ public class BaseBuilding : MonoBehaviour
         foreach (GameObject brick in Bricks)
         {
             //brick.GetComponent<Animator>().SetFloat("FixMultiplier",.65f);
-            if (brick.GetComponent<Animator>().GetBool("IsBroken"))
+            if (brick.GetComponent<Collider2D>().isTrigger)
             {
                 brick.SetActive(false);
             }
@@ -149,6 +164,26 @@ public class BaseBuilding : MonoBehaviour
         paddle.SetActive(true);
         ball.SetActive(true);
         ball.GetComponent<Ball>().LaunchSequence();
+    }
+
+    public void BeginBuild()
+    {
+        foreach(GameObject brick in Bricks)
+        {
+            if (!brick.activeInHierarchy)
+            {
+                brick.SetActive(true);
+                Animator brickAnim = brick.GetComponent<Animator>();
+                brickAnim.SetBool("IsBroken", true);
+                brickAnim.Play("BrokenBrick", 0, 0);
+            }
+        }
+        resources += 15;
+        GameMode = Mode.build;
+        DefendUI.SetActive(false);
+        BuildUI.SetActive(true);
+        paddle.SetActive(false);
+        ball.SetActive(false);
     }
 
     public void SkipBuild()

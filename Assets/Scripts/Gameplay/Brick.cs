@@ -43,6 +43,7 @@ public class Brick : MonoBehaviour
                 animator.SetBool("IsBroken", true);
                 bc.isTrigger = true;
                 audioSource.PlayOneShot(brickBreak);
+                //BaseBuilding.resources += this.GetComponentInParent<BrickLayers>().brickValue;
             }
     }
 
