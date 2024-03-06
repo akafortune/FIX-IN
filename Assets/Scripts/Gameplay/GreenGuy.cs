@@ -292,6 +292,10 @@ public class GreenGuy : MonoBehaviour
                 {
                     BaseBuilding.resources -= BrickValue();
                 }
+                else
+                {
+                    return;
+                }
             }
             fixRay.collider.gameObject.SendMessage("fixBrick");
             animator.SetTrigger("Fix");
