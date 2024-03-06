@@ -16,6 +16,8 @@ public class BaseBuilding : MonoBehaviour
     private bool firstRound;
     private float roundClock = 0;
 
+    private AudioSource songSource;
+    private AudioClip buildSong;
     private Animator brickAnimator;
     public GameObject ball;
     public GameObject paddle;
@@ -29,6 +31,8 @@ public class BaseBuilding : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        songSource = GameObject.Find("SongSource").GetComponent<AudioSource>();
+        buildSong = (AudioClip) Resources.Load("SFX/BuildMusic");
         firstRound = true;
         Bricks = getBrickArray();
         resources = 45;
@@ -178,6 +182,7 @@ public class BaseBuilding : MonoBehaviour
                 brickAnim.Play("BrokenBrick", 0, 0);
             }
         }
+        songSource.clip = buildSong;
         resources += 15;
         GameMode = Mode.build;
         DefendUI.SetActive(false);

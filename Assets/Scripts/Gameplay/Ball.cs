@@ -42,6 +42,8 @@ public class Ball : MonoBehaviour
     // Start is called before the first frame update
     void Awake()
     {
+        songSource = GameObject.Find("SongSource").GetComponent<AudioSource>();
+        defendSong = (AudioClip) Resources.Load("SFX/UpdatedDefendSong");
         countDownAudioPlayed = new bool[3];
         StaticspeedMultiplier = 1.25f;
         RampspeedMultiplier = 1f;

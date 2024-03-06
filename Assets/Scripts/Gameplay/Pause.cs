@@ -12,6 +12,7 @@ public class Pause : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        songSource = GameObject.Find("SongSource").GetComponent<AudioSource>();
         pauseMenu = GameObject.Find("PauseMenu");
         StartButton = GameObject.Find("Start Button");
         GameObject.Find("MusicSource");
