@@ -46,6 +46,10 @@ public class GreenGuy : MonoBehaviour
     public AudioClip walk, jump, brickFix, brickBreak; // haven't found a good walk sound yet
 
     private GameObject pickaxe, hammer;
+
+    Color red;
+    Color blue;
+    bool colorSwap;
     // Start is called before the first frame update
     private void Awake()
     {
@@ -72,6 +76,9 @@ public class GreenGuy : MonoBehaviour
         hammer.SetActive(false);
         pickaxe = GameObject.Find("Pickaxe");
         pickaxe.SetActive(false);
+        red = new Color(244f, 0f, 0f, 1f);
+        blue = new Color(0f, 46f, 255f, 1f);
+        colorSwap = false;
     }
 
     // Update is called once per frame
@@ -293,6 +300,8 @@ public class GreenGuy : MonoBehaviour
                     BaseBuilding.resources -= BrickValue();
                 }
             }
+            if (colorSwap)
+            {fixRay.collider.gameObject.GetComponent<SpriteRenderer>().color = red;}
             fixRay.collider.gameObject.SendMessage("fixBrick");
             animator.SetTrigger("Fix");
             animator.SetBool("Swinging", true);

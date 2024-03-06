@@ -29,6 +29,10 @@ public class BaseBuilding : MonoBehaviour
     private GameObject StartButton;
     private GameObject RebuildButton;
 
+    Color red;
+    Color blue;
+    bool colorSwap;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -55,6 +59,9 @@ public class BaseBuilding : MonoBehaviour
         lastBrickBuilt = false;
         GreenGuy.buildTimer = 0.65f;
         roundTime = 10;
+        red = new Color(244f, 0f, 0f, 1f);
+        blue = new Color(0f, 46f, 255f, 1f);
+        colorSwap = false;
 
         if (!Directory.Exists(Application.persistentDataPath + "/SaveData"))
         {
@@ -74,6 +81,7 @@ public class BaseBuilding : MonoBehaviour
         {
             RebuildButton.SetActive(false);
         }
+
     }
 
     private GameObject[] getBrickArray()
@@ -227,7 +235,11 @@ public class BaseBuilding : MonoBehaviour
         foreach(GameObject brick in Bricks)
         {
             if (Convert.ToBoolean(brickArrangement[index]))
+                {
                 brick.GetComponent<Brick>().fixBrick();
+                if (colorSwap) {brick.GetComponent<SpriteRenderer>().color = red;}
+                else {brick.GetComponent<SpriteRenderer>().color = blue;}
+                }
             else
                 brick.GetComponent<Brick>().cancelBrick();
             index++;
