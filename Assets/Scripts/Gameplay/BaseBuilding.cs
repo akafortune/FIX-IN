@@ -104,7 +104,6 @@ public class BaseBuilding : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Debug.Log(resources);
         resourcesText.text = Convert.ToString(resources);
 
         if(GameMode == Mode.defend)
