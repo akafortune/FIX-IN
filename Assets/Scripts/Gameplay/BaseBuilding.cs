@@ -54,7 +54,7 @@ public class BaseBuilding : MonoBehaviour
         DefendUI.SetActive(false);
         lastBrickBuilt = false;
         GreenGuy.buildTimer = 0.65f;
-        roundTime = 10;
+        roundTime = 60;
 
         if (!Directory.Exists(Application.persistentDataPath + "/SaveData"))
         {
