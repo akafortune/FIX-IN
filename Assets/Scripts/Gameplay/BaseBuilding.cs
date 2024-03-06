@@ -167,7 +167,13 @@ public class BaseBuilding : MonoBehaviour
     {
         foreach(GameObject brick in Bricks)
         {
-            brick.SetActive(true);
+            if (!brick.activeInHierarchy)
+            {
+                brick.SetActive(true);
+                Animator brickAnim = brick.GetComponent<Animator>();
+                brickAnim.SetBool("IsBroken", true);
+                brickAnim.Play("BrokenBrick", 0, 0);
+            }
         }
         GameMode = Mode.build;
         DefendUI.SetActive(false);
