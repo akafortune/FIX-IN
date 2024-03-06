@@ -17,7 +17,7 @@ public class BaseBuilding : MonoBehaviour
     private float roundClock = 0;
 
     private AudioSource songSource;
-    private AudioClip buildSong;
+    private AudioClip buildSong, defendSong;
     private Animator brickAnimator;
     public GameObject ball;
     public GameObject paddle;
@@ -25,6 +25,7 @@ public class BaseBuilding : MonoBehaviour
 
     private GameObject BuildUI;
     private GameObject DefendUI;
+    private TextMeshProUGUI Countdown;
     private GameObject StartButton;
     private GameObject RebuildButton;
 
@@ -33,6 +34,12 @@ public class BaseBuilding : MonoBehaviour
     {
         songSource = GameObject.Find("SongSource").GetComponent<AudioSource>();
         buildSong = (AudioClip) Resources.Load("SFX/BuildMusic");
+        defendSong = (AudioClip) Resources.Load("SFX/UpdatedDefendSong");
+        songSource.clip = defendSong;
+        songSource.Play();
+        songSource.clip = buildSong;
+        songSource.Play();
+        Countdown = GameObject.Find("Countdown").GetComponent<TextMeshProUGUI>();
         firstRound = true;
         Bricks = getBrickArray();
         resources = 45;
@@ -47,7 +54,7 @@ public class BaseBuilding : MonoBehaviour
         DefendUI.SetActive(false);
         lastBrickBuilt = false;
         GreenGuy.buildTimer = 0.65f;
-        roundTime = 60;
+        roundTime = 10;
 
         if (!Directory.Exists(Application.persistentDataPath + "/SaveData"))
         {
@@ -172,6 +179,7 @@ public class BaseBuilding : MonoBehaviour
 
     public void BeginBuild()
     {
+        Countdown.text = "";
         foreach(GameObject brick in Bricks)
         {
             if (!brick.activeInHierarchy)
@@ -183,6 +191,7 @@ public class BaseBuilding : MonoBehaviour
             }
         }
         songSource.clip = buildSong;
+        songSource.UnPause();
         resources += 15;
         GameMode = Mode.build;
         DefendUI.SetActive(false);

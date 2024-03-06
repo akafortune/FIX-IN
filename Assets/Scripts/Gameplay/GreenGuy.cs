@@ -286,27 +286,21 @@ public class GreenGuy : MonoBehaviour
         {
             string parentBrick = fixRay.collider.transform.parent.gameObject.name;
 
-
             if (BaseBuilding.GameMode == BaseBuilding.Mode.build)
             {
-                if(BaseBuilding.resources - BrickValue() >= 0)
+                if (BaseBuilding.resources - BrickValue() >= 0)
                 {
                     BaseBuilding.resources -= BrickValue();
-                    fixRay.collider.gameObject.SendMessage("fixBrick");
-                    animator.SetTrigger("Fix");
-                    animator.SetBool("Swinging", true);
-                    hammer.SetActive(true);
-                    building = true;
-                    buildClock = 0;
-                    canMove = false;
-                    audioSource.PlayOneShot(brickFix);
-                }
-
-                if(BaseBuilding.resources - BrickValue() <= 0)
-                {
-                    return;
                 }
             }
+            fixRay.collider.gameObject.SendMessage("fixBrick");
+            animator.SetTrigger("Fix");
+            animator.SetBool("Swinging", true);
+            hammer.SetActive(true);
+            building = true;
+            buildClock = 0;
+            canMove = false;
+            audioSource.PlayOneShot(brickFix);
         }
         else
         {
