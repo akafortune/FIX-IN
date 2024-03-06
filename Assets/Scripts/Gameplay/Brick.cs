@@ -23,6 +23,7 @@ public class Brick : MonoBehaviour
         animator = GetComponent<Animator>();
         bc = GetComponent<BoxCollider2D>();
         fixIndicator.enabled = false;
+        breakIndicator.enabled = false;
     }
 
     // Update is called once per frame
