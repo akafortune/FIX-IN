@@ -242,16 +242,16 @@ public class GreenGuy : MonoBehaviour
                 brickValue = 5;
                 break;
             case "Layer 2":
-                brickValue = 4;
-                break;
-            case "Layer 3":
                 brickValue = 3;
                 break;
+            case "Layer 3":
+                brickValue = 1;
+                break;
             case "Layer 4":
-                brickValue = 2;
+                brickValue = 3;
                 break;
             case "Layer 5":
-                brickValue = 1;
+                brickValue = 5;
                 break;
         }
         return brickValue;
