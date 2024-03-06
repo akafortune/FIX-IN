@@ -146,6 +146,7 @@ public class BaseBuilding : MonoBehaviour
                 sw.Write(brick.GetComponent<Brick>().isBuilt() + ",");
             }
             sw.Close();
+            firstRound = false;
         }
         foreach (GameObject brick in Bricks)
         {
