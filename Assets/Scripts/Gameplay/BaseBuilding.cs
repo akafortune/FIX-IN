@@ -31,7 +31,7 @@ public class BaseBuilding : MonoBehaviour
     {
         firstRound = true;
         Bricks = getBrickArray();
-        resources = 96;
+        resources = 45;
         GameMode = Mode.build;
         ball = GameObject.Find("Ball");
         ball.SetActive(false);
@@ -43,6 +43,7 @@ public class BaseBuilding : MonoBehaviour
         DefendUI.SetActive(false);
         lastBrickBuilt = false;
         GreenGuy.buildTimer = 0.65f;
+        roundTime = 60;
 
         if (!Directory.Exists(Application.persistentDataPath + "/SaveData"))
         {
@@ -176,6 +177,7 @@ public class BaseBuilding : MonoBehaviour
                 brickAnim.Play("BrokenBrick", 0, 0);
             }
         }
+        resources += 15;
         GameMode = Mode.build;
         DefendUI.SetActive(false);
         BuildUI.SetActive(true);
