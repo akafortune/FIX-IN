@@ -10,7 +10,7 @@ using UnityEngine.UIElements;
 public class GreenGuy : MonoBehaviour
 {
     public Animator animator; //
-    public PlatformEffector2D[] platforms; //
+    public BoxCollider2D[] platforms; //
     public Rigidbody2D rb; //
     public RaycastHit2D fixRay; //
     public LayerMask layersToHit;
@@ -58,7 +58,7 @@ public class GreenGuy : MonoBehaviour
     }
     void Start()
     {
-        platforms = GameObject.Find("Platforms").GetComponentsInChildren<PlatformEffector2D>();
+        platforms = GameObject.Find("Platforms").GetComponentsInChildren<BoxCollider2D>();
         SwingDustTransform = GameObject.Find("SwingDust").GetComponent<Transform>();
         Physics2D.queriesHitTriggers = true; //making it so that ray can detect triggers
         animator = GetComponent<Animator>();
@@ -76,6 +76,7 @@ public class GreenGuy : MonoBehaviour
         pickaxe = GameObject.Find("Pickaxe");
         pickaxe.SetActive(false);
         bouncing = false;
+        bouncePadValue = 1.7f;
     }
 
     // Update is called once per frame
@@ -88,37 +89,17 @@ public class GreenGuy : MonoBehaviour
         if(bouncing && rb.velocity.y < 0)
         {
             bouncing = false;
-            foreach (PlatformEffector2D platform in platforms)
+            foreach (BoxCollider2D platform in platforms)
             {
-                platform.gameObject.GetComponent<BoxCollider2D>().enabled = true;
+                platform.enabled = true;
             }
         }
 
         float adjustedSpeed = horizontalSpeed * Time.deltaTime * speedMod;
-        if(platformRotated)
-        {
-            platformClock += Time.deltaTime;
-            if(platformClock > .3f)
-            {
-                platformRotated = false;
-                foreach (PlatformEffector2D plat in platforms)
-                {
-                    plat.rotationalOffset = 0;
-                }
-            }
-        }
+        
         //Debug.Log(rb.velocity.y);
         if(canMove && Time.timeScale != 0)
         {
-            if (Input.GetKeyDown(KeyCode.S))
-            {
-                foreach (PlatformEffector2D plat in platforms)
-                {
-                    plat.rotationalOffset = 180;
-                }
-                platformRotated = true;
-                platformClock = 0;
-            }
             if (Input.GetKey(KeyCode.A))
             {
                 transform.Translate(-adjustedSpeed, 0, 0, Space.World);
@@ -164,9 +145,9 @@ public class GreenGuy : MonoBehaviour
                 animator.SetTrigger("Jump");
                 audioSource.PlayOneShot(jump);
                 floorRay.SendMessage("JumpAnimCrt");
-                foreach(PlatformEffector2D platform in platforms)
+                foreach(BoxCollider2D platform in platforms)
                 {
-                    platform.rotationalOffset = 0;
+                    platform.enabled = true;
                 }
             }
 
@@ -351,19 +332,23 @@ public class GreenGuy : MonoBehaviour
         {
             bouncing = true;
             float yVelocity = rb.velocity.y;
-            if(yVelocity >= 0)
+            if(yVelocity > 5)
+            {
+                rb.AddForce(new Vector2(0, jumpForce));
+            }
+            else if(yVelocity > -1.5f && canJump)
             {
                 rb.velocity = Vector2.zero;
-                rb.AddForce(new Vector2(0, jumpForce * (bouncePadValue + .2f)));
+                rb.AddForce(new Vector2(0, jumpForce * (bouncePadValue)));
             }
             else
                 return;
             canJump = false;
             animator.SetTrigger("Jump");
             floorRay.SendMessage("JumpAnimCrt");
-            foreach (PlatformEffector2D platform in platforms)
+            foreach (BoxCollider2D platform in platforms)
             {
-                platform.gameObject.GetComponent<BoxCollider2D>().enabled = false;
+                platform.enabled = false;
             }
         }
     }
