@@ -11,6 +11,8 @@ public class BaseBuilding : MonoBehaviour
     public TextMeshProUGUI resourcesText;
     public enum Mode { build, defend };
     public float roundTime;
+    private float roundCount = 0;
+    public TextMeshProUGUI roundText;
     public static Mode GameMode;
     public static bool lastBrickBuilt;
     private bool firstRound;
@@ -54,7 +56,8 @@ public class BaseBuilding : MonoBehaviour
         DefendUI.SetActive(false);
         lastBrickBuilt = false;
         GreenGuy.buildTimer = 0.65f;
-        roundTime = 60;
+        roundTime = 63.5f;
+        roundCount++;
 
         if (!Directory.Exists(Application.persistentDataPath + "/SaveData"))
         {
@@ -74,6 +77,7 @@ public class BaseBuilding : MonoBehaviour
         {
             RebuildButton.SetActive(false);
         }
+        roundText = GameObject.Find("RoundNumberText").GetComponent<TextMeshProUGUI>();
     }
 
     private GameObject[] getBrickArray()
@@ -116,6 +120,7 @@ public class BaseBuilding : MonoBehaviour
                 roundClock = 0;
             }
         }
+        roundText.text = roundCount.ToString();
     }
 
     /*
@@ -197,6 +202,7 @@ public class BaseBuilding : MonoBehaviour
         BuildUI.SetActive(true);
         paddle.SetActive(false);
         ball.SetActive(false);
+        roundCount++;
     }
 
     public void SkipBuild()

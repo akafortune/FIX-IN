@@ -17,18 +17,21 @@ public class TimeInGame : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        currentTime = 0f;
+        currentTime = 60f;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (BaseBuilding.GameMode == BaseBuilding.Mode.defend)
+        if (timeText.IsActive() && BaseBuilding.GameMode == BaseBuilding.Mode.defend)
         {
             TimeSpan time;
-            currentTime += Time.deltaTime;
+            //Debug.Log("Time: " + currentTime);
+            currentTime -= Time.deltaTime;
             time = TimeSpan.FromSeconds(currentTime);
             timeText.text = time.ToString(@"mm\:ss");
+            if (currentTime <= 0f)
+                currentTime = 60f;
         }
     }
     void FixedUpdate()
