@@ -1,6 +1,7 @@
 using JetBrains.Annotations;
 using System.Collections;
 using System.Collections.Generic;
+using System.Security.Cryptography;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -342,14 +343,21 @@ public class GreenGuy : MonoBehaviour
             score += 5;
             ShowFloatingText("5");
         }
-        if(collision.gameObject.name.Equals("BouncePad") && !bouncing)
+    }
+
+    private void OnTriggerStay2D(Collider2D collision)
+    {
+        if (collision.gameObject.name.Equals("BouncePad") && !bouncing)
         {
+            bouncing = true;
             float yVelocity = rb.velocity.y;
-            rb.velocity = Vector3.zero;
-            if (yVelocity > 0)
+            if(yVelocity >= 0)
+            {
+                rb.velocity = Vector2.zero;
                 rb.AddForce(new Vector2(0, jumpForce * (bouncePadValue + .2f)));
+            }
             else
-                rb.AddForce(new Vector2(0, jumpForce * bouncePadValue));
+                return;
             canJump = false;
             animator.SetTrigger("Jump");
             floorRay.SendMessage("JumpAnimCrt");
@@ -357,7 +365,6 @@ public class GreenGuy : MonoBehaviour
             {
                 platform.gameObject.GetComponent<BoxCollider2D>().enabled = false;
             }
-            bouncing = true;
         }
     }
 
