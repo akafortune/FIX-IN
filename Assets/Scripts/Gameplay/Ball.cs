@@ -291,7 +291,7 @@ public class Ball : MonoBehaviour
         if (gameTimer > 30)
         {
             float y = gameTimer - 30f;
-            float x = (-1f) * (25f / (Mathf.Pow(y, 2f) + (1.86f * y) + 86.5f)) + (1.3f);
+            float x = (-1f) * (25f / (Mathf.Pow(y, 2f) + (1.86f * y) + 86.5f)) + (1.28f);
             if (x < 1)
             {
                 RampspeedMultiplier = 1;
