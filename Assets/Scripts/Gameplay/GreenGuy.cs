@@ -14,6 +14,8 @@ public class GreenGuy : MonoBehaviour
     public RaycastHit2D fixRay; //
     public LayerMask layersToHit;
     public Transform rayOrigin;
+    public float bouncePadValue;
+    private bool bouncing, speeding;
 
     public GameObject floorRay;
     public Transform SwingDustTransform;
@@ -72,6 +74,7 @@ public class GreenGuy : MonoBehaviour
         hammer.SetActive(false);
         pickaxe = GameObject.Find("Pickaxe");
         pickaxe.SetActive(false);
+        bouncing = false;
     }
 
     // Update is called once per frame
@@ -80,6 +83,15 @@ public class GreenGuy : MonoBehaviour
         fixRay = Physics2D.Raycast(rayOrigin.position, new Vector2(fixMod , -1), distance, layersToHit);
 
         Debug.DrawLine(rayOrigin.position, rayOrigin.position + new Vector3(fixMod * distance, -1 * distance)); //visualising ray in editor
+
+        if(bouncing && rb.velocity.y < 0)
+        {
+            bouncing = false;
+            foreach (PlatformEffector2D platform in platforms)
+            {
+                platform.gameObject.GetComponent<BoxCollider2D>().enabled = true;
+            }
+        }
 
         float adjustedSpeed = horizontalSpeed * Time.deltaTime * speedMod;
         if(platformRotated)
@@ -329,6 +341,23 @@ public class GreenGuy : MonoBehaviour
         {
             score += 5;
             ShowFloatingText("5");
+        }
+        if(collision.gameObject.name.Equals("BouncePad") && !bouncing)
+        {
+            float yVelocity = rb.velocity.y;
+            rb.velocity = Vector3.zero;
+            if (yVelocity > 0)
+                rb.AddForce(new Vector2(0, jumpForce * (bouncePadValue + .2f)));
+            else
+                rb.AddForce(new Vector2(0, jumpForce * bouncePadValue));
+            canJump = false;
+            animator.SetTrigger("Jump");
+            floorRay.SendMessage("JumpAnimCrt");
+            foreach (PlatformEffector2D platform in platforms)
+            {
+                platform.gameObject.GetComponent<BoxCollider2D>().enabled = false;
+            }
+            bouncing = true;
         }
     }
 

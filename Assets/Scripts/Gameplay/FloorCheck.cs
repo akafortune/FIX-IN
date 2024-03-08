@@ -10,7 +10,7 @@ public class FloorCheck : MonoBehaviour
     public GreenGuy greenGuy;
     public BoxCollider2D checkBox;
     public LayerMask platforms;
-
+    private Rigidbody2D rb;
     public Animator animator;
 
     float clock = 0.2f;
@@ -23,6 +23,7 @@ public class FloorCheck : MonoBehaviour
     {
         HasJumped = true;
         animator = gameObject.GetComponentInParent<Animator>();
+        rb = gameObject.GetComponentInParent<Rigidbody2D>();
     }
 
     public void JumpAnimCrt()
@@ -39,12 +40,13 @@ public class FloorCheck : MonoBehaviour
             {
                 RaycastHit2D hit = Physics2D.Raycast(gameObject.transform.position, new Vector2(0 , -1), 0.05f, platforms);
                 Debug.DrawLine(transform.position, transform.position + new Vector3(0,-.05f));
-                if (hit.collider != null)
+                if (hit.collider != null && rb.velocity.y < .25 && rb.velocity.y > -.25)
                 {
+                    animator.ResetTrigger("Jump");
                     greenGuy.canJump = true;
                     greenGuy.animator.SetTrigger("Grounded");
                     HasJumped = false;
-
+                    animator.Play("Idle - Blink");
                 }
             }
             else {timer += Time.deltaTime;}

@@ -2892,7 +2892,7 @@ BoxCollider2D:
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 759
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 256
@@ -2944,6 +2944,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 256
   rayOrigin: {fileID: 498404325}
+  bouncePadValue: 1.7
   floorRay: {fileID: 1904182644}
   SwingDustTransform: {fileID: 0}
   jumpForce: 0
@@ -2968,7 +2969,7 @@ MonoBehaviour:
   audioSource: {fileID: 1236842747}
   walk: {fileID: 0}
   jump: {fileID: 8300000, guid: 8243244011a62dd4297efa44fd0daeb3, type: 3}
-  brickFix: {fileID: 8300000, guid: ae87c38fedc94b94899ced0ba060a997, type: 3}
+  brickFix: {fileID: 8300000, guid: 780a3197cd2321f418534c884096e93e, type: 3}
   brickBreak: {fileID: 8300000, guid: 827c0a858820367458799bae479d264a, type: 3}
 --- !u!212 &612270118
 SpriteRenderer:
