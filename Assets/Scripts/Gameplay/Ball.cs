@@ -13,6 +13,7 @@ public class Ball : MonoBehaviour
     private float ctdTimer;
     private bool countingDown;
     private bool[] countDownAudioPlayed;
+    private bool canRotate;
     private TextMeshProUGUI countdownText;
     public GameObject roundTimer;
     public float RampspeedMultiplier; //multiplier applies to static
@@ -65,7 +66,7 @@ public class Ball : MonoBehaviour
         countdownText = GameObject.Find("Countdown").GetComponent<TextMeshProUGUI>();
         countDownSound = (AudioClip) Resources.Load("SFX/Countdown");
         launchSound = (AudioClip) Resources.Load("SFX/Launch");
-        animator = gameObject.GetComponent<Animator>();
+        animator = gameObject.GetComponentInChildren<Animator>();
         //TestVersion = GameObject.Find("TestVersionText").GetComponent<TextMeshProUGUI>();
         //pauseMenu = GameObject.Find("PauseMenu");
         if (SceneManager.GetActiveScene() == SceneManager.GetSceneByBuildIndex(3) || SceneManager.GetActiveScene() == SceneManager.GetSceneByBuildIndex(4))
@@ -96,6 +97,7 @@ public class Ball : MonoBehaviour
 
     public void ResetBall()
     {
+        canRotate = false;
         countDownAudioPlayed = new bool[3];
         hits = 0;
         rb.velocity = Vector3.zero;
@@ -177,6 +179,7 @@ public class Ball : MonoBehaviour
         audioSource.PlayOneShot(launchSound);
         rb.velocity *= 10000f;
         //Debug.Log(rb.velocity.magnitude);
+        canRotate = true;
     } //Makes the ball start
 
     void FixedUpdate() //physics fuckery
