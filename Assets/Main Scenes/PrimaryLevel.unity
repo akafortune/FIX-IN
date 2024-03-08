@@ -3091,7 +3091,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 3
+  m_SortingOrder: 6
   m_Sprite: {fileID: 1984135851, guid: bce14f4bf83d2d64782077c88da280bd, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -9955,7 +9955,7 @@ GameObject:
   - component: {fileID: 1170065922}
   - component: {fileID: 1170065925}
   m_Layer: 6
-  m_Name: Rotating Sprite
+  m_Name: BallSprite
   m_TagString: Ball
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

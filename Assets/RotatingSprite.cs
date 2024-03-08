@@ -16,11 +16,11 @@ public class RotatingSprite : MonoBehaviour
     {
         if(rb.velocity.x > 0)
         {
-            transform.Rotate(0, 0, -10);
+            transform.Rotate(0, 0, -15);
         }
         else if(rb.velocity.x < 0)
         {
-            transform.Rotate(0, 0, 10);
+            transform.Rotate(0, 0, 15);
         }
     }
 }
