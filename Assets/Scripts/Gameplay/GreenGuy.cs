@@ -18,7 +18,11 @@ public class GreenGuy : MonoBehaviour
     public GameObject floorRay;
     public Transform SwingDustTransform;
     ParticleSystem dustParticle;
-    
+
+    public float controllerDeadZone = 0.1f;
+    public float horizontalMovementVal;
+    public float verticalMovementVal;
+    public bool joystickInUse;
     public int jumpForce;
     public int fixMod = 1;
     public static float speedMod = 1.5f;
@@ -72,11 +76,23 @@ public class GreenGuy : MonoBehaviour
         hammer.SetActive(false);
         pickaxe = GameObject.Find("Pickaxe");
         pickaxe.SetActive(false);
+        joystickInUse = false;
     }
 
     // Update is called once per frame
     void Update()
     {
+        horizontalMovementVal = Input.GetAxis("Horizontal");
+        verticalMovementVal = Input.GetAxis("Vertical");
+        if(horizontalMovementVal!=0)
+        {
+            joystickInUse = true;
+        }
+        else
+        {
+            joystickInUse = false;
+        }
+
         fixRay = Physics2D.Raycast(rayOrigin.position, new Vector2(fixMod , -1), distance, layersToHit);
 
         Debug.DrawLine(rayOrigin.position, rayOrigin.position + new Vector3(fixMod * distance, -1 * distance)); //visualising ray in editor
@@ -97,7 +113,7 @@ public class GreenGuy : MonoBehaviour
         //Debug.Log(rb.velocity.y);
         if(canMove && Time.timeScale != 0)
         {
-            if (Input.GetKeyDown(KeyCode.S))
+            if (Input.GetKeyDown(KeyCode.S)||verticalMovementVal < -.2f)
             {
                 foreach (PlatformEffector2D plat in platforms)
                 {
@@ -106,7 +122,7 @@ public class GreenGuy : MonoBehaviour
                 platformRotated = true;
                 platformClock = 0;
             }
-            if (Input.GetKey(KeyCode.A))
+            if (Input.GetKey(KeyCode.A)||horizontalMovementVal < -.1f)
             {
                 transform.Translate(-adjustedSpeed, 0, 0, Space.World);
                 
@@ -123,7 +139,7 @@ public class GreenGuy : MonoBehaviour
                     audioSource.Play();
                 }
             }
-            if (Input.GetKey(KeyCode.D))
+            if (Input.GetKey(KeyCode.D) || horizontalMovementVal > .1f)
             {
                 transform.Translate(adjustedSpeed, 0, 0, Space.World);
                 if (!Input.GetKey(KeyCode.A))
@@ -141,9 +157,12 @@ public class GreenGuy : MonoBehaviour
             }
             if ((!Input.GetKey(KeyCode.A) && !Input.GetKey(KeyCode.D)) || (Input.GetKey(KeyCode.A) && Input.GetKey(KeyCode.D)))
             {
-                animator.SetBool("Walking", false);
+                if(!joystickInUse)
+                {
+                    animator.SetBool("Walking", false);
+                }
             }
-            if (Input.GetKeyDown(KeyCode.W) && canJump && rb.velocity.y < .25 && rb.velocity.y > -.25 && !Input.GetKey(KeyCode.S))
+            if ((Input.GetKeyDown(KeyCode.W)||Input.GetKeyDown("joystick button 0")) && canJump && rb.velocity.y < .25 && rb.velocity.y > -.25 && !(Input.GetKey(KeyCode.S)|| verticalMovementVal < -.1f))
             {
                 //Debug.Log("jump");
                 rb.AddForce(new Vector2(0, jumpForce));
@@ -157,7 +176,7 @@ public class GreenGuy : MonoBehaviour
                 }
             }
 
-            if (Input.GetKeyDown(KeyCode.Space) && canJump && rb.velocity.y < .25 && rb.velocity.y >= 0)
+            if ((Input.GetKeyDown(KeyCode.Space)|| Input.GetKeyDown("joystick button 1")) && canJump && rb.velocity.y < .25 && rb.velocity.y >= 0)
             {
                 if (fixRay.collider != null)
                 {
