@@ -218,7 +218,7 @@ public class GreenGuy : MonoBehaviour
                 // Trigger floating text here
                 if (floatingText != null)
                 {
-                    ShowFloatingText("10");
+                    ShowFloatingText("+10");
                 }
             }
         }
@@ -347,7 +347,7 @@ public class GreenGuy : MonoBehaviour
         if (collision.gameObject.layer == 6 && !building)
         {
             score += 5;
-            ShowFloatingText("5");
+            ShowFloatingText("+5");
         }
     }
 
@@ -370,6 +370,6 @@ public class GreenGuy : MonoBehaviour
     {
         // text pop up should appear in the right direction no matter where the player faces
         GameObject flText = Instantiate(floatingText, transform.position + new Vector3(0, yOffset, 10), Quaternion.identity);
-        flText.GetComponentInChildren<TextMesh>().text = "+" + points;
+        flText.GetComponentInChildren<TextMesh>().text = points;
     }
 }
