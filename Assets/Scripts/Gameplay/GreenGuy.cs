@@ -16,7 +16,6 @@ public class GreenGuy : MonoBehaviour
     public LayerMask layersToHit;
     public Transform rayOrigin;
     public float bouncePadValue;
-    private bool bouncing, speeding;
 
     public GameObject floorRay;
     public Transform SwingDustTransform;
@@ -24,8 +23,8 @@ public class GreenGuy : MonoBehaviour
     
     public int jumpForce;
     public int fixMod = 1;
-    public static float speedMod = 1.5f;
-    public float horizontalSpeed = 2f;
+    public static float speedMod = 1f;
+    public float horizontalSpeed = 3f;
     public float stunClock, distance, platformClock;
     public static float stunTime = 2.5f;
     public bool canJump = false, canMove = true, platformRotated; //
@@ -49,6 +48,10 @@ public class GreenGuy : MonoBehaviour
     public AudioClip walk, jump, brickFix, brickBreak; // haven't found a good walk sound yet
 
     private GameObject pickaxe, hammer;
+
+    private float bounceTime, speedTime, shieldTime;
+    private bool bouncing, speeding, shielding;
+    private GameObject shield;
     // Start is called before the first frame update
     private void Awake()
     {
@@ -64,7 +67,7 @@ public class GreenGuy : MonoBehaviour
         animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
         jumpForce = 235 * (int)rb.mass;
-        horizontalSpeed = 2;
+        horizontalSpeed = 3;
         stunTime = 1.7f;
         yOffset = .5f;
         highScoreText.text = PlayerPrefs.GetInt("HighScore").ToString();
@@ -76,6 +79,8 @@ public class GreenGuy : MonoBehaviour
         pickaxe = GameObject.Find("Pickaxe");
         pickaxe.SetActive(false);
         bouncing = false;
+        speeding = false;
+        shielding = false;
         bouncePadValue = 1.7f;
     }
 
@@ -83,17 +88,7 @@ public class GreenGuy : MonoBehaviour
     void Update()
     {
         fixRay = Physics2D.Raycast(rayOrigin.position, new Vector2(fixMod , -1), distance, layersToHit);
-
         Debug.DrawLine(rayOrigin.position, rayOrigin.position + new Vector3(fixMod * distance, -1 * distance)); //visualising ray in editor
-
-        if(bouncing && rb.velocity.y < 0)
-        {
-            bouncing = false;
-            foreach (BoxCollider2D platform in platforms)
-            {
-                platform.enabled = true;
-            }
-        }
 
         float adjustedSpeed = horizontalSpeed * Time.deltaTime * speedMod;
         
@@ -176,6 +171,7 @@ public class GreenGuy : MonoBehaviour
         {
             buildClock += Time.deltaTime;
         }
+
         if(!animator.GetBool("Swinging") || animator.GetBool("Stun"))
         {
             hammer.SetActive(false);
@@ -197,6 +193,7 @@ public class GreenGuy : MonoBehaviour
                 }
             }
         }
+
         scoreText.text = ((int)score).ToString();
         if (score > PlayerPrefs.GetInt("HighScore", 0))
         {
@@ -317,7 +314,7 @@ public class GreenGuy : MonoBehaviour
         }
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void OnTriggerEnter2D(Collider2D collision) // bonk points
     {
         if (collision.gameObject.layer == 6 && !building)
         {
@@ -326,31 +323,28 @@ public class GreenGuy : MonoBehaviour
         }
     }
 
-    private void OnTriggerStay2D(Collider2D collision)
+    private void OnTriggerStay2D(Collider2D collision) // special tile interactions
     {
-        if (collision.gameObject.name.Equals("BouncePad") && !bouncing)
+
+    } 
+
+    public void Bounce()
+    {
+        float yVelocity = rb.velocity.y;
+        if (yVelocity > 5)
         {
-            bouncing = true;
-            float yVelocity = rb.velocity.y;
-            if(yVelocity > 5)
-            {
-                rb.AddForce(new Vector2(0, jumpForce));
-            }
-            else if(yVelocity > -1.5f && canJump)
-            {
-                rb.velocity = Vector2.zero;
-                rb.AddForce(new Vector2(0, jumpForce * (bouncePadValue)));
-            }
-            else
-                return;
-            canJump = false;
-            animator.SetTrigger("Jump");
-            floorRay.SendMessage("JumpAnimCrt");
-            foreach (BoxCollider2D platform in platforms)
-            {
-                platform.enabled = false;
-            }
+            rb.AddForce(new Vector2(0, jumpForce));
         }
+        else if (yVelocity > -1.5f && canJump)
+        {
+            rb.velocity = Vector2.zero;
+            rb.AddForce(new Vector2(0, jumpForce * (bouncePadValue)));
+        }
+        else
+            return;
+        canJump = false;
+        animator.SetTrigger("Jump");
+        floorRay.SendMessage("JumpAnimCrt");
     }
 
 
