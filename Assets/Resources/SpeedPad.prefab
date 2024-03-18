@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 8977608181438783129}
   - component: {fileID: 2418954728140469906}
   - component: {fileID: 1780141847519410253}
-  - component: {fileID: 637597873796341900}
+  - component: {fileID: 6712648192011269174}
   m_Layer: 8
   m_Name: SpeedPad
   m_TagString: Brick
@@ -29,7 +29,7 @@ Transform:
   m_GameObject: {fileID: 3747684032518093627}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.5, y: -3.6, z: 0}
+  m_LocalPosition: {x: -2.5, y: -2.6, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -153,7 +153,7 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 0.19832444}
   m_EdgeRadius: 0
---- !u!114 &637597873796341900
+--- !u!114 &6712648192011269174
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -162,6 +162,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 3747684032518093627}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 092b92d584d05044ab687b92b0bf0b72, type: 3}
+  m_Script: {fileID: 11500000, guid: 6af47d000dee12f43909ed0b37e61d93, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
