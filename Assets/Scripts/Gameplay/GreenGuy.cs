@@ -16,7 +16,7 @@ public class GreenGuy : MonoBehaviour
     public LayerMask layersToHit;
     public Transform rayOrigin;
     public float bouncePadValue;
-    private bool bouncing, speeding;
+    static private bool bouncing, speeding;
 
     public GameObject floorRay;
     public Transform SwingDustTransform;
@@ -49,6 +49,8 @@ public class GreenGuy : MonoBehaviour
     public AudioClip walk, jump, brickFix, brickBreak; // haven't found a good walk sound yet
 
     private GameObject pickaxe, hammer;
+
+    public GameObject SpeedParticles;
     // Start is called before the first frame update
     private void Awake()
     {
@@ -77,6 +79,9 @@ public class GreenGuy : MonoBehaviour
         pickaxe.SetActive(false);
         bouncing = false;
         bouncePadValue = 1.7f;
+
+        SpeedParticles = GameObject.Find("Zoom Trails");
+        SpeedParticles.SetActive(false);
     }
 
     // Update is called once per frame
@@ -217,6 +222,16 @@ public class GreenGuy : MonoBehaviour
             {
                 fixRay.collider.SendMessage("ShowBreakIndicator");
             }
+        }
+
+        //managing green guy particles for special bricks
+        if (speeding)
+        {
+            SpeedParticles.SetActive(true);
+        }
+        if (!speeding)
+        {
+            SpeedParticles.SetActive(false);
         }
     }
 
@@ -369,5 +384,10 @@ public class GreenGuy : MonoBehaviour
         // text pop up should appear in the right direction no matter where the player faces
         GameObject flText = Instantiate(floatingText, transform.position + new Vector3(0, yOffset, 10), Quaternion.identity);
         flText.GetComponentInChildren<TextMesh>().text = "+" + points;
+    }
+
+    public static void SetSpeeding(bool value)
+    {
+        speeding = value;
     }
 }

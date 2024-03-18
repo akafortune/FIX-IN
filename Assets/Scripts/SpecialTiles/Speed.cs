@@ -14,10 +14,12 @@ public class Speed : SpecialTile
     {
         Debug.Log("trigger");
         GreenGuy.speedMod = 1.5f;
+        GreenGuy.SetSpeeding(true);
     }
 
     protected override void stopAction()
     {
         GreenGuy.speedMod = 1;
+        GreenGuy.SetSpeeding(false);
     }
 }
