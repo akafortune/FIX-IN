@@ -13,13 +13,13 @@ public class Bounce : SpecialTile
     {
         greenGuy = GameObject.Find("GreenGuy");
         greenGuyRB = greenGuy.GetComponent<Rigidbody2D>();
-        effectLength = .15f;
+        effectLength = .1f;
         platforms = GameObject.Find("Platforms").GetComponentsInChildren<BoxCollider2D>();
     }
 
     protected override void Update()
     {
-        if (Time.time > timeStart + effectLength && effectActive && greenGuyRB.velocity.y < 0)
+        if ((Time.time > timeStart + effectLength && effectActive) || (effectActive && greenGuyRB.velocity.y < 0))
         {
             stopAction();
             effectActive = false;

@@ -272,6 +272,7 @@ public class Ball : MonoBehaviour
         }
         else if (collision.gameObject.name.Equals("Shield"))
         {
+            rb.AddForce(new Vector2(0, 50));
             rb.velocity *= 100;
         }
     }

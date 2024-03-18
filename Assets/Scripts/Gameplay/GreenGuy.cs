@@ -24,7 +24,7 @@ public class GreenGuy : MonoBehaviour
 
     public int jumpForce;
     public int fixMod = 1;
-    public static float speedMod = 1.5f;
+    public static float speedMod = 1f;
     public float horizontalSpeed = 2f;
     public float stunClock, distance, platformClock;
     public static float stunTime = 2.5f;
@@ -64,7 +64,7 @@ public class GreenGuy : MonoBehaviour
         animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
         jumpForce = 235 * (int)rb.mass;
-        horizontalSpeed = 2;
+        horizontalSpeed = 3;
         stunTime = 1.7f;
         yOffset = .5f;
         highScoreText.text = PlayerPrefs.GetInt("HighScore").ToString();
