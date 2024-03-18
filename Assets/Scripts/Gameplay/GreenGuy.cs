@@ -95,6 +95,15 @@ public class GreenGuy : MonoBehaviour
         //Debug.Log(rb.velocity.y);
         if(canMove && Time.timeScale != 0)
         {
+            if (Input.GetKeyDown(KeyCode.S))
+            {
+                foreach (BoxCollider2D plat in platforms)
+                {
+                    plat.enabled = false;
+                }
+                platformRotated = true;
+                platformClock = 0;
+            }
             if (Input.GetKey(KeyCode.A))
             {
                 transform.Translate(-adjustedSpeed, 0, 0, Space.World);
