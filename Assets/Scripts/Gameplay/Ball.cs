@@ -24,7 +24,7 @@ public class Ball : MonoBehaviour
     public GameObject gameOverMenu;
     private GameObject arrow;
     public AudioSource audioSource, songSource;
-    public AudioClip wallBounce, paddleBounce, ggBounce, bottomWallBounce, countDownSound, launchSound, ballExplode, defendSong;
+    public AudioClip wallBounce, paddleBounce, ggBounce, bottomWallBounce, countDownSound, launchSound, ballExplode, defendSong, parrySound;
     public TextMeshProUGUI TestVersion;
 
     private int minAngle, maxAngle, ballAngle;
@@ -39,6 +39,9 @@ public class Ball : MonoBehaviour
     public static int hits;
     private GameObject explodingParticle;
     private Vector3 particleLocation;
+
+    public bool isSlowed;
+    public float slowTime;
 
     // Start is called before the first frame update
     void Awake()
@@ -81,6 +84,8 @@ public class Ball : MonoBehaviour
         StaticspeedMultiplier *= augment;
         GreenGuy.stunTime /= augment;
         FinalspeedMultiplier = StaticspeedMultiplier;
+        isSlowed = false;
+        slowTime = 3f;
     }
 
     public void LaunchSequence()
@@ -228,6 +233,11 @@ public class Ball : MonoBehaviour
                 break;
         }
         trail.startColor = tailColor;
+        if(isSlowed)
+        {
+            tailColor = new Color(70f, 221f, 55f);
+            SlowBall();
+        }
     }
 
     private void OnCollisionEnter2D(Collision2D collision) // all of these checks are to keep the ball from bouncing in straight lines
@@ -275,6 +285,10 @@ public class Ball : MonoBehaviour
             rb.velocity *= 100;
             audioSource.PlayOneShot(ggBounce);
         }
+        else if (collision.gameObject.name.Equals("ParryBox"))
+        {
+            audioSource.PlayOneShot(parrySound);
+        }
     }
 
     void RampSpeed()
@@ -300,5 +314,19 @@ public class Ball : MonoBehaviour
     public void Explode()
     {
         hits = 5;
+    }
+
+    public void SlowBall()
+    {
+        slowTime -= Time.deltaTime;
+        if (slowTime > 0f)
+        {
+            //rb.velocity /= 2;
+        }
+        if(slowTime <= 0f)
+        {
+            isSlowed = false;
+            slowTime = 3f;
+        }
     }
 }

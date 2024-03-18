@@ -1,4 +1,5 @@
 using JetBrains.Annotations;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -36,7 +37,8 @@ public class GreenGuy : MonoBehaviour
     public TextMeshProUGUI scoreText;
     public TextMeshProUGUI highScoreText;
 
-    public float yOffset;
+    public float yParryOffset;
+    public float yTextOffset;
     public GameObject floatingText;
     public BoxCollider2D headBox;
 
@@ -46,13 +48,21 @@ public class GreenGuy : MonoBehaviour
     public AudioClip walk, jump, brickFix, brickBreak; // haven't found a good walk sound yet
 
     private GameObject pickaxe, hammer;
-    // Start is called before the first frame update
+
+    public GameObject parryBox;
+    public float parryWindow;
+    public float parryCooldown;
+    public bool isParrying;
+    public bool inCooldown;
+
     private void Awake()
     {
         dustParticle = GetComponentInChildren<ParticleSystem>();
         dustParticle.Stop();
         buildTimer = 1.3f;
     }
+
+    // Start is called before the first frame update
     void Start()
     {
         platforms = GameObject.Find("Platforms").GetComponentsInChildren<PlatformEffector2D>();
@@ -63,21 +73,28 @@ public class GreenGuy : MonoBehaviour
         jumpForce = 235 * (int)rb.mass;
         horizontalSpeed = 2;
         stunTime = 1.7f;
-        yOffset = .5f;
+        yTextOffset = .75f;
         highScoreText.text = PlayerPrefs.GetInt("HighScore").ToString();
         canJump = true;
         floatingText = (GameObject)Resources.Load("FloatingTextParent");
-        headBox = GameObject.Find("HeadBox").GetComponentInChildren<BoxCollider2D>();
+        //headBox = GameObject.Find("HeadBox").GetComponentInChildren<BoxCollider2D>();
         hammer = GameObject.Find("Hammer");
         hammer.SetActive(false);
         pickaxe = GameObject.Find("Pickaxe");
         pickaxe.SetActive(false);
+        parryBox = GameObject.Find("ParryBox");
+        parryBox.SetActive(false);
+        parryWindow = 0.25f;
+        parryCooldown = 9f;
+        isParrying = false;
+        inCooldown = false;
     }
 
     // Update is called once per frame
     void Update()
     {
         fixRay = Physics2D.Raycast(rayOrigin.position, new Vector2(fixMod , -1), distance, layersToHit);
+        parryBox.transform.position = new Vector2(gameObject.transform.position.x, gameObject.transform.position.y + yParryOffset);
 
         Debug.DrawLine(rayOrigin.position, rayOrigin.position + new Vector3(fixMod * distance, -1 * distance)); //visualising ray in editor
 
@@ -164,6 +181,23 @@ public class GreenGuy : MonoBehaviour
                     checkCollider();
                 }
             }
+
+        }
+
+        if (BaseBuilding.GameMode == BaseBuilding.Mode.defend && Input.GetKeyDown(KeyCode.Mouse0) && canJump && !inCooldown)
+        {
+            isParrying = true;
+        }
+        if (isParrying && !inCooldown)
+        {
+            Parry();
+            parryWindow -= Time.deltaTime;
+        }
+        if(inCooldown)
+        {
+            ParryCooldown();
+            print((int)parryCooldown);
+            parryCooldown -= Time.deltaTime;
         }
 
         if (stunned)
@@ -199,7 +233,7 @@ public class GreenGuy : MonoBehaviour
                 // Trigger floating text here
                 if (floatingText != null)
                 {
-                    ShowFloatingText("10");
+                    ShowFloatingNumText("10");
                 }
             }
         }
@@ -223,6 +257,50 @@ public class GreenGuy : MonoBehaviour
             {
                 fixRay.collider.SendMessage("ShowBreakIndicator");
             }
+        }
+    }
+
+    public void Parry()
+    {
+        print("Parry Activated");
+        //animator.SetBool("Walking", false);
+        canMove = false;
+        canJump = false;
+        parryBox.SetActive(true);
+        //print((int)parryWindow);
+        if(parryWindow > 0)
+        {
+            animator.SetBool("Walking", false);
+        }
+        if (parryWindow <= 0)
+        {
+            parryBox.SetActive(false);
+            if (!building && !stunned)
+            {
+                //animator.SetBool("Walking", true);
+                canMove = true;
+                canJump = true;
+            }
+            isParrying = false;
+            inCooldown = true;
+        }
+        //if (parryWindow <= -10)
+        //{
+        //    print("Parry Ready");
+        //    isParrying = false;
+        //    parryWindow = 0.25f;
+        //}
+    }
+
+    public void ParryCooldown()
+    {
+        if (parryCooldown <= 0)
+        {
+            print("Parry Ready");
+            inCooldown = false;
+            parryWindow = 0.25f;
+            parryCooldown = 10f;
+            ShowFloatingText("Parry Ready!");
         }
     }
 
@@ -267,16 +345,20 @@ public class GreenGuy : MonoBehaviour
 
         if(collision.gameObject.layer == 6) //ball
         {
-                canMove = false;
-                stunClock = 0;
-                animator.SetBool("Stun", true);
-                animator.SetTrigger("StunStart");
-                stunned = true;
-                if (building == true)
-                {
-                    BuidlingManagement("Stun");
-                    building = false;
-                }
+            canMove = false;
+            stunClock = 0;
+            animator.SetBool("Stun", true);
+            animator.SetTrigger("StunStart");
+            stunned = true;
+            if (building == true)
+            {
+                BuidlingManagement("Stun");
+                building = false;
+            }
+            if(isParrying)
+            {
+                ShowFloatingText("UnEpic!");
+            }
         }
     }
 
@@ -328,7 +410,7 @@ public class GreenGuy : MonoBehaviour
         if (collision.gameObject.layer == 6 && !building)
         {
             score += 5;
-            ShowFloatingText("5");
+            ShowFloatingNumText("5");
         }
     }
 
@@ -347,10 +429,17 @@ public class GreenGuy : MonoBehaviour
         }
     }
 
-    public void ShowFloatingText(string points)
+    public void ShowFloatingNumText(string points)
     {
         // text pop up should appear in the right direction no matter where the player faces
-        GameObject flText = Instantiate(floatingText, transform.position + new Vector3(0, yOffset, 10), Quaternion.identity);
+        GameObject flText = Instantiate(floatingText, transform.position + new Vector3(0, yTextOffset, 10), Quaternion.identity);
         flText.GetComponentInChildren<TextMesh>().text = "+" + points;
+    }
+
+    public void ShowFloatingText(string words)
+    {
+        // text pop up should appear in the right direction no matter where the player faces
+        GameObject flText = Instantiate(floatingText, transform.position + new Vector3(0, yTextOffset, 10), Quaternion.identity);
+        flText.GetComponentInChildren<TextMesh>().text = words;
     }
 }
