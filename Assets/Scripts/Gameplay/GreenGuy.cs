@@ -16,15 +16,16 @@ public class GreenGuy : MonoBehaviour
     public LayerMask layersToHit;
     public Transform rayOrigin;
     public float bouncePadValue;
+    private bool bouncing, speeding;
 
     public GameObject floorRay;
     public Transform SwingDustTransform;
     ParticleSystem dustParticle;
-    
+
     public int jumpForce;
     public int fixMod = 1;
-    public static float speedMod = 1f;
-    public float horizontalSpeed = 3f;
+    public static float speedMod = 1.5f;
+    public float horizontalSpeed = 2f;
     public float stunClock, distance, platformClock;
     public static float stunTime = 2.5f;
     public bool canJump = false, canMove = true, platformRotated; //
@@ -33,7 +34,7 @@ public class GreenGuy : MonoBehaviour
 
     public bool building = false, stunned = false;
 
-   // private float oneSecond = 1f;
+    // private float oneSecond = 1f;
     public float score;
     public TextMeshProUGUI scoreText;
     public TextMeshProUGUI highScoreText;
@@ -48,10 +49,6 @@ public class GreenGuy : MonoBehaviour
     public AudioClip walk, jump, brickFix, brickBreak; // haven't found a good walk sound yet
 
     private GameObject pickaxe, hammer;
-
-    private float bounceTime, speedTime, shieldTime;
-    private bool bouncing, speeding, shielding;
-    private GameObject shield;
     // Start is called before the first frame update
     private void Awake()
     {
@@ -67,7 +64,7 @@ public class GreenGuy : MonoBehaviour
         animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
         jumpForce = 235 * (int)rb.mass;
-        horizontalSpeed = 3;
+        horizontalSpeed = 2;
         stunTime = 1.7f;
         yOffset = .5f;
         highScoreText.text = PlayerPrefs.GetInt("HighScore").ToString();
@@ -79,35 +76,34 @@ public class GreenGuy : MonoBehaviour
         pickaxe = GameObject.Find("Pickaxe");
         pickaxe.SetActive(false);
         bouncing = false;
-        speeding = false;
-        shielding = false;
         bouncePadValue = 1.7f;
     }
 
     // Update is called once per frame
     void Update()
     {
-        fixRay = Physics2D.Raycast(rayOrigin.position, new Vector2(fixMod , -1), distance, layersToHit);
+        fixRay = Physics2D.Raycast(rayOrigin.position, new Vector2(fixMod, -1), distance, layersToHit);
+
         Debug.DrawLine(rayOrigin.position, rayOrigin.position + new Vector3(fixMod * distance, -1 * distance)); //visualising ray in editor
 
-        float adjustedSpeed = horizontalSpeed * Time.deltaTime * speedMod;
-        
-        //Debug.Log(rb.velocity.y);
-        if(canMove && Time.timeScale != 0)
+        if (bouncing && rb.velocity.y < 0)
         {
-            if (Input.GetKeyDown(KeyCode.S))
+            bouncing = false;
+            foreach (BoxCollider2D platform in platforms)
             {
-                foreach (BoxCollider2D plat in platforms)
-                {
-                    plat.enabled = false;
-                }
-                platformRotated = true;
-                platformClock = 0;
+                platform.enabled = true;
             }
+        }
+
+        float adjustedSpeed = horizontalSpeed * Time.deltaTime * speedMod;
+
+        //Debug.Log(rb.velocity.y);
+        if (canMove && Time.timeScale != 0)
+        {
             if (Input.GetKey(KeyCode.A))
             {
                 transform.Translate(-adjustedSpeed, 0, 0, Space.World);
-                
+
                 if (!Input.GetKey(KeyCode.D))
                 {
                     fixMod = -1;
@@ -116,7 +112,7 @@ public class GreenGuy : MonoBehaviour
                 }
                 animator.SetBool("Walking", true);
                 audioSource.clip = walk;
-                if(!audioSource.isPlaying)
+                if (!audioSource.isPlaying)
                 {
                     audioSource.Play();
                 }
@@ -149,7 +145,7 @@ public class GreenGuy : MonoBehaviour
                 animator.SetTrigger("Jump");
                 audioSource.PlayOneShot(jump);
                 floorRay.SendMessage("JumpAnimCrt");
-                foreach(BoxCollider2D platform in platforms)
+                foreach (BoxCollider2D platform in platforms)
                 {
                     platform.enabled = true;
                 }
@@ -180,8 +176,7 @@ public class GreenGuy : MonoBehaviour
         {
             buildClock += Time.deltaTime;
         }
-
-        if(!animator.GetBool("Swinging") || animator.GetBool("Stun"))
+        if (!animator.GetBool("Swinging") || animator.GetBool("Stun"))
         {
             hammer.SetActive(false);
             pickaxe.SetActive(false);
@@ -202,7 +197,6 @@ public class GreenGuy : MonoBehaviour
                 }
             }
         }
-
         scoreText.text = ((int)score).ToString();
         if (score > PlayerPrefs.GetInt("HighScore", 0))
         {
@@ -210,7 +204,7 @@ public class GreenGuy : MonoBehaviour
             highScoreText.text = PlayerPrefs.GetInt("HighScore").ToString();
         }
 
-        if(fixRay.collider != null && canJump && rb.velocity.y < .25 && rb.velocity.y > -.25)
+        if (fixRay.collider != null && canJump && rb.velocity.y < .25 && rb.velocity.y > -.25)
         {
             if (fixRay.collider.isTrigger)
             {
@@ -265,18 +259,18 @@ public class GreenGuy : MonoBehaviour
             animator.SetTrigger("Grounded");
         }*/
 
-        if(collision.gameObject.layer == 6) //ball
+        if (collision.gameObject.layer == 6) //ball
         {
-                canMove = false;
-                stunClock = 0;
-                animator.SetBool("Stun", true);
-                animator.SetTrigger("StunStart");
-                stunned = true;
-                if (building == true)
-                {
-                    BuidlingManagement("Stun");
-                    building = false;
-                }
+            canMove = false;
+            stunClock = 0;
+            animator.SetBool("Stun", true);
+            animator.SetTrigger("StunStart");
+            stunned = true;
+            if (building == true)
+            {
+                BuidlingManagement("Stun");
+                building = false;
+            }
         }
     }
 
@@ -308,7 +302,7 @@ public class GreenGuy : MonoBehaviour
         }
         else
         {
-            if(BaseBuilding.GameMode == BaseBuilding.Mode.build) //destroying bricks in build mode
+            if (BaseBuilding.GameMode == BaseBuilding.Mode.build) //destroying bricks in build mode
             {
                 fixRay.collider.gameObject.SendMessage("cancelBrick");
                 animator.SetTrigger("Fix");
@@ -323,7 +317,7 @@ public class GreenGuy : MonoBehaviour
         }
     }
 
-    private void OnTriggerEnter2D(Collider2D collision) // bonk points
+    private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.layer == 6 && !building)
         {
@@ -331,11 +325,6 @@ public class GreenGuy : MonoBehaviour
             ShowFloatingText("5");
         }
     }
-
-    private void OnTriggerStay2D(Collider2D collision) // special tile interactions
-    {
-
-    } 
 
     public void Bounce()
     {
@@ -354,6 +343,10 @@ public class GreenGuy : MonoBehaviour
         canJump = false;
         animator.SetTrigger("Jump");
         floorRay.SendMessage("JumpAnimCrt");
+        foreach (BoxCollider2D platform in platforms)
+        {
+            platform.enabled = false;
+        }
     }
 
 

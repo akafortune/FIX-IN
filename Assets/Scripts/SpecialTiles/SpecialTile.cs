@@ -14,9 +14,9 @@ public class SpecialTile : MonoBehaviour
         effectActive = false;
     }
 
-    protected void Update()
+    protected virtual void Update()
     {
-        if (Time.time > timeStart + effectLength)
+        if (Time.time > timeStart + effectLength && effectActive)
         {
             stopAction();
             effectActive = false;

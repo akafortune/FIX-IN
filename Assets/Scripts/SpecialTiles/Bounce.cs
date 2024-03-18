@@ -6,22 +6,28 @@ using UnityEngine;
 public class Bounce : SpecialTile
 {
     GameObject greenGuy;
+    Rigidbody2D greenGuyRB;
     BoxCollider2D[] platforms;
     // Start is called before the first frame update
     void Start()
     {
         greenGuy = GameObject.Find("GreenGuy");
-        effectLength = .1f;
+        greenGuyRB = greenGuy.GetComponent<Rigidbody2D>();
+        effectLength = .15f;
         platforms = GameObject.Find("Platforms").GetComponentsInChildren<BoxCollider2D>();
     }
 
+    protected override void Update()
+    {
+        if (Time.time > timeStart + effectLength && effectActive && greenGuyRB.velocity.y < 0)
+        {
+            stopAction();
+            effectActive = false;
+        }
+    }
     protected override void doAction()
     {
         greenGuy.SendMessage("Bounce");
-        foreach (BoxCollider2D platform in platforms)
-        {
-            platform.enabled = false;
-        }
     }
 
     protected override void stopAction()
