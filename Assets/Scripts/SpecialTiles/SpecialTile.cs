@@ -24,7 +24,7 @@ public class SpecialTile : MonoBehaviour
     }
 
     // Update is called once per frame
-    protected void OnTriggerStay2D(Collider2D collision)
+    protected virtual void OnTriggerStay2D(Collider2D collision)
     {
         if (collision.gameObject.name.Equals("SpecialBrickTrigger") && !effectActive)
         {

@@ -52,7 +52,7 @@ public class FloorCheck : MonoBehaviour
                     greenGuy.canJump = true;
                     greenGuy.animator.SetTrigger("Grounded");
                     HasJumped = false;
-                    animator.Play("Idle - Blink");
+                    //animator.Play("Idle - Blink");
                 }
             }
             else {timer += Time.deltaTime;}
