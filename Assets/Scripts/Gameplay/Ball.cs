@@ -62,7 +62,7 @@ public class Ball : MonoBehaviour
         explodingParticle.SetActive(false);
         arrow = GameObject.Find("Pointer");
         arrow.SetActive(false);
-        trail = GameObject.Find("Trail").GetComponent<TrailRenderer>();
+        trail = GameObject.Find("BallTrail").GetComponent<TrailRenderer>();
         countdownText = GameObject.Find("Countdown").GetComponent<TextMeshProUGUI>();
         countDownSound = (AudioClip) Resources.Load("SFX/Countdown");
         launchSound = (AudioClip) Resources.Load("SFX/Launch");
@@ -286,6 +286,11 @@ public class Ball : MonoBehaviour
         {
             rb.velocity *= 100;
             audioSource.PlayOneShot(ggBounce);
+        }
+        else if (collision.gameObject.name.Equals("Shield"))
+        {
+            rb.AddForce(new Vector2(0, 50));
+            rb.velocity *= 100;
         }
     }
 
