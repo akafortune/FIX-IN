@@ -55,6 +55,11 @@ public class GreenGuy : MonoBehaviour
     private GameObject pickaxe, hammer;
 
     public GameObject SpeedParticles;
+
+    public Vector3 targetedBrickTransform;
+    private bool teleporterPlaced = false;
+    private int brickType = 0;
+    private int[] specialBrickAmounts = { 10, 10, 10, 10 };
     // Start is called before the first frame update
     private void Awake()
     {
@@ -92,6 +97,12 @@ public class GreenGuy : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
+        if(teleporterPlaced)
+        {
+            brickType = 4;
+        }
+
         horizontalMovementVal = Input.GetAxis("Horizontal");
         verticalMovementVal = Input.GetAxis("Vertical");
         if(horizontalMovementVal!=0)
@@ -175,6 +186,33 @@ public class GreenGuy : MonoBehaviour
                     checkCollider();
                 }
             }
+
+            if(BaseBuilding.GameMode == BaseBuilding.Mode.build)
+            {
+                if (Input.GetKeyDown(KeyCode.RightArrow))
+                {
+                    if(brickType < 4)
+                    {
+                        brickType++;
+                    } else
+                    {
+                        brickType = 0;
+                    }
+                } else if (Input.GetKeyDown(KeyCode.LeftArrow))
+                {
+                    if (brickType > 0)
+                    {
+                        brickType--;
+                    }
+                    else
+                    {
+                        brickType = 4;
+                    }
+                }
+            } else
+            {
+                brickType = 0;
+            }
         }
 
         if (stunned)
@@ -234,6 +272,7 @@ public class GreenGuy : MonoBehaviour
             {
                 fixRay.collider.SendMessage("ShowBreakIndicator");
             }
+            targetedBrickTransform = fixRay.collider.gameObject.transform.position;
         }
 
         //managing green guy particles for special bricks
@@ -309,16 +348,49 @@ public class GreenGuy : MonoBehaviour
 
             if (BaseBuilding.GameMode == BaseBuilding.Mode.build)
             {
-                if (BaseBuilding.resources - BrickValue() >= 0)
+                if(brickType== 0)
                 {
-                    BaseBuilding.resources -= BrickValue();
-                }
-                else
+                    if (BaseBuilding.resources - BrickValue() >= 0)
+                    {
+                        BaseBuilding.resources -= BrickValue();
+                        fixRay.collider.gameObject.SendMessage("fixBrick");
+                    }
+                    else
+                    {
+                        return;
+                    }
+                } else
                 {
-                    return;
+                    if (specialBrickAmounts[brickType] > 0)
+                    {
+                        fixRay.collider.gameObject.SendMessage("specialBrick", brickType);
+                        specialBrickAmounts[brickType]--;
+
+                        //to make sure 2 teleporters must be placed
+                        if(brickType == 4)
+                        {
+                            if (teleporterPlaced)
+                            {
+                                teleporterPlaced = false;
+                            } else
+                            {
+                                teleporterPlaced = true;
+                                specialBrickAmounts[brickType]++;
+                            }
+                        }
+                    } else
+                    {
+                        return;
+                    }
+                    
                 }
             }
-            fixRay.collider.gameObject.SendMessage("fixBrick");
+
+            if(BaseBuilding.GameMode == BaseBuilding.Mode.defend)
+            {
+                fixRay.collider.gameObject.SendMessage("fixBrick");
+            }
+
             animator.SetTrigger("Fix");
             animator.SetBool("Swinging", true);
             hammer.SetActive(true);
