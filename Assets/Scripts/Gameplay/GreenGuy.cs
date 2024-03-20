@@ -1,6 +1,7 @@
 using JetBrains.Annotations;
 using System.Collections;
 using System.Collections.Generic;
+using System.Security.Cryptography;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -9,11 +10,13 @@ using UnityEngine.UIElements;
 public class GreenGuy : MonoBehaviour
 {
     public Animator animator; //
-    public PlatformEffector2D[] platforms; //
+    public BoxCollider2D[] platforms; //
     public Rigidbody2D rb; //
     public RaycastHit2D fixRay; //
     public LayerMask layersToHit;
     public Transform rayOrigin;
+    public float bouncePadValue;
+    static private bool touchingBouncePad, speeding;
 
     public GameObject floorRay;
     public Transform SwingDustTransform;
@@ -25,7 +28,7 @@ public class GreenGuy : MonoBehaviour
     public bool joystickInUse;
     public int jumpForce;
     public int fixMod = 1;
-    public static float speedMod = 1.5f;
+    public static float speedMod = 1f;
     public float horizontalSpeed = 2f;
     public float stunClock, distance, platformClock;
     public static float stunTime = 2.5f;
@@ -35,7 +38,7 @@ public class GreenGuy : MonoBehaviour
 
     public bool building = false, stunned = false;
 
-   // private float oneSecond = 1f;
+    // private float oneSecond = 1f;
     public float score;
     public TextMeshProUGUI scoreText;
     public TextMeshProUGUI highScoreText;
@@ -50,6 +53,8 @@ public class GreenGuy : MonoBehaviour
     public AudioClip walk, jump, brickFix, brickBreak; // haven't found a good walk sound yet
 
     private GameObject pickaxe, hammer;
+
+    public GameObject SpeedParticles;
     // Start is called before the first frame update
     private void Awake()
     {
@@ -59,17 +64,18 @@ public class GreenGuy : MonoBehaviour
     }
     void Start()
     {
-        platforms = GameObject.Find("Platforms").GetComponentsInChildren<PlatformEffector2D>();
+        platforms = GameObject.Find("Platforms").GetComponentsInChildren<BoxCollider2D>();
         SwingDustTransform = GameObject.Find("SwingDust").GetComponent<Transform>();
         Physics2D.queriesHitTriggers = true; //making it so that ray can detect triggers
         animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
         jumpForce = 235 * (int)rb.mass;
-        horizontalSpeed = 2;
+        horizontalSpeed = 3;
         stunTime = 1.7f;
         yOffset = .5f;
         highScoreText.text = PlayerPrefs.GetInt("HighScore").ToString();
         canJump = true;
+        touchingBouncePad = false;
         floatingText = (GameObject)Resources.Load("FloatingTextParent");
         headBox = GameObject.Find("HeadBox").GetComponentInChildren<BoxCollider2D>();
         hammer = GameObject.Find("Hammer");
@@ -77,6 +83,10 @@ public class GreenGuy : MonoBehaviour
         pickaxe = GameObject.Find("Pickaxe");
         pickaxe.SetActive(false);
         joystickInUse = false;
+        bouncePadValue = 1.7f;
+
+        SpeedParticles = GameObject.Find("Zoom Trails");
+        SpeedParticles.SetActive(false);
     }
 
     // Update is called once per frame
@@ -94,38 +104,17 @@ public class GreenGuy : MonoBehaviour
         }
 
         fixRay = Physics2D.Raycast(rayOrigin.position, new Vector2(fixMod , -1), distance, layersToHit);
-
         Debug.DrawLine(rayOrigin.position, rayOrigin.position + new Vector3(fixMod * distance, -1 * distance)); //visualising ray in editor
 
         float adjustedSpeed = horizontalSpeed * Time.deltaTime * speedMod;
-        if(platformRotated)
-        {
-            platformClock += Time.deltaTime;
-            if(platformClock > .3f)
-            {
-                platformRotated = false;
-                foreach (PlatformEffector2D plat in platforms)
-                {
-                    plat.rotationalOffset = 0;
-                }
-            }
-        }
+
         //Debug.Log(rb.velocity.y);
-        if(canMove && Time.timeScale != 0)
+        if (canMove && Time.timeScale != 0)
         {
-            if (Input.GetKeyDown(KeyCode.S)||verticalMovementVal < -.2f)
-            {
-                foreach (PlatformEffector2D plat in platforms)
-                {
-                    plat.rotationalOffset = 180;
-                }
-                platformRotated = true;
-                platformClock = 0;
-            }
             if (Input.GetKey(KeyCode.A)||horizontalMovementVal < -.1f)
             {
                 transform.Translate(-adjustedSpeed, 0, 0, Space.World);
-                
+
                 if (!Input.GetKey(KeyCode.D))
                 {
                     fixMod = -1;
@@ -134,7 +123,7 @@ public class GreenGuy : MonoBehaviour
                 }
                 animator.SetBool("Walking", true);
                 audioSource.clip = walk;
-                if(!audioSource.isPlaying)
+                if (!audioSource.isPlaying)
                 {
                     audioSource.Play();
                 }
@@ -164,15 +153,18 @@ public class GreenGuy : MonoBehaviour
             }
             if ((Input.GetKeyDown(KeyCode.W)||Input.GetKeyDown("joystick button 0")) && canJump && rb.velocity.y < .25 && rb.velocity.y > -.25 && !(Input.GetKey(KeyCode.S)|| verticalMovementVal < -.1f))
             {
+                float bounceMod = 1;
+                if (touchingBouncePad)
+                    bounceMod = 1.7f;
                 //Debug.Log("jump");
-                rb.AddForce(new Vector2(0, jumpForce));
+                rb.AddForce(new Vector2(0, jumpForce * bounceMod));
                 canJump = false;
                 animator.SetTrigger("Jump");
                 audioSource.PlayOneShot(jump);
                 floorRay.SendMessage("JumpAnimCrt");
-                foreach(PlatformEffector2D platform in platforms)
+                foreach (BoxCollider2D platform in platforms)
                 {
-                    platform.rotationalOffset = 0;
+                    platform.enabled = true;
                 }
             }
 
@@ -201,7 +193,7 @@ public class GreenGuy : MonoBehaviour
         {
             buildClock += Time.deltaTime;
         }
-        if(!animator.GetBool("Swinging") || animator.GetBool("Stun"))
+        if (!animator.GetBool("Swinging") || animator.GetBool("Stun"))
         {
             hammer.SetActive(false);
             pickaxe.SetActive(false);
@@ -229,7 +221,7 @@ public class GreenGuy : MonoBehaviour
             highScoreText.text = PlayerPrefs.GetInt("HighScore").ToString();
         }
 
-        if(fixRay.collider != null && canJump && rb.velocity.y < .25 && rb.velocity.y > -.25)
+        if (fixRay.collider != null && canJump && rb.velocity.y < .25 && rb.velocity.y > -.25)
         {
             if (fixRay.collider.isTrigger)
             {
@@ -242,6 +234,16 @@ public class GreenGuy : MonoBehaviour
             {
                 fixRay.collider.SendMessage("ShowBreakIndicator");
             }
+        }
+
+        //managing green guy particles for special bricks
+        if (speeding)
+        {
+            SpeedParticles.SetActive(true);
+        }
+        if (!speeding)
+        {
+            SpeedParticles.SetActive(false);
         }
     }
 
@@ -284,18 +286,18 @@ public class GreenGuy : MonoBehaviour
             animator.SetTrigger("Grounded");
         }*/
 
-        if(collision.gameObject.layer == 6) //ball
+        if (collision.gameObject.layer == 6) //ball
         {
-                canMove = false;
-                stunClock = 0;
-                animator.SetBool("Stun", true);
-                animator.SetTrigger("StunStart");
-                stunned = true;
-                if (building == true)
-                {
-                    BuidlingManagement("Stun");
-                    building = false;
-                }
+            canMove = false;
+            stunClock = 0;
+            animator.SetBool("Stun", true);
+            animator.SetTrigger("StunStart");
+            stunned = true;
+            if (building == true)
+            {
+                BuidlingManagement("Stun");
+                building = false;
+            }
         }
     }
 
@@ -327,7 +329,7 @@ public class GreenGuy : MonoBehaviour
         }
         else
         {
-            if(BaseBuilding.GameMode == BaseBuilding.Mode.build) //destroying bricks in build mode
+            if (BaseBuilding.GameMode == BaseBuilding.Mode.build) //destroying bricks in build mode
             {
                 fixRay.collider.gameObject.SendMessage("cancelBrick");
                 animator.SetTrigger("Fix");
@@ -351,7 +353,6 @@ public class GreenGuy : MonoBehaviour
         }
     }
 
-
     //Building Handler
 
     public void BuidlingManagement(string input)
@@ -371,5 +372,20 @@ public class GreenGuy : MonoBehaviour
         // text pop up should appear in the right direction no matter where the player faces
         GameObject flText = Instantiate(floatingText, transform.position + new Vector3(0, yOffset, 10), Quaternion.identity);
         flText.GetComponentInChildren<TextMesh>().text = points;
+    }
+
+    public static void SetSpeeding(bool value)
+    {
+        speeding = value;
+    }
+
+    public static bool GetSpeeding()
+    {
+        return speeding;
+    }
+
+    public static void SetBounce(bool value)
+    {
+        touchingBouncePad = value;
     }
 }

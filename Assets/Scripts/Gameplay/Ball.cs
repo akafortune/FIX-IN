@@ -287,6 +287,11 @@ public class Ball : MonoBehaviour
             rb.velocity *= 100;
             audioSource.PlayOneShot(ggBounce);
         }
+        else if (collision.gameObject.name.Equals("Shield"))
+        {
+            rb.AddForce(new Vector2(0, 50));
+            rb.velocity *= 100;
+        }
     }
 
     void RampSpeed()
