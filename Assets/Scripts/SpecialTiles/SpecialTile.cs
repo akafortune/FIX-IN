@@ -7,15 +7,18 @@ public class SpecialTile : MonoBehaviour
     protected bool effectActive;
     protected float timeStart;
     protected float effectLength;
+    private Rigidbody2D rb;
 
     // Start is called before the first frame update
-    void Start()
+    protected virtual void Start()
     {
         effectActive = false;
+        rb = GetComponent<Rigidbody2D>();
     }
 
     protected virtual void Update()
     {
+        rb.AddForce(Vector2.zero);
         if (Time.time > timeStart + effectLength && effectActive)
         {
             stopAction();

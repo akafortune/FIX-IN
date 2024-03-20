@@ -8,8 +8,9 @@ public class Teleporter : SpecialTile
     GameObject greenGuy;
     BoxCollider2D[] platforms;
     // Start is called before the first frame update
-    void Start()
+    protected override void Start()
     {
+        base.Start();
         greenGuy = GameObject.Find("GreenGuy");
         effectLength = 5;
         assignTeleporter();

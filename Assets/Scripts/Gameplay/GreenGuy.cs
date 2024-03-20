@@ -16,7 +16,7 @@ public class GreenGuy : MonoBehaviour
     public LayerMask layersToHit;
     public Transform rayOrigin;
     public float bouncePadValue;
-    static private bool bouncing, speeding;
+    static private bool touchingBouncePad, speeding;
 
     public GameObject floorRay;
     public Transform SwingDustTransform;
@@ -71,13 +71,13 @@ public class GreenGuy : MonoBehaviour
         yOffset = .5f;
         highScoreText.text = PlayerPrefs.GetInt("HighScore").ToString();
         canJump = true;
+        touchingBouncePad = false;
         floatingText = (GameObject)Resources.Load("FloatingTextParent");
         headBox = GameObject.Find("HeadBox").GetComponentInChildren<BoxCollider2D>();
         hammer = GameObject.Find("Hammer");
         hammer.SetActive(false);
         pickaxe = GameObject.Find("Pickaxe");
         pickaxe.SetActive(false);
-        bouncing = false;
         bouncePadValue = 1.7f;
 
         SpeedParticles = GameObject.Find("Zoom Trails");
@@ -90,15 +90,6 @@ public class GreenGuy : MonoBehaviour
         fixRay = Physics2D.Raycast(rayOrigin.position, new Vector2(fixMod, -1), distance, layersToHit);
 
         Debug.DrawLine(rayOrigin.position, rayOrigin.position + new Vector3(fixMod * distance, -1 * distance)); //visualising ray in editor
-
-        if (bouncing && rb.velocity.y < 0)
-        {
-            bouncing = false;
-            foreach (BoxCollider2D platform in platforms)
-            {
-                platform.enabled = true;
-            }
-        }
 
         float adjustedSpeed = horizontalSpeed * Time.deltaTime * speedMod;
 
@@ -144,8 +135,11 @@ public class GreenGuy : MonoBehaviour
             }
             if (Input.GetKeyDown(KeyCode.W) && canJump && rb.velocity.y < .25 && rb.velocity.y > -.25 && !Input.GetKey(KeyCode.S))
             {
+                float bounceMod = 1;
+                if (touchingBouncePad)
+                    bounceMod = 1.7f;
                 //Debug.Log("jump");
-                rb.AddForce(new Vector2(0, jumpForce));
+                rb.AddForce(new Vector2(0, jumpForce * bounceMod));
                 canJump = false;
                 animator.SetTrigger("Jump");
                 audioSource.PlayOneShot(jump);
@@ -341,30 +335,6 @@ public class GreenGuy : MonoBehaviour
         }
     }
 
-    public void Bounce()
-    {
-        float yVelocity = rb.velocity.y;
-        if (yVelocity > 5)
-        {
-            rb.AddForce(new Vector2(0, jumpForce));
-        }
-        else if (yVelocity > -1.5f && canJump)
-        {
-            rb.velocity = Vector2.zero;
-            rb.AddForce(new Vector2(0, jumpForce * (bouncePadValue)));
-        }
-        else
-            return;
-        canJump = false;
-        animator.SetTrigger("Jump");
-        floorRay.SendMessage("JumpAnimCrt");
-        foreach (BoxCollider2D platform in platforms)
-        {
-            platform.enabled = false;
-        }
-    }
-
-
     //Building Handler
 
     public void BuidlingManagement(string input)
@@ -389,5 +359,15 @@ public class GreenGuy : MonoBehaviour
     public static void SetSpeeding(bool value)
     {
         speeding = value;
+    }
+
+    public static bool GetSpeeding()
+    {
+        return speeding;
+    }
+
+    public static void SetBounce(bool value)
+    {
+        touchingBouncePad = value;
     }
 }

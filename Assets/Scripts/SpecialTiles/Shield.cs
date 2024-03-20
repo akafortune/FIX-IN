@@ -8,8 +8,9 @@ public class Shield : SpecialTile
     float cooldownLength;
     GameObject shield;
     // Start is called before the first frame update
-    void Start()
+    protected override void Start()
     {
+        base.Start();
         shield = transform.GetChild(0).gameObject;
         effectLength = 10;
         cooldownLength = 10;
