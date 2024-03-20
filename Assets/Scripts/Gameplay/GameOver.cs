@@ -34,6 +34,8 @@ public class GameOver : MonoBehaviour
     public void Retry()
     {
         Time.timeScale = 1f;
+        string scene = SceneManager.GetActiveScene().name;
+        SceneManager.UnloadSceneAsync(scene);
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 

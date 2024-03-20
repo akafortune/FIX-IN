@@ -36,7 +36,7 @@ public class FloorCheck : MonoBehaviour
     {
         RaycastHit2D PlatformDropCast = Physics2D.Raycast(gameObject.transform.position, new Vector2(0, -1), 0.8f, platforms);
         Debug.DrawLine(transform.position, transform.position + new Vector3(0, -.8f));
-        if (PlatformDropCast.collider != null && Input.GetKeyDown(KeyCode.S) && PlatformDropCast.collider.name != "PlatformLower")
+        if (PlatformDropCast.collider != null && (Input.GetKeyDown(KeyCode.S) || Input.GetAxis("Vertical") < -.1f) && PlatformDropCast.collider.name != "PlatformLower")
         {
             PlatformDropCast.collider.gameObject.GetComponent<BoxCollider2D>().enabled = false;
         }
