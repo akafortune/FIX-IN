@@ -179,6 +179,8 @@ public class BaseBuilding : MonoBehaviour
         paddle.SetActive(true);
         ball.SetActive(true);
         ball.GetComponent<Ball>().LaunchSequence();
+        
+        ball.GetComponent<Ball>().NewRound(roundCount);
     }
 
     public void BeginBuild()

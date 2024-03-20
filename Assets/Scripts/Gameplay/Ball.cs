@@ -13,6 +13,7 @@ public class Ball : MonoBehaviour
     private float ctdTimer;
     private bool countingDown;
     private bool[] countDownAudioPlayed;
+    private bool canRotate;
     private TextMeshProUGUI countdownText;
     public GameObject roundTimer;
     public float RampspeedMultiplier; //multiplier applies to static
@@ -40,6 +41,8 @@ public class Ball : MonoBehaviour
     private GameObject explodingParticle;
     private Vector3 particleLocation;
 
+    private Animator animator;
+
     // Start is called before the first frame update
     void Awake()
     {
@@ -63,6 +66,7 @@ public class Ball : MonoBehaviour
         countdownText = GameObject.Find("Countdown").GetComponent<TextMeshProUGUI>();
         countDownSound = (AudioClip) Resources.Load("SFX/Countdown");
         launchSound = (AudioClip) Resources.Load("SFX/Launch");
+        animator = gameObject.GetComponentInChildren<Animator>();
         //TestVersion = GameObject.Find("TestVersionText").GetComponent<TextMeshProUGUI>();
         //pauseMenu = GameObject.Find("PauseMenu");
         if (SceneManager.GetActiveScene() == SceneManager.GetSceneByBuildIndex(3) || SceneManager.GetActiveScene() == SceneManager.GetSceneByBuildIndex(4))
@@ -78,9 +82,8 @@ public class Ball : MonoBehaviour
             maxAngle = 45;
         }
         ctdTimer = 3.0f;
-        StaticspeedMultiplier *= augment;
         GreenGuy.stunTime /= augment;
-        FinalspeedMultiplier = StaticspeedMultiplier;
+        FinalspeedMultiplier = StaticspeedMultiplier * augment;
     }
 
     public void LaunchSequence()
@@ -94,6 +97,7 @@ public class Ball : MonoBehaviour
 
     public void ResetBall()
     {
+        canRotate = false;
         countDownAudioPlayed = new bool[3];
         hits = 0;
         rb.velocity = Vector3.zero;
@@ -102,6 +106,7 @@ public class Ball : MonoBehaviour
         explodingParticle.transform.position = particleLocation;
         trail.Clear();
         transform.eulerAngles = new Vector3(0, 0, 180);
+        animator.SetTrigger("Reset");
     } //Puts the ball back where it started
 
     public void Rotate()
@@ -174,10 +179,14 @@ public class Ball : MonoBehaviour
         audioSource.PlayOneShot(launchSound);
         rb.velocity *= 10000f;
         //Debug.Log(rb.velocity.magnitude);
+        canRotate = true;
     } //Makes the ball start
 
     void FixedUpdate() //physics fuckery
     {
+        animator.ResetTrigger("Reset");
+        animator.ResetTrigger("Hit2");
+        animator.ResetTrigger("Hit3");
         LastXVelocity = rb.velocity.x;
         //Debug.Log(rb.velocity.x);
         while (rb.velocity.magnitude > 3.5 * FinalspeedMultiplier) // Prevents ball from going apeshit and flying off the map
@@ -213,9 +222,11 @@ public class Ball : MonoBehaviour
                 break;
             case 2:
                 tailColor = new Color(255 / 255f, 244 / 255f, 146 / 255f);
+                animator.SetTrigger("Hit2");
                 break;
             case 3:
                 tailColor = new Color(255 / 255f, 116 / 255f, 37 / 255f);
+                animator.SetTrigger("Hit3");
                 break;
             //case 4:
             //    tailColor = new Color();
@@ -255,6 +266,7 @@ public class Ball : MonoBehaviour
         else if (collision.gameObject.name.Equals("Paddle"))
         {
             hits = 0;
+            animator.SetTrigger("Reset");
             if (LastXVelocity < 0.5f * mapSizeAugment && LastXVelocity > -0.5f * mapSizeAugment)
             {
                 //Debug.Log("Fixed X");
@@ -282,7 +294,7 @@ public class Ball : MonoBehaviour
         if (gameTimer > 30)
         {
             float y = gameTimer - 30f;
-            float x = (-1f) * (25f / (Mathf.Pow(y, 2f) + (186f * y) + 86.5f)) + (1.3f);
+            float x = (-1f) * (25f / (Mathf.Pow(y, 2f) + (1.86f * y) + 86.5f)) + (1.28f);
             if (x < 1)
             {
                 RampspeedMultiplier = 1;
@@ -291,8 +303,8 @@ public class Ball : MonoBehaviour
             {
                 RampspeedMultiplier = x;
             }
-            FinalspeedMultiplier = StaticspeedMultiplier * RampspeedMultiplier;
-            //Debug.Log(GreenGuy.stunTime);
+            FinalspeedMultiplier = (StaticspeedMultiplier *augment) * RampspeedMultiplier;
+            Debug.Log(FinalspeedMultiplier);
             GreenGuy.stunTime = 1.7f / (augment + (RampspeedMultiplier / 3f));
         }
     }
@@ -300,5 +312,18 @@ public class Ball : MonoBehaviour
     public void Explode()
     {
         hits = 5;
+    }
+
+    public void NewRound(float round)
+    {
+        if (round > 1 && round < 6)
+        {
+            augment+= 0.01f;
+        }
+        gameTimer = 0f;
+        GreenGuy.stunTime = 1.7f / augment;
+        animator.SetTrigger("Reset");
+        FinalspeedMultiplier = StaticspeedMultiplier*augment;
+        Debug.Log(FinalspeedMultiplier);
     }
 }
