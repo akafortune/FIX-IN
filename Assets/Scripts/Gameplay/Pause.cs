@@ -7,14 +7,16 @@ using UnityEngine.SceneManagement;
 public class Pause : MonoBehaviour
 {
     public GameObject pauseMenu;
-    private GameObject StartButton;
+    private GameObject StartButton, RebuildButton;
     public AudioSource songSource;
+    public bool rebuildActive;
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         songSource = GameObject.Find("SongSource").GetComponent<AudioSource>();
         pauseMenu = GameObject.Find("PauseMenu");
         StartButton = GameObject.Find("Start Button");
+        RebuildButton = GameObject.Find("Rebuild Button");
         GameObject.Find("MusicSource");
         pauseMenu.SetActive(false);
     }
@@ -28,6 +30,8 @@ public class Pause : MonoBehaviour
             {
                 pauseMenu.SetActive(false);
                 StartButton.SetActive(true);
+                if(rebuildActive)
+                    RebuildButton.SetActive(true);
                 Time.timeScale = 1f;
                 songSource.Play();
             }
@@ -35,6 +39,8 @@ public class Pause : MonoBehaviour
             {
                 pauseMenu.SetActive(true);
                 StartButton.SetActive(false);
+                rebuildActive = RebuildButton.activeInHierarchy;
+                RebuildButton.SetActive(false);
                 Time.timeScale = 0f;
                 songSource.Pause();
             }

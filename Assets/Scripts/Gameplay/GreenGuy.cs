@@ -18,7 +18,11 @@ public class GreenGuy : MonoBehaviour
     public GameObject floorRay;
     public Transform SwingDustTransform;
     ParticleSystem dustParticle;
-    
+
+    public float controllerDeadZone = 0.1f;
+    public float horizontalMovementVal;
+    public float verticalMovementVal;
+    public bool joystickInUse;
     public int jumpForce;
     public int fixMod = 1;
     public static float speedMod = 1.5f;
@@ -46,10 +50,6 @@ public class GreenGuy : MonoBehaviour
     public AudioClip walk, jump, brickFix, brickBreak; // haven't found a good walk sound yet
 
     private GameObject pickaxe, hammer;
-
-    Color red;
-    Color blue;
-    bool colorSwap;
     // Start is called before the first frame update
     private void Awake()
     {
@@ -76,14 +76,23 @@ public class GreenGuy : MonoBehaviour
         hammer.SetActive(false);
         pickaxe = GameObject.Find("Pickaxe");
         pickaxe.SetActive(false);
-        red = new Color(244f, 0f, 0f, 1f);
-        blue = new Color(0f, 46f, 255f, 1f);
-        colorSwap = false;
+        joystickInUse = false;
     }
 
     // Update is called once per frame
     void Update()
     {
+        horizontalMovementVal = Input.GetAxis("Horizontal");
+        verticalMovementVal = Input.GetAxis("Vertical");
+        if(horizontalMovementVal!=0)
+        {
+            joystickInUse = true;
+        }
+        else
+        {
+            joystickInUse = false;
+        }
+
         fixRay = Physics2D.Raycast(rayOrigin.position, new Vector2(fixMod , -1), distance, layersToHit);
 
         Debug.DrawLine(rayOrigin.position, rayOrigin.position + new Vector3(fixMod * distance, -1 * distance)); //visualising ray in editor
@@ -104,7 +113,7 @@ public class GreenGuy : MonoBehaviour
         //Debug.Log(rb.velocity.y);
         if(canMove && Time.timeScale != 0)
         {
-            if (Input.GetKeyDown(KeyCode.S))
+            if (Input.GetKeyDown(KeyCode.S)||verticalMovementVal < -.2f)
             {
                 foreach (PlatformEffector2D plat in platforms)
                 {
@@ -113,7 +122,7 @@ public class GreenGuy : MonoBehaviour
                 platformRotated = true;
                 platformClock = 0;
             }
-            if (Input.GetKey(KeyCode.A))
+            if (Input.GetKey(KeyCode.A)||horizontalMovementVal < -.1f)
             {
                 transform.Translate(-adjustedSpeed, 0, 0, Space.World);
                 
@@ -130,7 +139,7 @@ public class GreenGuy : MonoBehaviour
                     audioSource.Play();
                 }
             }
-            if (Input.GetKey(KeyCode.D))
+            if (Input.GetKey(KeyCode.D) || horizontalMovementVal > .1f)
             {
                 transform.Translate(adjustedSpeed, 0, 0, Space.World);
                 if (!Input.GetKey(KeyCode.A))
@@ -148,9 +157,12 @@ public class GreenGuy : MonoBehaviour
             }
             if ((!Input.GetKey(KeyCode.A) && !Input.GetKey(KeyCode.D)) || (Input.GetKey(KeyCode.A) && Input.GetKey(KeyCode.D)))
             {
-                animator.SetBool("Walking", false);
+                if(!joystickInUse)
+                {
+                    animator.SetBool("Walking", false);
+                }
             }
-            if (Input.GetKeyDown(KeyCode.W) && canJump && rb.velocity.y < .25 && rb.velocity.y > -.25 && !Input.GetKey(KeyCode.S))
+            if ((Input.GetKeyDown(KeyCode.W)||Input.GetKeyDown("joystick button 0")) && canJump && rb.velocity.y < .25 && rb.velocity.y > -.25 && !(Input.GetKey(KeyCode.S)|| verticalMovementVal < -.1f))
             {
                 //Debug.Log("jump");
                 rb.AddForce(new Vector2(0, jumpForce));
@@ -164,7 +176,7 @@ public class GreenGuy : MonoBehaviour
                 }
             }
 
-            if (Input.GetKeyDown(KeyCode.Space) && canJump && rb.velocity.y < .25 && rb.velocity.y >= 0)
+            if ((Input.GetKeyDown(KeyCode.Space)|| Input.GetKeyDown("joystick button 1")) && canJump && rb.velocity.y < .25 && rb.velocity.y >= 0)
             {
                 if (fixRay.collider != null)
                 {
@@ -206,7 +218,7 @@ public class GreenGuy : MonoBehaviour
                 // Trigger floating text here
                 if (floatingText != null)
                 {
-                    ShowFloatingText("10");
+                    ShowFloatingText("+10");
                 }
             }
         }
@@ -217,7 +229,7 @@ public class GreenGuy : MonoBehaviour
             highScoreText.text = PlayerPrefs.GetInt("HighScore").ToString();
         }
 
-        if(fixRay.collider != null)
+        if(fixRay.collider != null && canJump && rb.velocity.y < .25 && rb.velocity.y > -.25)
         {
             if (fixRay.collider.isTrigger)
             {
@@ -249,16 +261,16 @@ public class GreenGuy : MonoBehaviour
                 brickValue = 5;
                 break;
             case "Layer 2":
-                brickValue = 4;
-                break;
-            case "Layer 3":
                 brickValue = 3;
                 break;
+            case "Layer 3":
+                brickValue = 1;
+                break;
             case "Layer 4":
-                brickValue = 2;
+                brickValue = 3;
                 break;
             case "Layer 5":
-                brickValue = 1;
+                brickValue = 5;
                 break;
         }
         return brickValue;
@@ -299,12 +311,11 @@ public class GreenGuy : MonoBehaviour
                 {
                     BaseBuilding.resources -= BrickValue();
                 }
+                else
+                {
+                    return;
+                }
             }
-            if (colorSwap)
-            {fixRay.collider.gameObject.GetComponent<SpriteRenderer>().color = red;}
-            else
-            {fixRay.collider.gameObject.GetComponent<SpriteRenderer>().color = blue;}
-            colorSwap = !colorSwap;
             fixRay.collider.gameObject.SendMessage("fixBrick");
             animator.SetTrigger("Fix");
             animator.SetBool("Swinging", true);
@@ -336,7 +347,7 @@ public class GreenGuy : MonoBehaviour
         if (collision.gameObject.layer == 6 && !building)
         {
             score += 5;
-            ShowFloatingText("5");
+            ShowFloatingText("+5");
         }
     }
 
@@ -359,6 +370,6 @@ public class GreenGuy : MonoBehaviour
     {
         // text pop up should appear in the right direction no matter where the player faces
         GameObject flText = Instantiate(floatingText, transform.position + new Vector3(0, yOffset, 10), Quaternion.identity);
-        flText.GetComponentInChildren<TextMesh>().text = "+" + points;
+        flText.GetComponentInChildren<TextMesh>().text = points;
     }
 }

@@ -14,6 +14,7 @@ public class Ball : MonoBehaviour
     private bool countingDown;
     private bool[] countDownAudioPlayed;
     private TextMeshProUGUI countdownText;
+    public GameObject roundTimer;
     public float RampspeedMultiplier; //multiplier applies to static
 
     public float FinalspeedMultiplier;
@@ -42,6 +43,8 @@ public class Ball : MonoBehaviour
     // Start is called before the first frame update
     void Awake()
     {
+        //roundTimer = GameObject.Find("TimerText").GetComponent<TextMeshProUGUI>();
+        roundTimer.SetActive(false);
         songSource = GameObject.Find("SongSource").GetComponent<AudioSource>();
         defendSong = (AudioClip) Resources.Load("SFX/UpdatedDefendSong");
         countDownAudioPlayed = new bool[3];
@@ -114,6 +117,7 @@ public class Ball : MonoBehaviour
 
     void Countdown()
     {
+        roundTimer.SetActive(false);
         if (ctdTimer > 3)
         {
             //waiting a second to play audio
@@ -156,6 +160,7 @@ public class Ball : MonoBehaviour
 
     public void Launch()
     {
+        roundTimer.SetActive(true); // round timer begins
         songSource.clip = defendSong;
         songSource.Play();
         explodingParticle.transform.position = transform.position;

@@ -11,6 +11,8 @@ public class BaseBuilding : MonoBehaviour
     public TextMeshProUGUI resourcesText;
     public enum Mode { build, defend };
     public float roundTime;
+    private float roundCount = 0;
+    public TextMeshProUGUI roundText;
     public static Mode GameMode;
     public static bool lastBrickBuilt;
     private bool firstRound;
@@ -28,10 +30,6 @@ public class BaseBuilding : MonoBehaviour
     private TextMeshProUGUI Countdown;
     private GameObject StartButton;
     private GameObject RebuildButton;
-
-    Color red;
-    Color blue;
-    bool colorSwap;
 
     // Start is called before the first frame update
     void Start()
@@ -58,10 +56,8 @@ public class BaseBuilding : MonoBehaviour
         DefendUI.SetActive(false);
         lastBrickBuilt = false;
         GreenGuy.buildTimer = 0.65f;
-        roundTime = 10;
-        red = new Color(244f, 0f, 0f, 1f);
-        blue = new Color(0f, 46f, 255f, 1f);
-        colorSwap = false;
+        roundTime = 63.5f;
+        roundCount++;
 
         if (!Directory.Exists(Application.persistentDataPath + "/SaveData"))
         {
@@ -81,7 +77,7 @@ public class BaseBuilding : MonoBehaviour
         {
             RebuildButton.SetActive(false);
         }
-
+        roundText = GameObject.Find("RoundNumberText").GetComponent<TextMeshProUGUI>();
     }
 
     private GameObject[] getBrickArray()
@@ -112,7 +108,6 @@ public class BaseBuilding : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Debug.Log(resources);
         resourcesText.text = Convert.ToString(resources);
 
         if(GameMode == Mode.defend)
@@ -125,6 +120,7 @@ public class BaseBuilding : MonoBehaviour
                 roundClock = 0;
             }
         }
+        roundText.text = roundCount.ToString();
     }
 
     /*
@@ -206,6 +202,7 @@ public class BaseBuilding : MonoBehaviour
         BuildUI.SetActive(true);
         paddle.SetActive(false);
         ball.SetActive(false);
+        roundCount++;
     }
 
     public void SkipBuild()
@@ -235,12 +232,7 @@ public class BaseBuilding : MonoBehaviour
         foreach(GameObject brick in Bricks)
         {
             if (Convert.ToBoolean(brickArrangement[index]))
-                {
                 brick.GetComponent<Brick>().fixBrick();
-                if (colorSwap) {brick.GetComponent<SpriteRenderer>().color = red;}
-                else {brick.GetComponent<SpriteRenderer>().color = blue;}
-                colorSwap = !colorSwap;
-                }
             else
                 brick.GetComponent<Brick>().cancelBrick();
             index++;
