@@ -49,7 +49,7 @@ public class FloorCheck : MonoBehaviour
                 if (hit.collider != null && rb.velocity.y < .25 && rb.velocity.y > -.25)
                 {
                     animator.ResetTrigger("Jump");
-                    greenGuy.canJump = true;
+                    GreenGuy.canJump = true;
                     greenGuy.animator.SetTrigger("Grounded");
                     HasJumped = false;
                     //animator.Play("Idle - Blink");

@@ -54,6 +54,16 @@ public class Teleporter : SpecialTile
         }
     }
 
+    protected override void OnTriggerStay2D(Collider2D collision)
+    {
+        if (collision.gameObject.name.Equals("SpecialBrickTrigger") && !effectActive)
+        {
+            timeStart = Time.time;
+            doAction();
+            effectActive = true;
+        }
+    }
+
     protected void enableTeleporter()
     {
         effectActive = false;

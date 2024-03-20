@@ -29,7 +29,7 @@ public class SpecialTile : MonoBehaviour
     // Update is called once per frame
     protected virtual void OnTriggerStay2D(Collider2D collision)
     {
-        if (collision.gameObject.name.Equals("SpecialBrickTrigger") && !effectActive)
+        if (collision.gameObject.name.Equals("SpecialBrickTrigger") && !effectActive && GreenGuy.canJump)
         {
             timeStart = Time.time;
             doAction();
