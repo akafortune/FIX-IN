@@ -8,9 +8,14 @@ public class Speed : SpecialTile
     protected override void Start()
     {
         base.Start();
-        effectLength = 2;
+        effectLength = 5;
     }
 
+    protected override void OnTriggerStay2D(Collider2D collision)
+    {
+        if(!(Input.GetAxis("Vertical") < -.1f))
+            base.OnTriggerStay2D(collision);
+    }
     protected override void doAction()
     {
         Debug.Log("trigger");
