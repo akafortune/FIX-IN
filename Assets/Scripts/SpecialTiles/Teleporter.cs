@@ -7,9 +7,12 @@ public class Teleporter : SpecialTile
     protected Transform otherTeleporter;
     GameObject greenGuy;
     BoxCollider2D[] platforms;
+
+     ParticleSystem[] ps;
     // Start is called before the first frame update
     protected override void Start()
     {
+        ps = GetComponentsInChildren<ParticleSystem>();
         base.Start();
         greenGuy = GameObject.Find("GreenGuy");
         effectLength = 5;
@@ -67,11 +70,21 @@ public class Teleporter : SpecialTile
     protected void enableTeleporter()
     {
         effectActive = false;
+        foreach (ParticleSystem p in ps)
+        {
+            var e = p.emission;
+            e.rateOverTime = 1000f;
+        }
     }    
 
     protected void disableTeleporter()
     {
         effectActive = true;
         timeStart = Time.time;
+        foreach (ParticleSystem p in ps)
+        {
+            var e = p.emission;
+            e.rateOverTime = 0f;
+        }
     }
 }
