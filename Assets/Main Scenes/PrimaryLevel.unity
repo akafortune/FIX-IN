@@ -2726,6 +2726,7 @@ MonoBehaviour:
   - {fileID: 959180445}
   - {fileID: 618872635}
   - {fileID: 592490941}
+  - {fileID: 1765553652}
 --- !u!1 &549820824
 GameObject:
   m_ObjectHideFlags: 0
@@ -2949,6 +2950,10 @@ MonoBehaviour:
   rayOrigin: {fileID: 498404325}
   floorRay: {fileID: 1904182644}
   SwingDustTransform: {fileID: 0}
+  controllerDeadZone: 0.1
+  horizontalMovementVal: 0
+  verticalMovementVal: 0
+  joystickInUse: 0
   jumpForce: 0
   fixMod: 1
   horizontalSpeed: 2
@@ -4287,6 +4292,51 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 10.32, y: 0.28177977}
   m_EdgeRadius: 0
+--- !u!1 &920838932
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 920838934}
+  - component: {fileID: 920838935}
+  m_Layer: 0
+  m_Name: TimeManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &920838934
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 920838932}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 356.74146, y: 187.9815, z: -1.8249073}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &920838935
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 920838932}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a80b54e996037bb4b80eb8d25bd12092, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ball: {fileID: 0}
 --- !u!1 &938135756
 GameObject:
   m_ObjectHideFlags: 0
@@ -13563,3 +13613,4 @@ SceneRoots:
   - {fileID: 549752040}
   - {fileID: 549820827}
   - {fileID: 1167635746}
+  - {fileID: 920838934}

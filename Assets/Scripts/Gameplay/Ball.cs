@@ -15,6 +15,7 @@ public class Ball : MonoBehaviour
     private bool[] countDownAudioPlayed;
     private TextMeshProUGUI countdownText;
     public GameObject roundTimer;
+    public static bool firstLaunch;
     public float RampspeedMultiplier; //multiplier applies to static
 
     public float FinalspeedMultiplier;
@@ -44,6 +45,7 @@ public class Ball : MonoBehaviour
     void Awake()
     {
         //roundTimer = GameObject.Find("TimerText").GetComponent<TextMeshProUGUI>();
+        firstLaunch = true;
         roundTimer.SetActive(false);
         songSource = GameObject.Find("SongSource").GetComponent<AudioSource>();
         defendSong = (AudioClip) Resources.Load("SFX/UpdatedDefendSong");
@@ -117,7 +119,10 @@ public class Ball : MonoBehaviour
 
     void Countdown()
     {
-        roundTimer.SetActive(false);
+        if(firstLaunch)
+        {
+            roundTimer.SetActive(false);
+        }
         if (ctdTimer > 3)
         {
             //waiting a second to play audio
@@ -155,6 +160,7 @@ public class Ball : MonoBehaviour
             countdownText.text = "";
             countingDown = false;
             Launch();
+            firstLaunch = false;
         }
     } //Begins launch countdown and activates indicator arrow
 
@@ -225,6 +231,7 @@ public class Ball : MonoBehaviour
                 audioSource.PlayOneShot(ballExplode);
                 particleLocation = transform.position;
                 LaunchSequence();
+                //firstLaunch = false;
                 break;
         }
         trail.startColor = tailColor;
@@ -300,5 +307,10 @@ public class Ball : MonoBehaviour
     public void Explode()
     {
         hits = 5;
+    }
+
+    public void SetFirstLaunch(bool fLaunch)
+    {
+        firstLaunch = fLaunch; 
     }
 }
