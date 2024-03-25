@@ -26,6 +26,7 @@ public class GreenGuy : MonoBehaviour
     public float horizontalMovementVal;
     public float verticalMovementVal;
     public bool joystickInUse;
+    public bool allowTapJump;
     public int jumpForce;
     public int fixMod = 1;
     public static float speedMod = 1f;
@@ -84,10 +85,12 @@ public class GreenGuy : MonoBehaviour
         pickaxe = GameObject.Find("Pickaxe");
         pickaxe.SetActive(false);
         joystickInUse = false;
+        allowTapJump = false;
         bouncePadValue = 1.7f;
 
         SpeedParticles = GameObject.Find("Zoom Trails");
         SpeedParticles.SetActive(false);
+        
     }
 
     // Update is called once per frame
@@ -102,6 +105,14 @@ public class GreenGuy : MonoBehaviour
         else
         {
             joystickInUse = false;
+        }
+        if(Input.GetJoystickNames()[0].Equals("Controller (MAYFLASH Arcade Fightstick F300)"))
+        {
+            allowTapJump = true;
+        }
+        else
+        {
+            allowTapJump = false;
         }
 
         fixRay = Physics2D.Raycast(rayOrigin.position, new Vector2(fixMod , -1), distance, layersToHit);
@@ -152,7 +163,7 @@ public class GreenGuy : MonoBehaviour
                     animator.SetBool("Walking", false);
                 }
             }
-            if ((Input.GetKeyDown(KeyCode.W)||Input.GetKeyDown("joystick button 0")) && canJump && rb.velocity.y < .25 && rb.velocity.y > -.25 && !(Input.GetKey(KeyCode.S)|| verticalMovementVal < -.1f))
+            if ((Input.GetKeyDown(KeyCode.W)||Input.GetKeyDown("joystick button 0")|| (allowTapJump&&verticalMovementVal > .1f)) && canJump && rb.velocity.y < .25 && rb.velocity.y > -.25 && !(Input.GetKey(KeyCode.S)|| verticalMovementVal < -.1f))
             {
                 float bounceMod = 1;
                 if (touchingBouncePad)
