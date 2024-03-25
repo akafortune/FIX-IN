@@ -13,6 +13,7 @@ public class Brick : MonoBehaviour
     public AudioClip brickBreak;
     public SpriteRenderer fixIndicator;
     public SpriteRenderer breakIndicator;
+    public GameObject[] brickTypes;
     private static bool canBreak;
     // Start is called before the first frame update
     void Awake()
@@ -52,6 +53,11 @@ public class Brick : MonoBehaviour
     {
         animator.SetBool("IsBroken", false);
         bc.isTrigger = false;
+    }
+
+    public void specialBrick(int brickIndex)
+    {
+        GameObject p = Instantiate(brickTypes[brickIndex - 1], this.transform);
     }
 
     public void cancelBrick()
