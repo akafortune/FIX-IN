@@ -40,6 +40,8 @@ public class GreenGuy : MonoBehaviour
 
     public bool building = false, stunned = false;
 
+    
+
     // private float oneSecond = 1f;
     public float score;
     public TextMeshProUGUI scoreText;
@@ -101,7 +103,7 @@ public class GreenGuy : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        
         if(teleporterPlaced)
         {
             brickType = 4;
@@ -117,15 +119,7 @@ public class GreenGuy : MonoBehaviour
         {
             joystickInUse = false;
         }
-        if(Input.GetJoystickNames()[0].Equals("Controller (MAYFLASH Arcade Fightstick F300)"))
-        {
-            allowTapJump = true;
-        }
-        else
-        {
-            allowTapJump = false;
-        }
-
+   
         fixRay = Physics2D.Raycast(rayOrigin.position, new Vector2(fixMod , -1), distance, layersToHit);
         Debug.DrawLine(rayOrigin.position, rayOrigin.position + new Vector3(fixMod * distance, -1 * distance)); //visualising ray in editor
 
@@ -174,7 +168,7 @@ public class GreenGuy : MonoBehaviour
                     animator.SetBool("Walking", false);
                 }
             }
-            if ((Input.GetKeyDown(KeyCode.W)||Input.GetKeyDown("joystick button 0")|| (allowTapJump&&verticalMovementVal > .1f)) && canJump && rb.velocity.y < .25 && rb.velocity.y > -.25 && !(Input.GetKey(KeyCode.S)|| verticalMovementVal < -.1f))
+            if ((Input.GetKeyDown(KeyCode.W)||Input.GetKeyDown("joystick button 2")|| (allowTapJump&&verticalMovementVal > .1f)) && canJump && rb.velocity.y < .25 && rb.velocity.y > -.25 && !(Input.GetKey(KeyCode.S)|| verticalMovementVal < -.1f))
             {
                 float bounceMod = 1;
                 if (touchingBouncePad)
@@ -191,7 +185,7 @@ public class GreenGuy : MonoBehaviour
                 }
             }
 
-            if ((Input.GetKeyDown(KeyCode.Space)|| Input.GetKeyDown("joystick button 1")) && canJump && rb.velocity.y < .25 && rb.velocity.y >= 0)
+            if ((Input.GetKeyDown(KeyCode.Space)|| Input.GetKeyDown("joystick button 3")) && canJump && rb.velocity.y < .25 && rb.velocity.y >= 0)
             {
                 if (fixRay.collider != null)
                 {
@@ -471,5 +465,18 @@ public class GreenGuy : MonoBehaviour
     public static void SetBounce(bool value)
     {
         touchingBouncePad = value;
+    }
+
+    public void OnToggleChange(bool tickOn)
+    {
+        //method to toggle tap jump on and off
+        if(tickOn)
+        {
+            allowTapJump = true;
+        }
+        else
+        {
+            allowTapJump = false;
+        }
     }
 }
