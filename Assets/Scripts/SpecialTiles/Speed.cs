@@ -13,8 +13,12 @@ public class Speed : SpecialTile
 
     protected override void OnTriggerStay2D(Collider2D collision)
     {
-        if(!(Input.GetAxis("Vertical") < -.1f))
-            base.OnTriggerStay2D(collision);
+        if(!(Input.GetAxis("Vertical") < -.1f) && collision.gameObject.name.Equals("SpecialBrickTrigger") && GreenGuy.canJump)
+        {
+            timeStart = Time.time;
+            doAction();
+            effectActive = true;
+        }
     }
     protected override void doAction()
     {

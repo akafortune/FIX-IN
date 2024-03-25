@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class Teleporter : SpecialTile
@@ -9,6 +10,7 @@ public class Teleporter : SpecialTile
     BoxCollider2D[] platforms;
 
      ParticleSystem[] ps;
+    ParticleSystem[] otherTeleporterPS;
     // Start is called before the first frame update
     protected override void Start()
     {
@@ -18,6 +20,7 @@ public class Teleporter : SpecialTile
         effectLength = 5;
         assignTeleporter();
         platforms = GameObject.Find("Platforms").GetComponentsInChildren<BoxCollider2D>();
+        otherTeleporterPS = otherTeleporter.GetComponentsInChildren<ParticleSystem>();
 }
 
     protected override void doAction()
@@ -75,6 +78,12 @@ public class Teleporter : SpecialTile
             var e = p.emission;
             e.rateOverTime = 1000f;
         }
+
+        foreach (ParticleSystem p in otherTeleporterPS)
+        {
+            var e = p.emission;
+            e.rateOverTime = 1000f;
+        }
     }    
 
     protected void disableTeleporter()
@@ -82,6 +91,12 @@ public class Teleporter : SpecialTile
         effectActive = true;
         timeStart = Time.time;
         foreach (ParticleSystem p in ps)
+        {
+            var e = p.emission;
+            e.rateOverTime = 0f;
+        }
+
+        foreach (ParticleSystem p in otherTeleporterPS)
         {
             var e = p.emission;
             e.rateOverTime = 0f;

@@ -213,7 +213,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &9212103077743269647
 Transform:
   m_ObjectHideFlags: 0
@@ -224,7 +224,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 7, y: 7, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5571433876571129974}
@@ -315,7 +315,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 0.49999997
+  m_Radius: 3.5
 --- !u!1001 &8129909094015406225
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -364,9 +364,29 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4115328301529147108, guid: b6f4b220681211a4a8dab303e5baf2c8, type: 3}
+      propertyPath: m_SortingOrder
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 4285292599183348336, guid: b6f4b220681211a4a8dab303e5baf2c8, type: 3}
       propertyPath: m_Name
       value: Sheild Particles
+      objectReference: {fileID: 0}
+    - target: {fileID: 5014953719930351679, guid: b6f4b220681211a4a8dab303e5baf2c8, type: 3}
+      propertyPath: InitialModule.startSize.scalar
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5014953719930351679, guid: b6f4b220681211a4a8dab303e5baf2c8, type: 3}
+      propertyPath: InitialModule.startSize.minScalar
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5014953719930351679, guid: b6f4b220681211a4a8dab303e5baf2c8, type: 3}
+      propertyPath: EmissionModule.rateOverTime.scalar
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5014953719930351679, guid: b6f4b220681211a4a8dab303e5baf2c8, type: 3}
+      propertyPath: InitialModule.startColor.maxColor.g
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

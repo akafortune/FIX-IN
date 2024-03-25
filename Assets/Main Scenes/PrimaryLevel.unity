@@ -3455,34 +3455,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: ShieldGenerator
       objectReference: {fileID: 0}
-    - target: {fileID: 3840318042646601902, guid: 16c551901a07f3e4992ea9b8614f7ed1, type: 3}
-      propertyPath: looping
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3840318042646601902, guid: 16c551901a07f3e4992ea9b8614f7ed1, type: 3}
-      propertyPath: ShapeModule.radius.value
-      value: 3.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 3840318042646601902, guid: 16c551901a07f3e4992ea9b8614f7ed1, type: 3}
-      propertyPath: InitialModule.startSize.scalar
-      value: 0.2
-      objectReference: {fileID: 0}
-    - target: {fileID: 3840318042646601902, guid: 16c551901a07f3e4992ea9b8614f7ed1, type: 3}
-      propertyPath: InitialModule.startSize.minScalar
-      value: 0.1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3840318042646601902, guid: 16c551901a07f3e4992ea9b8614f7ed1, type: 3}
-      propertyPath: EmissionModule.rateOverTime.scalar
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3840318042646601902, guid: 16c551901a07f3e4992ea9b8614f7ed1, type: 3}
-      propertyPath: InitialModule.startColor.maxColor.g
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5318654911850755701, guid: 16c551901a07f3e4992ea9b8614f7ed1, type: 3}
-      propertyPath: m_SortingOrder
-      value: 8
-      objectReference: {fileID: 0}
     - target: {fileID: 5571433876571129974, guid: 16c551901a07f3e4992ea9b8614f7ed1, type: 3}
       propertyPath: m_LocalPosition.x
       value: -1.5
@@ -3521,10 +3493,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5571433876571129974, guid: 16c551901a07f3e4992ea9b8614f7ed1, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6415451300876470763, guid: 16c551901a07f3e4992ea9b8614f7ed1, type: 3}
-      propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
