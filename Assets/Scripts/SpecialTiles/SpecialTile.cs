@@ -42,7 +42,7 @@ public class SpecialTile : MonoBehaviour
     protected virtual void doAction() { }
     protected virtual void stopAction() { }
 
-    protected void cancelBrick()
+    protected virtual void cancelBrick()
     {
         Brick.removeSpecialBrick(index-1);
         Destroy(this.gameObject);

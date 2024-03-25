@@ -170,6 +170,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d8ed49c1985f7e44a8f9c48df8516fcc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Brick: {fileID: 0}
+  index: 0
+  portalParticles:
+  - {fileID: 5894340081882608983}
+  - {fileID: 7553527761309913872}
+  - {fileID: 8515396035068889288}
+  - {fileID: 3135208460374470145}
 --- !u!50 &2863525053103119549
 Rigidbody2D:
   serializedVersion: 4
@@ -213,7 +220,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &2108101661118795852
 Transform:
   m_ObjectHideFlags: 0
@@ -298,7 +305,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &626482206911072006
 Transform:
   m_ObjectHideFlags: 0
@@ -5126,7 +5133,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &5171678292348446625
 Transform:
   m_ObjectHideFlags: 0
@@ -9954,7 +9961,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &5783734802419316103
 Transform:
   m_ObjectHideFlags: 0

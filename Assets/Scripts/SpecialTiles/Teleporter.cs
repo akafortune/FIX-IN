@@ -9,7 +9,7 @@ public class Teleporter : SpecialTile
     protected Transform otherTeleporter;
     GameObject greenGuy;
     BoxCollider2D[] platforms;
-
+    public GameObject[] portalParticles;
      ParticleSystem[] ps;
     protected ParticleSystem[] otherTeleporterPS;
     // Start is called before the first frame update
@@ -61,6 +61,17 @@ public class Teleporter : SpecialTile
                 otherTeleporterPS = otherTeleporter.GetComponentsInChildren<ParticleSystem>();
                 teleporter.otherTeleporter = this.transform;
                 teleporter.otherTeleporterPS = this.GetComponentsInChildren<ParticleSystem>();
+                
+                foreach(GameObject go in portalParticles)
+                {
+                    go.gameObject.SetActive(true);
+                }
+
+                foreach(GameObject go in teleporter.portalParticles)
+                {
+                    go.gameObject.SetActive(true);
+                }
+
                 break;
             }
         }
@@ -107,5 +118,17 @@ public class Teleporter : SpecialTile
             var e = p.emission;
             e.rateOverTime = 0f;
         }
+    }
+
+    protected override void cancelBrick()
+    {
+        Teleporter otherTeleporterScript = otherTeleporter.GetComponent<Teleporter>();
+        otherTeleporterScript.otherTeleporter = null;
+        
+        foreach(GameObject go in otherTeleporterScript.portalParticles)
+        {
+            go.SetActive(false);
+        }
+        base.cancelBrick();
     }
 }
