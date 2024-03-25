@@ -8,6 +8,8 @@ public class SpecialTile : MonoBehaviour
     protected float timeStart;
     protected float effectLength;
     private Rigidbody2D rb;
+    public Brick Brick;
+    public int index;
 
     // Start is called before the first frame update
     protected virtual void Start()
@@ -39,4 +41,10 @@ public class SpecialTile : MonoBehaviour
 
     protected virtual void doAction() { }
     protected virtual void stopAction() { }
+
+    protected void cancelBrick()
+    {
+        Brick.removeSpecialBrick(index-1);
+        Destroy(this.gameObject);
+    }
 }

@@ -89,7 +89,7 @@ public class BaseBuilding : MonoBehaviour
         }
         roundText = GameObject.Find("RoundNumberText").GetComponent<TextMeshProUGUI>();
 
-        /*
+        
         do
         {
             bubble1Item = Random.Range(0, 4);
@@ -102,7 +102,7 @@ public class BaseBuilding : MonoBehaviour
         b1.GetComponentInChildren<Bubble>().brickInd = bubble1Item;
         b2 = Instantiate(itemBubble, bubbleTwo);
         b2.GetComponentInChildren<Bubble>().brickInd = bubble2Item;
-        */
+        
     }
 
     private GameObject[] getBrickArray()

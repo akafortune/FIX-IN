@@ -16,6 +16,7 @@ public class Brick : MonoBehaviour
     public SpriteRenderer breakIndicator;
     public GameObject[] brickTypes;
     private static bool canBreak;
+    private GreenGuy GreenGuy;
     // Start is called before the first frame update
     void Awake()
     {
@@ -27,6 +28,7 @@ public class Brick : MonoBehaviour
         bc = GetComponent<BoxCollider2D>();
         fixIndicator.enabled = false;
         breakIndicator.enabled = false;
+        GreenGuy = GameObject.Find("GreenGuy").GetComponent<GreenGuy>();
     }
 
     // Update is called once per frame
@@ -60,9 +62,18 @@ public class Brick : MonoBehaviour
     public void specialBrick(int brickIndex)
     {
         GameObject p = Instantiate(brickTypes[brickIndex-1], this.transform);
-        bc.isTrigger = false;
         bc.enabled = false;
         spriteRenderer.enabled = false;
+        SpecialTile tile = p.GetComponent<SpecialTile>();
+        tile.Brick = this;
+        tile.index = brickIndex;
+    }
+
+    public void removeSpecialBrick(int index)
+    {
+        bc.enabled = true;
+        spriteRenderer.enabled = true;
+        GreenGuy.specialBrickAmounts[index]++;
     }
 
     public void cancelBrick()
