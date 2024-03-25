@@ -21,7 +21,7 @@ public class Shield : SpecialTile
         cooldownLength = 10;
         cooldownStart = -10;
 
-        animator = GameObject.Find("Sheild Particles").transform.GetChild(0).gameObject.GetComponent<Animator>();
+        animator = shieldParticles.GetComponent<Animator>();
         animator.SetBool("Stop", true);
     }
     protected override void OnTriggerStay2D(Collider2D collision)

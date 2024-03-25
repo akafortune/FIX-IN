@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Teleporter : SpecialTile
@@ -25,6 +26,7 @@ public class Teleporter : SpecialTile
         if(otherTeleporter == null)
         {
             assignTeleporter();
+            return;
         }
         foreach (BoxCollider2D boxCollider in platforms)
         {
@@ -38,9 +40,12 @@ public class Teleporter : SpecialTile
 
     protected override void stopAction()
     {
-        this.transform.GetChild(0).gameObject.SetActive(true);
-        otherTeleporter.GetChild(0).gameObject.SetActive(true);
-        otherTeleporter.GetComponent<Teleporter>().enableTeleporter();
+        if (otherTeleporter != null)
+        {
+            this.transform.GetChild(0).gameObject.SetActive(true);
+            otherTeleporter.GetChild(0).gameObject.SetActive(true);
+            otherTeleporter.GetComponent<Teleporter>().enableTeleporter();
+        }
     }
 
     private void assignTeleporter()

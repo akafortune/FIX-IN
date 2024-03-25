@@ -11,11 +11,10 @@ public class Bubble : MonoBehaviour
     public int brickInd;
     public int cost;
     public TextMeshPro text;
+    protected static int previousBrickInd = -1;
 
     void Start()
     {
-        brickInd = Random.Range(0, brickTypes.Length);
-
         GameObject brickIcon = Instantiate(brickTypes[brickInd], brickHolder);
         cost = 15;
 
@@ -32,6 +31,8 @@ public class Bubble : MonoBehaviour
                 break;
             case 3:
                 text.text += "Teleporter";
+                foreach(Transform child in brickIcon.GetComponentInChildren<Transform>())
+                    child.gameObject.SetActive(false);
                 break;
             default:
                 break;

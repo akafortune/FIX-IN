@@ -3,6 +3,7 @@ using System.IO;
 using System.Linq;
 using TMPro;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class BaseBuilding : MonoBehaviour
 {
@@ -29,6 +30,7 @@ public class BaseBuilding : MonoBehaviour
     public Transform bubbleOne, bubbleTwo;
     public GameObject itemBubble;
     public GameObject b1, b2;
+    public int bubble1Item, bubble2Item;
 
     private GameObject BuildUI;
     private GameObject DefendUI;
@@ -84,9 +86,18 @@ public class BaseBuilding : MonoBehaviour
         }
         roundText = GameObject.Find("RoundNumberText").GetComponent<TextMeshProUGUI>();
 
+        do
+        {
+            bubble1Item = Random.Range(0, 4);
+            Debug.Log(bubble1Item);
+            bubble2Item = Random.Range(0, 4);
+            Debug.Log(bubble2Item);
+        } while (bubble1Item == bubble2Item);
 
         b1 = Instantiate(itemBubble, bubbleOne);
+        b1.GetComponentInChildren<Bubble>().brickInd = bubble1Item;
         b2 = Instantiate(itemBubble, bubbleTwo);
+        b2.GetComponentInChildren<Bubble>().brickInd = bubble2Item;
     }
 
     private GameObject[] getBrickArray()
@@ -211,8 +222,19 @@ public class BaseBuilding : MonoBehaviour
 
     public void BeginBuild()
     {
+        do
+        {
+            bubble1Item = Random.Range(0, 4);
+            Debug.Log(bubble1Item);
+            bubble2Item = Random.Range(0, 4);
+            Debug.Log(bubble2Item);
+        } while (bubble1Item == bubble2Item);
+
         b1 = Instantiate(itemBubble, bubbleOne);
+        b1.GetComponentInChildren<Bubble>().brickInd = bubble1Item;
         b2 = Instantiate(itemBubble, bubbleTwo);
+        b2.GetComponentInChildren<Bubble>().brickInd = bubble2Item;
+
         Countdown.text = "";
         foreach(GameObject brick in Bricks)
         {
