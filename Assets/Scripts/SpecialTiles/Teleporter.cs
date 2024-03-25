@@ -125,10 +125,9 @@ public class Teleporter : SpecialTile
         Teleporter otherTeleporterScript = otherTeleporter.GetComponent<Teleporter>();
         otherTeleporterScript.otherTeleporter = null;
 
-        disableTeleporter();
         foreach(GameObject go in otherTeleporterScript.portalParticles)
         {
-            //go.SetActive(false);
+            go.SetActive(false);
         }
         base.cancelBrick();
     }
