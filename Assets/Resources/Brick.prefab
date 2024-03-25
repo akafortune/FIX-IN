@@ -173,8 +173,8 @@ MonoBehaviour:
   breakIndicator: {fileID: 0}
   brickTypes:
   - {fileID: 900775377911562965, guid: f776a640840533041868486e8cfbaa63, type: 3}
-  - {fileID: 3747684032518093627, guid: 2b84f0455615d294dae42a0bcde6c3c2, type: 3}
   - {fileID: 2046593276452045484, guid: 16c551901a07f3e4992ea9b8614f7ed1, type: 3}
+  - {fileID: 3747684032518093627, guid: 2b84f0455615d294dae42a0bcde6c3c2, type: 3}
   - {fileID: 1217669116338727567, guid: a4de3ea0593173f438da6dfd2dba0534, type: 3}
 --- !u!1 &2152738008917297449
 GameObject:

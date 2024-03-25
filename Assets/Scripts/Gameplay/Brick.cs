@@ -11,6 +11,7 @@ public class Brick : MonoBehaviour
     BoxCollider2D bc; 
     public AudioSource audioSource;
     public AudioClip brickBreak;
+    private SpriteRenderer spriteRenderer;
     public SpriteRenderer fixIndicator;
     public SpriteRenderer breakIndicator;
     public GameObject[] brickTypes;
@@ -18,6 +19,7 @@ public class Brick : MonoBehaviour
     // Start is called before the first frame update
     void Awake()
     {
+        spriteRenderer = GetComponent<SpriteRenderer>();
         fixIndicator = GetComponentsInChildren<SpriteRenderer>()[1];
         breakIndicator = GetComponentsInChildren<SpriteRenderer>()[2];
         audioSource = GetComponentInParent<AudioSource>();
@@ -57,7 +59,10 @@ public class Brick : MonoBehaviour
 
     public void specialBrick(int brickIndex)
     {
-        GameObject p = Instantiate(brickTypes[brickIndex - 1], this.transform);
+        GameObject p = Instantiate(brickTypes[brickIndex-1], this.transform);
+        bc.isTrigger = false;
+        bc.enabled = false;
+        spriteRenderer.enabled = false;
     }
 
     public void cancelBrick()

@@ -6,11 +6,9 @@ public class BubbleUpDown : MonoBehaviour
 {
     public float timer = 5f;
     public bool up = true;
+   
     // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    
 
     // Update is called once per frame
     void Update()
@@ -33,4 +31,6 @@ public class BubbleUpDown : MonoBehaviour
             up = !up;
         }
     }
+
+    
 }

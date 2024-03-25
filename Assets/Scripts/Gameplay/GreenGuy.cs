@@ -37,8 +37,8 @@ public class GreenGuy : MonoBehaviour
     public bool canMove = true, platformRotated; //
     public static float buildTimer;
     public float buildClock = 0;
-
     public bool building = false, stunned = false;
+    public string[] materialArray;
 
     
 
@@ -46,6 +46,7 @@ public class GreenGuy : MonoBehaviour
     public float score;
     public TextMeshProUGUI scoreText;
     public TextMeshProUGUI highScoreText;
+    public TextMeshProUGUI materialText;
 
     public float yOffset;
     public GameObject floatingText;
@@ -62,8 +63,8 @@ public class GreenGuy : MonoBehaviour
 
     public Vector3 targetedBrickTransform;
     private bool teleporterPlaced = false;
-    private int brickType = 0;
-    private int[] specialBrickAmounts = { 10, 10, 10, 10 };
+    public int brickType = 0;
+    public int[] specialBrickAmounts;
     // Start is called before the first frame update
     private void Awake()
     {
@@ -73,6 +74,7 @@ public class GreenGuy : MonoBehaviour
     }
     void Start()
     {
+        Debug.Log(this.gameObject.name);
         platforms = GameObject.Find("Platforms").GetComponentsInChildren<BoxCollider2D>();
         SwingDustTransform = GameObject.Find("SwingDust").GetComponent<Transform>();
         Physics2D.queriesHitTriggers = true; //making it so that ray can detect triggers
@@ -103,7 +105,14 @@ public class GreenGuy : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if(brickType == 0)
+        {
+            materialText.text = materialArray[brickType];
+        } else
+        {
+            materialText.text = materialArray[brickType] + ":" + specialBrickAmounts[brickType - 1];
+        }
+
         if(teleporterPlaced)
         {
             brickType = 4;
@@ -119,7 +128,20 @@ public class GreenGuy : MonoBehaviour
         {
             joystickInUse = false;
         }
-   
+
+        if(Input.GetJoystickNames().Length != 0)
+        {
+            if (Input.GetJoystickNames()[0].Equals("Controller (MAYFLASH Arcade Fightstick F300)"))
+            {
+                allowTapJump = true;
+            }
+        }
+        
+        else
+        {
+            allowTapJump = false;
+        }
+
         fixRay = Physics2D.Raycast(rayOrigin.position, new Vector2(fixMod , -1), distance, layersToHit);
         Debug.DrawLine(rayOrigin.position, rayOrigin.position + new Vector3(fixMod * distance, -1 * distance)); //visualising ray in editor
 
@@ -195,7 +217,7 @@ public class GreenGuy : MonoBehaviour
 
             if(BaseBuilding.GameMode == BaseBuilding.Mode.build)
             {
-                if (Input.GetKeyDown(KeyCode.RightArrow))
+                if (Input.GetKeyDown(KeyCode.E) ||  Input.GetKeyDown("joystick button 1"))
                 {
                     if(brickType < 4)
                     {
@@ -204,7 +226,7 @@ public class GreenGuy : MonoBehaviour
                     {
                         brickType = 0;
                     }
-                } else if (Input.GetKeyDown(KeyCode.LeftArrow))
+                } else if (Input.GetKeyDown(KeyCode.Q) || Input.GetKeyDown("joystick button 0"))
                 {
                     if (brickType > 0)
                     {
@@ -354,7 +376,7 @@ public class GreenGuy : MonoBehaviour
 
             if (BaseBuilding.GameMode == BaseBuilding.Mode.build)
             {
-                if(brickType== 0)
+                if(brickType == 0)
                 {
                     if (BaseBuilding.resources - BrickValue() >= 0)
                     {
@@ -367,10 +389,10 @@ public class GreenGuy : MonoBehaviour
                     }
                 } else
                 {
-                    if (specialBrickAmounts[brickType] > 0)
+                    if (specialBrickAmounts[brickType-1] > 0)
                     {
                         fixRay.collider.gameObject.SendMessage("specialBrick", brickType);
-                        specialBrickAmounts[brickType]--;
+                        specialBrickAmounts[brickType-1]--;
 
                         //to make sure 2 teleporters must be placed
                         if(brickType == 4)
@@ -381,7 +403,7 @@ public class GreenGuy : MonoBehaviour
                             } else
                             {
                                 teleporterPlaced = true;
-                                specialBrickAmounts[brickType]++;
+                                specialBrickAmounts[brickType-1]++;
                             }
                         }
                     } else
@@ -467,6 +489,7 @@ public class GreenGuy : MonoBehaviour
         touchingBouncePad = value;
     }
 
+
     public void OnToggleChange(bool tickOn)
     {
         //method to toggle tap jump on and off
@@ -478,5 +501,9 @@ public class GreenGuy : MonoBehaviour
         {
             allowTapJump = false;
         }
+
+    public void addSpecialResources(int brickInd)
+    {
+        specialBrickAmounts[brickInd] += 1;
     }
 }
