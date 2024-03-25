@@ -24,6 +24,11 @@ public class BaseBuilding : MonoBehaviour
     public GameObject ball;
     public GameObject paddle;
     public GameObject[] Bricks;
+    public GameObject[] brickTypes;
+
+    public Transform bubbleOne, bubbleTwo;
+    public GameObject itemBubble;
+    public GameObject b1, b2;
 
     private GameObject BuildUI;
     private GameObject DefendUI;
@@ -78,6 +83,10 @@ public class BaseBuilding : MonoBehaviour
             RebuildButton.SetActive(false);
         }
         roundText = GameObject.Find("RoundNumberText").GetComponent<TextMeshProUGUI>();
+
+
+        b1 = Instantiate(itemBubble, bubbleOne);
+        b2 = Instantiate(itemBubble, bubbleTwo);
     }
 
     private GameObject[] getBrickArray()
@@ -119,8 +128,12 @@ public class BaseBuilding : MonoBehaviour
                 BeginBuild();
                 roundClock = 0;
             }
+
+            
         }
         roundText.text = roundCount.ToString();
+
+        
     }
 
     /*
@@ -153,7 +166,8 @@ public class BaseBuilding : MonoBehaviour
 
     public void BeginRound()
     {
-        if(firstRound)
+        Destroy(b1);
+        Destroy(b2);
         {
             StreamWriter sw = new StreamWriter(Application.persistentDataPath + "/SaveData/lastRound1.txt");
             sw.WriteLine(resources);
@@ -185,6 +199,8 @@ public class BaseBuilding : MonoBehaviour
 
     public void BeginBuild()
     {
+        b1 = Instantiate(itemBubble, bubbleOne);
+        b2 = Instantiate(itemBubble, bubbleTwo);
         Countdown.text = "";
         foreach(GameObject brick in Bricks)
         {

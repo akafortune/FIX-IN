@@ -42,6 +42,7 @@ GameObject:
   - component: {fileID: 9075312356686469541}
   - component: {fileID: 5411355137888525957}
   - component: {fileID: 4121750899673927592}
+  - component: {fileID: 4298246495315062209}
   m_Layer: 0
   m_Name: Circle
   m_TagString: Untagged
@@ -151,6 +152,26 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.5
+--- !u!114 &4298246495315062209
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1968578630005040528}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 03a8dc4fd5f779649a6331f00ac922cc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  parent: {fileID: 8776831317386501753}
+  brickTypes:
+  - {fileID: 900775377911562965, guid: f776a640840533041868486e8cfbaa63, type: 3}
+  - {fileID: 2046593276452045484, guid: 16c551901a07f3e4992ea9b8614f7ed1, type: 3}
+  - {fileID: 3747684032518093627, guid: 2b84f0455615d294dae42a0bcde6c3c2, type: 3}
+  - {fileID: 1217669116338727567, guid: a4de3ea0593173f438da6dfd2dba0534, type: 3}
+  brickHolder: {fileID: 3703894848134602846}
+  brickInd: 0
 --- !u!1 &2257917962372778772
 GameObject:
   m_ObjectHideFlags: 0

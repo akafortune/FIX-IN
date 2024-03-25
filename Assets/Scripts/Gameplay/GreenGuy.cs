@@ -60,8 +60,8 @@ public class GreenGuy : MonoBehaviour
 
     public Vector3 targetedBrickTransform;
     private bool teleporterPlaced = false;
-    private int brickType = 0;
-    private int[] specialBrickAmounts = { 10, 10, 10, 10 };
+    public int brickType = 0;
+    public int[] specialBrickAmounts;
     // Start is called before the first frame update
     private void Awake()
     {
@@ -71,6 +71,7 @@ public class GreenGuy : MonoBehaviour
     }
     void Start()
     {
+        Debug.Log(this.gameObject.name);
         platforms = GameObject.Find("Platforms").GetComponentsInChildren<BoxCollider2D>();
         SwingDustTransform = GameObject.Find("SwingDust").GetComponent<Transform>();
         Physics2D.queriesHitTriggers = true; //making it so that ray can detect triggers
@@ -360,7 +361,7 @@ public class GreenGuy : MonoBehaviour
 
             if (BaseBuilding.GameMode == BaseBuilding.Mode.build)
             {
-                if(brickType== 0)
+                if(brickType == 0)
                 {
                     if (BaseBuilding.resources - BrickValue() >= 0)
                     {
@@ -373,10 +374,10 @@ public class GreenGuy : MonoBehaviour
                     }
                 } else
                 {
-                    if (specialBrickAmounts[brickType] > 0)
+                    if (specialBrickAmounts[brickType-1] > 0)
                     {
                         fixRay.collider.gameObject.SendMessage("specialBrick", brickType);
-                        specialBrickAmounts[brickType]--;
+                        specialBrickAmounts[brickType-1]--;
 
                         //to make sure 2 teleporters must be placed
                         if(brickType == 4)
@@ -387,7 +388,7 @@ public class GreenGuy : MonoBehaviour
                             } else
                             {
                                 teleporterPlaced = true;
-                                specialBrickAmounts[brickType]++;
+                                specialBrickAmounts[brickType-1]++;
                             }
                         }
                     } else
@@ -471,5 +472,10 @@ public class GreenGuy : MonoBehaviour
     public static void SetBounce(bool value)
     {
         touchingBouncePad = value;
+    }
+
+    public void addSpecialResources(int brickInd)
+    {
+        specialBrickAmounts[brickInd] += 1;
     }
 }

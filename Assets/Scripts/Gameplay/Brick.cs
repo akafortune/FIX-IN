@@ -57,7 +57,8 @@ public class Brick : MonoBehaviour
 
     public void specialBrick(int brickIndex)
     {
-        GameObject p = Instantiate(brickTypes[brickIndex - 1], this.transform);
+        GameObject p = Instantiate(brickTypes[brickIndex-1], this.transform);
+        bc.isTrigger = false;
     }
 
     public void cancelBrick()
