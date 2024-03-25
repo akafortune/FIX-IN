@@ -493,7 +493,7 @@ public class GreenGuy : MonoBehaviour
     public void OnToggleChange(bool tickOn)
     {
         //method to toggle tap jump on and off
-        if(tickOn)
+        if (tickOn)
         {
             allowTapJump = true;
         }
@@ -501,6 +501,7 @@ public class GreenGuy : MonoBehaviour
         {
             allowTapJump = false;
         }
+    }
 
     public void addSpecialResources(int brickInd)
     {

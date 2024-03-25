@@ -66,6 +66,9 @@ public class BaseBuilding : MonoBehaviour
         roundTime = 63.5f;
         roundCount++;
 
+        bubbleOne = GameObject.Find("Bubble 1").GetComponent<Transform>();
+        bubbleTwo = GameObject.Find("Bubble 2").GetComponent<Transform>();
+
         if (!Directory.Exists(Application.persistentDataPath + "/SaveData"))
         {
             Directory.CreateDirectory(Application.persistentDataPath + "/SaveData");
@@ -86,6 +89,7 @@ public class BaseBuilding : MonoBehaviour
         }
         roundText = GameObject.Find("RoundNumberText").GetComponent<TextMeshProUGUI>();
 
+        /*
         do
         {
             bubble1Item = Random.Range(0, 4);
@@ -98,6 +102,7 @@ public class BaseBuilding : MonoBehaviour
         b1.GetComponentInChildren<Bubble>().brickInd = bubble1Item;
         b2 = Instantiate(itemBubble, bubbleTwo);
         b2.GetComponentInChildren<Bubble>().brickInd = bubble2Item;
+        */
     }
 
     private GameObject[] getBrickArray()

@@ -11,7 +11,7 @@ public class Teleporter : SpecialTile
     BoxCollider2D[] platforms;
 
      ParticleSystem[] ps;
-    ParticleSystem[] otherTeleporterPS;
+    protected ParticleSystem[] otherTeleporterPS;
     // Start is called before the first frame update
     protected override void Start()
     {
@@ -21,7 +21,6 @@ public class Teleporter : SpecialTile
         effectLength = 5;
         assignTeleporter();
         platforms = GameObject.Find("Platforms").GetComponentsInChildren<BoxCollider2D>();
-        otherTeleporterPS = otherTeleporter.GetComponentsInChildren<ParticleSystem>();
 }
 
     protected override void doAction()
@@ -59,7 +58,9 @@ public class Teleporter : SpecialTile
             if(teleporter.otherTeleporter == null && teleporter.transform != this.transform)
             {
                 otherTeleporter = teleporter.transform;
+                otherTeleporterPS = otherTeleporter.GetComponentsInChildren<ParticleSystem>();
                 teleporter.otherTeleporter = this.transform;
+                teleporter.otherTeleporterPS = this.GetComponentsInChildren<ParticleSystem>();
                 break;
             }
         }
