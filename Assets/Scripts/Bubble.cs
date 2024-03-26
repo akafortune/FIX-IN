@@ -49,6 +49,15 @@ public class Bubble : MonoBehaviour
             
     }
 
+    private void Update()
+    {
+        if(BaseBuilding.GameMode == BaseBuilding.Mode.defend)
+        {
+            Destroy(otherBubble);
+            Destroy(parent);
+        }
+    }
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.name.Equals("HeadBox") && BaseBuilding.resources - cost >= 0)

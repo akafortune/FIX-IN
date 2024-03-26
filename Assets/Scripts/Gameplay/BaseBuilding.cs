@@ -171,8 +171,6 @@ public class BaseBuilding : MonoBehaviour
 
     public void BeginRound()
     {
-        Destroy(b1);
-        Destroy(b2);
         {
             StreamWriter sw = new StreamWriter(Application.persistentDataPath + "/SaveData/lastRound1.txt");
             sw.WriteLine(resources);
