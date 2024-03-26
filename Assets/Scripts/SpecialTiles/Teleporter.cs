@@ -61,15 +61,17 @@ public class Teleporter : SpecialTile
                 otherTeleporterPS = otherTeleporter.GetComponentsInChildren<ParticleSystem>();
                 teleporter.otherTeleporter = this.transform;
                 teleporter.otherTeleporterPS = this.GetComponentsInChildren<ParticleSystem>();
-                
-                foreach(GameObject go in portalParticles)
+
+                foreach (ParticleSystem p in ps)
                 {
-                    go.gameObject.SetActive(true);
+                    var e = p.emission;
+                    e.rateOverTime = 1000f;
                 }
 
-                foreach(GameObject go in teleporter.portalParticles)
+                foreach (ParticleSystem p in otherTeleporterPS)
                 {
-                    go.gameObject.SetActive(true);
+                    var e = p.emission;
+                    e.rateOverTime = 1000f;
                 }
 
                 break;
@@ -125,10 +127,12 @@ public class Teleporter : SpecialTile
         Teleporter otherTeleporterScript = otherTeleporter.GetComponent<Teleporter>();
         otherTeleporterScript.otherTeleporter = null;
 
-        foreach(GameObject go in otherTeleporterScript.portalParticles)
+        foreach (ParticleSystem p in otherTeleporterPS)
         {
-            go.SetActive(false);
+            var e = p.emission;
+            e.rateOverTime = 0f;
         }
+
         base.cancelBrick();
     }
 }
