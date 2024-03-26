@@ -38,6 +38,8 @@ public class BaseBuilding : MonoBehaviour
     private GameObject StartButton;
     private GameObject RebuildButton;
 
+    private GreenGuy greenGuy;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -69,6 +71,7 @@ public class BaseBuilding : MonoBehaviour
         bubbleOne = GameObject.Find("Bubble 1").GetComponent<Transform>();
         bubbleTwo = GameObject.Find("Bubble 2").GetComponent<Transform>();
 
+        greenGuy = GameObject.Find("GreenGuy").GetComponent<GreenGuy>();
         if (!Directory.Exists(Application.persistentDataPath + "/SaveData"))
         {
             Directory.CreateDirectory(Application.persistentDataPath + "/SaveData");
@@ -89,20 +92,7 @@ public class BaseBuilding : MonoBehaviour
         }
         roundText = GameObject.Find("RoundNumberText").GetComponent<TextMeshProUGUI>();
 
-        /*
-        do
-        {
-            bubble1Item = Random.Range(0, 4);
-            Debug.Log(bubble1Item);
-            bubble2Item = Random.Range(0, 4);
-            Debug.Log(bubble2Item);
-        } while (bubble1Item == bubble2Item);
-
-        b1 = Instantiate(itemBubble, bubbleOne);
-        b1.GetComponentInChildren<Bubble>().brickInd = bubble1Item;
-        b2 = Instantiate(itemBubble, bubbleTwo);
-        b2.GetComponentInChildren<Bubble>().brickInd = bubble2Item;
-        */
+        //spawnBubble();
     }
 
     private GameObject[] getBrickArray()
@@ -148,19 +138,6 @@ public class BaseBuilding : MonoBehaviour
             
         }
         roundText.text = roundCount.ToString();
-
-        if(GameMode == Mode.build)
-        {
-            if (!b1.activeInHierarchy && b2.activeInHierarchy)
-            {
-                b2.SetActive(false);
-            }
-
-            if (!b2.activeInHierarchy && b1.activeInHierarchy)
-            {
-                b1.SetActive(false);
-            }
-        }
         
     }
 
@@ -194,8 +171,6 @@ public class BaseBuilding : MonoBehaviour
 
     public void BeginRound()
     {
-        Destroy(b1);
-        Destroy(b2);
         {
             StreamWriter sw = new StreamWriter(Application.persistentDataPath + "/SaveData/lastRound1.txt");
             sw.WriteLine(resources);
@@ -227,18 +202,13 @@ public class BaseBuilding : MonoBehaviour
 
     public void BeginBuild()
     {
-        do
+        if (Teleporter.brokenPortals %2 == 1)
         {
-            bubble1Item = Random.Range(0, 4);
-            Debug.Log(bubble1Item);
-            bubble2Item = Random.Range(0, 4);
-            Debug.Log(bubble2Item);
-        } while (bubble1Item == bubble2Item);
+            greenGuy.specialBrickAmounts[3]++;
+        }
+        Teleporter.brokenPortals = 0;
 
-        b1 = Instantiate(itemBubble, bubbleOne);
-        b1.GetComponentInChildren<Bubble>().brickInd = bubble1Item;
-        b2 = Instantiate(itemBubble, bubbleTwo);
-        b2.GetComponentInChildren<Bubble>().brickInd = bubble2Item;
+        spawnBubble();
 
         Countdown.text = "";
         foreach(GameObject brick in Bricks)
@@ -296,5 +266,21 @@ public class BaseBuilding : MonoBehaviour
         }
         sr.Close();
         RebuildButton.SetActive(false);
+    }
+
+    protected void spawnBubble()
+    {
+        do
+        {
+            bubble1Item = Random.Range(0, 4);
+            Debug.Log(bubble1Item);
+            bubble2Item = Random.Range(0, 4);
+            Debug.Log(bubble2Item);
+        } while (bubble1Item == bubble2Item);
+
+        b1 = Instantiate(itemBubble, bubbleOne);
+        b1.GetComponentInChildren<Bubble>().brickInd = bubble1Item;
+        b2 = Instantiate(itemBubble, bubbleTwo);
+        b2.GetComponentInChildren<Bubble>().brickInd = bubble2Item;
     }
 }

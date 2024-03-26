@@ -13,22 +13,25 @@ public class BubbleUpDown : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (timer > 0)
+        if (Time.timeScale != 0)
         {
-            timer -=Time.deltaTime;
-            if (up)
+            if (timer > 0)
             {
-                gameObject.transform.position += new Vector3(0, 0.0005f, 0);
+                timer -= Time.deltaTime;
+                if (up)
+                {
+                    gameObject.transform.position += new Vector3(0, 0.0005f, 0);
+                }
+                if (!up)
+                {
+                    gameObject.transform.position -= new Vector3(0, 0.0005f, 0);
+                }
             }
-            if (!up)
+            else
             {
-                gameObject.transform.position -= new Vector3(0, 0.0005f, 0);
+                timer = 5f;
+                up = !up;
             }
-        }
-        else
-        {
-            timer = 5f;
-            up = !up;
         }
     }
 

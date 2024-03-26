@@ -32,4 +32,10 @@ public class Speed : SpecialTile
         GreenGuy.speedMod = 1;
         GreenGuy.SetSpeeding(false);
     }
+
+    protected override void cancelBrick()
+    {
+        stopAction();
+        base.cancelBrick();
+    }
 }

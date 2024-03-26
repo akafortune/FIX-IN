@@ -34,7 +34,8 @@ public class GreenGuy : MonoBehaviour
     public float stunClock, distance, platformClock;
     public static float stunTime = 2.5f;
     public static bool canJump = false;
-    public bool canMove = true, platformRotated; //
+    public static bool canMove = true;
+    public bool platformRotated; //
     public static float buildTimer;
     public float buildClock = 0;
     public bool building = false, stunned = false;
@@ -393,19 +394,6 @@ public class GreenGuy : MonoBehaviour
                     {
                         fixRay.collider.gameObject.SendMessage("specialBrick", brickType);
                         specialBrickAmounts[brickType-1]--;
-
-                        //to make sure 2 teleporters must be placed
-                        if(brickType == 4)
-                        {
-                            if (teleporterPlaced)
-                            {
-                                teleporterPlaced = false;
-                            } else
-                            {
-                                teleporterPlaced = true;
-                                specialBrickAmounts[brickType-1]++;
-                            }
-                        }
                     } else
                     {
                         return;
@@ -505,6 +493,11 @@ public class GreenGuy : MonoBehaviour
 
     public void addSpecialResources(int brickInd)
     {
-        specialBrickAmounts[brickInd] += 1;
+        if (brickInd != 3)
+        {
+            specialBrickAmounts[brickInd] += 1;
+        }
+        else
+            specialBrickAmounts[brickInd] += 2;
     }
 }

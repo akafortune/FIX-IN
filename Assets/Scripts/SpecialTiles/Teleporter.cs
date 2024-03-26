@@ -9,9 +9,10 @@ public class Teleporter : SpecialTile
     protected Transform otherTeleporter;
     GameObject greenGuy;
     BoxCollider2D[] platforms;
-
+    public GameObject[] portalParticles;
      ParticleSystem[] ps;
     protected ParticleSystem[] otherTeleporterPS;
+    public static int brokenPortals;
     // Start is called before the first frame update
     protected override void Start()
     {
@@ -21,12 +22,14 @@ public class Teleporter : SpecialTile
         effectLength = 5;
         assignTeleporter();
         platforms = GameObject.Find("Platforms").GetComponentsInChildren<BoxCollider2D>();
+        brokenPortals = 0;
 }
 
     protected override void doAction()
     {
         if(otherTeleporter == null)
         {
+            Debug.Log("DoAction Assign");
             assignTeleporter();
             return;
         }
@@ -61,6 +64,19 @@ public class Teleporter : SpecialTile
                 otherTeleporterPS = otherTeleporter.GetComponentsInChildren<ParticleSystem>();
                 teleporter.otherTeleporter = this.transform;
                 teleporter.otherTeleporterPS = this.GetComponentsInChildren<ParticleSystem>();
+
+                foreach (ParticleSystem p in ps)
+                {
+                    var e = p.emission;
+                    e.rateOverTime = 1000f;
+                }
+
+                foreach (ParticleSystem p in otherTeleporterPS)
+                {
+                    var e = p.emission;
+                    e.rateOverTime = 1000f;
+                }
+
                 break;
             }
         }
@@ -73,6 +89,16 @@ public class Teleporter : SpecialTile
             timeStart = Time.time;
             doAction();
             effectActive = true;
+        }
+    }
+
+    protected override void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.name.Equals("Ball"))
+        {
+            brokenPortals++;
+            ReAssign();
+            base.OnCollisionEnter2D(collision);
         }
     }
 
@@ -94,6 +120,7 @@ public class Teleporter : SpecialTile
 
     protected void disableTeleporter()
     {
+        Debug.Log("Deactive");
         effectActive = true;
         timeStart = Time.time;
         foreach (ParticleSystem p in ps)
@@ -106,6 +133,31 @@ public class Teleporter : SpecialTile
         {
             var e = p.emission;
             e.rateOverTime = 0f;
+        }
+    }
+
+    protected override void cancelBrick()
+    {
+        ReAssign();
+        base.cancelBrick();
+    }
+
+    protected void ReAssign()
+    {
+        Debug.Log("Reassign");
+        if (otherTeleporter != null)
+        {
+            Teleporter otherTeleporterScript = otherTeleporter.GetComponent<Teleporter>();
+            otherTeleporterScript.otherTeleporter = null;
+            otherTeleporterScript.assignTeleporter();
+            if (otherTeleporterScript.otherTeleporter == null)
+            {
+                foreach (ParticleSystem p in otherTeleporterPS)
+                {
+                    var e = p.emission;
+                    e.rateOverTime = 0f;
+                }
+            }
         }
     }
 }
