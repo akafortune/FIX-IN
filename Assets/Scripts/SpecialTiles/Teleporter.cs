@@ -12,6 +12,7 @@ public class Teleporter : SpecialTile
     public GameObject[] portalParticles;
      ParticleSystem[] ps;
     protected ParticleSystem[] otherTeleporterPS;
+    public static int brokenPortals;
     // Start is called before the first frame update
     protected override void Start()
     {
@@ -21,12 +22,14 @@ public class Teleporter : SpecialTile
         effectLength = 5;
         assignTeleporter();
         platforms = GameObject.Find("Platforms").GetComponentsInChildren<BoxCollider2D>();
+        brokenPortals = 0;
 }
 
     protected override void doAction()
     {
         if(otherTeleporter == null)
         {
+            Debug.Log("DoAction Assign");
             assignTeleporter();
             return;
         }
@@ -89,6 +92,16 @@ public class Teleporter : SpecialTile
         }
     }
 
+    protected override void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.name.Equals("Ball"))
+        {
+            brokenPortals++;
+            ReAssign();
+            base.OnCollisionEnter2D(collision);
+        }
+    }
+
     protected void enableTeleporter()
     {
         effectActive = false;
@@ -107,6 +120,7 @@ public class Teleporter : SpecialTile
 
     protected void disableTeleporter()
     {
+        Debug.Log("Deactive");
         effectActive = true;
         timeStart = Time.time;
         foreach (ParticleSystem p in ps)
@@ -124,18 +138,26 @@ public class Teleporter : SpecialTile
 
     protected override void cancelBrick()
     {
-        if(otherTeleporter!=null)
+        ReAssign();
+        base.cancelBrick();
+    }
+
+    protected void ReAssign()
+    {
+        Debug.Log("Reassign");
+        if (otherTeleporter != null)
         {
             Teleporter otherTeleporterScript = otherTeleporter.GetComponent<Teleporter>();
             otherTeleporterScript.otherTeleporter = null;
-
-            foreach (ParticleSystem p in otherTeleporterPS)
+            otherTeleporterScript.assignTeleporter();
+            if (otherTeleporterScript.otherTeleporter == null)
             {
-                var e = p.emission;
-                e.rateOverTime = 0f;
+                foreach (ParticleSystem p in otherTeleporterPS)
+                {
+                    var e = p.emission;
+                    e.rateOverTime = 0f;
+                }
             }
         }
-
-        base.cancelBrick();
     }
 }

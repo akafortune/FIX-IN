@@ -18,11 +18,11 @@ public class Bubble : MonoBehaviour
     {
         if(parent.transform.parent.name.Equals("Bubble 1"))
         {
-            otherBubble = GameObject.Find("Bubble 2");
+            otherBubble = GameObject.Find("Bubble 2").transform.GetChild(0).gameObject;
         }
         if (parent.transform.parent.name.Equals("Bubble 2"))
         {
-            otherBubble = GameObject.Find("Bubble 1");
+            otherBubble = GameObject.Find("Bubble 1").transform.GetChild(0).gameObject;
         }
         GameObject brickIcon = Instantiate(brickTypes[brickInd], brickHolder);
         cost = 15;

@@ -47,4 +47,14 @@ public class SpecialTile : MonoBehaviour
         Brick.removeSpecialBrick(index-1);
         Destroy(this.gameObject);
     }
+
+    protected virtual void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.tag.Equals("Ball"))
+        {
+            Ball.hits++;
+            Brick.removeSpecialBrick();
+            Destroy(this.gameObject);
+        }
+    }
 }
