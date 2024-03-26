@@ -34,7 +34,8 @@ public class GreenGuy : MonoBehaviour
     public float stunClock, distance, platformClock;
     public static float stunTime = 2.5f;
     public static bool canJump = false;
-    public bool canMove = true, platformRotated; //
+    public static bool canMove = true;
+    public bool platformRotated; //
     public static float buildTimer;
     public float buildClock = 0;
     public bool building = false, stunned = false;
