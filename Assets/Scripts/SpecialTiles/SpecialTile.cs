@@ -10,12 +10,17 @@ public class SpecialTile : MonoBehaviour
     private Rigidbody2D rb;
     public Brick Brick;
     public int index;
+    protected Animator animator;
+    protected SpriteRenderer spriteRenderer;
 
     // Start is called before the first frame update
     protected virtual void Start()
     {
         effectActive = false;
         rb = GetComponent<Rigidbody2D>();
+        animator = GetComponent<Animator>();
+        animator.SetBool("IsBroken", false);
+        spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
     protected virtual void Update()
@@ -25,6 +30,11 @@ public class SpecialTile : MonoBehaviour
         {
             stopAction();
             effectActive = false;
+        }
+
+        if(!spriteRenderer.enabled)
+        {
+           Destroy(gameObject);
         }
     }
 
@@ -45,16 +55,18 @@ public class SpecialTile : MonoBehaviour
     protected virtual void cancelBrick()
     {
         Brick.removeSpecialBrick(index-1);
-        Destroy(this.gameObject);
+        animator.SetBool("IsBroken", true);
+        //Destroy(this.gameObject);
     }
 
     protected virtual void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.tag.Equals("Ball"))
         {
+            animator.SetBool("IsBroken", true);
             Ball.hits++;
             Brick.removeSpecialBrick();
-            Destroy(this.gameObject);
+            //Destroy(this.gameObject);
         }
     }
 }

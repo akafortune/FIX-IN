@@ -10,7 +10,7 @@ public class Teleporter : SpecialTile
     GameObject greenGuy;
     BoxCollider2D[] platforms;
     public GameObject[] portalParticles;
-     ParticleSystem[] ps;
+    public ParticleSystem[] ps;
     protected ParticleSystem[] otherTeleporterPS;
     public static int brokenPortals;
     // Start is called before the first frame update
@@ -23,7 +23,9 @@ public class Teleporter : SpecialTile
         assignTeleporter();
         platforms = GameObject.Find("Platforms").GetComponentsInChildren<BoxCollider2D>();
         brokenPortals = 0;
-}
+        animator.SetBool("IsBroken", false);
+        spriteRenderer = GetComponent<SpriteRenderer>();
+    }
 
     protected override void doAction()
     {
@@ -55,6 +57,7 @@ public class Teleporter : SpecialTile
 
     private void assignTeleporter()
     {
+        Debug.Log("Assign");
         Teleporter[] teleporters = GameObject.FindObjectsByType<Teleporter>(FindObjectsSortMode.None);
         foreach(Teleporter teleporter in teleporters)
         {

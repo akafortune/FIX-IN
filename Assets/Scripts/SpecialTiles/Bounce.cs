@@ -21,7 +21,10 @@ public class Bounce : SpecialTile
 
     protected override void Update()
     {
-
+        if (!spriteRenderer.enabled)
+        {
+            Destroy(gameObject);
+        }
     }
 
     private void FixedUpdate()
