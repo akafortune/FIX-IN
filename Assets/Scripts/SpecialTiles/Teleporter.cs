@@ -124,13 +124,16 @@ public class Teleporter : SpecialTile
 
     protected override void cancelBrick()
     {
-        Teleporter otherTeleporterScript = otherTeleporter.GetComponent<Teleporter>();
-        otherTeleporterScript.otherTeleporter = null;
-
-        foreach (ParticleSystem p in otherTeleporterPS)
+        if(otherTeleporter!=null)
         {
-            var e = p.emission;
-            e.rateOverTime = 0f;
+            Teleporter otherTeleporterScript = otherTeleporter.GetComponent<Teleporter>();
+            otherTeleporterScript.otherTeleporter = null;
+
+            foreach (ParticleSystem p in otherTeleporterPS)
+            {
+                var e = p.emission;
+                e.rateOverTime = 0f;
+            }
         }
 
         base.cancelBrick();
