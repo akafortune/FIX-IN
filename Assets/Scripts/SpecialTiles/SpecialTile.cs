@@ -7,7 +7,7 @@ public class SpecialTile : MonoBehaviour
     protected bool effectActive;
     protected float timeStart;
     protected float effectLength;
-    private Rigidbody2D rb;
+    protected Rigidbody2D rb;
     public Brick Brick;
     public int index;
     protected Animator animator;

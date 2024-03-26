@@ -10,7 +10,7 @@ public class Shield : SpecialTile
     GameObject shieldParticles;
     int hits;
 
-    public Animator animator;
+    public Animator ShieldAnimator;
     // Start is called before the first frame update
     protected override void Start()
     {
@@ -21,8 +21,9 @@ public class Shield : SpecialTile
         cooldownLength = 10;
         cooldownStart = -10;
 
-        animator = shieldParticles.GetComponent<Animator>();
-        animator.SetBool("Stop", true);
+        ShieldAnimator = shieldParticles.GetComponent<Animator>();
+        ShieldAnimator.SetBool("Stop", true);
+        shield.SetActive(false);
     }
     protected override void OnTriggerStay2D(Collider2D collision)
     {
@@ -32,18 +33,23 @@ public class Shield : SpecialTile
         }
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    protected override void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.name.Equals("Ball"))
         {
-            hits++;
-            if(hits == 4)
+            if (shield.activeInHierarchy)
             {
-                stopAction();
-                effectActive = false;
+                hits++;
+                if (hits == 4)
+                {
+                    stopAction();
+                    effectActive = false;
+                }
+                IEnumerator Routine = decreaseSizeRoutine(1 - (hits * .1f));
+                StartCoroutine(Routine);
             }
-            IEnumerator Routine = decreaseSizeRoutine(1-(hits*.1f));
-            StartCoroutine(Routine);
+            else
+                base.OnCollisionEnter2D(collision);
         }
     }
     protected override void doAction()
@@ -51,8 +57,8 @@ public class Shield : SpecialTile
         shield.transform.localScale = (Vector3.one);
         shieldParticles.transform.localScale = (Vector3.one);
         shield.SetActive(true);
-        animator.SetBool("Stop", false);
-        animator.SetTrigger("Start");
+        ShieldAnimator.SetBool("Stop", false);
+        ShieldAnimator.SetTrigger("Start");
         hits = 0;
     }
 
@@ -60,12 +66,12 @@ public class Shield : SpecialTile
     {
         shield.SetActive(false);
         cooldownStart = Time.time;
-        animator.SetBool("Stop", true);
+        ShieldAnimator.SetBool("Stop", true);
     }
 
     void FixedUpdate()
     {
-        animator.ResetTrigger("Start");
+        ShieldAnimator.ResetTrigger("Start");
     }
 
     IEnumerator decreaseSizeRoutine(float size)

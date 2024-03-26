@@ -10,9 +10,10 @@ public class Teleporter : SpecialTile
     GameObject greenGuy;
     BoxCollider2D[] platforms;
     public GameObject[] portalParticles;
-    public ParticleSystem[] ps;
+     ParticleSystem[] ps;
     protected ParticleSystem[] otherTeleporterPS;
     public static int brokenPortals;
+    bool broken;
     // Start is called before the first frame update
     protected override void Start()
     {
@@ -23,8 +24,21 @@ public class Teleporter : SpecialTile
         assignTeleporter();
         platforms = GameObject.Find("Platforms").GetComponentsInChildren<BoxCollider2D>();
         brokenPortals = 0;
-        animator.SetBool("IsBroken", false);
-        spriteRenderer = GetComponent<SpriteRenderer>();
+}
+
+    protected override void Update()
+    {
+        rb.AddForce(Vector2.zero);
+        if (Time.time > timeStart + effectLength && effectActive)
+        {
+            stopAction();
+            effectActive = false;
+        }
+
+        if (!spriteRenderer.enabled && ps[0].particleCount == 0)
+        {
+            Destroy(gameObject);
+        }
     }
 
     protected override void doAction()
@@ -57,7 +71,6 @@ public class Teleporter : SpecialTile
 
     private void assignTeleporter()
     {
-        Debug.Log("Assign");
         Teleporter[] teleporters = GameObject.FindObjectsByType<Teleporter>(FindObjectsSortMode.None);
         foreach(Teleporter teleporter in teleporters)
         {
@@ -87,7 +100,7 @@ public class Teleporter : SpecialTile
 
     protected override void OnTriggerStay2D(Collider2D collision)
     {
-        if (collision.gameObject.name.Equals("SpecialBrickTrigger") && !effectActive)
+        if (collision.gameObject.name.Equals("SpecialBrickTrigger") && !effectActive && !broken)
         {
             timeStart = Time.time;
             doAction();
@@ -141,7 +154,13 @@ public class Teleporter : SpecialTile
 
     protected override void cancelBrick()
     {
+        foreach (ParticleSystem p in ps)
+        {
+            var e = p.emission;
+            e.rateOverTime = 0f;
+        }
         ReAssign();
+        broken = true;
         base.cancelBrick();
     }
 
