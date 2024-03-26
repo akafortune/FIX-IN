@@ -7,7 +7,7 @@ public class RoundTimeManager : MonoBehaviour
     public Ball ball;
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         ball = GameObject.Find("Ball").GetComponent<Ball>();
     }
