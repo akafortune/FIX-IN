@@ -148,19 +148,6 @@ public class BaseBuilding : MonoBehaviour
             
         }
         roundText.text = roundCount.ToString();
-
-        if(GameMode == Mode.build)
-        {
-            if (!b1.activeInHierarchy && b2.activeInHierarchy)
-            {
-                b2.SetActive(false);
-            }
-
-            if (!b2.activeInHierarchy && b1.activeInHierarchy)
-            {
-                b1.SetActive(false);
-            }
-        }
         
     }
 

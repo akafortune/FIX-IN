@@ -7,6 +7,7 @@ public class Bubble : MonoBehaviour
 {
     public GameObject parent;
     public GameObject[] brickTypes;
+    private GameObject otherBubble;
     public Transform brickHolder;
     public int brickInd;
     public int cost;
@@ -15,6 +16,14 @@ public class Bubble : MonoBehaviour
 
     void Start()
     {
+        if(parent.transform.parent.name.Equals("Bubble 1"))
+        {
+            otherBubble = GameObject.Find("Bubble 2");
+        }
+        if (parent.transform.parent.name.Equals("Bubble 2"))
+        {
+            otherBubble = GameObject.Find("Bubble 1");
+        }
         GameObject brickIcon = Instantiate(brickTypes[brickInd], brickHolder);
         cost = 15;
 
@@ -40,13 +49,14 @@ public class Bubble : MonoBehaviour
             
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.name.Equals("GreenGuy") && BaseBuilding.resources - cost >= 0)
+        if (collision.gameObject.name.Equals("HeadBox") && BaseBuilding.resources - cost >= 0)
         {
-            collision.gameObject.SendMessage("addSpecialResources", brickInd);
+            collision.transform.parent.SendMessage("addSpecialResources", brickInd);
             BaseBuilding.resources -= cost;
-            parent.SetActive(false);
+            Destroy(otherBubble);
+            Destroy(parent);
         }
     }
 }

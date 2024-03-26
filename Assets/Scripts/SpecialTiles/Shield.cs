@@ -80,4 +80,10 @@ public class Shield : SpecialTile
         yield return null;
 
     }
+
+    protected override void cancelBrick()
+    {
+        stopAction();
+        base.cancelBrick();
+    }
 }
