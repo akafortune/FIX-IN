@@ -237,15 +237,33 @@ public class GreenGuy : MonoBehaviour
             {
                 if (Input.GetKeyDown(KeyCode.E) ||  Input.GetKeyDown("joystick button 1"))
                 {
+                    do
+                    {
+                        brickType++;
+                        if (brickType > 4)
+                        {
+                            brickType = 0;
+                        }
+                    } while (brickType != 0 && specialBrickAmounts[brickType - 1] == 0);
+                    /*
                     if(brickType < 4)
                     {
                         brickType++;
                     } else
                     {
                         brickType = 0;
-                    }
+                    }*/
                 } else if (Input.GetKeyDown(KeyCode.Q) || Input.GetKeyDown("joystick button 0"))
                 {
+                    do
+                    {
+                        brickType--;
+                        if (brickType < 0)
+                        {
+                            brickType = 4;
+                        }
+                    } while (brickType != 0 && specialBrickAmounts[brickType-1] == 0);
+                    /*
                     if (brickType > 0)
                     {
                         brickType--;
@@ -253,8 +271,10 @@ public class GreenGuy : MonoBehaviour
                     else
                     {
                         brickType = 4;
-                    }
+                    }*/
                 }
+                if(brickType != 0 && specialBrickAmounts[brickType - 1] == 0)
+                    brickType = 0;
             } else
             {
                 brickType = 0;
