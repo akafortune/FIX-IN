@@ -429,6 +429,22 @@ public class GreenGuy : MonoBehaviour
                 audioSource.PlayOneShot(brickBreak);
                 BaseBuilding.resources += BrickValue();
             }
+            else if(BaseBuilding.GameMode == BaseBuilding.Mode.defend && fixRay.collider.name.StartsWith("Shield"))
+            {
+                Shield shield = fixRay.collider.GetComponent<Shield>();
+                if (shield.CanStart())
+                {
+                    Debug.Log("Shield Start");
+                    animator.SetTrigger("Fix");
+                    animator.SetBool("Swinging", true);
+                    hammer.SetActive(true);
+                    building = true;
+                    buildClock = 0;
+                    canMove = false;
+                    audioSource.PlayOneShot(brickFix);
+                    shield.StartShield();
+                }
+            }
         }
     }
 

@@ -8,6 +8,7 @@ public class Shield : SpecialTile
     float cooldownLength;
     GameObject shield;
     GameObject shieldParticles;
+    public Animator lever;
     int hits;
 
     public Animator ShieldAnimator;
@@ -24,13 +25,11 @@ public class Shield : SpecialTile
         ShieldAnimator = shieldParticles.GetComponent<Animator>();
         ShieldAnimator.SetBool("Stop", true);
         shield.SetActive(false);
+        lever = transform.GetChild(2).GetComponent<Animator>();
     }
     protected override void OnTriggerStay2D(Collider2D collision)
     {
-        if(cooldownStart + cooldownLength < Time.time && BaseBuilding.GameMode != BaseBuilding.Mode.build)
-        {
-            base.OnTriggerStay2D(collision);
-        }
+        //do nothing
     }
 
     protected override void OnCollisionEnter2D(Collision2D collision)
@@ -64,9 +63,12 @@ public class Shield : SpecialTile
 
     protected override void stopAction()
     {
+        lever.SetBool("ff", false);
         shield.SetActive(false);
         cooldownStart = Time.time;
         ShieldAnimator.SetBool("Stop", true);
+        IEnumerator coroutine = resetShield();
+        StartCoroutine(coroutine);
     }
 
     void FixedUpdate()
@@ -91,5 +93,40 @@ public class Shield : SpecialTile
     {
         stopAction();
         base.cancelBrick();
+    }
+
+    public bool CanStart()
+    {
+        if (cooldownStart + cooldownLength < Time.time && !effectActive)
+            return true;
+        else
+            return false;
+    }
+
+    public void StartShield()
+    {
+        timeStart = Time.time;
+        IEnumerator coroutine = waitToStartShield();
+        StartCoroutine(coroutine);
+    }
+
+    protected IEnumerator waitToStartShield()
+    {
+        yield return new WaitForSeconds(.5f);
+        doAction();
+        lever.SetBool("Off", true);
+        effectActive = true;
+    }
+
+    protected IEnumerator resetShield()
+    {
+        yield return new WaitForSeconds(2.5f);
+        lever.SetInteger("WarmupStage", 1);
+        yield return new WaitForSeconds(2.5f);
+        lever.SetInteger("WarmupStage", 2);
+        yield return new WaitForSeconds(2.5f);
+        lever.SetInteger("WarmupStage", 3);
+        yield return new WaitForSeconds(2.5f);
+        lever.SetBool("Off", false);
     }
 }
