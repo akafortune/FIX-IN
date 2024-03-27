@@ -17,6 +17,7 @@ public class GreenGuy : MonoBehaviour
     public Transform rayOrigin;
     public float bouncePadValue;
     static private bool touchingBouncePad, speeding;
+    private bool shieldWhack;
 
     public GameObject floorRay;
     public Transform SwingDustTransform;
@@ -271,7 +272,7 @@ public class GreenGuy : MonoBehaviour
             canMove = true;
             animator.SetBool("Swinging", false);
             building = false;
-            if (BaseBuilding.GameMode != BaseBuilding.Mode.build && BaseBuilding.lastBrickBuilt)
+            if (BaseBuilding.GameMode != BaseBuilding.Mode.build && BaseBuilding.lastBrickBuilt &&!shieldWhack)
             {
                 score += 10;
                 // Trigger floating text here
@@ -279,6 +280,10 @@ public class GreenGuy : MonoBehaviour
                 {
                     ShowFloatingText("+10");
                 }
+            }
+            else if(shieldWhack)
+            {
+                shieldWhack = false;
             }
         }
         scoreText.text = ((int)score).ToString();
@@ -434,6 +439,7 @@ public class GreenGuy : MonoBehaviour
                 Shield shield = fixRay.collider.GetComponent<Shield>();
                 if (shield.CanStart())
                 {
+                    shieldWhack = true;
                     Debug.Log("Shield Start");
                     animator.SetTrigger("Fix");
                     animator.SetBool("Swinging", true);

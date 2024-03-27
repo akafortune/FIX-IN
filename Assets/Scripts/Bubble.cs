@@ -25,23 +25,26 @@ public class Bubble : MonoBehaviour
             otherBubble = GameObject.Find("Bubble 1").transform.GetChild(0).gameObject;
         }
         GameObject brickIcon = Instantiate(brickTypes[brickInd], brickHolder);
-        cost = 15;
 
         switch (brickInd)
         {
             case 0:
-                text.text += "Bounce Pad";
+                text.text = "-5 Resources \n\n\n\n\n\n\nBounce Pad";
+                cost = 5;
                 break;
             case 1:
-                text.text += "Shield Generator";
+                text.text = "-20 Resources \n\n\n\n\n\n\nShield Generator";
+                cost = 20;
                 break;
             case 2:
-                text.text += "Speed Pad";
+                text.text = "-10 Resources \n\n\n\n\n\n\nSpeed Pad";
+                cost = 10;
                 break;
             case 3:
-                text.text += "Teleporter";
+                text.text = "-15 Resources \n\n\n\n\n\n\nTeleporter";
                 foreach(Transform child in brickIcon.GetComponentInChildren<Transform>())
                     child.gameObject.SetActive(false);
+                cost = 15;
                 break;
             default:
                 break;
