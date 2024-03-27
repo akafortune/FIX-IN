@@ -19,7 +19,7 @@ public class Shield : SpecialTile
         shield = transform.GetChild(0).gameObject;
         shieldParticles = transform.GetChild(1).transform.GetChild(0).gameObject;
         effectLength = 10;
-        cooldownLength = 10;
+        cooldownLength = 15;
         cooldownStart = -10;
 
         ShieldAnimator = shieldParticles.GetComponent<Animator>();

@@ -171,7 +171,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Brick: {fileID: 0}
   index: 0
-  animator: {fileID: 0}
+  lever: {fileID: 0}
+  ShieldAnimator: {fileID: 0}
 --- !u!50 &2416439460312689175
 Rigidbody2D:
   serializedVersion: 4
@@ -424,7 +425,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 3.5
+  m_Radius: 2.7
 --- !u!1001 &8129909094015406225
 PrefabInstance:
   m_ObjectHideFlags: 0
