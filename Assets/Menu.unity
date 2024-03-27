@@ -438,10 +438,10 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
-        - m_Target: {fileID: 265438513}
-          m_TargetAssemblyTypeName: SelectedButton, Assembly-CSharp
-          m_MethodName: OnSelect
-          m_Mode: 0
+        - m_Target: {fileID: 265438510}
+          m_TargetAssemblyTypeName: UnityEngine.UI.Selectable, UnityEngine.UI
+          m_MethodName: Select
+          m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
             m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -2656,10 +2656,10 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 1453763661}
-          m_TargetAssemblyTypeName: SelectedButton, Assembly-CSharp
-          m_MethodName: OnSelect
-          m_Mode: 0
+        - m_Target: {fileID: 1453763658}
+          m_TargetAssemblyTypeName: UnityEngine.UI.Selectable, UnityEngine.UI
+          m_MethodName: Select
+          m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
             m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -3460,10 +3460,10 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
-        - m_Target: {fileID: 1895979948}
-          m_TargetAssemblyTypeName: SelectedButton, Assembly-CSharp
-          m_MethodName: OnSelect
-          m_Mode: 0
+        - m_Target: {fileID: 1895979945}
+          m_TargetAssemblyTypeName: UnityEngine.UI.Selectable, UnityEngine.UI
+          m_MethodName: Select
+          m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
             m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
