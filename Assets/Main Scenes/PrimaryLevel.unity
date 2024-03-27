@@ -2455,6 +2455,11 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!4 &473241443 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 3906440461057099451, guid: 42cbc65f119623445a8d0b0577b4806c, type: 3}
+  m_PrefabInstance: {fileID: 4938087538014571033}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &478442247
 GameObject:
   m_ObjectHideFlags: 0
@@ -3250,6 +3255,8 @@ MonoBehaviour:
   brickFix: {fileID: 8300000, guid: ae87c38fedc94b94899ced0ba060a997, type: 3}
   brickBreak: {fileID: 8300000, guid: 827c0a858820367458799bae479d264a, type: 3}
   SpeedParticles: {fileID: 0}
+  JumpParticles: {fileID: 0}
+  SuperJumping: 0
   targetedBrickTransform: {x: 0, y: 0, z: 0}
   brickType: 0
   specialBrickAmounts: 02000000020000000200000004000000
@@ -3326,6 +3333,7 @@ Transform:
   - {fileID: 1338826221}
   - {fileID: 616866757}
   - {fileID: 1170903780}
+  - {fileID: 473241443}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &612270120
@@ -14920,6 +14928,63 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2146379965}
   m_CullTransparentMesh: 1
+--- !u!1001 &4938087538014571033
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 612270119}
+    m_Modifications:
+    - target: {fileID: 3906440461057099451, guid: 42cbc65f119623445a8d0b0577b4806c, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3906440461057099451, guid: 42cbc65f119623445a8d0b0577b4806c, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3906440461057099451, guid: 42cbc65f119623445a8d0b0577b4806c, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3906440461057099451, guid: 42cbc65f119623445a8d0b0577b4806c, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3906440461057099451, guid: 42cbc65f119623445a8d0b0577b4806c, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3906440461057099451, guid: 42cbc65f119623445a8d0b0577b4806c, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3906440461057099451, guid: 42cbc65f119623445a8d0b0577b4806c, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3906440461057099451, guid: 42cbc65f119623445a8d0b0577b4806c, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3906440461057099451, guid: 42cbc65f119623445a8d0b0577b4806c, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3906440461057099451, guid: 42cbc65f119623445a8d0b0577b4806c, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4860165835771744068, guid: 42cbc65f119623445a8d0b0577b4806c, type: 3}
+      propertyPath: m_Name
+      value: Jump Trails
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 42cbc65f119623445a8d0b0577b4806c, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

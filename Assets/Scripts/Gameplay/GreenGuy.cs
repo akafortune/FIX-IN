@@ -63,6 +63,9 @@ public class GreenGuy : MonoBehaviour
 
     public GameObject SpeedParticles;
 
+    public GameObject JumpParticles;
+    public bool SuperJumping;
+
     public Vector3 targetedBrickTransform;
     private bool teleporterPlaced = false;
     public int brickType = 0;
@@ -101,12 +104,20 @@ public class GreenGuy : MonoBehaviour
 
         SpeedParticles = GameObject.Find("Zoom Trails");
         SpeedParticles.SetActive(false);
+        JumpParticles = GameObject.Find("Jump Trails");
+        JumpParticles.SetActive(false);
+        SuperJumping = false;
         
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (SuperJumping && canJump)
+        {
+            SuperJumping = false;
+            JumpParticles.SetActive(false);
+        }
         if(brickType == 0)
         {
             materialText.text = materialArray[brickType];
@@ -206,6 +217,11 @@ public class GreenGuy : MonoBehaviour
                 foreach (BoxCollider2D platform in platforms)
                 {
                     platform.enabled = true;
+                }
+                if (touchingBouncePad)
+                {
+                    SuperJumping = true;
+                    JumpParticles.SetActive(true);
                 }
             }
 
