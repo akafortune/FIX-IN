@@ -63,7 +63,6 @@ public class Shield : SpecialTile
 
     protected override void stopAction()
     {
-        lever.SetBool("ff", false);
         shield.SetActive(false);
         cooldownStart = Time.time;
         ShieldAnimator.SetBool("Stop", true);
@@ -120,13 +119,13 @@ public class Shield : SpecialTile
 
     protected IEnumerator resetShield()
     {
-        yield return new WaitForSeconds(2.5f);
+        yield return new WaitForSeconds(cooldownLength/4f);
         lever.SetInteger("WarmupStage", 1);
-        yield return new WaitForSeconds(2.5f);
+        yield return new WaitForSeconds(cooldownLength/4f);
         lever.SetInteger("WarmupStage", 2);
-        yield return new WaitForSeconds(2.5f);
+        yield return new WaitForSeconds(cooldownLength/4f);
         lever.SetInteger("WarmupStage", 3);
-        yield return new WaitForSeconds(2.5f);
+        yield return new WaitForSeconds(cooldownLength/4f);
         lever.SetBool("Off", false);
     }
 }
