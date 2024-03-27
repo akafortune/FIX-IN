@@ -34,6 +34,8 @@ public class SpecialTile : MonoBehaviour
 
         if(!spriteRenderer.enabled)
         {
+            if(effectActive)
+                stopAction();
            Destroy(gameObject);
         }
     }

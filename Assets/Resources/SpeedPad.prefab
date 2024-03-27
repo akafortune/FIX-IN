@@ -76,7 +76,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: -1
   m_Sprite: {fileID: -726017490, guid: 1b7c9e75535884848a644c942e595fcd, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -166,6 +166,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6af47d000dee12f43909ed0b37e61d93, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Brick: {fileID: 0}
+  index: 0
 --- !u!50 &6547581765653362142
 Rigidbody2D:
   serializedVersion: 4
