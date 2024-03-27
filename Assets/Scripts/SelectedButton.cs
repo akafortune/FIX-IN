@@ -13,6 +13,7 @@ public class SelectedButton : MonoBehaviour, ISelectHandler, IDeselectHandler
     public Animator[] hammerAnims;
     public AudioSource audioSource;
     public AudioClip buttonChange;
+    public AudioClip buttonPress;
 
     // Start is called before the first frame update
     void Start()
@@ -30,7 +31,8 @@ public class SelectedButton : MonoBehaviour, ISelectHandler, IDeselectHandler
             
             if(Input.GetKeyDown(KeyCode.Mouse0) || Input.GetButtonDown("Submit"))
             {
-                foreach(Animator anim in hammerAnims)
+                audioSource.PlayOneShot(buttonPress);
+                foreach (Animator anim in hammerAnims)
                 {
                     anim.SetTrigger("ButtonSelected");
                 }

@@ -16,7 +16,6 @@ public class MainMenu : MonoBehaviour
     public bool sceneChange;
     public int sceneNumber;
     private AudioSource audioSource;
-    public AudioClip buttonPress;
 
     // Start is called before the first frame update
     void Start()
@@ -24,7 +23,7 @@ public class MainMenu : MonoBehaviour
         buttonPressed = false;
         sceneChange = false;
         buffer = 0f;
-        audioSource = GetComponent<AudioSource>();
+        audioSource = GetComponentInParent<AudioSource>();
         //hammerIndicator = GameObject.Find("Indicator").GetComponent<GameObject>();
         if (SceneManager.GetActiveScene() == SceneManager.GetSceneByBuildIndex(0))
         {
@@ -54,7 +53,6 @@ public class MainMenu : MonoBehaviour
         buffer = 0f;
         buttonPressed = true;
         sceneNumber = scene;
-        audioSource.PlayOneShot(buttonPress);
         if (sceneChange)
         {
             print("Change scene now");

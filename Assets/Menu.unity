@@ -396,6 +396,7 @@ MonoBehaviour:
   hammerAnims: []
   audioSource: {fileID: 0}
   buttonChange: {fileID: 8300000, guid: e98fa4352823141448d643f19a37cbe8, type: 3}
+  buttonPress: {fileID: 8300000, guid: 99cd8406a493d4d4b810aeefa13c7948, type: 3}
 --- !u!114 &265438514
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -465,6 +466,22 @@ MonoBehaviour:
           m_TargetAssemblyTypeName: UnityEngine.UI.Selectable, UnityEngine.UI
           m_MethodName: OnDeselect
           m_Mode: 0
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - eventID: 1
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 265438510}
+          m_TargetAssemblyTypeName: UnityEngine.UI.Selectable, UnityEngine.UI
+          m_MethodName: Select
+          m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
             m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -1882,7 +1899,6 @@ MonoBehaviour:
   buttonPressed: 0
   sceneChange: 0
   sceneNumber: 0
-  buttonPress: {fileID: 8300000, guid: 99cd8406a493d4d4b810aeefa13c7948, type: 3}
 --- !u!82 &1028547512
 AudioSource:
   m_ObjectHideFlags: 0
@@ -2622,6 +2638,7 @@ MonoBehaviour:
   hammerAnims: []
   audioSource: {fileID: 0}
   buttonChange: {fileID: 8300000, guid: e98fa4352823141448d643f19a37cbe8, type: 3}
+  buttonPress: {fileID: 8300000, guid: 99cd8406a493d4d4b810aeefa13c7948, type: 3}
 --- !u!114 &1453763662
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2691,6 +2708,22 @@ MonoBehaviour:
           m_TargetAssemblyTypeName: UnityEngine.UI.Selectable, UnityEngine.UI
           m_MethodName: OnDeselect
           m_Mode: 0
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - eventID: 1
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1453763658}
+          m_TargetAssemblyTypeName: UnityEngine.UI.Selectable, UnityEngine.UI
+          m_MethodName: Select
+          m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
             m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -3361,6 +3394,7 @@ MonoBehaviour:
   hammerAnims: []
   audioSource: {fileID: 0}
   buttonChange: {fileID: 8300000, guid: e98fa4352823141448d643f19a37cbe8, type: 3}
+  buttonPress: {fileID: 8300000, guid: 99cd8406a493d4d4b810aeefa13c7948, type: 3}
 --- !u!114 &1895979949
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3430,6 +3464,22 @@ MonoBehaviour:
           m_TargetAssemblyTypeName: SelectedButton, Assembly-CSharp
           m_MethodName: OnSelect
           m_Mode: 0
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - eventID: 1
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1895979945}
+          m_TargetAssemblyTypeName: UnityEngine.UI.Selectable, UnityEngine.UI
+          m_MethodName: Select
+          m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
             m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
