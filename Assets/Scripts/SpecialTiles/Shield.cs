@@ -10,6 +10,7 @@ public class Shield : SpecialTile
     GameObject shieldParticles;
     public Animator lever;
     int hits;
+    SpriteRenderer ShieldIndicator;
 
     public Animator ShieldAnimator;
     // Start is called before the first frame update
@@ -26,11 +27,14 @@ public class Shield : SpecialTile
         ShieldAnimator.SetBool("Stop", true);
         shield.SetActive(false);
         lever = transform.GetChild(2).GetComponent<Animator>();
+        ShieldIndicator = transform.GetChild(3).GetComponent<SpriteRenderer>();
+        ShieldIndicator.enabled = false;
     }
     protected override void OnTriggerStay2D(Collider2D collision)
     {
         //do nothing
     }
+
 
     protected override void OnCollisionEnter2D(Collision2D collision)
     {
@@ -73,6 +77,7 @@ public class Shield : SpecialTile
     void FixedUpdate()
     {
         ShieldAnimator.ResetTrigger("Start");
+        ShieldIndicator.enabled = false;
     }
 
     IEnumerator decreaseSizeRoutine(float size)
@@ -127,5 +132,13 @@ public class Shield : SpecialTile
         lever.SetInteger("WarmupStage", 3);
         yield return new WaitForSeconds(cooldownLength/4f);
         lever.SetBool("Off", false);
+    }
+
+    public void ShowShieldIndicator()
+    {
+        if (CanStart())
+        {
+            ShieldIndicator.enabled = true;
+        }
     }
 }
