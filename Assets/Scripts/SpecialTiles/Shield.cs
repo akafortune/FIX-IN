@@ -74,8 +74,9 @@ public class Shield : SpecialTile
         StartCoroutine(coroutine);
     }
 
-    void FixedUpdate()
+    protected override void FixedUpdate()
     {
+        base.FixedUpdate();
         ShieldAnimator.ResetTrigger("Start");
         ShieldIndicator.enabled = false;
     }

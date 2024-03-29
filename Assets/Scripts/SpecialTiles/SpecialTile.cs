@@ -12,6 +12,9 @@ public class SpecialTile : MonoBehaviour
     public int index;
     protected Animator animator;
     protected SpriteRenderer spriteRenderer;
+    public SpriteRenderer breakIndicator;
+    protected bool broken;
+    protected BoxCollider2D BoxCollider;
 
     // Start is called before the first frame update
     protected virtual void Start()
@@ -21,6 +24,8 @@ public class SpecialTile : MonoBehaviour
         animator = GetComponent<Animator>();
         animator.SetBool("IsBroken", false);
         spriteRenderer = GetComponent<SpriteRenderer>();
+        breakIndicator = transform.GetChild(transform.childCount - 1).GetComponent<SpriteRenderer>();
+        BoxCollider = GetComponent<BoxCollider2D>();
     }
 
     protected virtual void Update()
@@ -38,6 +43,11 @@ public class SpecialTile : MonoBehaviour
                 stopAction();
            Destroy(gameObject);
         }
+    }
+
+    protected virtual void FixedUpdate()
+    {
+        breakIndicator.enabled = false;
     }
 
     // Update is called once per frame
@@ -59,6 +69,8 @@ public class SpecialTile : MonoBehaviour
         Brick.removeSpecialBrick(index-1);
         animator.SetBool("IsBroken", true);
         //Destroy(this.gameObject);
+        broken = true;
+        BoxCollider.enabled = false;
     }
 
     protected virtual void OnCollisionEnter2D(Collision2D collision)
@@ -70,5 +82,11 @@ public class SpecialTile : MonoBehaviour
             Brick.removeSpecialBrick();
             //Destroy(this.gameObject);
         }
+    }
+
+    public void ShowBreakIndicator()
+    {
+        if(!broken)
+            breakIndicator.enabled=true;
     }
 }

@@ -345,7 +345,7 @@ public class GreenGuy : MonoBehaviour
                     fixRay.collider.SendMessage("ShowShieldIndicator");
                 }
             }
-            if (!fixRay.collider.isTrigger && BaseBuilding.GameMode == BaseBuilding.Mode.build && fixRay.collider.gameObject.name.Contains("Brick"))
+            if (!fixRay.collider.isTrigger && BaseBuilding.GameMode == BaseBuilding.Mode.build )//&& fixRay.collider.gameObject.name.Contains("Brick"))
             {
                 fixRay.collider.SendMessage("ShowBreakIndicator");
             }

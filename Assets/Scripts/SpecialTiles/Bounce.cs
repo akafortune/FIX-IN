@@ -27,8 +27,9 @@ public class Bounce : SpecialTile
         }
     }
 
-    private void FixedUpdate()
+    protected override void FixedUpdate()
     {
+        base.FixedUpdate();
         GreenGuy.SetBounce(false);
     }
 

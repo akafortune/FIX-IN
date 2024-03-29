@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Unity.VisualScripting;
+using UnityEditor;
 using UnityEngine;
 
 public class Teleporter : SpecialTile
@@ -13,7 +14,6 @@ public class Teleporter : SpecialTile
      ParticleSystem[] ps;
     protected ParticleSystem[] otherTeleporterPS;
     public static int brokenPortals;
-    bool broken;
     // Start is called before the first frame update
     protected override void Start()
     {
@@ -74,7 +74,7 @@ public class Teleporter : SpecialTile
         Teleporter[] teleporters = GameObject.FindObjectsByType<Teleporter>(FindObjectsSortMode.None);
         foreach(Teleporter teleporter in teleporters)
         {
-            if(teleporter.otherTeleporter == null && teleporter.transform != this.transform)
+            if(teleporter.otherTeleporter == null && teleporter.transform != this.transform && !teleporter.broken)
             {
                 otherTeleporter = teleporter.transform;
                 otherTeleporterPS = otherTeleporter.GetComponentsInChildren<ParticleSystem>();
@@ -159,8 +159,8 @@ public class Teleporter : SpecialTile
             var e = p.emission;
             e.rateOverTime = 0f;
         }
-        ReAssign();
         broken = true;
+        ReAssign();
         base.cancelBrick();
     }
 
