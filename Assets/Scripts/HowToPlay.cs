@@ -5,14 +5,21 @@ using UnityEngine.Video;
 using UnityEngine.UI;
 using TMPro;
 using static MainMenu;
+using UnityEditor;
 
 public class HowToPlay : MonoBehaviour
 {
     //Strings
+    [TextArea(10,10)]
     [SerializeField] private string helpText1 = "Build bricks with your build button. When you build a brick it removes the cost listed on the row from your resources. You can remove built bricks to get back the resources used to build them with the same button";
+    [TextArea(10,10)]
     [SerializeField] private string helpText2 = "Starting the round will remove all unbuilt bricks. when the countdown ends the ball will begin breaking bricks. You can block with your head but will receive a breif stun or rebuild with the build button when they break. If the ball hits too many bricks it will be detroyed and respawn. if the ball reaches the bottom the game is over";
+    [TextArea(10,10)]
     [SerializeField] private string helpText3 = "";
+    [TextArea(10,10)]
     [SerializeField] private string helpText4 = "";
+
+
 
     private string[] HelpText;
 
