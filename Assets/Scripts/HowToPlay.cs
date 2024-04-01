@@ -11,13 +11,13 @@ public class HowToPlay : MonoBehaviour
 {
     //Strings
     [TextArea(10,10)]
-    [SerializeField] private string helpText1 = "";
+    [SerializeField] private string helpText1;
     [TextArea(10,10)]
-    [SerializeField] private string helpText2 = "";
+    [SerializeField] private string helpText2;
     [TextArea(10,10)]
-    [SerializeField] private string helpText3 = "";
+    [SerializeField] private string helpText3;
     [TextArea(10,10)]
-    [SerializeField] private string helpText4 = "";
+    [SerializeField] private string helpText4;
 
 
 
