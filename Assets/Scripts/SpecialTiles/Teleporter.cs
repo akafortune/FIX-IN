@@ -113,6 +113,12 @@ public class Teleporter : SpecialTile
         if (collision.gameObject.name.Equals("Ball"))
         {
             brokenPortals++;
+            foreach (ParticleSystem p in ps)
+            {
+                var e = p.emission;
+                e.rateOverTime = 0f;
+            }
+            broken = true;
             ReAssign();
             base.OnCollisionEnter2D(collision);
         }
