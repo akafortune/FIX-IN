@@ -21,6 +21,7 @@ public class Pause : MonoBehaviour
     public bool pressQuit;
     public SelectedButton restartButton;
     public bool pauseStart;
+    bool sceneStart;
 
     // Start is called before the first frame update
     void Awake()
@@ -30,13 +31,13 @@ public class Pause : MonoBehaviour
         StartButton = GameObject.Find("Start Button");
         RebuildButton = GameObject.Find("Rebuild Button");
         GameObject.Find("MusicSource");
-        pauseMenu.SetActive(false);
         //buttonPressed = false;
         restartGame = false;
         pressRestart = false;
         sceneChange = false;
         pressQuit = false;
         buffer = 0f;
+        sceneStart = true;
         //restartButton = GameObject.Find("RestartButton").GetComponent<SelectedButton>();
     }
 
@@ -87,10 +88,6 @@ public class Pause : MonoBehaviour
                 pressQuit = false;
             }
         }
-    }
-
-    public void FixedUpdate()
-    {
         if (pauseStart)
         {
             restartButton.BackupSelect();
@@ -101,7 +98,13 @@ public class Pause : MonoBehaviour
                 pauseStart = false;
             }
         }
+        if (sceneStart)
+        {
+            pauseMenu.SetActive(false);
+            sceneStart = false;
+        }    
     }
+
 
     public void Restart()
     {
