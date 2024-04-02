@@ -63,7 +63,7 @@ public class Pause : MonoBehaviour
                 RebuildButton.SetActive(false);
                 Time.timeScale = 0f;
                 songSource.Pause();
-                pauseStart = true;
+                //pauseStart = true;
             }
         }
         if (pressRestart || pressQuit)
@@ -88,7 +88,7 @@ public class Pause : MonoBehaviour
                 pressQuit = false;
             }
         }
-        if (pauseStart)
+        /*if (pauseStart)  BRUTE FORCE WHY DID YOU FAIL ME
         {
             restartButton.BackupSelect();
             print(restartButton.GetIsSelected());
@@ -97,7 +97,7 @@ public class Pause : MonoBehaviour
             {
                 pauseStart = false;
             }
-        }
+        }*/
         if (sceneStart)
         {
             pauseMenu.SetActive(false);
