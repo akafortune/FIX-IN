@@ -11,7 +11,7 @@ public class FloatingText : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Destroy(transform.parent, destroyTime);
+        Destroy(transform.parent.gameObject, destroyTime);
         //transform.localPosition += new Vector3(0, yOffset, 0);
     }
 
