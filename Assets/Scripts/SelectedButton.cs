@@ -7,7 +7,7 @@ using UnityEngine.UI;
 
 public class SelectedButton : MonoBehaviour, ISelectHandler, IDeselectHandler
 {
-    public bool isSelected { get; private set; } = false;
+    public bool isSelected;
 
     public GameObject hammerIndicatorParent;
     public Animator[] hammerAnims;
@@ -18,6 +18,7 @@ public class SelectedButton : MonoBehaviour, ISelectHandler, IDeselectHandler
     // Start is called before the first frame update
     void Start()
     {
+        isSelected = false;
         audioSource = GetComponentInParent<AudioSource>();
         hammerAnims = hammerIndicatorParent.GetComponentsInChildren<Animator>();
     }
@@ -28,6 +29,7 @@ public class SelectedButton : MonoBehaviour, ISelectHandler, IDeselectHandler
         if(isSelected)
         {
             hammerIndicatorParent.SetActive(true);
+            print("Hammers are showing");
             
             if(Input.GetKeyDown(KeyCode.Mouse0) || Input.GetButtonDown("Submit"))
             {
@@ -44,6 +46,14 @@ public class SelectedButton : MonoBehaviour, ISelectHandler, IDeselectHandler
         }
     }
 
+    void FixedUpdate()
+    {
+        foreach (Animator anim in hammerAnims)
+        {
+            anim.ResetTrigger("ButtonSelected");
+        }
+    }
+
     public void OnSelect(BaseEventData eData)
     {
         isSelected = true;
@@ -53,5 +63,16 @@ public class SelectedButton : MonoBehaviour, ISelectHandler, IDeselectHandler
     public void OnDeselect(BaseEventData eData) 
     {
         isSelected = false;
+    }
+
+    public void BackupSelect()
+    {
+        isSelected = true;
+        audioSource.PlayOneShot(buttonChange);
+    }
+
+    public bool GetIsSelected()
+    {
+        return isSelected;
     }
 }
