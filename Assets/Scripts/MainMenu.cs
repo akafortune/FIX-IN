@@ -31,7 +31,6 @@ public class MainMenu : MonoBehaviour
             loadScreen = GameObject.Find("Load");
             loadScreen.SetActive(false);
         }
-        Resources.LoadAsync("HowToPlay.unity");
     }
 
     public void Update()
