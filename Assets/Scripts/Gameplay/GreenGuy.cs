@@ -335,7 +335,7 @@ public class GreenGuy : MonoBehaviour
         {
             if (fixRay.collider.isTrigger)
             {
-                if (BaseBuilding.GameMode == BaseBuilding.Mode.defend || (BaseBuilding.GameMode == BaseBuilding.Mode.build && BaseBuilding.resources - BrickValue() >= 0))
+                if (BaseBuilding.GameMode == BaseBuilding.Mode.defend || (BaseBuilding.GameMode == BaseBuilding.Mode.build && (BaseBuilding.resources - BrickValue() >= 0)) || brickType != 0)
                 {
                     fixRay.collider.SendMessage("ShowFixIndicator");
                 }
