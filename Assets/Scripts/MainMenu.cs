@@ -31,12 +31,7 @@ public class MainMenu : MonoBehaviour
             loadScreen = GameObject.Find("Load");
             loadScreen.SetActive(false);
         }
-        Resources.LoadAsync("Help Screen/Ball Break 2.mp4");
-        Resources.LoadAsync("Help Screen/Break Base.mp4");
-        Resources.LoadAsync("Help Screen/Build Base 2.mp4");
-        Resources.LoadAsync("Help Screen/Round 2.mp4");
-        Resources.LoadAsync("Help Screen/video1.renderTexture");
-        Resources.LoadAsync("Help Screen/video2.renderTexture");
+        Resources.LoadAsync("HowToPlay.unity");
     }
 
     public void Update()

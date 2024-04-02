@@ -1116,6 +1116,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5e4b0bac84323154796615fc49b964e6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  helpText1: Build bricks with your build button. When you build a brick it removes
+    the cost listed on the row from your resources. You can remove built bricks to
+    get back the resources used to build them with the same button
+  helpText2: 
+  helpText3: 
+  helpText4: 
+  page: 0
   videoHolder1: {fileID: 649787047}
   videoHolder2: {fileID: 1904266434}
   videoHolder3: {fileID: 0}
