@@ -6,6 +6,7 @@ using UnityEngine.UI;
 using TMPro;
 using static MainMenu;
 using UnityEditor;
+//using static UnityEngine.UIElements;
 
 public class HowToPlay : MonoBehaviour
 {
@@ -41,6 +42,9 @@ public class HowToPlay : MonoBehaviour
     [SerializeField] private RenderTexture videoTexture2;
 
     [SerializeField] private TextMeshProUGUI helpTextUI;
+    [SerializeField] private TextMeshProUGUI modeUI;
+
+    [SerializeField] private Image brick;
 
     // Start is called before the first frame update
     void Awake()
@@ -50,9 +54,10 @@ public class HowToPlay : MonoBehaviour
         helpTextUI.text = HelpText[page];
         helpVideo1 =  new VideoPlayer[] {videoHolder1.transform.GetChild(0).GetComponent<VideoPlayer>(), videoHolder1.transform.GetChild(1).GetComponent<VideoPlayer>()};   
         helpVideo2 =  new VideoPlayer[] {videoHolder2.transform.GetChild(0).GetComponent<VideoPlayer>(), videoHolder2.transform.GetChild(1).GetComponent<VideoPlayer>()};
-        //helpVideo3 =  new VideoPlayer[] {videoHolder3.transform.GetChild(0).GetComponent<VideoPlayer>(), videoHolder3.transform.GetChild(1).GetComponent<VideoPlayer>()};
+        helpVideo3 =  new VideoPlayer[] {videoHolder3.transform.GetChild(0).GetComponent<VideoPlayer>(), videoHolder3.transform.GetChild(1).GetComponent<VideoPlayer>()};
         //helpVideo4 =  new VideoPlayer[] {videoHolder4.transform.GetChild(0).GetComponent<VideoPlayer>(), videoHolder4.transform.GetChild(1).GetComponent<VideoPlayer>()};
-        HelpVideo = new VideoPlayer[][] {helpVideo1, helpVideo2 };
+        HelpVideo = new VideoPlayer[][] {helpVideo1, helpVideo2, helpVideo3};
+        brick.color = new Color(0f, 0f, 255f, 1f);
     }
 
     // Update is called once per frame
@@ -64,7 +69,7 @@ public class HowToPlay : MonoBehaviour
     public void SwapPage(int newPage)
     {
         page += newPage;
-        if (page < 0 || page > 3)
+        if (page < 0 || page > 2)
         {
             gameObject.GetComponent<MainMenu>().LoadScene(0);
         }
@@ -83,14 +88,28 @@ public class HowToPlay : MonoBehaviour
             {
                 if (first)
                 {
+                    v.time = 0;
                     v.targetTexture = videoTexture1;
                     first = false;
                 }
                 else
                 {
+                    v.time = 0;
                     v.targetTexture = videoTexture2;
                 }
             }
+
+            if (page < 2) //if build phase
+            {
+                brick.color = new Color(0f, 0f, 255f, 1f);
+                modeUI.text = "Build Phase";
+            }
+            else //if defend phase
+            {
+                brick.color = new Color(255f, 0f, 0f, 1f);
+                modeUI.text = "Defend Phase";
+            }
         }
+
     }
 }
