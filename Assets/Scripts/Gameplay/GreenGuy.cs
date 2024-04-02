@@ -205,7 +205,7 @@ public class GreenGuy : MonoBehaviour
                     animator.SetBool("Walking", false);
                 }
             }
-            if ((Input.GetKeyDown(KeyCode.W)||Input.GetKeyDown("joystick button 2")|| (allowTapJump&&verticalMovementVal > .1f)) && canJump && rb.velocity.y < .25 && rb.velocity.y > -.25 && !(Input.GetKey(KeyCode.S)|| verticalMovementVal < -.1f))
+            if ((Input.GetKeyDown(KeyCode.W)||Input.GetKeyDown("joystick button 0")|| (allowTapJump&&verticalMovementVal > .1f)) && canJump && rb.velocity.y < .25 && rb.velocity.y > -.25 && !(Input.GetKey(KeyCode.S)|| verticalMovementVal < -.1f))
             {
                 float bounceMod = 1;
                 if (touchingBouncePad)
@@ -227,7 +227,7 @@ public class GreenGuy : MonoBehaviour
                 }
             }
 
-            if ((Input.GetKeyDown(KeyCode.Space)|| Input.GetKeyDown("joystick button 3")) && canJump && rb.velocity.y < .25 && rb.velocity.y >= 0)
+            if ((Input.GetKeyDown(KeyCode.Space)|| Input.GetKeyDown("joystick button 1")) && canJump && rb.velocity.y < .25 && rb.velocity.y >= 0)
             {
                 if (fixRay.collider != null)
                 {
@@ -237,7 +237,7 @@ public class GreenGuy : MonoBehaviour
 
             if(BaseBuilding.GameMode == BaseBuilding.Mode.build)
             {
-                if (Input.GetKeyDown(KeyCode.E) ||  Input.GetKeyDown("joystick button 1"))
+                if (Input.GetKeyDown(KeyCode.E) ||  Input.GetKeyDown("joystick button 2"))
                 {
                     do
                     {
@@ -255,7 +255,7 @@ public class GreenGuy : MonoBehaviour
                     {
                         brickType = 0;
                     }*/
-                } else if (Input.GetKeyDown(KeyCode.Q) || Input.GetKeyDown("joystick button 0"))
+                } else if (Input.GetKeyDown(KeyCode.Q))
                 {
                     do
                     {

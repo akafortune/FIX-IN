@@ -24,12 +24,12 @@ public class Pause : MonoBehaviour
     // Update is called once per frame
     public void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (Input.GetKeyDown(KeyCode.Escape)||Input.GetKeyDown("joystick button 7"))
         {
             if (pauseMenu.activeSelf)
             {
                 pauseMenu.SetActive(false);
-                StartButton.SetActive(true);
+                //StartButton.SetActive(true);
                 if(rebuildActive)
                     RebuildButton.SetActive(true);
                 Time.timeScale = 1f;
@@ -38,7 +38,7 @@ public class Pause : MonoBehaviour
             else
             {
                 pauseMenu.SetActive(true);
-                StartButton.SetActive(false);
+                //StartButton.SetActive(false);
                 rebuildActive = RebuildButton.activeInHierarchy;
                 RebuildButton.SetActive(false);
                 Time.timeScale = 0f;

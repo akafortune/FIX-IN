@@ -138,7 +138,14 @@ public class BaseBuilding : MonoBehaviour
             
         }
         roundText.text = roundCount.ToString();
-        
+        if(Input.GetKeyDown("r")||Input.GetKeyDown("joystick button 6"))
+        {
+            BeginRound();
+        }
+        if(Input.GetKeyDown("f")||Input.GetKeyDown("joystick button 3"))
+        {
+            BuildLast();
+        }
     }
 
     /*
