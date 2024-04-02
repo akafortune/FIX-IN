@@ -87,6 +87,8 @@ public class GreenGuy : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         jumpForce = 235 * (int)rb.mass;
         horizontalSpeed = 3;
+        speedMod = 1;
+        speeding = false;
         stunTime = 1.7f;
         yOffset = .5f;
         highScoreText.text = PlayerPrefs.GetInt("HighScore").ToString();
