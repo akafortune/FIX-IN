@@ -80,6 +80,7 @@ public class SpecialTile : MonoBehaviour
             animator.SetBool("IsBroken", true);
             Ball.hits++;
             Brick.removeSpecialBrick();
+            BoxCollider.enabled = false;
             //Destroy(this.gameObject);
         }
     }
