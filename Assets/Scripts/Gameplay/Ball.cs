@@ -316,7 +316,7 @@ public class Ball : MonoBehaviour
                 RampspeedMultiplier = x;
             }
             FinalspeedMultiplier = (StaticspeedMultiplier *augment) * RampspeedMultiplier;
-            Debug.Log(FinalspeedMultiplier);
+            //Debug.Log(FinalspeedMultiplier);
             GreenGuy.stunTime = 1.7f / (augment + (RampspeedMultiplier / 3f));
         }
     }
@@ -336,7 +336,7 @@ public class Ball : MonoBehaviour
         GreenGuy.stunTime = 1.7f / augment;
         animator.SetTrigger("Reset");
         FinalspeedMultiplier = StaticspeedMultiplier*augment;
-        Debug.Log(FinalspeedMultiplier);
+        //Debug.Log(FinalspeedMultiplier);
     }
     
     public void SetFirstLaunch(bool fLaunch)
