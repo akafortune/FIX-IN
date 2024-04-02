@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Security.Cryptography;
 using TMPro;
 using Unity.VisualScripting;
+using Unity.VisualScripting.Antlr3.Runtime.Tree;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -109,7 +110,8 @@ public class GreenGuy : MonoBehaviour
         JumpParticles = GameObject.Find("Jump Trails");
         JumpParticles.SetActive(false);
         SuperJumping = false;
-        
+        canMove = true;
+        building = false;
     }
 
     // Update is called once per frame
