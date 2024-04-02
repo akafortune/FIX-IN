@@ -2,7 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
 public class Pause : MonoBehaviour
 {
@@ -10,6 +13,16 @@ public class Pause : MonoBehaviour
     private GameObject StartButton, RebuildButton;
     public AudioSource songSource;
     public bool rebuildActive;
+    //public bool buttonPressed;
+    public float buffer = 0f;
+    public bool restartGame;
+    public bool pressRestart;
+    public bool sceneChange;
+    public bool pressQuit;
+    public SelectedButton restartButton;
+    public bool pauseStart;
+    bool sceneStart;
+
     // Start is called before the first frame update
     void Awake()
     {
@@ -18,7 +31,14 @@ public class Pause : MonoBehaviour
         StartButton = GameObject.Find("Start Button");
         RebuildButton = GameObject.Find("Rebuild Button");
         GameObject.Find("MusicSource");
-        pauseMenu.SetActive(false);
+        //buttonPressed = false;
+        restartGame = false;
+        pressRestart = false;
+        sceneChange = false;
+        pressQuit = false;
+        buffer = 0f;
+        sceneStart = true;
+        //restartButton = GameObject.Find("RestartButton").GetComponent<SelectedButton>();
     }
 
     // Update is called once per frame
@@ -43,14 +63,57 @@ public class Pause : MonoBehaviour
                 RebuildButton.SetActive(false);
                 Time.timeScale = 0f;
                 songSource.Pause();
+                //pauseStart = true;
             }
         }
+        if (pressRestart || pressQuit)
+        {
+            //Time.timeScale = 1f;
+            buffer += Time.unscaledDeltaTime;
+            print(buffer);
+        }
+        if (buffer >= 0.4f)
+        {
+            //buttonPressed = false;
+            if(pressRestart)
+            {
+                restartGame = true;
+                Restart();
+                pressRestart = false;
+            }
+            else if(pressQuit)
+            {
+                sceneChange = true;
+                Quit();
+                pressQuit = false;
+            }
+        }
+        /*if (pauseStart)  BRUTE FORCE WHY DID YOU FAIL ME
+        {
+            restartButton.BackupSelect();
+            print(restartButton.GetIsSelected());
+
+            if (restartButton.GetIsSelected())
+            {
+                pauseStart = false;
+            }
+        }*/
+        if (sceneStart)
+        {
+            pauseMenu.SetActive(false);
+            sceneStart = false;
+        }    
     }
+
 
     public void Restart()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-        Time.timeScale = 1f;
+        pressRestart = true;
+        if (restartGame)
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+            Time.timeScale = 1f;
+        }
     }
 
     public void NewTest()
@@ -60,7 +123,11 @@ public class Pause : MonoBehaviour
 
     public void Quit()
     {
-        Time.timeScale = 1f;
-        SceneManager.LoadScene(0);
+        pressQuit = true;
+        if (sceneChange)
+        {
+            Time.timeScale = 1f;
+            SceneManager.LoadScene(0);
+        }
     }
 }
