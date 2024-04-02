@@ -21,10 +21,10 @@ public class SelectedButton : MonoBehaviour, ISelectHandler, IDeselectHandler
         isSelected = false;
         audioSource = GetComponentInParent<AudioSource>();
         hammerAnims = hammerIndicatorParent.GetComponentsInChildren<Animator>();
-        if (this.gameObject.name == "RestartButton")
-        {
-            BackupSelect();
-        }
+        //if (this.gameObject.name == "RestartButton")
+        //{
+        //    BackupSelect();
+        //}
     }
 
     // Update is called once per frame
