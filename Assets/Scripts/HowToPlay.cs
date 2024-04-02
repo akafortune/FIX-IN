@@ -52,6 +52,7 @@ public class HowToPlay : MonoBehaviour
         helpVideo2 =  new VideoPlayer[] {videoHolder2.transform.GetChild(0).GetComponent<VideoPlayer>(), videoHolder2.transform.GetChild(1).GetComponent<VideoPlayer>()};
         //helpVideo3 =  new VideoPlayer[] {videoHolder3.transform.GetChild(0).GetComponent<VideoPlayer>(), videoHolder3.transform.GetChild(1).GetComponent<VideoPlayer>()};
         //helpVideo4 =  new VideoPlayer[] {videoHolder4.transform.GetChild(0).GetComponent<VideoPlayer>(), videoHolder4.transform.GetChild(1).GetComponent<VideoPlayer>()};
+        HelpVideo = new VideoPlayer[][] {helpVideo1, helpVideo2 };
     }
 
     // Update is called once per frame
