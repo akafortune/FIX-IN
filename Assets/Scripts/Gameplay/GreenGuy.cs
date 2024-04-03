@@ -42,6 +42,7 @@ public class GreenGuy : MonoBehaviour
     public float buildClock = 0;
     public bool building = false, stunned = false;
     public string[] materialArray;
+    public Sprite[] iconArray;
 
     BaseBuilding BaseBuilding;
 
@@ -50,6 +51,7 @@ public class GreenGuy : MonoBehaviour
     public TextMeshProUGUI scoreText;
     public TextMeshProUGUI highScoreText;
     public TextMeshProUGUI materialText;
+    public SpriteRenderer materialIcon;
 
     public float yOffset;
     public GameObject floatingText;
@@ -131,6 +133,8 @@ public class GreenGuy : MonoBehaviour
         {
             materialText.text = materialArray[brickType] + ":" + specialBrickAmounts[brickType - 1];
         }
+
+        materialIcon.sprite = iconArray[brickType];
 
         if(teleporterPlaced)
         {
