@@ -3136,7 +3136,7 @@ MonoBehaviour:
   SuperJumping: 0
   targetedBrickTransform: {x: 0, y: 0, z: 0}
   brickType: 0
-  specialBrickAmounts: 02000000020000000200000002000000
+  specialBrickAmounts: 00000000000000000000000000000000
 --- !u!212 &612270118
 SpriteRenderer:
   m_ObjectHideFlags: 0
