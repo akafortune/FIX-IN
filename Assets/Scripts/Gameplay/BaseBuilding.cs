@@ -296,28 +296,33 @@ public class BaseBuilding : MonoBehaviour
 
     public bool checkWin()
     {
-        foreach (GameObject brick in Bricks)
+        if (GameMode == Mode.build)
         {
-            Brick BrickScript = brick.GetComponent<Brick>();
-            if(!BrickScript.isBuilt() && !BrickScript.replaced)
+            foreach (GameObject brick in Bricks)
             {
-                return false;
+                Brick BrickScript = brick.GetComponent<Brick>();
+                if (!BrickScript.isBuilt() && !BrickScript.replaced)
+                {
+                    return false;
+                }
             }
-        }
 
-        foreach (GameObject brick in Bricks)
-        {
-            Brick BrickScript = brick.GetComponent<Brick>();
-            if (BrickScript.replaced && BrickScript.SpecialBrick != null)
-                BrickScript.SpecialBrick.SendMessage("RemoveBrick");
-            else
-                BrickScript.cancelBrick();
+            foreach (GameObject brick in Bricks)
+            {
+                Brick BrickScript = brick.GetComponent<Brick>();
+                if (BrickScript.replaced && BrickScript.SpecialBrick != null)
+                    BrickScript.SpecialBrick.SendMessage("RemoveBrick");
+                else
+                    BrickScript.cancelBrick();
+            }
+            GameObject flText = Instantiate(FloatingText, Vector3.zero, Quaternion.identity);
+            flText.GetComponentInChildren<TextMesh>().text = "" + 1000;
+            songSource.PlayOneShot(winJingle);
+            resources = 15;
+            greenGuy.score += 1000;
+            return true;
         }
-        GameObject flText = Instantiate(FloatingText, Vector3.zero, Quaternion.identity);
-        flText.GetComponentInChildren<TextMesh>().text = "" + 1000;
-        songSource.PlayOneShot(winJingle);
-        resources = 15;
-        greenGuy.score += 1000;
-        return true;
+        else
+            return false;
     }
 }
