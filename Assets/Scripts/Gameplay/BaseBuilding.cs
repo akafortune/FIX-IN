@@ -3,6 +3,7 @@ using System.IO;
 using System.Linq;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SocialPlatforms.Impl;
 using Random = UnityEngine.Random;
 
 public class BaseBuilding : MonoBehaviour
@@ -316,6 +317,7 @@ public class BaseBuilding : MonoBehaviour
         flText.GetComponentInChildren<TextMesh>().text = "" + 1000;
         songSource.PlayOneShot(winJingle);
         resources = 15;
+        greenGuy.score += 1000;
         return true;
     }
 }

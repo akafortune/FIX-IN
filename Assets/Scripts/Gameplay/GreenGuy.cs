@@ -46,7 +46,7 @@ public class GreenGuy : MonoBehaviour
     BaseBuilding BaseBuilding;
 
     // private float oneSecond = 1f;
-    public float score;
+    public int score;
     public TextMeshProUGUI scoreText;
     public TextMeshProUGUI highScoreText;
     public TextMeshProUGUI materialText;
@@ -113,6 +113,7 @@ public class GreenGuy : MonoBehaviour
         SuperJumping = false;
         canMove = true;
         building = false;
+        score = 0;
     }
 
     // Update is called once per frame
