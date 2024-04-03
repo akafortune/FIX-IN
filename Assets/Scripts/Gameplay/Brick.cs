@@ -15,9 +15,11 @@ public class Brick : MonoBehaviour
     public SpriteRenderer fixIndicator;
     public SpriteRenderer breakIndicator;
     public GameObject[] brickTypes;
+    public GameObject SpecialBrick;
     private static bool canBreak;
-    private bool replaced;
+    public bool replaced;
     private GreenGuy GreenGuy;
+    BaseBuilding baseBuilding;
     // Start is called before the first frame update
     void Awake()
     {
@@ -31,6 +33,7 @@ public class Brick : MonoBehaviour
         breakIndicator.enabled = false;
         GreenGuy = GameObject.Find("GreenGuy").GetComponent<GreenGuy>();
         replaced = false;
+        baseBuilding = GameObject.FindAnyObjectByType<BaseBuilding>();
     }
 
     // Update is called once per frame
@@ -59,14 +62,20 @@ public class Brick : MonoBehaviour
     {
         animator.SetBool("IsBroken", false);
         bc.isTrigger = false;
+        baseBuilding.checkWin();
     }
 
-    public void specialBrick(int brickIndex)
+    public void PlaceSpecialBrick(int brickIndex)
     {
         replaced = true;
-        GameObject p = Instantiate(brickTypes[brickIndex-1], this.transform);
+        if (baseBuilding.checkWin())
+        {
+            replaced = false;
+            return;
+        }
+        SpecialBrick = Instantiate(brickTypes[brickIndex-1], this.transform);
         bc.enabled = false;
-        SpecialTile tile = p.GetComponent<SpecialTile>();
+        SpecialTile tile = SpecialBrick.GetComponent<SpecialTile>();
         tile.Brick = this;
         tile.index = brickIndex;
         bc.isTrigger = false;

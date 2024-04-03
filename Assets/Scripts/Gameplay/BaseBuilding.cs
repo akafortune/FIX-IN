@@ -20,7 +20,7 @@ public class BaseBuilding : MonoBehaviour
     private float roundClock = 0;
 
     private AudioSource songSource;
-    private AudioClip buildSong, defendSong;
+    private AudioClip buildSong, defendSong, winJingle;
     private Animator brickAnimator;
     public GameObject ball;
     public GameObject paddle;
@@ -37,7 +37,7 @@ public class BaseBuilding : MonoBehaviour
     private TextMeshProUGUI Countdown;
     private GameObject StartButton;
     private GameObject RebuildButton;
-
+    private GameObject FloatingText;
     private GreenGuy greenGuy;
 
     // Start is called before the first frame update
@@ -46,14 +46,16 @@ public class BaseBuilding : MonoBehaviour
         songSource = GameObject.Find("SongSource").GetComponent<AudioSource>();
         buildSong = (AudioClip) Resources.Load("SFX/BuildMusic");
         defendSong = (AudioClip) Resources.Load("SFX/UpdatedDefendSong");
+        winJingle = (AudioClip)Resources.Load("SFX/Win");
         songSource.clip = defendSong;
         songSource.Play();
         songSource.clip = buildSong;
         songSource.Play();
         Countdown = GameObject.Find("Countdown").GetComponent<TextMeshProUGUI>();
+        FloatingText = (GameObject)Resources.Load("FloatingTextParent");
         firstRound = true;
         Bricks = getBrickArray();
-        resources = 45;
+        resources = 4500;
         GameMode = Mode.build;
         ball = GameObject.Find("Ball");
         ball.SetActive(false);
@@ -289,5 +291,31 @@ public class BaseBuilding : MonoBehaviour
         b1.GetComponentInChildren<Bubble>().brickInd = bubble1Item;
         b2 = Instantiate(itemBubble, bubbleTwo);
         b2.GetComponentInChildren<Bubble>().brickInd = bubble2Item;
+    }
+
+    public bool checkWin()
+    {
+        foreach (GameObject brick in Bricks)
+        {
+            Brick BrickScript = brick.GetComponent<Brick>();
+            if(!BrickScript.isBuilt() && !BrickScript.replaced)
+            {
+                return false;
+            }
+        }
+
+        foreach (GameObject brick in Bricks)
+        {
+            Brick BrickScript = brick.GetComponent<Brick>();
+            if (BrickScript.replaced && BrickScript.SpecialBrick != null)
+                BrickScript.SpecialBrick.SendMessage("RemoveBrick");
+            else
+                BrickScript.cancelBrick();
+        }
+        GameObject flText = Instantiate(FloatingText, Vector3.zero, Quaternion.identity);
+        flText.GetComponentInChildren<TextMesh>().text = "" + 1000;
+        songSource.PlayOneShot(winJingle);
+        resources = 15;
+        return true;
     }
 }

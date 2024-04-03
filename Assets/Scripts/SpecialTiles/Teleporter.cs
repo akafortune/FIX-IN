@@ -170,6 +170,17 @@ public class Teleporter : SpecialTile
         base.cancelBrick();
     }
 
+    public override void RemoveBrick()
+    {
+        foreach (ParticleSystem p in ps)
+        {
+            var e = p.emission;
+            e.rateOverTime = 0f;
+        }
+        broken = true;
+        base.RemoveBrick();
+    }
+
     protected void ReAssign()
     {
         Debug.Log("Reassign");

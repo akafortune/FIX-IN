@@ -43,7 +43,7 @@ public class GreenGuy : MonoBehaviour
     public bool building = false, stunned = false;
     public string[] materialArray;
 
-    
+    BaseBuilding BaseBuilding;
 
     // private float oneSecond = 1f;
     public float score;
@@ -81,6 +81,7 @@ public class GreenGuy : MonoBehaviour
     void Start()
     {
         Debug.Log(this.gameObject.name);
+        BaseBuilding = GameObject.FindAnyObjectByType<BaseBuilding>();
         platforms = GameObject.Find("Platforms").GetComponentsInChildren<BoxCollider2D>();
         SwingDustTransform = GameObject.Find("SwingDust").GetComponent<Transform>();
         Physics2D.queriesHitTriggers = true; //making it so that ray can detect triggers
@@ -444,7 +445,7 @@ public class GreenGuy : MonoBehaviour
                 {
                     if (specialBrickAmounts[brickType-1] > 0)
                     {
-                        fixRay.collider.gameObject.SendMessage("specialBrick", brickType);
+                        fixRay.collider.gameObject.SendMessage("PlaceSpecialBrick", brickType);
                         specialBrickAmounts[brickType-1]--;
                     } else
                     {

@@ -824,7 +824,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isSelected: 0
-  firstSelected: 0
   hammerIndicatorParent: {fileID: 375871946}
   hammerAnims: []
   audioSource: {fileID: 0}
@@ -3130,7 +3129,7 @@ MonoBehaviour:
   SuperJumping: 0
   targetedBrickTransform: {x: 0, y: 0, z: 0}
   brickType: 0
-  specialBrickAmounts: 00000000000000000000000000000000
+  specialBrickAmounts: 02000000020000000200000002000000
 --- !u!212 &612270118
 SpriteRenderer:
   m_ObjectHideFlags: 0
