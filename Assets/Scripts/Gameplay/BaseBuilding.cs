@@ -96,6 +96,7 @@ public class BaseBuilding : MonoBehaviour
         }
         roundText = GameObject.Find("RoundNumberText").GetComponent<TextMeshProUGUI>();
 
+        //Comment out for build
         //spawnBubble();
     }
 
@@ -287,9 +288,9 @@ public class BaseBuilding : MonoBehaviour
     {
         do
         {
-            bubble1Item = Random.Range(0, 4);
+            bubble1Item = Random.Range(0, 6);
             Debug.Log(bubble1Item);
-            bubble2Item = Random.Range(0, 4);
+            bubble2Item = Random.Range(0, 6);
             Debug.Log(bubble2Item);
         } while (bubble1Item == bubble2Item);
 

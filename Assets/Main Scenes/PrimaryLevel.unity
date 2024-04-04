@@ -3194,7 +3194,7 @@ MonoBehaviour:
   - {fileID: 21300000, guid: b0f2ee207cb27564bb2c91a629e35fe7, type: 3}
   - {fileID: 21300000, guid: eba461882573d4c4a983b25f23795fdf, type: 3}
   - {fileID: 21300000, guid: 27138e8144e5d9b4e9e1264538f38089, type: 3}
-  specialBrickAmounts: 020000000200000002000000020000000200000002000000
+  specialBrickAmounts: 02000000020000000200000002000000020000000a000000
   score: 0
   scoreText: {fileID: 397082735}
   highScoreText: {fileID: 140330708}

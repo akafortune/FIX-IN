@@ -46,6 +46,14 @@ public class Bubble : MonoBehaviour
                     child.gameObject.SetActive(false);
                 cost = 15;
                 break;
+            case 4:
+                text.text = "-15 Resources \n\n\n\n\n\n\nMine";
+                cost = 15;
+                break;
+            case 5:
+                text.text = "-5 Resources \n\n\n\n\n\n\nReinforced Brick";
+                cost = 5;
+                break;
             default:
                 break;
         }
