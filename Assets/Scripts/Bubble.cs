@@ -75,8 +75,19 @@ public class Bubble : MonoBehaviour
         {
             collision.transform.parent.SendMessage("addSpecialResources", brickInd);
             BaseBuilding.resources -= cost;
-            Destroy(otherBubble);
-            Destroy(parent);
+
+            StartCoroutine(Pop());
+            
         }
+    }
+
+    IEnumerator Pop()
+    {
+        gameObject.GetComponent<Collider2D>().enabled = false;
+        Destroy(otherBubble);
+        parent.GetComponent<Animator>().SetTrigger("Pop");
+        Destroy(brickHolder.gameObject);
+        yield return new WaitForSeconds(.5f);
+        Destroy(parent);
     }
 }
