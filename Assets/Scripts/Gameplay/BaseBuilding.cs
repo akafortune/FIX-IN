@@ -237,7 +237,7 @@ public class BaseBuilding : MonoBehaviour
             }
         }
         songSource.clip = buildSong;
-        songSource.UnPause();
+        songSource.Play();
         resources += 15;
         GameMode = Mode.build;
         DefendUI.SetActive(false);
