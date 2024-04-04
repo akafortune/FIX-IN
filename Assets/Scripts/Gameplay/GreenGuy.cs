@@ -19,7 +19,7 @@ public class GreenGuy : MonoBehaviour
     public Transform rayOrigin;
     public float bouncePadValue;
     static private bool touchingBouncePad, speeding;
-    private bool shieldWhack;
+    private bool specialWhack;
 
     public GameObject floorRay;
     public Transform SwingDustTransform;
@@ -321,7 +321,7 @@ public class GreenGuy : MonoBehaviour
             canMove = true;
             animator.SetBool("Swinging", false);
             building = false;
-            if (BaseBuilding.GameMode != BaseBuilding.Mode.build && BaseBuilding.lastBrickBuilt &&!shieldWhack)
+            if (BaseBuilding.GameMode != BaseBuilding.Mode.build && BaseBuilding.lastBrickBuilt &&!specialWhack)
             {
                 score += 10;
                 // Trigger floating text here
@@ -330,9 +330,9 @@ public class GreenGuy : MonoBehaviour
                     ShowFloatingText("+10");
                 }
             }
-            else if(shieldWhack)
+            else if(specialWhack)
             {
-                shieldWhack = false;
+                specialWhack = false;
             }
         }
         scoreText.text = ((int)score).ToString();
@@ -356,6 +356,13 @@ public class GreenGuy : MonoBehaviour
                 if (BaseBuilding.GameMode == BaseBuilding.Mode.defend)
                 {
                     fixRay.collider.SendMessage("ShowShieldIndicator");
+                }
+            }
+            else if (fixRay.collider.gameObject.name.Contains("Mine"))
+            {
+                if (BaseBuilding.GameMode == BaseBuilding.Mode.defend)
+                {
+                    fixRay.collider.SendMessage("ShowMine");
                 }
             }
             if (!fixRay.collider.isTrigger && BaseBuilding.GameMode == BaseBuilding.Mode.build )//&& fixRay.collider.gameObject.name.Contains("Brick"))
@@ -495,7 +502,7 @@ public class GreenGuy : MonoBehaviour
                 Shield shield = fixRay.collider.GetComponent<Shield>();
                 if (shield.CanStart())
                 {
-                    shieldWhack = true;
+                    specialWhack = true;
                     Debug.Log("Shield Start");
                     animator.SetTrigger("Fix");
                     animator.SetBool("Swinging", true);
@@ -505,6 +512,23 @@ public class GreenGuy : MonoBehaviour
                     canMove = false;
                     audioSource.PlayOneShot(brickFix);
                     shield.StartShield();
+                }
+            }
+            else if (BaseBuilding.GameMode == BaseBuilding.Mode.defend && fixRay.collider.name.StartsWith("Mine") && !building)
+            {
+                Mine mine = fixRay.collider.GetComponent<Mine>();
+                if (mine.getMineable())
+                {
+                    specialWhack = true;
+                    mine.doAction();
+                    ShowFloatingText("+Scrap");
+                    animator.SetTrigger("Fix");
+                    animator.SetBool("Swinging", true);
+                    pickaxe.SetActive(true);
+                    building = true;
+                    buildClock = 0;
+                    canMove = false;
+                    audioSource.PlayOneShot(brickBreak);
                 }
             }
         }
