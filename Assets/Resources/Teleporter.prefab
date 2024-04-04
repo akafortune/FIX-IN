@@ -171,7 +171,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d8ed49c1985f7e44a8f9c48df8516fcc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Brick: {fileID: 0}
+  associatedBrick: {fileID: 0}
   index: 0
   breakIndicator: {fileID: 0}
   portalParticles:
@@ -5087,7 +5087,7 @@ ParticleSystemRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 1
+  m_SortingOrder: 2
   m_RenderMode: 0
   m_MeshDistribution: 0
   m_SortMode: 0
