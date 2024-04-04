@@ -1,0 +1,824 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8e6292b2c06870d4495f009f912b9600, type: 3}
+  m_Name: PPS Profile
+  m_EditorClassIdentifier: 
+  settings:
+  - {fileID: 934229382270692746}
+  - {fileID: 5797542315874777496}
+--- !u!114 &934229382270692746
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a63c99b3ed38a41f39e4d2bc6c00dfba, type: 3}
+  m_Name: VHSPro
+  m_EditorClassIdentifier: 
+  active: 1
+  enabled:
+    overrideState: 1
+    value: 1
+  g_pixel:
+    overrideState: 1
+    value: 1
+  g_color:
+    overrideState: 1
+    value: 1
+  g_palette:
+    overrideState: 1
+    value: 1
+  g_crt:
+    overrideState: 1
+    value: 1
+  g_noise:
+    overrideState: 1
+    value: 1
+  g_jitter:
+    overrideState: 1
+    value: 1
+  g_signal:
+    overrideState: 1
+    value: 1
+  g_feedback:
+    overrideState: 1
+    value: 1
+  g_extra:
+    overrideState: 1
+    value: 1
+  g_bypass:
+    overrideState: 1
+    value: 0
+  pixelOn:
+    overrideState: 1
+    value: 1
+  screenResPresetId:
+    overrideState: 1
+    value: 1
+  screenWidth:
+    overrideState: 1
+    value: 640
+  screenHeight:
+    overrideState: 1
+    value: 480
+  colorOn:
+    overrideState: 0
+    value: 1
+  colorMode:
+    overrideState: 1
+    value: 2
+  colorSyncedOn:
+    overrideState: 1
+    value: 1
+  bitsR:
+    overrideState: 1
+    value: 2
+  bitsG:
+    overrideState: 1
+    value: 2
+  bitsB:
+    overrideState: 1
+    value: 2
+  bitsSynced:
+    overrideState: 1
+    value: 7
+  bitsGray:
+    overrideState: 1
+    value: 1
+  grayscaleColor:
+    overrideState: 1
+    value: {r: 1, g: 1, b: 1, a: 1}
+  ditherOn:
+    overrideState: 0
+    value: 1
+  ditherMode:
+    overrideState: 1
+    value: 3
+  ditherAmount:
+    overrideState: 0
+    value: 1
+  paletteOn:
+    overrideState: 0
+    value: 0
+  paletteId:
+    overrideState: 1
+    value: 10
+  paletteDelta:
+    overrideState: 0
+    value: 5
+  paletteTex:
+    overrideState: 1
+    value: {fileID: 2800000, guid: 708e0afb14ec548908ec37afb4507e6a, type: 3}
+    defaultState: 1
+  paletteCustom: {fileID: 0}
+  paletteCustomName: 
+  paletteCustomInit: 0
+  bleedOn:
+    overrideState: 0
+    value: 1
+  crtMode:
+    overrideState: 1
+    value: 0
+  bleedAmount:
+    overrideState: 0
+    value: 0
+  noiseResGlobal:
+    overrideState: 1
+    value: 1
+  noiseResWidth:
+    overrideState: 1
+    value: 640
+  noiseResHeight:
+    overrideState: 1
+    value: 480
+  filmgrainOn:
+    overrideState: 1
+    value: 0
+  filmGrainAmount:
+    overrideState: 1
+    value: 0.1
+  signalNoiseOn:
+    overrideState: 0
+    value: 0
+  signalNoiseAmount:
+    overrideState: 0
+    value: 0.182
+  signalNoisePower:
+    overrideState: 0
+    value: 0.95
+  lineNoiseOn:
+    overrideState: 0
+    value: 0
+  lineNoiseAmount:
+    overrideState: 0
+    value: 2.34
+  lineNoiseSpeed:
+    overrideState: 0
+    value: 5
+  tapeNoiseOn:
+    overrideState: 0
+    value: 1
+  tapeNoiseTH:
+    overrideState: 1
+    value: 0.63
+  tapeNoiseAmount:
+    overrideState: 1
+    value: 1
+  tapeNoiseSpeed:
+    overrideState: 1
+    value: 1
+  scanLinesOn:
+    overrideState: 1
+    value: 1
+  scanLineWidth:
+    overrideState: 1
+    value: 5
+  linesFloatOn:
+    overrideState: 1
+    value: 0
+  linesFloatSpeed:
+    overrideState: 1
+    value: -0.74
+  stretchOn:
+    overrideState: 0
+    value: 1
+  jitterHOn:
+    overrideState: 0
+    value: 0
+  jitterHAmount:
+    overrideState: 0
+    value: 0.22
+  jitterVOn:
+    overrideState: 0
+    value: 0
+  jitterVAmount:
+    overrideState: 0
+    value: 1
+  jitterVSpeed:
+    overrideState: 0
+    value: 1
+  twitchHOn:
+    overrideState: 0
+    value: 0
+  twitchHFreq:
+    overrideState: 0
+    value: 1
+  twitchVOn:
+    overrideState: 0
+    value: 0
+  twitchVFreq:
+    overrideState: 0
+    value: 1
+  signalTweakOn:
+    overrideState: 1
+    value: 0
+  signalAdjustY:
+    overrideState: 1
+    value: -0.07
+  signalAdjustI:
+    overrideState: 1
+    value: 0.082
+  signalAdjustQ:
+    overrideState: 1
+    value: -0.109
+  signalShiftY:
+    overrideState: 1
+    value: 1
+  signalShiftI:
+    overrideState: 1
+    value: 1
+  signalShiftQ:
+    overrideState: 1
+    value: 1
+  feedbackOn:
+    overrideState: 0
+    value: 0
+  feedbackThresh:
+    overrideState: 0
+    value: 0.1
+  feedbackAmount:
+    overrideState: 0
+    value: 0.57
+  feedbackFade:
+    overrideState: 0
+    value: 0.82
+  feedbackColor:
+    overrideState: 0
+    value: {r: 1, g: 0.5, b: 0, a: 1}
+  feedbackDebugOn:
+    overrideState: 0
+    value: 0
+  independentTimeOn:
+    overrideState: 0
+    value: 0
+  bypassOn:
+    overrideState: 1
+    value: 0
+  bypassTex:
+    overrideState: 1
+    value: {fileID: 0}
+    defaultState: 1
+--- !u!114 &3435503476550201883
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 0}
+  m_Name: VHSPro
+  m_EditorClassIdentifier: Assembly-CSharp:UnityEngine.Rendering.PostProcessing:VHSPro
+  active: 1
+  enabled:
+    overrideState: 1
+    value: 1
+  g_pixel:
+    overrideState: 1
+    value: 1
+  g_color:
+    overrideState: 1
+    value: 1
+  g_palette:
+    overrideState: 1
+    value: 1
+  g_crt:
+    overrideState: 1
+    value: 1
+  g_noise:
+    overrideState: 1
+    value: 1
+  g_jitter:
+    overrideState: 1
+    value: 1
+  g_signal:
+    overrideState: 1
+    value: 1
+  g_feedback:
+    overrideState: 1
+    value: 1
+  g_extra:
+    overrideState: 1
+    value: 0
+  g_bypass:
+    overrideState: 1
+    value: 0
+  pixelOn:
+    overrideState: 1
+    value: 1
+  screenResPresetId:
+    overrideState: 1
+    value: 1
+  screenWidth:
+    overrideState: 1
+    value: 640
+  screenHeight:
+    overrideState: 1
+    value: 480
+  colorOn:
+    overrideState: 1
+    value: 1
+  colorMode:
+    overrideState: 1
+    value: 2
+  colorSyncedOn:
+    overrideState: 1
+    value: 1
+  bitsR:
+    overrideState: 1
+    value: 2
+  bitsG:
+    overrideState: 1
+    value: 2
+  bitsB:
+    overrideState: 1
+    value: 2
+  bitsSynced:
+    overrideState: 1
+    value: 19
+  bitsGray:
+    overrideState: 1
+    value: 1
+  grayscaleColor:
+    overrideState: 1
+    value:
+      r: 1
+      g: 1
+      b: 1
+      a: 1
+  ditherOn:
+    overrideState: 1
+    value: 0
+  ditherMode:
+    overrideState: 1
+    value: 3
+  ditherAmount:
+    overrideState: 1
+    value: 1
+  paletteOn:
+    overrideState: 1
+    value: 0
+  paletteId:
+    overrideState: 1
+    value: 0
+  paletteDelta:
+    overrideState: 1
+    value: 5
+  paletteTex:
+    overrideState: 1
+    value: {fileID: 0}
+    defaultState: 1
+  paletteCustom: {fileID: 0}
+  paletteCustomName: 
+  paletteCustomInit: 0
+  bleedOn:
+    overrideState: 1
+    value: 1
+  crtMode:
+    overrideState: 1
+    value: 0
+  bleedAmount:
+    overrideState: 1
+    value: 1
+  noiseResGlobal:
+    overrideState: 1
+    value: 1
+  noiseResWidth:
+    overrideState: 1
+    value: 640
+  noiseResHeight:
+    overrideState: 1
+    value: 480
+  filmgrainOn:
+    overrideState: 1
+    value: 0
+  filmGrainAmount:
+    overrideState: 1
+    value: 0.016
+  signalNoiseOn:
+    overrideState: 1
+    value: 0
+  signalNoiseAmount:
+    overrideState: 1
+    value: 0.3
+  signalNoisePower:
+    overrideState: 1
+    value: 0.83
+  lineNoiseOn:
+    overrideState: 1
+    value: 0
+  lineNoiseAmount:
+    overrideState: 1
+    value: 1
+  lineNoiseSpeed:
+    overrideState: 1
+    value: 5
+  tapeNoiseOn:
+    overrideState: 1
+    value: 1
+  tapeNoiseTH:
+    overrideState: 1
+    value: 0.63
+  tapeNoiseAmount:
+    overrideState: 1
+    value: 1
+  tapeNoiseSpeed:
+    overrideState: 1
+    value: 1
+  scanLinesOn:
+    overrideState: 1
+    value: 0
+  scanLineWidth:
+    overrideState: 1
+    value: 10
+  linesFloatOn:
+    overrideState: 1
+    value: 0
+  linesFloatSpeed:
+    overrideState: 1
+    value: 1
+  stretchOn:
+    overrideState: 1
+    value: 0
+  jitterHOn:
+    overrideState: 1
+    value: 0
+  jitterHAmount:
+    overrideState: 1
+    value: 0.5
+  jitterVOn:
+    overrideState: 1
+    value: 0
+  jitterVAmount:
+    overrideState: 1
+    value: 1
+  jitterVSpeed:
+    overrideState: 1
+    value: 1
+  twitchHOn:
+    overrideState: 1
+    value: 0
+  twitchHFreq:
+    overrideState: 1
+    value: 1
+  twitchVOn:
+    overrideState: 1
+    value: 0
+  twitchVFreq:
+    overrideState: 1
+    value: 1
+  signalTweakOn:
+    overrideState: 1
+    value: 0
+  signalAdjustY:
+    overrideState: 1
+    value: 0
+  signalAdjustI:
+    overrideState: 1
+    value: 0
+  signalAdjustQ:
+    overrideState: 1
+    value: 0
+  signalShiftY:
+    overrideState: 1
+    value: 1
+  signalShiftI:
+    overrideState: 1
+    value: 1
+  signalShiftQ:
+    overrideState: 1
+    value: 1
+  feedbackOn:
+    overrideState: 1
+    value: 0
+  feedbackThresh:
+    overrideState: 1
+    value: 0.1
+  feedbackAmount:
+    overrideState: 1
+    value: 2
+  feedbackFade:
+    overrideState: 1
+    value: 0.82
+  feedbackColor:
+    overrideState: 1
+    value:
+      r: 1
+      g: 0.5
+      b: 0
+      a: 1
+  feedbackDebugOn:
+    overrideState: 1
+    value: 0
+  independentTimeOn:
+    overrideState: 1
+    value: 0
+  bypassOn:
+    overrideState: 1
+    value: 0
+  bypassTex:
+    overrideState: 1
+    value: {fileID: 0}
+    defaultState: 1
+--- !u!114 &5797542315874777496
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b77c5407dc277943b591ade9e6b18c5, type: 3}
+  m_Name: LensDistortion
+  m_EditorClassIdentifier: 
+  active: 1
+  enabled:
+    overrideState: 1
+    value: 1
+  intensity:
+    overrideState: 1
+    value: 20
+  intensityX:
+    overrideState: 1
+    value: 1
+  intensityY:
+    overrideState: 1
+    value: 1
+  centerX:
+    overrideState: 1
+    value: 0
+  centerY:
+    overrideState: 1
+    value: 0
+  scale:
+    overrideState: 1
+    value: 1
+--- !u!114 &7606419647804787092
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a63c99b3ed38a41f39e4d2bc6c00dfba, type: 3}
+  m_Name: VHSPro
+  m_EditorClassIdentifier: 
+  active: 1
+  enabled:
+    overrideState: 1
+    value: 1
+  g_pixel:
+    overrideState: 1
+    value: 1
+  g_color:
+    overrideState: 1
+    value: 1
+  g_palette:
+    overrideState: 1
+    value: 1
+  g_crt:
+    overrideState: 1
+    value: 1
+  g_noise:
+    overrideState: 1
+    value: 1
+  g_jitter:
+    overrideState: 1
+    value: 1
+  g_signal:
+    overrideState: 1
+    value: 1
+  g_feedback:
+    overrideState: 1
+    value: 1
+  g_extra:
+    overrideState: 1
+    value: 0
+  g_bypass:
+    overrideState: 1
+    value: 0
+  pixelOn:
+    overrideState: 1
+    value: 1
+  screenResPresetId:
+    overrideState: 1
+    value: 1
+  screenWidth:
+    overrideState: 1
+    value: 640
+  screenHeight:
+    overrideState: 1
+    value: 480
+  colorOn:
+    overrideState: 1
+    value: 1
+  colorMode:
+    overrideState: 1
+    value: 2
+  colorSyncedOn:
+    overrideState: 1
+    value: 1
+  bitsR:
+    overrideState: 1
+    value: 2
+  bitsG:
+    overrideState: 1
+    value: 2
+  bitsB:
+    overrideState: 1
+    value: 2
+  bitsSynced:
+    overrideState: 1
+    value: 12
+  bitsGray:
+    overrideState: 1
+    value: 1
+  grayscaleColor:
+    overrideState: 1
+    value: {r: 1, g: 1, b: 1, a: 1}
+  ditherOn:
+    overrideState: 1
+    value: 1
+  ditherMode:
+    overrideState: 1
+    value: 3
+  ditherAmount:
+    overrideState: 1
+    value: 1
+  paletteOn:
+    overrideState: 1
+    value: 0
+  paletteId:
+    overrideState: 1
+    value: 0
+  paletteDelta:
+    overrideState: 1
+    value: 5
+  paletteTex:
+    overrideState: 1
+    value: {fileID: 0}
+    defaultState: 1
+  paletteCustom: {fileID: 0}
+  paletteCustomName: 
+  paletteCustomInit: 0
+  bleedOn:
+    overrideState: 1
+    value: 1
+  crtMode:
+    overrideState: 1
+    value: 0
+  bleedAmount:
+    overrideState: 1
+    value: 1
+  noiseResGlobal:
+    overrideState: 1
+    value: 1
+  noiseResWidth:
+    overrideState: 1
+    value: 640
+  noiseResHeight:
+    overrideState: 1
+    value: 480
+  filmgrainOn:
+    overrideState: 1
+    value: 0
+  filmGrainAmount:
+    overrideState: 1
+    value: 0.016
+  signalNoiseOn:
+    overrideState: 1
+    value: 0
+  signalNoiseAmount:
+    overrideState: 1
+    value: 0.3
+  signalNoisePower:
+    overrideState: 1
+    value: 0.83
+  lineNoiseOn:
+    overrideState: 1
+    value: 0
+  lineNoiseAmount:
+    overrideState: 1
+    value: 1
+  lineNoiseSpeed:
+    overrideState: 1
+    value: 5
+  tapeNoiseOn:
+    overrideState: 1
+    value: 1
+  tapeNoiseTH:
+    overrideState: 1
+    value: 0.63
+  tapeNoiseAmount:
+    overrideState: 1
+    value: 1
+  tapeNoiseSpeed:
+    overrideState: 1
+    value: 1
+  scanLinesOn:
+    overrideState: 1
+    value: 0
+  scanLineWidth:
+    overrideState: 1
+    value: 10
+  linesFloatOn:
+    overrideState: 1
+    value: 0
+  linesFloatSpeed:
+    overrideState: 1
+    value: 1
+  stretchOn:
+    overrideState: 1
+    value: 0
+  jitterHOn:
+    overrideState: 1
+    value: 0
+  jitterHAmount:
+    overrideState: 1
+    value: 0.5
+  jitterVOn:
+    overrideState: 1
+    value: 0
+  jitterVAmount:
+    overrideState: 1
+    value: 1
+  jitterVSpeed:
+    overrideState: 1
+    value: 1
+  twitchHOn:
+    overrideState: 1
+    value: 0
+  twitchHFreq:
+    overrideState: 1
+    value: 1
+  twitchVOn:
+    overrideState: 1
+    value: 0
+  twitchVFreq:
+    overrideState: 1
+    value: 1
+  signalTweakOn:
+    overrideState: 1
+    value: 0
+  signalAdjustY:
+    overrideState: 1
+    value: 0
+  signalAdjustI:
+    overrideState: 1
+    value: 0
+  signalAdjustQ:
+    overrideState: 1
+    value: 0
+  signalShiftY:
+    overrideState: 1
+    value: 1
+  signalShiftI:
+    overrideState: 1
+    value: 1
+  signalShiftQ:
+    overrideState: 1
+    value: 1
+  feedbackOn:
+    overrideState: 1
+    value: 0
+  feedbackThresh:
+    overrideState: 1
+    value: 0.1
+  feedbackAmount:
+    overrideState: 1
+    value: 2
+  feedbackFade:
+    overrideState: 1
+    value: 0.82
+  feedbackColor:
+    overrideState: 1
+    value: {r: 1, g: 0.5, b: 0, a: 1}
+  feedbackDebugOn:
+    overrideState: 1
+    value: 0
+  independentTimeOn:
+    overrideState: 1
+    value: 0
+  bypassOn:
+    overrideState: 1
+    value: 0
+  bypassTex:
+    overrideState: 1
+    value: {fileID: 0}
+    defaultState: 1
