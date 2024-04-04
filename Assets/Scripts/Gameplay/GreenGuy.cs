@@ -123,6 +123,12 @@ public class GreenGuy : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (!animator.GetBool("Swinging") || animator.GetBool("Stun"))
+        {
+            hammer.SetActive(false);
+            pickaxe.SetActive(false);
+        }
+
         if (SuperJumping && canJump)
         {
             SuperJumping = false;
@@ -308,11 +314,6 @@ public class GreenGuy : MonoBehaviour
         if (building)
         {
             buildClock += Time.deltaTime;
-        }
-        if (!animator.GetBool("Swinging") || animator.GetBool("Stun"))
-        {
-            hammer.SetActive(false);
-            pickaxe.SetActive(false);
         }
 
         if (buildClock > buildTimer && building)
@@ -576,5 +577,11 @@ public class GreenGuy : MonoBehaviour
         }
         else
             specialBrickAmounts[brickInd] += 2;
+    }
+
+    public void zeroSpecialResources()
+    {
+        for (int i = 0; i < specialBrickAmounts.Length; i++)
+            specialBrickAmounts[i] = 0;
     }
 }

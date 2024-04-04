@@ -57,7 +57,7 @@ public class BaseBuilding : MonoBehaviour
         firstRound = true;
         canRebuild = true;
         Bricks = getBrickArray();
-        resources = 45;
+        resources = 4500;
         GameMode = Mode.build;
         ball = GameObject.Find("Ball");
         ball.SetActive(false);
@@ -323,8 +323,9 @@ public class BaseBuilding : MonoBehaviour
             GameObject flText = Instantiate(FloatingText, Vector3.zero, Quaternion.identity);
             flText.GetComponentInChildren<TextMesh>().text = "" + 1000;
             songSource.PlayOneShot(winJingle);
-            resources = 45;
+            resources += 45;
             greenGuy.score += 1000;
+            greenGuy.zeroSpecialResources();
             return true;
         }
         else
