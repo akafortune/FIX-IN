@@ -96,7 +96,8 @@ public class BaseBuilding : MonoBehaviour
         }
         roundText = GameObject.Find("RoundNumberText").GetComponent<TextMeshProUGUI>();
 
-        //spawnBubble();
+        //Comment out for build
+        spawnBubble();
     }
 
     private GameObject[] getBrickArray()
@@ -183,20 +184,19 @@ public class BaseBuilding : MonoBehaviour
 
     public void BeginRound()
     {
+        if(firstRound)
         {
             StreamWriter sw = new StreamWriter(Application.persistentDataPath + "/SaveData/lastRound1.txt");
             sw.WriteLine(resources);
-            if (firstRound)
+            foreach (GameObject brick in Bricks)
             {
-                foreach (GameObject brick in Bricks)
-                {
-                    sw.Write(brick.GetComponent<Brick>().isBuilt() + ",");
-                }
+                sw.Write(brick.GetComponent<Brick>().isBuilt() + ",");
             }
             sw.Close();
             firstRound = false;
             RebuildButton.SetActive(false);
         }
+        b1.transform.GetChild(0).SendMessage("StartPop");
         foreach (GameObject brick in Bricks)
         {
             //brick.GetComponent<Animator>().SetFloat("FixMultiplier",.65f);
@@ -287,9 +287,9 @@ public class BaseBuilding : MonoBehaviour
     {
         do
         {
-            bubble1Item = Random.Range(0, 4);
+            bubble1Item = Random.Range(0, 6);
             Debug.Log(bubble1Item);
-            bubble2Item = Random.Range(0, 4);
+            bubble2Item = Random.Range(0, 6);
             Debug.Log(bubble2Item);
         } while (bubble1Item == bubble2Item);
 

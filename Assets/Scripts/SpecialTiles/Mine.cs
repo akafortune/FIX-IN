@@ -40,4 +40,19 @@ public class Mine : SpecialTile
         yield return new WaitForSeconds(1);
         canMine = true;
     }
+
+    protected override void cancelBrick()
+    {
+        base.cancelBrick();
+        Destroy(this.gameObject);
+    }
+
+    protected override void OnCollisionEnter2D(Collision2D collision)
+    {
+        base.OnCollisionEnter2D(collision);
+        if(collision.gameObject.name.Equals("Ball"))
+        {
+            Destroy(this.gameObject);
+        }
+    }
 }

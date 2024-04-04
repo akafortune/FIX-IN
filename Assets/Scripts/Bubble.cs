@@ -46,6 +46,14 @@ public class Bubble : MonoBehaviour
                     child.gameObject.SetActive(false);
                 cost = 15;
                 break;
+            case 4:
+                text.text = "-15 Resources \n\n\n\n\n\n\nMine";
+                cost = 15;
+                break;
+            case 5:
+                text.text = "-5 Resources \n\n\n\n\n\n\nReinforced Brick";
+                cost = 5;
+                break;
             default:
                 break;
         }
@@ -56,8 +64,7 @@ public class Bubble : MonoBehaviour
     {
         if(BaseBuilding.GameMode == BaseBuilding.Mode.defend)
         {
-            Destroy(otherBubble);
-            Destroy(parent);
+            //StartCoroutine(Pop());
         }
     }
 
@@ -67,8 +74,25 @@ public class Bubble : MonoBehaviour
         {
             collision.transform.parent.SendMessage("addSpecialResources", brickInd);
             BaseBuilding.resources -= cost;
-            Destroy(otherBubble);
-            Destroy(parent);
+
+            StartCoroutine(Pop());
+            
         }
+    }
+
+    public void StartPop()
+    {
+        StartCoroutine(Pop());
+    }
+    IEnumerator Pop()
+    {
+        gameObject.GetComponent<Collider2D>().enabled = false;
+        parent.GetComponent<Animator>().SetTrigger("Pop");
+        otherBubble.GetComponent<Animator>().SetTrigger("Pop");
+        Destroy(brickHolder.gameObject);
+        Destroy(otherBubble.transform.GetChild(5).gameObject);
+        yield return new WaitForSeconds(.5f);
+        Destroy(parent);
+        Destroy(otherBubble);
     }
 }

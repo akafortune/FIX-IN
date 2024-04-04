@@ -16,7 +16,7 @@ public class Brick : MonoBehaviour
     public SpriteRenderer breakIndicator;
     public GameObject[] brickTypes;
     public GameObject SpecialBrick;
-    private static bool canBreak;
+    public static bool canBreak;
     public bool replaced;
     private GreenGuy GreenGuy;
     BaseBuilding baseBuilding;
@@ -76,9 +76,10 @@ public class Brick : MonoBehaviour
         SpecialBrick = Instantiate(brickTypes[brickIndex-1], this.transform);
         bc.enabled = false;
         SpecialTile tile = SpecialBrick.GetComponent<SpecialTile>();
-        tile.Brick = this;
+        tile.associatedBrick = this;
         tile.index = brickIndex;
         bc.isTrigger = false;
+        spriteRenderer.enabled = false;
     }
 
     public void removeSpecialBrick(int index)

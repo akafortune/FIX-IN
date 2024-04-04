@@ -8,7 +8,7 @@ public class SpecialTile : MonoBehaviour
     protected float timeStart;
     protected float effectLength;
     protected Rigidbody2D rb;
-    public Brick Brick;
+    public Brick associatedBrick;
     public int index;
     protected Animator animator;
     protected SpriteRenderer spriteRenderer;
@@ -66,7 +66,7 @@ public class SpecialTile : MonoBehaviour
 
     protected virtual void cancelBrick()
     {
-        Brick.removeSpecialBrick(index-1);
+        associatedBrick.removeSpecialBrick(index-1);
         animator.SetBool("IsBroken", true);
         //Destroy(this.gameObject);
         broken = true;
@@ -75,7 +75,7 @@ public class SpecialTile : MonoBehaviour
 
     public virtual void RemoveBrick()
     {
-        Brick.removeSpecialBrick();
+        associatedBrick.removeSpecialBrick();
         animator.SetBool("IsBroken", true);
         //Destroy(this.gameObject);
         broken = true;
@@ -84,11 +84,12 @@ public class SpecialTile : MonoBehaviour
 
     protected virtual void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.tag.Equals("Ball"))
+        if (collision.gameObject.tag.Equals("Ball") && Brick.canBreak)
         {
+            Brick.canBreak = false;
             animator.SetBool("IsBroken", true);
             Ball.hits++;
-            Brick.removeSpecialBrick();
+            associatedBrick.removeSpecialBrick();
             BoxCollider.enabled = false;
             //Destroy(this.gameObject);
         }
