@@ -64,8 +64,7 @@ public class Bubble : MonoBehaviour
     {
         if(BaseBuilding.GameMode == BaseBuilding.Mode.defend)
         {
-            Destroy(otherBubble);
-            Destroy(parent);
+            //StartCoroutine(Pop());
         }
     }
 
@@ -81,13 +80,19 @@ public class Bubble : MonoBehaviour
         }
     }
 
+    public void StartPop()
+    {
+        StartCoroutine(Pop());
+    }
     IEnumerator Pop()
     {
         gameObject.GetComponent<Collider2D>().enabled = false;
-        Destroy(otherBubble);
         parent.GetComponent<Animator>().SetTrigger("Pop");
+        otherBubble.GetComponent<Animator>().SetTrigger("Pop");
         Destroy(brickHolder.gameObject);
+        Destroy(otherBubble.transform.GetChild(5).gameObject);
         yield return new WaitForSeconds(.5f);
         Destroy(parent);
+        Destroy(otherBubble);
     }
 }
