@@ -280,6 +280,8 @@ public class Ball : MonoBehaviour
                 int HorzForce = LastXVelocity > 0 ? -50 : 50;
                 rb.AddRelativeForce(new Vector2(HorzForce * FinalspeedMultiplier * mapSizeAugment, 0), ForceMode2D.Force);
             }
+            else
+                rb.AddRelativeForce(new Vector2 (LastXVelocity > 0 ? -10 : 10, 0));
             audioSource.PlayOneShot(paddleBounce);
         }
         else if (collision.gameObject.name.Equals("Wall9PatchBottom"))

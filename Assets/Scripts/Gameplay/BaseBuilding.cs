@@ -17,7 +17,7 @@ public class BaseBuilding : MonoBehaviour
     public TextMeshProUGUI roundText;
     public static Mode GameMode;
     public static bool lastBrickBuilt;
-    private bool firstRound;
+    private bool firstRound, canRebuild;
     private float roundClock = 0;
 
     private AudioSource songSource;
@@ -55,6 +55,7 @@ public class BaseBuilding : MonoBehaviour
         Countdown = GameObject.Find("Countdown").GetComponent<TextMeshProUGUI>();
         FloatingText = (GameObject)Resources.Load("FloatingTextParent");
         firstRound = true;
+        canRebuild = true;
         Bricks = getBrickArray();
         resources = 45;
         GameMode = Mode.build;
@@ -141,13 +142,14 @@ public class BaseBuilding : MonoBehaviour
             
         }
         roundText.text = roundCount.ToString();
-        if(Input.GetKeyDown("r")||Input.GetKeyDown("joystick button 6"))
+        if (GameMode == Mode.build && Input.GetKeyDown("r")||Input.GetKeyDown("joystick button 6"))
         {
             BeginRound();
         }
-        if(Input.GetKeyDown("f")||Input.GetKeyDown("joystick button 3"))
+        if(GameMode == Mode.build && firstRound && canRebuild && Input.GetKeyDown("f")||Input.GetKeyDown("joystick button 3"))
         {
             BuildLast();
+            canRebuild = false;
         }
     }
 
@@ -184,9 +186,12 @@ public class BaseBuilding : MonoBehaviour
         {
             StreamWriter sw = new StreamWriter(Application.persistentDataPath + "/SaveData/lastRound1.txt");
             sw.WriteLine(resources);
-            foreach(GameObject brick in Bricks)
+            if (firstRound)
             {
-                sw.Write(brick.GetComponent<Brick>().isBuilt() + ",");
+                foreach (GameObject brick in Bricks)
+                {
+                    sw.Write(brick.GetComponent<Brick>().isBuilt() + ",");
+                }
             }
             sw.Close();
             firstRound = false;

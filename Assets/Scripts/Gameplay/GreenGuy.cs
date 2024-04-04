@@ -6,6 +6,7 @@ using TMPro;
 using Unity.VisualScripting;
 using Unity.VisualScripting.Antlr3.Runtime.Tree;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.UIElements;
 
 public class GreenGuy : MonoBehaviour
@@ -43,6 +44,7 @@ public class GreenGuy : MonoBehaviour
     public bool building = false, stunned = false;
     public string[] materialArray;
     public Sprite[] iconArray;
+    public int[] specialBrickAmounts;
 
     BaseBuilding BaseBuilding;
 
@@ -51,7 +53,7 @@ public class GreenGuy : MonoBehaviour
     public TextMeshProUGUI scoreText;
     public TextMeshProUGUI highScoreText;
     public TextMeshProUGUI materialText;
-    public SpriteRenderer materialIcon;
+    public RawImage materialIcon;
 
     public float yOffset;
     public GameObject floatingText;
@@ -72,7 +74,6 @@ public class GreenGuy : MonoBehaviour
     public Vector3 targetedBrickTransform;
     private bool teleporterPlaced = false;
     public int brickType = 0;
-    public int[] specialBrickAmounts;
     // Start is called before the first frame update
     private void Awake()
     {
@@ -86,6 +87,7 @@ public class GreenGuy : MonoBehaviour
         BaseBuilding = GameObject.FindAnyObjectByType<BaseBuilding>();
         platforms = GameObject.Find("Platforms").GetComponentsInChildren<BoxCollider2D>();
         SwingDustTransform = GameObject.Find("SwingDust").GetComponent<Transform>();
+        materialIcon = GameObject.Find("RawImage").GetComponent<RawImage>();
         Physics2D.queriesHitTriggers = true; //making it so that ray can detect triggers
         animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
@@ -134,7 +136,7 @@ public class GreenGuy : MonoBehaviour
             materialText.text = materialArray[brickType] + ":" + specialBrickAmounts[brickType - 1];
         }
 
-        materialIcon.sprite = iconArray[brickType];
+        materialIcon.texture = iconArray[brickType].texture;
 
         if(teleporterPlaced)
         {
@@ -250,7 +252,7 @@ public class GreenGuy : MonoBehaviour
                     do
                     {
                         brickType++;
-                        if (brickType > 4)
+                        if (brickType > 6)
                         {
                             brickType = 0;
                         }
@@ -270,7 +272,7 @@ public class GreenGuy : MonoBehaviour
                         brickType--;
                         if (brickType < 0)
                         {
-                            brickType = 4;
+                            brickType = 6;
                         }
                     } while (brickType != 0 && specialBrickAmounts[brickType-1] == 0);
                     /*
