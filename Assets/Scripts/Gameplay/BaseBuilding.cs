@@ -40,6 +40,7 @@ public class BaseBuilding : MonoBehaviour
     private GameObject RebuildButton;
     private GameObject FloatingText;
     private GreenGuy greenGuy;
+    public int scoreLast;
 
     // Start is called before the first frame update
     void Start()
@@ -71,6 +72,7 @@ public class BaseBuilding : MonoBehaviour
         GreenGuy.buildTimer = 0.65f;
         roundTime = 63.5f;
         roundCount++;
+        scoreLast = 0;
 
         bubbleOne = GameObject.Find("Bubble 1").GetComponent<Transform>();
         bubbleTwo = GameObject.Find("Bubble 2").GetComponent<Transform>();
@@ -253,6 +255,32 @@ public class BaseBuilding : MonoBehaviour
         paddle.SetActive(false);
         ball.SetActive(false);
         roundCount++;
+
+        //Resources for score
+        float scoreDiff = greenGuy.score - scoreLast;
+        Debug.Log("Score Diff: "+scoreDiff);
+        if (scoreDiff > 0) 
+        {
+            //divide by 100 and round up
+            float gainF = scoreDiff / 100f;
+            Debug.Log("GainF: " + gainF);
+            int gainI = (int)gainF;
+            Debug.Log("GainI: " + gainI);
+            float dec = gainF - (float)gainI;
+            Debug.Log("Dec: " + dec);
+            gainF = (float)gainI+((1-dec) + dec);
+            Debug.Log("GainF: " + gainF);
+            //*2
+            gainF *= 2;
+            Debug.Log("GainF: " + gainF);
+            gainI = (int)gainF;
+            Debug.Log("GainI: " + gainI);
+            Debug.Log("Resources: "+resources);
+            Debug.Log(gainI + resources);
+            resources += gainI;
+
+        }
+        
     }
 
     public void SkipBuild()
@@ -334,6 +362,7 @@ public class BaseBuilding : MonoBehaviour
             resources += 45;
             greenGuy.score += 1000;
             greenGuy.zeroSpecialResources();
+            ball.GetComponent<Ball>().WinGrace();
             return true;
         }
         else

@@ -356,4 +356,9 @@ public class Ball : MonoBehaviour
     {
         firstLaunch = fLaunch;
     }
+
+    public void WinGrace()
+    {
+        augment -= 0.12f;
+    }
 }
