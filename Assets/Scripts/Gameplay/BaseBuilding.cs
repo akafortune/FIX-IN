@@ -263,22 +263,11 @@ public class BaseBuilding : MonoBehaviour
         {
             //divide by 100 and round up
             float gainF = scoreDiff / 100f;
-            Debug.Log("GainF: " + gainF);
-            int gainI = (int)gainF;
-            Debug.Log("GainI: " + gainI);
-            float dec = gainF - (float)gainI;
-            Debug.Log("Dec: " + dec);
-            gainF = (float)gainI+((1-dec) + dec);
-            Debug.Log("GainF: " + gainF);
+            gainF += 0.5f;
+            int gainI = Mathf.RoundToInt(gainF);
             //*2
-            gainF *= 2;
-            Debug.Log("GainF: " + gainF);
-            gainI = (int)gainF;
-            Debug.Log("GainI: " + gainI);
-            Debug.Log("Resources: "+resources);
-            Debug.Log(gainI + resources);
+            gainI *= 2;
             resources += gainI;
-
         }
         
     }
