@@ -15,11 +15,13 @@ public class MainMenu : MonoBehaviour
     public bool buttonPressed;
     public bool sceneChange;
     public int sceneNumber;
+    public GameObject SettingsMenu;
     private AudioSource audioSource;
 
     // Start is called before the first frame update
     void Start()
     {
+        SettingsMenu.SetActive(false);
         buttonPressed = false;
         sceneChange = false;
         buffer = 0f;
@@ -64,6 +66,18 @@ public class MainMenu : MonoBehaviour
             }
             SceneManager.LoadScene(scene);
             sceneChange = false;
+        }
+    }
+
+    public void ToggleSettings()
+    {
+        if(!SettingsMenu.activeInHierarchy)
+        {
+            SettingsMenu.SetActive(true);
+        }
+        else
+        {
+            SettingsMenu.SetActive(false);
         }
     }
 
