@@ -33,10 +33,10 @@ public class Reinforced : SpecialTile
             }
             Brick.canBreak = false;
         }
-           
-        if (hits <= 0 && ballHit)
-        {
-            
-        }
+    }
+
+    public void ResetHits()
+    {
+        hits = 3;
     }
 }

@@ -218,6 +218,13 @@ public class BaseBuilding : MonoBehaviour
 
     public void BeginBuild()
     {
+        Reinforced[] reinforcedTiles = GameObject.FindObjectsByType<Reinforced>(FindObjectsSortMode.None);
+        
+        foreach(Reinforced tile in reinforcedTiles)
+        {
+            tile.ResetHits();
+        }
+
         if (Teleporter.brokenPortals %2 == 1)
         {
             greenGuy.specialBrickAmounts[3]++;
