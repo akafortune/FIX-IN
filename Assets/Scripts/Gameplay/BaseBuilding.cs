@@ -196,7 +196,8 @@ public class BaseBuilding : MonoBehaviour
             firstRound = false;
             RebuildButton.SetActive(false);
         }
-        b1.transform.GetChild(0).SendMessage("StartPop");
+        if(b1 != null)
+            b1.transform.GetChild(0).SendMessage("StartPop");
         foreach (GameObject brick in Bricks)
         {
             //brick.GetComponent<Animator>().SetFloat("FixMultiplier",.65f);
