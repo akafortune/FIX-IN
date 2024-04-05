@@ -332,7 +332,14 @@ public class Ball : MonoBehaviour
     {
         if (round > 1 && round < 6)
         {
-            augment+= 0.01f;
+            augment += 0.02f;
+        }
+        else if (round > 5)
+        {
+            if (((round - 1) % 2) == 0)
+            {
+                augment += 0.04f;
+            }
         }
         gameTimer = 0f;
         GreenGuy.stunTime = 1.7f / augment;
