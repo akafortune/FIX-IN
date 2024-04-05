@@ -18,31 +18,26 @@ public class SettingsManager : MonoBehaviour
 
     void Start()
     {
-        Screen.fullScreen = true;
         resolutions = Screen.resolutions;
 
         ResolutionDropdown.ClearOptions();
 
         List<string> options = new List<string>();
-
-        int StartingResolution = 0;
-        for(int i = 0; i < resolutions.Length; i++)
+        int currentResolutionIndex = 0;
+        for (int i = 0; i < resolutions.Length; i++)
         {
-            string option = resolutions[i].width + "x" + resolutions[i].height;
-            if (options.Contains(option))
-            continue;
+            string option = resolutions[i].width + "x" + resolutions[i].height + " @ " + resolutions[i].refreshRate + "hz";
             options.Add(option);
-           
-
-            if (resolutions[i].width == Screen.width && resolutions[i].height == Screen.height)
+            if (resolutions[i].width == Screen.currentResolution.width && resolutions[i].height == Screen.currentResolution.height)
             {
-                StartingResolution = i;
+                currentResolutionIndex = i;
             }
         }
+
         ResolutionDropdown.AddOptions(options);
-        ResolutionDropdown.value = StartingResolution;
-        SetResolution(StartingResolution);
+        ResolutionDropdown.value = currentResolutionIndex;
         ResolutionDropdown.RefreshShownValue();
+        gameObject.SetActive(false);
     }
 
     public void SetResolution(int resIndex)

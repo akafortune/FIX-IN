@@ -33,7 +33,7 @@ public class SelectedButton : MonoBehaviour, ISelectHandler, IDeselectHandler
         if(isSelected)
         {
             hammerIndicatorParent.SetActive(true);
-            print("Hammers are showing");
+            //print("Hammers are showing");
             
             if(Input.GetKeyDown(KeyCode.Mouse0) || Input.GetButtonDown("Submit"))
             {
