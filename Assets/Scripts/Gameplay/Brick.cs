@@ -68,11 +68,6 @@ public class Brick : MonoBehaviour
     public void PlaceSpecialBrick(int brickIndex)
     {
         replaced = true;
-        if (baseBuilding.checkWin())
-        {
-            replaced = false;
-            return;
-        }
         SpecialBrick = Instantiate(brickTypes[brickIndex-1], this.transform);
         bc.enabled = false;
         SpecialTile tile = SpecialBrick.GetComponent<SpecialTile>();
@@ -80,6 +75,7 @@ public class Brick : MonoBehaviour
         tile.index = brickIndex;
         bc.isTrigger = false;
         spriteRenderer.enabled = false;
+        baseBuilding.checkWin();
     }
 
     public void removeSpecialBrick(int index)
