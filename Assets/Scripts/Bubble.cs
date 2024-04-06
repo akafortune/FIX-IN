@@ -76,7 +76,6 @@ public class Bubble : MonoBehaviour
             BaseBuilding.resources -= cost;
 
             StartCoroutine(Pop());
-            
         }
     }
 
