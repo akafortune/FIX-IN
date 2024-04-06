@@ -36,5 +36,6 @@ public class Reinforced : SpecialTile
     public void ResetHits()
     {
         hits = 3;
+        animator.SetInteger("HP", hits);
     }
 }
