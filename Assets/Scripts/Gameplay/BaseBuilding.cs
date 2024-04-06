@@ -269,6 +269,7 @@ public class BaseBuilding : MonoBehaviour
             gainI *= 2;
             resources += gainI;
         }
+        scoreLast = greenGuy.score;
         
     }
 
