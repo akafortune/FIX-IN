@@ -365,6 +365,13 @@ public class GreenGuy : MonoBehaviour
                     fixRay.collider.SendMessage("ShowMine");
                 }
             }
+            else if (fixRay.collider.gameObject.name.Contains("Reinforced"))
+            {
+                if (BaseBuilding.GameMode == BaseBuilding.Mode.defend)
+                {
+                    fixRay.collider.SendMessage("ShowRepair");
+                }
+            }
             if (!fixRay.collider.isTrigger && BaseBuilding.GameMode == BaseBuilding.Mode.build )//&& fixRay.collider.gameObject.name.Contains("Brick"))
             {
                 fixRay.collider.SendMessage("ShowBreakIndicator");
@@ -429,7 +436,7 @@ public class GreenGuy : MonoBehaviour
             animator.SetBool("Stun", true);
             animator.SetTrigger("StunStart");
             stunned = true;
-            if (building == true)
+            if (building == true && !specialWhack)
             {
                 BuidlingManagement("Stun");
                 building = false;
@@ -529,6 +536,22 @@ public class GreenGuy : MonoBehaviour
                     buildClock = 0;
                     canMove = false;
                     audioSource.PlayOneShot(brickBreak);
+                }
+            }
+            else if (BaseBuilding.GameMode == BaseBuilding.Mode.defend && fixRay.collider.name.StartsWith("Reinforced") && !building)
+            {
+                Reinforced tile = fixRay.collider.GetComponent<Reinforced>();
+                if(tile.canRepair())
+                {
+                    specialWhack = true;
+                    tile.repair();
+                    animator.SetTrigger("Fix");
+                    animator.SetBool("Swinging", true);
+                    hammer.SetActive(true);
+                    building = true;
+                    buildClock = 0;
+                    canMove = false;
+                    audioSource.PlayOneShot(brickFix);
                 }
             }
         }
