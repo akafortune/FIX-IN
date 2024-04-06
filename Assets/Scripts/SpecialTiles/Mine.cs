@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Mine : SpecialTile
@@ -44,7 +45,7 @@ public class Mine : SpecialTile
     protected override void cancelBrick()
     {
         base.cancelBrick();
-        Destroy(this.gameObject);
+        associatedBrick.removeSpecialBrick();
     }
 
     protected override void OnCollisionEnter2D(Collision2D collision)
@@ -52,7 +53,7 @@ public class Mine : SpecialTile
         base.OnCollisionEnter2D(collision);
         if(collision.gameObject.name.Equals("Ball"))
         {
-            Destroy(this.gameObject);
+            associatedBrick.removeSpecialBrick();
         }
     }
 }

@@ -281,8 +281,8 @@ TextureImporter:
       name: MineBrickSheet_8
       rect:
         serializedVersion: 2
-        x: 96
-        y: 0
+        x: 768
+        y: 36
         width: 96
         height: 36
       alignment: 0
@@ -302,7 +302,7 @@ TextureImporter:
       name: MineBrickSheet_9
       rect:
         serializedVersion: 2
-        x: 192
+        x: 0
         y: 0
         width: 96
         height: 36
@@ -323,7 +323,7 @@ TextureImporter:
       name: MineBrickSheet_10
       rect:
         serializedVersion: 2
-        x: 288
+        x: 96
         y: 0
         width: 96
         height: 36
@@ -344,7 +344,7 @@ TextureImporter:
       name: MineBrickSheet_11
       rect:
         serializedVersion: 2
-        x: 384
+        x: 192
         y: 0
         width: 96
         height: 36
@@ -365,7 +365,7 @@ TextureImporter:
       name: MineBrickSheet_12
       rect:
         serializedVersion: 2
-        x: 480
+        x: 288
         y: 0
         width: 96
         height: 36
@@ -386,7 +386,7 @@ TextureImporter:
       name: MineBrickSheet_13
       rect:
         serializedVersion: 2
-        x: 576
+        x: 384
         y: 0
         width: 96
         height: 36
@@ -407,7 +407,7 @@ TextureImporter:
       name: MineBrickSheet_14
       rect:
         serializedVersion: 2
-        x: 672
+        x: 480
         y: 0
         width: 96
         height: 36
@@ -428,7 +428,7 @@ TextureImporter:
       name: MineBrickSheet_15
       rect:
         serializedVersion: 2
-        x: 768
+        x: 576
         y: 0
         width: 96
         height: 36
@@ -441,6 +441,48 @@ TextureImporter:
       bones: []
       spriteID: c131fee899565b24e98ea771fb073952
       internalID: 1053876892
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MineBrickSheet_16
+      rect:
+        serializedVersion: 2
+        x: 672
+        y: 0
+        width: 96
+        height: 36
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 590e03b1f1be46442b0269195a59bc87
+      internalID: -245213551
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MineBrickSheet_17
+      rect:
+        serializedVersion: 2
+        x: 768
+        y: 0
+        width: 96
+        height: 36
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f3c213e0b01911e4987fbe66ce4563e4
+      internalID: 311717617
       vertices: []
       indices: 
       edges: []
@@ -464,6 +506,8 @@ TextureImporter:
       MineBrickSheet_13: -334997890
       MineBrickSheet_14: -1975467734
       MineBrickSheet_15: 1053876892
+      MineBrickSheet_16: -245213551
+      MineBrickSheet_17: 311717617
       MineBrickSheet_2: 1728926248
       MineBrickSheet_3: -1085156552
       MineBrickSheet_4: -50148118
