@@ -436,9 +436,10 @@ public class GreenGuy : MonoBehaviour
             animator.SetBool("Stun", true);
             animator.SetTrigger("StunStart");
             stunned = true;
-            if (building == true && !specialWhack)
+            if (building)
             {
-                BuidlingManagement("Stun");
+                if(!specialWhack)
+                    BuidlingManagement("Stun");
                 building = false;
             }
         }

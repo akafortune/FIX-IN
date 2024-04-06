@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.IO;
 using System.Linq;
 using TMPro;
@@ -58,7 +59,7 @@ public class BaseBuilding : MonoBehaviour
         firstRound = true;
         canRebuild = true;
         Bricks = getBrickArray();
-        resources = 45;
+        resources = 4500;
         GameMode = Mode.build;
         ball = GameObject.Find("Ball");
         ball.SetActive(false);
@@ -145,11 +146,11 @@ public class BaseBuilding : MonoBehaviour
             
         }
         roundText.text = roundCount.ToString();
-        if (GameMode == Mode.build && Input.GetKeyDown("r")||Input.GetKeyDown("joystick button 6"))
+        if (GameMode == Mode.build && Time.timeScale != 0 && Input.GetKeyDown("r")||Input.GetKeyDown("joystick button 6"))
         {
             BeginRound();
         }
-        if(GameMode == Mode.build && firstRound && canRebuild && Input.GetKeyDown("f")||Input.GetKeyDown("joystick button 3"))
+        if(GameMode == Mode.build && firstRound && canRebuild && Time.timeScale != 0 &&  Input.GetKeyDown("f")||Input.GetKeyDown("joystick button 3"))
         {
             BuildLast();
             canRebuild = false;
@@ -198,7 +199,7 @@ public class BaseBuilding : MonoBehaviour
             firstRound = false;
             RebuildButton.SetActive(false);
         }
-        if(b1 != null)
+        if(b1.transform.childCount != 0)
             b1.transform.GetChild(0).SendMessage("StartPop");
         foreach (GameObject brick in Bricks)
         {
@@ -338,24 +339,32 @@ public class BaseBuilding : MonoBehaviour
                 }
             }
 
-            foreach (GameObject brick in Bricks)
-            {
-                Brick BrickScript = brick.GetComponent<Brick>();
-                if (BrickScript.replaced && BrickScript.SpecialBrick != null)
-                    BrickScript.SpecialBrick.SendMessage("RemoveBrick");
-                else
-                    BrickScript.cancelBrick();
-            }
-            GameObject flText = Instantiate(FloatingText, Vector3.zero, Quaternion.identity);
-            flText.GetComponentInChildren<TextMesh>().text = "" + 1000;
-            songSource.PlayOneShot(winJingle);
-            resources += 45;
-            greenGuy.score += 1000;
-            greenGuy.zeroSpecialResources();
-            ball.GetComponent<Ball>().WinGrace();
+
+            StartCoroutine(Prestige());
             return true;
         }
         else
             return false;
+    }
+
+    IEnumerator Prestige()
+    {
+        yield return new WaitForSeconds(.65f);
+
+        foreach (GameObject brick in Bricks)
+        {
+            Brick BrickScript = brick.GetComponent<Brick>();
+            if (BrickScript.replaced && BrickScript.SpecialBrick != null)
+                BrickScript.SpecialBrick.SendMessage("RemoveBrick");
+            else
+                BrickScript.cancelBrick();
+        }
+        GameObject flText = Instantiate(FloatingText, Vector3.zero, Quaternion.identity);
+        flText.GetComponentInChildren<TextMesh>().text = "" + 1000;
+        songSource.PlayOneShot(winJingle);
+        resources += 45;
+        greenGuy.score += 1000;
+        greenGuy.zeroSpecialResources();
+        ball.GetComponent<Ball>().WinGrace();
     }
 }
