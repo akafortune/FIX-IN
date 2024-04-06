@@ -49,14 +49,18 @@ public class GreenGuy : MonoBehaviour
     BaseBuilding BaseBuilding;
 
     // private float oneSecond = 1f;
-    public int score;
-    public TextMeshProUGUI scoreText;
-    public TextMeshProUGUI highScoreText;
+    public ScoreManager scoreManager;
+    //public int scoreToGrow;
+    //public int currentScore;
+    //public int highScoreValue;
+    //public int scoreGrowthRate = 1;
+    //public TextMeshProUGUI scoreText;
+    //public TextMeshProUGUI highScoreText;
     public TextMeshProUGUI materialText;
     public RawImage materialIcon;
 
-    public float yOffset;
-    public GameObject floatingText;
+    //public float yOffset;
+    public FloatingText floatingText;
     public BoxCollider2D headBox;
 
     public BoxCollider2D checkBox;
@@ -96,11 +100,11 @@ public class GreenGuy : MonoBehaviour
         speedMod = 1;
         speeding = false;
         stunTime = 1.7f;
-        yOffset = .5f;
-        highScoreText.text = PlayerPrefs.GetInt("HighScore").ToString();
+        //yOffset = .5f;
+        //highScoreText.text = PlayerPrefs.GetInt("HighScore").ToString();
         canJump = true;
         touchingBouncePad = false;
-        floatingText = (GameObject)Resources.Load("FloatingTextParent");
+        //floatingText = (GameObject)Resources.Load("FloatingTextParent");
         headBox = GameObject.Find("HeadBox").GetComponentInChildren<BoxCollider2D>();
         hammer = GameObject.Find("Hammer");
         hammer.SetActive(false);
@@ -117,7 +121,11 @@ public class GreenGuy : MonoBehaviour
         SuperJumping = false;
         canMove = true;
         building = false;
-        score = 0;
+        scoreManager = GameObject.Find("ScoreManager").GetComponent<ScoreManager>();
+        //currentScore = 0;
+        //scoreToGrow = 0;
+        //highScoreValue = 0;
+        floatingText = GameObject.Find("ScoreManager").GetComponent<FloatingText>();
     }
 
     // Update is called once per frame
@@ -322,11 +330,11 @@ public class GreenGuy : MonoBehaviour
             building = false;
             if (BaseBuilding.GameMode != BaseBuilding.Mode.build && BaseBuilding.lastBrickBuilt &&!shieldWhack)
             {
-                score += 10;
+                scoreManager.IncreaseScore(10);
                 // Trigger floating text here
                 if (floatingText != null)
                 {
-                    ShowFloatingText("+10");
+                    floatingText.ShowFloatingText("+10");
                 }
             }
             else if(shieldWhack)
@@ -334,12 +342,17 @@ public class GreenGuy : MonoBehaviour
                 shieldWhack = false;
             }
         }
-        scoreText.text = ((int)score).ToString();
-        if (score > PlayerPrefs.GetInt("HighScore", 0))
-        {
-            PlayerPrefs.SetInt("HighScore", (int)score);
-            highScoreText.text = PlayerPrefs.GetInt("HighScore").ToString();
-        }
+        //scoreText.text = ((int)scoreToGrow).ToString();
+        //if (currentScore > PlayerPrefs.GetInt("HighScore", 0))
+        //{
+        //    PlayerPrefs.SetInt("HighScore", (int)scoreToGrow);
+        //    highScoreText.text = PlayerPrefs.GetInt("HighScore").ToString();
+        //}
+
+        //if(scoreToGrow != currentScore && scoreToGrow < currentScore)
+        //{
+        //    scoreToGrow += scoreGrowthRate;
+        //}
 
         if (fixRay.collider != null && canJump && rb.velocity.y < .25 && rb.velocity.y > -.25)
         {
@@ -513,8 +526,8 @@ public class GreenGuy : MonoBehaviour
     {
         if (collision.gameObject.layer == 6 && !building)
         {
-            score += 5;
-            ShowFloatingText("+5");
+            scoreManager.IncreaseScore(5);
+            floatingText.ShowFloatingText("+5");
         }
     }
 
@@ -532,12 +545,12 @@ public class GreenGuy : MonoBehaviour
         }
     }
 
-    public void ShowFloatingText(string points)
-    {
-        // text pop up should appear in the right direction no matter where the player faces
-        GameObject flText = Instantiate(floatingText, transform.position + new Vector3(0, yOffset, 10), Quaternion.identity);
-        flText.GetComponentInChildren<TextMesh>().text = points;
-    }
+    //public void ShowFloatingText(string points)
+    //{
+    //    // text pop up should appear in the right direction no matter where the player faces
+    //    GameObject flText = Instantiate(floatingText, transform.position + new Vector3(0, yOffset, 10), Quaternion.identity);
+    //    flText.GetComponentInChildren<TextMesh>().text = points;
+    //}
 
     public static void SetSpeeding(bool value)
     {

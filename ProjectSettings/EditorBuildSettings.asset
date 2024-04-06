@@ -26,4 +26,7 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/TwistHowToPlay.unity
     guid: a99d802b0f2a47741b93fb254e91980f
+  - enabled: 1
+    path: Assets/GameOver.unity
+    guid: b27179165b14eed4c9d3d8a724200dca
   m_configObjects: {}

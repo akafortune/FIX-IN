@@ -13,7 +13,7 @@ public class BaseBuilding : MonoBehaviour
     public TextMeshProUGUI resourcesText;
     public enum Mode { build, defend };
     public float roundTime;
-    private float roundCount = 0;
+    private static float roundCount = 0;
     public TextMeshProUGUI roundText;
     public static Mode GameMode;
     public static bool lastBrickBuilt;
@@ -40,6 +40,8 @@ public class BaseBuilding : MonoBehaviour
     private GameObject RebuildButton;
     private GameObject FloatingText;
     private GreenGuy greenGuy;
+    private ScoreManager scoreManager;
+    private FloatingText floatingText;
 
     // Start is called before the first frame update
     void Start()
@@ -57,7 +59,7 @@ public class BaseBuilding : MonoBehaviour
         firstRound = true;
         canRebuild = true;
         Bricks = getBrickArray();
-        resources = 45;
+        resources = 4500;
         GameMode = Mode.build;
         ball = GameObject.Find("Ball");
         ball.SetActive(false);
@@ -96,6 +98,8 @@ public class BaseBuilding : MonoBehaviour
         }
         roundText = GameObject.Find("RoundNumberText").GetComponent<TextMeshProUGUI>();
 
+        scoreManager = GameObject.Find("ScoreManager").GetComponent<ScoreManager>();
+        floatingText = GameObject.Find("ScoreManager").GetComponent<FloatingText>();
         //spawnBubble();
     }
 
@@ -320,14 +324,21 @@ public class BaseBuilding : MonoBehaviour
                 else
                     BrickScript.cancelBrick();
             }
-            GameObject flText = Instantiate(FloatingText, Vector3.zero, Quaternion.identity);
-            flText.GetComponentInChildren<TextMesh>().text = "" + 1000;
+            //GameObject flText = Instantiate(FloatingText, Vector3.zero, Quaternion.identity);
+            //flText.GetComponentInChildren<TextMesh>().text = "" + 1000;
+            floatingText.ShowFloatingText("+1000");
             songSource.PlayOneShot(winJingle);
             resources = 45;
-            greenGuy.score += 1000;
+            //greenGuy.currentScore += 10000;
+            scoreManager.IncreaseScore(1000);
             return true;
         }
         else
             return false;
+    }
+
+    public static int getRoundCount()
+    {
+        return (int)roundCount;
     }
 }

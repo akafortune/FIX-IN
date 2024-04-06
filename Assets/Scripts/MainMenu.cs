@@ -6,16 +6,22 @@ using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using UnityEngine.InputSystem;
+using TMPro;
 
 public class MainMenu : MonoBehaviour
 {
-    private GameObject canvas;
+    public GameObject canvas;
     private GameObject loadScreen;
     public float buffer = 0f;
     public bool buttonPressed;
     public bool sceneChange;
     public int sceneNumber;
     private AudioSource audioSource;
+    public AudioClip gameOverSound, risingPoints;
+
+    public TextMeshProUGUI roundCountText;
+    public TextMeshProUGUI pointValueText;
+    int scoreStart = 0;
 
     // Start is called before the first frame update
     void Start()
@@ -25,11 +31,19 @@ public class MainMenu : MonoBehaviour
         buffer = 0f;
         audioSource = GetComponentInParent<AudioSource>();
         //hammerIndicator = GameObject.Find("Indicator").GetComponent<GameObject>();
-        if (SceneManager.GetActiveScene() == SceneManager.GetSceneByBuildIndex(0))
+        if (SceneManager.GetActiveScene() == SceneManager.GetSceneByBuildIndex(0) || SceneManager.GetActiveScene() == SceneManager.GetSceneByBuildIndex(6))
         {
             canvas = GameObject.Find("Canvas");
             loadScreen = GameObject.Find("Load");
             loadScreen.SetActive(false);
+        }
+        if (SceneManager.GetActiveScene().name == "GameOver")
+        {
+            audioSource.PlayOneShot(gameOverSound);
+            roundCountText = GameObject.Find("RoundCountText").GetComponent<TextMeshProUGUI>();
+            pointValueText = GameObject.Find("ScoreNumberText").GetComponent<TextMeshProUGUI>();
+            roundCountText.text = GameStats.roundsLasted.ToString();
+            pointValueText.text = scoreStart.ToString();
         }
     }
 
@@ -37,14 +51,28 @@ public class MainMenu : MonoBehaviour
     {
         if (buttonPressed)
         {
-            buffer += Time.deltaTime;
-            print((int)buffer);
+            print("Button has been pressed");
+            buffer += Time.unscaledDeltaTime;
+            print(buffer);
         }
         if (buffer >= 0.4f)
         {
             buttonPressed = false;
             sceneChange = true;
             LoadScene(sceneNumber);
+        }
+        
+        if (SceneManager.GetActiveScene().name == "GameOver")
+        {
+            pointValueText.text = scoreStart.ToString();
+            if (scoreStart < GameStats.playerScore)
+            {
+                scoreStart++;
+                if(risingPoints != null)
+                {
+                    audioSource.PlayOneShot(risingPoints);
+                }
+            }
         }
     }
 

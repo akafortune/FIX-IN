@@ -44,6 +44,8 @@ public class Ball : MonoBehaviour
 
     private Animator animator;
 
+    public ScoreManager scoreManager;
+
     // Start is called before the first frame update
     void Awake()
     {
@@ -86,6 +88,11 @@ public class Ball : MonoBehaviour
         ctdTimer = 3.0f;
         GreenGuy.stunTime /= augment;
         FinalspeedMultiplier = StaticspeedMultiplier * augment;
+    }
+
+    public void Start()
+    {
+        scoreManager = GameObject.Find("ScoreManager").GetComponent<ScoreManager>();
     }
 
     public void LaunchSequence()
@@ -286,10 +293,12 @@ public class Ball : MonoBehaviour
         }
         else if (collision.gameObject.name.Equals("Wall9PatchBottom"))
         {
-            Time.timeScale = 0f;
-            gameOverMenu.SetActive(true);
-            audioSource.PlayOneShot(bottomWallBounce);
+            //Time.timeScale = 0f;
+            //gameOverMenu.SetActive(true);
+            //audioSource.PlayOneShot(bottomWallBounce);
             songSource.Pause();
+            // when the player loses and does not get a new high score
+            scoreManager.GameOver();
         }
         else if (collision.gameObject.name.Equals("GreenGuy"))
         {
