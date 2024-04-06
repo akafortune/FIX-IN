@@ -1065,7 +1065,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Texture: {fileID: 2800000, guid: 1cb8c966faf2ffd45a6c9ab8361daf60, type: 3}
+  m_Texture: {fileID: 2800000, guid: c8f655c28209e55479bdc13f5a2b8fa3, type: 3}
   m_UVRect:
     serializedVersion: 2
     x: 0
@@ -1893,6 +1893,7 @@ MonoBehaviour:
   b2: {fileID: 1280672380}
   bubble1Item: 0
   bubble2Item: 0
+  scoreLast: 0
 --- !u!1 &375871946
 GameObject:
   m_ObjectHideFlags: 0
@@ -3192,8 +3193,8 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 292f3c3cc22341344b9430ea8a78d85a, type: 3}
   - {fileID: 21300000, guid: fd320acd498b0444bb11a13d2df6a24c, type: 3}
   - {fileID: 21300000, guid: b0f2ee207cb27564bb2c91a629e35fe7, type: 3}
-  - {fileID: 21300000, guid: eba461882573d4c4a983b25f23795fdf, type: 3}
-  - {fileID: 21300000, guid: 27138e8144e5d9b4e9e1264538f38089, type: 3}
+  - {fileID: 21300000, guid: 9b17e7c0fb2abea4d98370dacb8a9bc1, type: 3}
+  - {fileID: 21300000, guid: 49f8026d4aef2ec4e81d22d8731d7f88, type: 3}
   specialBrickAmounts: 02000000020000000200000002000000020000000a000000
   score: 0
   scoreText: {fileID: 397082735}
