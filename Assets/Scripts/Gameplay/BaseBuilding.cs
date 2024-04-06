@@ -99,7 +99,7 @@ public class BaseBuilding : MonoBehaviour
         roundText = GameObject.Find("RoundNumberText").GetComponent<TextMeshProUGUI>();
 
         //Comment out for build
-        //spawnBubble();
+        spawnBubble();
     }
 
     private GameObject[] getBrickArray()
