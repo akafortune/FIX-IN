@@ -59,7 +59,7 @@ public class BaseBuilding : MonoBehaviour
         firstRound = true;
         canRebuild = true;
         Bricks = getBrickArray();
-        resources = 4500;
+        resources = 45;
         GameMode = Mode.build;
         ball = GameObject.Find("Ball");
         ball.SetActive(false);
@@ -100,7 +100,7 @@ public class BaseBuilding : MonoBehaviour
         roundText = GameObject.Find("RoundNumberText").GetComponent<TextMeshProUGUI>();
 
         //Comment out for build
-        spawnBubble();
+        //spawnBubble();
     }
 
     private GameObject[] getBrickArray()
@@ -146,7 +146,7 @@ public class BaseBuilding : MonoBehaviour
             
         }
         roundText.text = roundCount.ToString();
-        if (GameMode == Mode.build && Time.timeScale != 0 && Input.GetKeyDown("r")||Input.GetKeyDown("joystick button 6"))
+        if (GameMode == Mode.build && Time.timeScale != 0 && Input.GetKeyDown(KeyCode.R)||Input.GetKeyDown("joystick button 6"))
         {
             BeginRound();
         }
@@ -199,8 +199,10 @@ public class BaseBuilding : MonoBehaviour
             firstRound = false;
             RebuildButton.SetActive(false);
         }
-        if(b1.transform.childCount != 0)
+
+        if (b1 != null)
             b1.transform.GetChild(0).SendMessage("StartPop");
+
         foreach (GameObject brick in Bricks)
         {
             //brick.GetComponent<Animator>().SetFloat("FixMultiplier",.65f);
@@ -248,7 +250,7 @@ public class BaseBuilding : MonoBehaviour
             }
         }
         songSource.clip = buildSong;
-        songSource.UnPause();
+        songSource.Play();
         resources += 15;
         GameMode = Mode.build;
         DefendUI.SetActive(false);

@@ -529,7 +529,7 @@ public class GreenGuy : MonoBehaviour
                 {
                     specialWhack = true;
                     mine.doAction();
-                    ShowFloatingText("+Scrap");
+                    ShowFloatingText("+Resource");
                     animator.SetTrigger("Fix");
                     animator.SetBool("Swinging", true);
                     pickaxe.SetActive(true);
