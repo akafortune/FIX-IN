@@ -1889,8 +1889,8 @@ MonoBehaviour:
   bubbleOne: {fileID: 0}
   bubbleTwo: {fileID: 0}
   itemBubble: {fileID: 8776831317386501753, guid: f314979330700a947a702478f12e27cc, type: 3}
-  b1: {fileID: 2012102320}
-  b2: {fileID: 1280672380}
+  b1: {fileID: 0}
+  b2: {fileID: 0}
   bubble1Item: 0
   bubble2Item: 0
   scoreLast: 0
