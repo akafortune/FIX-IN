@@ -16,6 +16,8 @@ public class SettingsManager : MonoBehaviour
     public Slider masterSlider;
 
     public Toggle fullscreenToggle;
+    public Toggle BXToggle;
+    public bool BXisToggled;
     bool codeChange = false;
     public void SetFullcreen(bool isFullscreen)
     {
@@ -30,6 +32,17 @@ public class SettingsManager : MonoBehaviour
         else
         {
             fullscreenToggle.isOn = false;
+        }
+    }
+    public void checkBXSwap()
+    {
+        if (PlayerPrefs.HasKey("BXSwap")&&PlayerPrefs.GetString("BXSwap").Equals("True"))
+        {
+            BXToggle.isOn = true;
+        }
+        else
+        {
+            BXToggle.isOn = false;
         }
     }
     public void SetResolution(int resIndex)
@@ -51,6 +64,7 @@ public class SettingsManager : MonoBehaviour
         CheckMusic();
         CheckSFX();
         checkFullscreen();
+        checkBXSwap();
         resolutions = Screen.resolutions;
         int buffer = -1;
         ResolutionDropdown.ClearOptions();
@@ -88,6 +102,8 @@ public class SettingsManager : MonoBehaviour
 
         ResolutionDropdown.RefreshShownValue();
         codeChange = false;
+        this.gameObject.SetActive(false);
+
     }
 
     public void LoadMusicVolume()
@@ -158,6 +174,11 @@ public class SettingsManager : MonoBehaviour
         {
             SetMasterVolume();
         }
+    }
+    public void BXSwap(bool isSwapped)
+    {
+        BXisToggled = isSwapped;
+        PlayerPrefs.SetString("BXSwap", "" + isSwapped);
     }
     // Update is called once per frame
     void Update()

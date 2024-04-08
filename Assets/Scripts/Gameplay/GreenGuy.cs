@@ -30,6 +30,7 @@ public class GreenGuy : MonoBehaviour
     public float verticalMovementVal;
     public bool joystickInUse;
     public bool allowTapJump;
+    public bool BXSwap;
     public int jumpForce;
     public int fixMod = 1;
     public static float speedMod = 1f;
@@ -118,11 +119,38 @@ public class GreenGuy : MonoBehaviour
         canMove = true;
         building = false;
         score = 0;
+
+        if (PlayerPrefs.HasKey("BXSwap"))
+        {
+            if (PlayerPrefs.GetString("BXSwap").Equals("true"))
+            {
+                BXSwap = true;
+            }
+            else
+            {
+                BXSwap = false;
+            }
+        }
+        else
+        {
+            BXSwap = false;
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
+        if(PlayerPrefs.HasKey("BXSwap"))
+        {
+            if (PlayerPrefs.GetString("BXSwap").Equals("True"))
+            {
+                BXSwap = true;
+            }
+            else
+            {
+                BXSwap = false;
+            }
+        }
         if (!animator.GetBool("Swinging") || animator.GetBool("Stun"))
         {
             hammer.SetActive(false);
@@ -221,7 +249,7 @@ public class GreenGuy : MonoBehaviour
                     animator.SetBool("Walking", false);
                 }
             }
-            if ((Input.GetKeyDown(KeyCode.W)||Input.GetKeyDown("joystick button 0")|| (allowTapJump&&verticalMovementVal > .1f)) && canJump && rb.velocity.y < .25 && rb.velocity.y > -.25 && !(Input.GetKey(KeyCode.S)|| verticalMovementVal < -.1f))
+            if ((Input.GetKeyDown(KeyCode.W)||Input.GetKeyDown("joystick button 0") && canJump && rb.velocity.y < .25 && rb.velocity.y > -.25 && !(Input.GetKey(KeyCode.S)|| verticalMovementVal < -.1f)))
             {
                 float bounceMod = 1;
                 if (touchingBouncePad)
@@ -243,7 +271,7 @@ public class GreenGuy : MonoBehaviour
                 }
             }
 
-            if ((Input.GetKeyDown(KeyCode.Space)|| Input.GetKeyDown("joystick button 1")) && canJump && rb.velocity.y < .25 && rb.velocity.y >= 0)
+            if ((Input.GetKeyDown(KeyCode.Space)|| (!BXSwap&&Input.GetKeyDown("joystick button 1")||BXSwap&& Input.GetKeyDown("joystick button 2"))) && canJump && rb.velocity.y < .25 && rb.velocity.y >= 0)
             {
                 if (fixRay.collider != null)
                 {
@@ -253,7 +281,7 @@ public class GreenGuy : MonoBehaviour
 
             if(BaseBuilding.GameMode == BaseBuilding.Mode.build)
             {
-                if (Input.GetKeyDown(KeyCode.E) ||  Input.GetKeyDown("joystick button 2"))
+                if (Input.GetKeyDown(KeyCode.E) ||  (BXSwap && Input.GetKeyDown("joystick button 1") || !BXSwap && Input.GetKeyDown("joystick button 2")))
                 {
                     do
                     {
@@ -608,4 +636,6 @@ public class GreenGuy : MonoBehaviour
         for (int i = 0; i < specialBrickAmounts.Length; i++)
             specialBrickAmounts[i] = 0;
     }
+
+    
 }
