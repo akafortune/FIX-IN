@@ -21,7 +21,6 @@ public class MainMenu : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        SettingsMenu.SetActive(false);
         buttonPressed = false;
         sceneChange = false;
         buffer = 0f;
