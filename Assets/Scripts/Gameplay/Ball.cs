@@ -195,6 +195,7 @@ public class Ball : MonoBehaviour
         animator.ResetTrigger("Hit3");
         LastXVelocity = rb.velocity.x;
         //Debug.Log(rb.velocity.x);
+        rb.velocity *= 10;
         while (rb.velocity.magnitude > 3.5 * FinalspeedMultiplier) // Prevents ball from going apeshit and flying off the map
         {
             rb.velocity = rb.velocity * 0.99f;

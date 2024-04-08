@@ -87,7 +87,7 @@ public class GreenGuy : MonoBehaviour
         BaseBuilding = GameObject.FindAnyObjectByType<BaseBuilding>();
         platforms = GameObject.Find("Platforms").GetComponentsInChildren<BoxCollider2D>();
         SwingDustTransform = GameObject.Find("SwingDust").GetComponent<Transform>();
-        materialIcon = GameObject.Find("RawImage").GetComponent<RawImage>();
+        materialIcon = GameObject.Find("SelectedIcon").GetComponent<RawImage>();
         Physics2D.queriesHitTriggers = true; //making it so that ray can detect triggers
         animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();

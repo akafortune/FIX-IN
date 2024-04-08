@@ -1020,7 +1020,7 @@ GameObject:
   - component: {fileID: 196656079}
   - component: {fileID: 196656078}
   m_Layer: 5
-  m_Name: RawImage
+  m_Name: SelectedIcon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1886,11 +1886,11 @@ MonoBehaviour:
   paddle: {fileID: 471462421}
   Bricks: []
   brickTypes: []
-  bubbleOne: {fileID: 0}
-  bubbleTwo: {fileID: 0}
+  B1Transform: {fileID: 0}
+  B2Transform: {fileID: 0}
   itemBubble: {fileID: 8776831317386501753, guid: f314979330700a947a702478f12e27cc, type: 3}
-  b1: {fileID: 0}
-  b2: {fileID: 0}
+  BubbleOne: {fileID: 0}
+  BubbleTwo: {fileID: 0}
   bubble1Item: 0
   bubble2Item: 0
   scoreLast: 0
@@ -3195,7 +3195,7 @@ MonoBehaviour:
   - {fileID: 21300000, guid: b0f2ee207cb27564bb2c91a629e35fe7, type: 3}
   - {fileID: 21300000, guid: 9b17e7c0fb2abea4d98370dacb8a9bc1, type: 3}
   - {fileID: 21300000, guid: 49f8026d4aef2ec4e81d22d8731d7f88, type: 3}
-  specialBrickAmounts: 000000000000000000000000640000000000000000000000
+  specialBrickAmounts: 000000000000000000000000640000000000000064000000
   score: 0
   scoreText: {fileID: 397082735}
   highScoreText: {fileID: 140330708}
@@ -11448,7 +11448,7 @@ Transform:
   m_GameObject: {fileID: 1280672380}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 2, y: 1, z: 0}
+  m_LocalPosition: {x: 2, y: 1.32, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -16297,7 +16297,7 @@ Transform:
   m_GameObject: {fileID: 2012102320}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2, y: 1, z: 0}
+  m_LocalPosition: {x: -2, y: 1.32, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

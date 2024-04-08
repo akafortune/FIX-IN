@@ -29,9 +29,9 @@ public class BaseBuilding : MonoBehaviour
     public GameObject[] Bricks;
     public GameObject[] brickTypes;
 
-    public Transform bubbleOne, bubbleTwo;
+    public Transform B1Transform, B2Transform;
     public GameObject itemBubble;
-    public GameObject b1, b2;
+    public GameObject BubbleOne, BubbleTwo;
     public int bubble1Item, bubble2Item;
 
     private GameObject BuildUI;
@@ -75,8 +75,8 @@ public class BaseBuilding : MonoBehaviour
         roundCount++;
         scoreLast = 0;
 
-        bubbleOne = GameObject.Find("Bubble 1").GetComponent<Transform>();
-        bubbleTwo = GameObject.Find("Bubble 2").GetComponent<Transform>();
+        B1Transform = GameObject.Find("Bubble 1").GetComponent<Transform>();
+        B2Transform = GameObject.Find("Bubble 2").GetComponent<Transform>();
 
         greenGuy = GameObject.Find("GreenGuy").GetComponent<GreenGuy>();
         if (!Directory.Exists(Application.persistentDataPath + "/SaveData"))
@@ -200,8 +200,8 @@ public class BaseBuilding : MonoBehaviour
             RebuildButton.SetActive(false);
         }
 
-        if (b1 != null)
-            b1.transform.GetChild(0).SendMessage("StartPop");
+        if (BubbleOne != null)
+            BubbleOne.transform.GetChild(0).SendMessage("StartPop");
 
         foreach (GameObject brick in Bricks)
         {
@@ -322,10 +322,10 @@ public class BaseBuilding : MonoBehaviour
             Debug.Log(bubble2Item);
         } while (bubble1Item == bubble2Item);
 
-        b1 = Instantiate(itemBubble, bubbleOne);
-        b1.GetComponentInChildren<Bubble>().brickInd = bubble1Item;
-        b2 = Instantiate(itemBubble, bubbleTwo);
-        b2.GetComponentInChildren<Bubble>().brickInd = bubble2Item;
+        BubbleOne = Instantiate(itemBubble, B1Transform);
+        BubbleOne.GetComponentInChildren<Bubble>().brickInd = bubble1Item;
+        BubbleTwo = Instantiate(itemBubble, B2Transform);
+        BubbleTwo.GetComponentInChildren<Bubble>().brickInd = bubble2Item;
     }
 
     public bool checkWin()
