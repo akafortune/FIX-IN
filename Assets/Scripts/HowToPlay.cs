@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.Video;
 using UnityEngine.UI;
 using TMPro;
-using static MainMenu;
+using static SceneTransition;
 using UnityEditor;
 //using static UnityEngine.UIElements;
 
@@ -71,7 +71,7 @@ public class HowToPlay : MonoBehaviour
         page += newPage;
         if (page < 0 || page > 2)
         {
-            gameObject.GetComponent<MainMenu>().LoadScene(0);
+            GameObject.Find("Crossfade").GetComponent<SceneTransition>().LoadLevelTransition(0);
         }
         else
         {

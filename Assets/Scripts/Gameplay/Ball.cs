@@ -202,6 +202,7 @@ public class Ball : MonoBehaviour
         animator.ResetTrigger("Hit3");
         LastXVelocity = rb.velocity.x;
         //Debug.Log(rb.velocity.x);
+        rb.velocity *= 10;
         while (rb.velocity.magnitude > 3.5 * FinalspeedMultiplier) // Prevents ball from going apeshit and flying off the map
         {
             rb.velocity = rb.velocity * 0.99f;
@@ -287,8 +288,7 @@ public class Ball : MonoBehaviour
                 int HorzForce = LastXVelocity > 0 ? -50 : 50;
                 rb.AddRelativeForce(new Vector2(HorzForce * FinalspeedMultiplier * mapSizeAugment, 0), ForceMode2D.Force);
             }
-            else
-                rb.AddRelativeForce(new Vector2 (LastXVelocity > 0 ? -10 : 10, 0));
+            rb.velocity *= 100;
             audioSource.PlayOneShot(paddleBounce);
         }
         else if (collision.gameObject.name.Equals("Wall9PatchBottom"))
@@ -309,6 +309,11 @@ public class Ball : MonoBehaviour
         {
             rb.AddForce(new Vector2(0, 50));
             rb.velocity *= 100;
+        }
+        else if(collision.gameObject.name.Contains("Brick"))
+        {
+            rb.velocity *= 100;
+            Debug.Log("brick");
         }
     }
 
@@ -341,7 +346,14 @@ public class Ball : MonoBehaviour
     {
         if (round > 1 && round < 6)
         {
-            augment+= 0.01f;
+            augment += 0.02f;
+        }
+        else if (round > 5)
+        {
+            if (((round - 1) % 2) == 0)
+            {
+                augment += 0.04f;
+            }
         }
         gameTimer = 0f;
         GreenGuy.stunTime = 1.7f / augment;
@@ -353,5 +365,10 @@ public class Ball : MonoBehaviour
     public void SetFirstLaunch(bool fLaunch)
     {
         firstLaunch = fLaunch;
+    }
+
+    public void WinGrace()
+    {
+        augment -= 0.12f;
     }
 }

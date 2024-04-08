@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.IO;
 using System.Linq;
 using TMPro;
@@ -28,9 +29,9 @@ public class BaseBuilding : MonoBehaviour
     public GameObject[] Bricks;
     public GameObject[] brickTypes;
 
-    public Transform bubbleOne, bubbleTwo;
+    public Transform B1Transform, B2Transform;
     public GameObject itemBubble;
-    public GameObject b1, b2;
+    public GameObject BubbleOne, BubbleTwo;
     public int bubble1Item, bubble2Item;
 
     private GameObject BuildUI;
@@ -42,6 +43,7 @@ public class BaseBuilding : MonoBehaviour
     private GreenGuy greenGuy;
     private ScoreManager scoreManager;
     private FloatingText floatingText;
+    public int scoreLast;
 
     // Start is called before the first frame update
     void Start()
@@ -73,9 +75,10 @@ public class BaseBuilding : MonoBehaviour
         GreenGuy.buildTimer = 0.65f;
         roundTime = 63.5f;
         roundCount = 1;
+        scoreLast = 0;
 
-        bubbleOne = GameObject.Find("Bubble 1").GetComponent<Transform>();
-        bubbleTwo = GameObject.Find("Bubble 2").GetComponent<Transform>();
+        B1Transform = GameObject.Find("Bubble 1").GetComponent<Transform>();
+        B2Transform = GameObject.Find("Bubble 2").GetComponent<Transform>();
 
         greenGuy = GameObject.Find("GreenGuy").GetComponent<GreenGuy>();
         if (!Directory.Exists(Application.persistentDataPath + "/SaveData"))
@@ -100,6 +103,7 @@ public class BaseBuilding : MonoBehaviour
 
         scoreManager = GameObject.Find("ScoreManager").GetComponent<ScoreManager>();
         floatingText = GameObject.Find("ScoreManager").GetComponent<FloatingText>();
+        //Comment out for build
         //spawnBubble();
     }
 
@@ -146,11 +150,11 @@ public class BaseBuilding : MonoBehaviour
             
         }
         roundText.text = roundCount.ToString();
-        if (GameMode == Mode.build && Input.GetKeyDown("r")||Input.GetKeyDown("joystick button 6"))
+        if (GameMode == Mode.build && Time.timeScale != 0 && Input.GetKeyDown(KeyCode.R)||Input.GetKeyDown("joystick button 6"))
         {
             BeginRound();
         }
-        if(GameMode == Mode.build && firstRound && canRebuild && Input.GetKeyDown("f")||Input.GetKeyDown("joystick button 3"))
+        if(GameMode == Mode.build && firstRound && canRebuild && Time.timeScale != 0 &&  Input.GetKeyDown("f")||Input.GetKeyDown("joystick button 3"))
         {
             BuildLast();
             canRebuild = false;
@@ -187,20 +191,22 @@ public class BaseBuilding : MonoBehaviour
 
     public void BeginRound()
     {
+        if(firstRound)
         {
             StreamWriter sw = new StreamWriter(Application.persistentDataPath + "/SaveData/lastRound1.txt");
             sw.WriteLine(resources);
-            if (firstRound)
+            foreach (GameObject brick in Bricks)
             {
-                foreach (GameObject brick in Bricks)
-                {
-                    sw.Write(brick.GetComponent<Brick>().isBuilt() + ",");
-                }
+                sw.Write(brick.GetComponent<Brick>().isBuilt() + ",");
             }
             sw.Close();
             firstRound = false;
             RebuildButton.SetActive(false);
         }
+
+        if (BubbleOne != null)
+            BubbleOne.transform.GetChild(0).SendMessage("StartPop");
+
         foreach (GameObject brick in Bricks)
         {
             //brick.GetComponent<Animator>().SetFloat("FixMultiplier",.65f);
@@ -221,6 +227,13 @@ public class BaseBuilding : MonoBehaviour
 
     public void BeginBuild()
     {
+        Reinforced[] reinforcedTiles = GameObject.FindObjectsByType<Reinforced>(FindObjectsSortMode.None);
+        
+        foreach(Reinforced tile in reinforcedTiles)
+        {
+            tile.ResetHits();
+        }
+
         if (Teleporter.brokenPortals %2 == 1)
         {
             greenGuy.specialBrickAmounts[3]++;
@@ -241,7 +254,7 @@ public class BaseBuilding : MonoBehaviour
             }
         }
         songSource.clip = buildSong;
-        songSource.UnPause();
+        songSource.Play();
         resources += 15;
         GameMode = Mode.build;
         DefendUI.SetActive(false);
@@ -249,6 +262,22 @@ public class BaseBuilding : MonoBehaviour
         paddle.SetActive(false);
         ball.SetActive(false);
         roundCount++;
+
+        //Resources for score
+        float scoreDiff = greenGuy.score - scoreLast;
+        Debug.Log("Score Diff: "+scoreDiff);
+        if (scoreDiff > 0) 
+        {
+            //divide by 100 and round up
+            float gainF = scoreDiff / 100f;
+            gainF += 0.5f;
+            int gainI = Mathf.RoundToInt(gainF);
+            //*2
+            gainI *= 2;
+            resources += gainI;
+        }
+        scoreLast = greenGuy.score;
+        
     }
 
     public void SkipBuild()
@@ -291,16 +320,16 @@ public class BaseBuilding : MonoBehaviour
     {
         do
         {
-            bubble1Item = Random.Range(0, 4);
+            bubble1Item = Random.Range(0, 6);
             Debug.Log(bubble1Item);
-            bubble2Item = Random.Range(0, 4);
+            bubble2Item = Random.Range(0, 6);
             Debug.Log(bubble2Item);
         } while (bubble1Item == bubble2Item);
 
-        b1 = Instantiate(itemBubble, bubbleOne);
-        b1.GetComponentInChildren<Bubble>().brickInd = bubble1Item;
-        b2 = Instantiate(itemBubble, bubbleTwo);
-        b2.GetComponentInChildren<Bubble>().brickInd = bubble2Item;
+        BubbleOne = Instantiate(itemBubble, B1Transform);
+        BubbleOne.GetComponentInChildren<Bubble>().brickInd = bubble1Item;
+        BubbleTwo = Instantiate(itemBubble, B2Transform);
+        BubbleTwo.GetComponentInChildren<Bubble>().brickInd = bubble2Item;
     }
 
     public bool checkWin()
@@ -331,6 +360,8 @@ public class BaseBuilding : MonoBehaviour
             resources = 45;
             //greenGuy.currentScore += 10000;
             scoreManager.IncreaseScore(1000);
+
+            StartCoroutine(Prestige());
             return true;
         }
         else
@@ -340,5 +371,24 @@ public class BaseBuilding : MonoBehaviour
     public static int getRoundCount()
     {
         return (int)roundCount;
+    IEnumerator Prestige()
+    {
+        yield return new WaitForSeconds(.65f);
+
+        foreach (GameObject brick in Bricks)
+        {
+            Brick BrickScript = brick.GetComponent<Brick>();
+            if (BrickScript.replaced && BrickScript.SpecialBrick != null)
+                BrickScript.SpecialBrick.SendMessage("RemoveBrick");
+            else
+                BrickScript.cancelBrick();
+        }
+        GameObject flText = Instantiate(FloatingText, Vector3.zero, Quaternion.identity);
+        flText.GetComponentInChildren<TextMesh>().text = "" + 1000;
+        songSource.PlayOneShot(winJingle);
+        resources += 45;
+        greenGuy.score += 1000;
+        greenGuy.zeroSpecialResources();
+        ball.GetComponent<Ball>().WinGrace();
     }
 }

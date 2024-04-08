@@ -61,7 +61,7 @@ AnimatorStateTransition:
   m_Name: 
   m_Conditions:
   - m_ConditionMode: 1
-    m_ConditionEvent: Crossfade
+    m_ConditionEvent: Start
     m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: -569189067190254024}
@@ -112,8 +112,8 @@ AnimatorController:
   m_Name: Crossfade
   serializedVersion: 5
   m_AnimatorParameters:
-  - m_Name: Crossfade
-    m_Type: 4
+  - m_Name: Start
+    m_Type: 9
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0

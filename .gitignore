@@ -77,3 +77,6 @@ tool = unityyamlmerge
 [mergetool "unityyamlmerge"]
 trustExitCode = false
 cmd = '<path to UnityYAMLMerge>' merge -p "$BASE" "$REMOTE" "$LOCAL" "$MERGED"
+Assets/Visual/VHSPro/VHSPro_BRP_3.0.unitypackage.meta
+Assets/Visual/VHSPro/VHSPro_HDRP_3.0.unitypackage.meta
+Assets/Visual/VHSPro/VHSPro_URP_3.0.unitypackage.meta

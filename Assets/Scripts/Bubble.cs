@@ -29,22 +29,28 @@ public class Bubble : MonoBehaviour
         switch (brickInd)
         {
             case 0:
-                text.text = "-5 Resources \n\n\n\n\n\n\nBounce Pad";
+                text.text = "Bounce Pad\n-5 Resources";
                 cost = 5;
                 break;
             case 1:
-                text.text = "-20 Resources \n\n\n\n\n\n\nShield Generator";
+                text.text = "Shield Generator\n-20 Resources";
                 cost = 20;
                 break;
             case 2:
-                text.text = "-10 Resources \n\n\n\n\n\n\nSpeed Pad";
+                text.text = "Speed Pad\n-10 Resources";
                 cost = 10;
                 break;
             case 3:
-                text.text = "-15 Resources \n\n\n\n\n\n\nTeleporter";
-                foreach(Transform child in brickIcon.GetComponentInChildren<Transform>())
-                    child.gameObject.SetActive(false);
+                text.text = "Teleporter\n-15 Resources";
                 cost = 15;
+                break;
+            case 4:
+                text.text = "Mine\n-15 Resources";
+                cost = 15;
+                break;
+            case 5:
+                text.text = "Reinforced Brick\n-5 Resources";
+                cost = 5;
                 break;
             default:
                 break;
@@ -56,8 +62,7 @@ public class Bubble : MonoBehaviour
     {
         if(BaseBuilding.GameMode == BaseBuilding.Mode.defend)
         {
-            Destroy(otherBubble);
-            Destroy(parent);
+            //StartCoroutine(Pop());
         }
     }
 
@@ -67,8 +72,24 @@ public class Bubble : MonoBehaviour
         {
             collision.transform.parent.SendMessage("addSpecialResources", brickInd);
             BaseBuilding.resources -= cost;
-            Destroy(otherBubble);
-            Destroy(parent);
+
+            StartCoroutine(Pop());
         }
+    }
+
+    public void StartPop()
+    {
+        StartCoroutine(Pop());
+    }
+    IEnumerator Pop()
+    {
+        gameObject.GetComponent<Collider2D>().enabled = false;
+        parent.GetComponent<Animator>().SetTrigger("Pop");
+        otherBubble.GetComponent<Animator>().SetTrigger("Pop");
+        Destroy(brickHolder.gameObject);
+        Destroy(otherBubble.transform.GetChild(5).gameObject);
+        yield return new WaitForSeconds(.5f);
+        Destroy(parent);
+        Destroy(otherBubble);
     }
 }

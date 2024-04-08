@@ -19,7 +19,7 @@ public class GreenGuy : MonoBehaviour
     public Transform rayOrigin;
     public float bouncePadValue;
     static private bool touchingBouncePad, speeding;
-    private bool shieldWhack;
+    private bool specialWhack;
 
     public GameObject floorRay;
     public Transform SwingDustTransform;
@@ -91,7 +91,7 @@ public class GreenGuy : MonoBehaviour
         BaseBuilding = GameObject.FindAnyObjectByType<BaseBuilding>();
         platforms = GameObject.Find("Platforms").GetComponentsInChildren<BoxCollider2D>();
         SwingDustTransform = GameObject.Find("SwingDust").GetComponent<Transform>();
-        materialIcon = GameObject.Find("RawImage").GetComponent<RawImage>();
+        materialIcon = GameObject.Find("SelectedIcon").GetComponent<RawImage>();
         Physics2D.queriesHitTriggers = true; //making it so that ray can detect triggers
         animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
@@ -131,6 +131,12 @@ public class GreenGuy : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (!animator.GetBool("Swinging") || animator.GetBool("Stun"))
+        {
+            hammer.SetActive(false);
+            pickaxe.SetActive(false);
+        }
+
         if (SuperJumping && canJump)
         {
             SuperJumping = false;
@@ -317,18 +323,13 @@ public class GreenGuy : MonoBehaviour
         {
             buildClock += Time.deltaTime;
         }
-        if (!animator.GetBool("Swinging") || animator.GetBool("Stun"))
-        {
-            hammer.SetActive(false);
-            pickaxe.SetActive(false);
-        }
 
         if (buildClock > buildTimer && building)
         {
             canMove = true;
             animator.SetBool("Swinging", false);
             building = false;
-            if (BaseBuilding.GameMode != BaseBuilding.Mode.build && BaseBuilding.lastBrickBuilt &&!shieldWhack)
+            if (BaseBuilding.GameMode != BaseBuilding.Mode.build && BaseBuilding.lastBrickBuilt &&!specialWhack)
             {
                 scoreManager.IncreaseScore(10);
                 // Trigger floating text here
@@ -337,9 +338,9 @@ public class GreenGuy : MonoBehaviour
                     floatingText.ShowFloatingText("+10");
                 }
             }
-            else if(shieldWhack)
+            else if(specialWhack)
             {
-                shieldWhack = false;
+                specialWhack = false;
             }
         }
         //scoreText.text = ((int)scoreToGrow).ToString();
@@ -368,6 +369,20 @@ public class GreenGuy : MonoBehaviour
                 if (BaseBuilding.GameMode == BaseBuilding.Mode.defend)
                 {
                     fixRay.collider.SendMessage("ShowShieldIndicator");
+                }
+            }
+            else if (fixRay.collider.gameObject.name.Contains("Mine"))
+            {
+                if (BaseBuilding.GameMode == BaseBuilding.Mode.defend)
+                {
+                    fixRay.collider.SendMessage("ShowMine");
+                }
+            }
+            else if (fixRay.collider.gameObject.name.Contains("Reinforced"))
+            {
+                if (BaseBuilding.GameMode == BaseBuilding.Mode.defend)
+                {
+                    fixRay.collider.SendMessage("ShowRepair");
                 }
             }
             if (!fixRay.collider.isTrigger && BaseBuilding.GameMode == BaseBuilding.Mode.build )//&& fixRay.collider.gameObject.name.Contains("Brick"))
@@ -434,9 +449,10 @@ public class GreenGuy : MonoBehaviour
             animator.SetBool("Stun", true);
             animator.SetTrigger("StunStart");
             stunned = true;
-            if (building == true)
+            if (building)
             {
-                BuidlingManagement("Stun");
+                if(!specialWhack)
+                    BuidlingManagement("Stun");
                 building = false;
             }
         }
@@ -507,7 +523,7 @@ public class GreenGuy : MonoBehaviour
                 Shield shield = fixRay.collider.GetComponent<Shield>();
                 if (shield.CanStart())
                 {
-                    shieldWhack = true;
+                    specialWhack = true;
                     Debug.Log("Shield Start");
                     animator.SetTrigger("Fix");
                     animator.SetBool("Swinging", true);
@@ -517,6 +533,39 @@ public class GreenGuy : MonoBehaviour
                     canMove = false;
                     audioSource.PlayOneShot(brickFix);
                     shield.StartShield();
+                }
+            }
+            else if (BaseBuilding.GameMode == BaseBuilding.Mode.defend && fixRay.collider.name.StartsWith("Mine") && !building)
+            {
+                Mine mine = fixRay.collider.GetComponent<Mine>();
+                if (mine.getMineable())
+                {
+                    specialWhack = true;
+                    mine.doAction();
+                    ShowFloatingText("+Resource");
+                    animator.SetTrigger("Fix");
+                    animator.SetBool("Swinging", true);
+                    pickaxe.SetActive(true);
+                    building = true;
+                    buildClock = 0;
+                    canMove = false;
+                    audioSource.PlayOneShot(brickBreak);
+                }
+            }
+            else if (BaseBuilding.GameMode == BaseBuilding.Mode.defend && fixRay.collider.name.StartsWith("Reinforced") && !building)
+            {
+                Reinforced tile = fixRay.collider.GetComponent<Reinforced>();
+                if(tile.canRepair())
+                {
+                    specialWhack = true;
+                    tile.repair();
+                    animator.SetTrigger("Fix");
+                    animator.SetBool("Swinging", true);
+                    hammer.SetActive(true);
+                    building = true;
+                    buildClock = 0;
+                    canMove = false;
+                    audioSource.PlayOneShot(brickFix);
                 }
             }
         }
@@ -589,5 +638,11 @@ public class GreenGuy : MonoBehaviour
         }
         else
             specialBrickAmounts[brickInd] += 2;
+    }
+
+    public void zeroSpecialResources()
+    {
+        for (int i = 0; i < specialBrickAmounts.Length; i++)
+            specialBrickAmounts[i] = 0;
     }
 }

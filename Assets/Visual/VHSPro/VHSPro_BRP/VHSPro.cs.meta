@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: a63c99b3ed38a41f39e4d2bc6c00dfba
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - mat1: {fileID: 2100000, guid: b15a1750777e73441b5c641dcf71a144, type: 2}
+  - matTape: {fileID: 2100000, guid: 7cb634a4330d2b14a80e148021e90c30, type: 2}
+  - matBleed: {fileID: 2100000, guid: 5080f7e8275451a41b974af092e26490, type: 2}
+  - matFeedback: {fileID: 2100000, guid: 3cecfbe1149a2964bb8717b14f9b4a40, type: 2}
+  - paletteCustom: {instanceID: 0}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

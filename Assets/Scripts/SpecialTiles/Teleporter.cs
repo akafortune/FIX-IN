@@ -100,7 +100,7 @@ public class Teleporter : SpecialTile
 
     protected override void OnTriggerStay2D(Collider2D collision)
     {
-        if (collision.gameObject.name.Equals("SpecialBrickTrigger") && !effectActive && !broken)
+        if (collision.gameObject.name.Equals("SpecialBrickTrigger") && !effectActive && !broken && otherTeleporter != null)
         {
             timeStart = Time.time;
             doAction();
