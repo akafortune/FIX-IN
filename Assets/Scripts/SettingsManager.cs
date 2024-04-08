@@ -57,12 +57,16 @@ public class SettingsManager : MonoBehaviour
     void Start()
     {
         codeChange = true;
-        SetMasterVolume();
+        CheckMusic();
+
         SetMusicVolume();
+        CheckSFX();
+
         SetSFXVolume();
         CheckMaster();
-        CheckMusic();
-        CheckSFX();
+
+        SetMasterVolume();
+        
         checkFullscreen();
         checkBXSwap();
         resolutions = Screen.resolutions;
