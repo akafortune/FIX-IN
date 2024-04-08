@@ -22,6 +22,7 @@ public class Pause : MonoBehaviour
     public SelectedButton restartButton;
     public bool pauseStart;
     bool sceneStart;
+    public GameObject SettingsMenu;
 
     // Start is called before the first frame update
     void Awake()
@@ -104,7 +105,17 @@ public class Pause : MonoBehaviour
             sceneStart = false;
         }    
     }
-
+    public void ToggleSettings()
+    {
+        if (!SettingsMenu.activeInHierarchy)
+        {
+            SettingsMenu.SetActive(true);
+        }
+        else
+        {
+            SettingsMenu.SetActive(false);
+        }
+    }
 
     public void Restart()
     {
