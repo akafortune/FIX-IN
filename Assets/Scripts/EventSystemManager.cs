@@ -16,15 +16,13 @@ public class EventSystemManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        gameOverEventSystem.SetActive(false);
+        //gameOverEventSystem.SetActive(false);
     }
 
     private void Awake()
     {
         pauseMenu = GameObject.Find("PauseMenu");
-        gameOverMenu = GameObject.Find("GameOverMenu");
         pauseEventSystem = GameObject.Find("PauseEventSystem");
-        gameOverEventSystem = GameObject.Find("GameOverEventSystem");
         //pauseES = pauseEventSystem.GetComponent<EventSystem>();
     }
 
@@ -34,28 +32,17 @@ public class EventSystemManager : MonoBehaviour
         if(pauseMenu.activeInHierarchy)
         {
             pauseEventSystem.SetActive(true);
-            gameOverEventSystem.SetActive(false);
+            //gameOverEventSystem.SetActive(false);
         }
-        else if(gameOverMenu.activeInHierarchy)
-        {
-            gameOverEventSystem.SetActive(true);
-            pauseEventSystem.SetActive(false);
-        }
-
     }
 
     private void FixedUpdate()
     {
         if (pauseEventSystem.activeInHierarchy)
         {
-            gameOverEventSystem.SetActive(false);
             //pauseES = GameObject.Find("PauseEventSystem").GetComponent<EventSystem>();
             //pauseES.SetSelectedGameObject(selectedButton.gameObject);
             //pauseES.firstSelectedGameObject = selectedButton.gameObject;
-        }
-        else if (gameOverEventSystem.activeInHierarchy)
-        {
-            pauseEventSystem.SetActive(false);
         }
     }
 }

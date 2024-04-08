@@ -72,7 +72,7 @@ public class BaseBuilding : MonoBehaviour
         lastBrickBuilt = false;
         GreenGuy.buildTimer = 0.65f;
         roundTime = 63.5f;
-        roundCount++;
+        roundCount = 1;
 
         bubbleOne = GameObject.Find("Bubble 1").GetComponent<Transform>();
         bubbleTwo = GameObject.Find("Bubble 2").GetComponent<Transform>();
