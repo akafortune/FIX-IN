@@ -371,6 +371,8 @@ public class BaseBuilding : MonoBehaviour
     public static int getRoundCount()
     {
         return (int)roundCount;
+    }
+
     IEnumerator Prestige()
     {
         yield return new WaitForSeconds(.65f);
