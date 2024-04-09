@@ -23,6 +23,7 @@ public class Pause : MonoBehaviour
     public bool pauseStart;
     bool sceneStart;
     public GameObject SettingsMenu;
+    public bool settingsOpen;
 
     // Start is called before the first frame update
     void Awake()
@@ -39,13 +40,14 @@ public class Pause : MonoBehaviour
         pressQuit = false;
         buffer = 0f;
         sceneStart = true;
+        settingsOpen = false;
         //restartButton = GameObject.Find("RestartButton").GetComponent<SelectedButton>();
     }
 
     // Update is called once per frame
     public void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape)||Input.GetKeyDown("joystick button 7"))
+        if ((Input.GetKeyDown(KeyCode.Escape)||Input.GetKeyDown("joystick button 7"))&&!settingsOpen)
         {
             if (pauseMenu.activeSelf)
             {
@@ -110,10 +112,12 @@ public class Pause : MonoBehaviour
         if (!SettingsMenu.activeInHierarchy)
         {
             SettingsMenu.SetActive(true);
+            settingsOpen = true;
         }
         else
         {
             SettingsMenu.SetActive(false);
+            settingsOpen = false;
         }
     }
 
