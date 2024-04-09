@@ -26,10 +26,10 @@ public class FloatingText : MonoBehaviour
         
     }
 
-    public void ShowFloatingText(string points)
+    public void ShowFloatingText(string points, Transform t)
     {
         // text pop up should appear in the right direction no matter where the player faces
-        GameObject flText = Instantiate(floatingText, greenGuy.transform.position + new Vector3(0, yOffset, 0), Quaternion.identity);
+        GameObject flText = Instantiate(floatingText, t.position + new Vector3(0, yOffset, 0), Quaternion.identity);
         flText.GetComponentInChildren<TextMesh>().text = points;
         Destroy(flText, destroyTime);
     }

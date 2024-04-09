@@ -15,6 +15,7 @@ public class SpecialTile : MonoBehaviour
     public SpriteRenderer breakIndicator;
     protected bool broken;
     protected BoxCollider2D BoxCollider;
+    public int row;
 
     // Start is called before the first frame update
     protected virtual void Start()
@@ -43,6 +44,7 @@ public class SpecialTile : MonoBehaviour
                 stopAction();
            Destroy(gameObject);
         }
+        FindRow();
     }
 
     protected virtual void FixedUpdate()
@@ -99,5 +101,29 @@ public class SpecialTile : MonoBehaviour
     {
         if(!broken)
             breakIndicator.enabled=true;
+    }
+
+    public void FindRow()
+    {
+        if(transform.parent.name.Equals("Layer 5"))
+        {
+            row = 1;
+        }
+        else if (transform.parent.name.Equals("Layer 4"))
+        {
+            row = 2;
+        }
+        else if (transform.parent.name.Equals("Layer 3"))
+        {
+            row = 3;
+        }
+        else if (transform.parent.name.Equals("Layer 2"))
+        {
+            row = 4;
+        }
+        else if (transform.parent.name.Equals("Layer 1"))
+        {
+            row = 5;
+        }
     }
 }
