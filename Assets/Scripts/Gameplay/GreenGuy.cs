@@ -49,6 +49,8 @@ public class GreenGuy : MonoBehaviour
 
     BaseBuilding BaseBuilding;
 
+    public int score;
+
     // private float oneSecond = 1f;
     public ScoreManager scoreManager;
     //public int scoreToGrow;
@@ -571,7 +573,7 @@ public class GreenGuy : MonoBehaviour
                 {
                     specialWhack = true;
                     mine.doAction();
-                    ShowFloatingText("+Resource");
+                    floatingText.ShowFloatingText("+Resource");
                     animator.SetTrigger("Fix");
                     animator.SetBool("Swinging", true);
                     pickaxe.SetActive(true);
