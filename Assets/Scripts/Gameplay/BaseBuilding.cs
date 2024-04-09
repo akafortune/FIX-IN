@@ -14,7 +14,7 @@ public class BaseBuilding : MonoBehaviour
     public TextMeshProUGUI resourcesText;
     public enum Mode { build, defend };
     public float roundTime;
-    private float roundCount = 0;
+    private static float roundCount = 0;
     public TextMeshProUGUI roundText;
     public static Mode GameMode;
     public static bool lastBrickBuilt;
@@ -41,6 +41,8 @@ public class BaseBuilding : MonoBehaviour
     private GameObject RebuildButton;
     private GameObject FloatingText;
     private GreenGuy greenGuy;
+    private ScoreManager scoreManager;
+    private FloatingText floatingText;
     public int scoreLast;
 
     // Start is called before the first frame update
@@ -59,7 +61,7 @@ public class BaseBuilding : MonoBehaviour
         firstRound = true;
         canRebuild = true;
         Bricks = getBrickArray();
-        resources = 45;
+        resources = 4500;
         GameMode = Mode.build;
         ball = GameObject.Find("Ball");
         ball.SetActive(false);
@@ -72,7 +74,7 @@ public class BaseBuilding : MonoBehaviour
         lastBrickBuilt = false;
         GreenGuy.buildTimer = 0.65f;
         roundTime = 63.5f;
-        roundCount++;
+        roundCount = 1;
         scoreLast = 0;
 
         B1Transform = GameObject.Find("Bubble 1").GetComponent<Transform>();
@@ -99,6 +101,8 @@ public class BaseBuilding : MonoBehaviour
         }
         roundText = GameObject.Find("RoundNumberText").GetComponent<TextMeshProUGUI>();
 
+        scoreManager = GameObject.Find("ScoreManager").GetComponent<ScoreManager>();
+        floatingText = GameObject.Find("ScoreManager").GetComponent<FloatingText>();
         //Comment out for build
         //spawnBubble();
     }
@@ -341,12 +345,32 @@ public class BaseBuilding : MonoBehaviour
                 }
             }
 
+            foreach (GameObject brick in Bricks)
+            {
+                Brick BrickScript = brick.GetComponent<Brick>();
+                if (BrickScript.replaced && BrickScript.SpecialBrick != null)
+                    BrickScript.SpecialBrick.SendMessage("RemoveBrick");
+                else
+                    BrickScript.cancelBrick();
+            }
+            //GameObject flText = Instantiate(FloatingText, Vector3.zero, Quaternion.identity);
+            //flText.GetComponentInChildren<TextMesh>().text = "" + 1000;
+            floatingText.ShowFloatingText("+1000");
+            songSource.PlayOneShot(winJingle);
+            resources = 45;
+            //greenGuy.currentScore += 10000;
+            scoreManager.IncreaseScore(1000);
 
             StartCoroutine(Prestige());
             return true;
         }
         else
             return false;
+    }
+
+    public static int getRoundCount()
+    {
+        return (int)roundCount;
     }
 
     IEnumerator Prestige()

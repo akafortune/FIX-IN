@@ -10,9 +10,9 @@ public class TimeInGame : MonoBehaviour
     float currentTime;
     public TextMeshProUGUI timeText;
 
-    private float oneSecond = 1f;
-    public float score;
-    public TextMeshProUGUI scoreText;
+    //private float oneSecond = 1f;
+    //public float score;
+    //public TextMeshProUGUI scoreText;
 
     // Start is called before the first frame update
     void Start()
@@ -38,8 +38,8 @@ public class TimeInGame : MonoBehaviour
     {
         if (BaseBuilding.GameMode == BaseBuilding.Mode.defend)
         {
-            score += oneSecond * Time.fixedDeltaTime;
-            scoreText.text = ((int)score).ToString();
+            //score += oneSecond * Time.fixedDeltaTime;
+            //scoreText.text = ((int)score).ToString();
         }
     }
 
