@@ -3031,6 +3031,7 @@ MonoBehaviour:
   restartButton: {fileID: 1368084166}
   pauseStart: 0
   SettingsMenu: {fileID: 1287405590}
+  settingsOpen: 0
 --- !u!114 &549752043
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3076,7 +3077,7 @@ AudioSource:
   m_GameObject: {fileID: 549752036}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: -3399331442234404183, guid: 6e016028c3a35324eaffcd6ea1f3aebb, type: 2}
+  OutputAudioMixerGroup: {fileID: 2333928704171502312, guid: 2f488c691484ba6419661ef00f1038ad, type: 2}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
   m_Volume: 1
@@ -4637,7 +4638,7 @@ AudioSource:
   m_GameObject: {fileID: 819597823}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 5797592579576818048, guid: 6e016028c3a35324eaffcd6ea1f3aebb, type: 2}
+  OutputAudioMixerGroup: {fileID: 3085126259415894502, guid: 2f488c691484ba6419661ef00f1038ad, type: 2}
   m_audioClip: {fileID: 8300000, guid: db8bfdcb5b7a1094fbc34035ead540db, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 1
@@ -11582,7 +11583,7 @@ AudioSource:
   m_GameObject: {fileID: 1236842746}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: -3399331442234404183, guid: 6e016028c3a35324eaffcd6ea1f3aebb, type: 2}
+  OutputAudioMixerGroup: {fileID: 2333928704171502312, guid: 2f488c691484ba6419661ef00f1038ad, type: 2}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
   m_Volume: 0.434
@@ -15938,7 +15939,7 @@ AudioSource:
   m_GameObject: {fileID: 1904830576}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: -3399331442234404183, guid: 6e016028c3a35324eaffcd6ea1f3aebb, type: 2}
+  OutputAudioMixerGroup: {fileID: 2333928704171502312, guid: 2f488c691484ba6419661ef00f1038ad, type: 2}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
   m_Volume: 1
@@ -17047,7 +17048,7 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 6195435366165998861, guid: 505fc7a617aca1549a19ea82b742c569, type: 3}
   m_PrefabInstance: {fileID: 2008850525}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1287405590}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2fd71b3d28d45404aba2f81c0bd6c51d, type: 3}

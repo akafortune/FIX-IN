@@ -1,12 +1,6 @@
 fileFormatVersion: 2
-<<<<<<<< HEAD:Assets/Visual/VHSPro/VHSPro_BRP/DemoScene.meta
-guid: 2942d28f9929944eba5ae93203bb152b
-folderAsset: yes
-DefaultImporter:
-========
-guid: 6e016028c3a35324eaffcd6ea1f3aebb
+guid: 2f488c691484ba6419661ef00f1038ad
 NativeFormatImporter:
->>>>>>>> UI_Branch:Assets/Audio/NewAudioMixer.mixer.meta
   externalObjects: {}
   mainObjectFileID: 24100000
   userData: 
