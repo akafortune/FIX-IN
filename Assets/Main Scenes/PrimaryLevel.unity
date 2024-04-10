@@ -4999,6 +4999,10 @@ PrefabInstance:
       value: 10.26
       objectReference: {fileID: 0}
     - target: {fileID: 8018758877809169723, guid: ca760b86ea0973d45b504c6383d3febe, type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8018758877809169723, guid: ca760b86ea0973d45b504c6383d3febe, type: 3}
       propertyPath: m_SpriteTilingProperty.newSize.x
       value: 11.127881
       objectReference: {fileID: 0}
@@ -11029,7 +11033,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 459891926141384103, guid: 37443d1e0dee345469bd4843b0a9fa9b, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -0.000005722046
+      value: 0.000009536743
       objectReference: {fileID: 0}
     - target: {fileID: 468260968267483104, guid: 37443d1e0dee345469bd4843b0a9fa9b, type: 3}
       propertyPath: m_AnchorMax.x
