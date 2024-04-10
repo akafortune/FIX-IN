@@ -126,7 +126,8 @@ public class Pause : MonoBehaviour
         pressRestart = true;
         if (restartGame)
         {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+            GameObject.Find("Crossfade").GetComponent<SceneTransition>().LoadLevelTransition(SceneManager.GetActiveScene().buildIndex, "");
+            //SceneManager.LoadScene(SceneManager.GetActiveScene().name);
             Time.timeScale = 1f;
         }
     }
@@ -142,7 +143,8 @@ public class Pause : MonoBehaviour
         if (sceneChange)
         {
             Time.timeScale = 1f;
-            SceneManager.LoadScene(0);
+            GameObject.Find("Crossfade").GetComponent<SceneTransition>().LoadLevelTransition(0, "");
+            //SceneManager.LoadScene(0);
         }
     }
 }

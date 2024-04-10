@@ -53,7 +53,7 @@ public class MainMenu : MonoBehaviour
 
     public void Update()
     {
-        if (buttonPressed)
+        /*if (buttonPressed)
         {
             print("Button has been pressed");
             buffer += Time.unscaledDeltaTime;
@@ -63,7 +63,7 @@ public class MainMenu : MonoBehaviour
             buttonPressed = false;
             sceneChange = true;
             LoadScene(sceneNumber);
-        }
+        }*/
         
         if (SceneManager.GetActiveScene().name == "GameOver")
         {
@@ -81,8 +81,9 @@ public class MainMenu : MonoBehaviour
 
     public void LoadScene(int scene)
     {
-        buffer = 0f;
-        buttonPressed = true;
+        /*buffer = 0f;
+        buttonPressed = true;*/
+        sceneChange = true;
         sceneNumber = scene;
         if (sceneChange)
         {

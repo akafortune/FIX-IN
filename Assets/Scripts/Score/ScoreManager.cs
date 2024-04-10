@@ -17,9 +17,14 @@ public class ScoreManager : MonoBehaviour
     public SpecialTile[] sTiles;
     public AudioSource audioSource;
     public AudioClip bonusPoints;
+
+    float timescaledecay;
+    bool decayTime;
     // Start is called before the first frame update
     void Start()
     {
+        timescaledecay = 1;
+        decayTime = false;
         audioSource = GetComponent<AudioSource>();
     }
 
@@ -33,6 +38,14 @@ public class ScoreManager : MonoBehaviour
         {
             scoreToGrow += scoreGrowthRate;
         }
+
+        if (decayTime == true && timescaledecay > 0)
+        {
+            timescaledecay = Mathf.Exp((-1f)*timescaledecay);
+            Debug.Log(timescaledecay);
+            Time.timeScale = timescaledecay;
+        }
+        
     }
 
     public void IncreaseScore(int points)
@@ -44,6 +57,8 @@ public class ScoreManager : MonoBehaviour
     {
         PlayerPrefs.SetInt("HighScore", 0);
     }
+
+    
 
     public void GameOver()
     {
@@ -58,7 +73,9 @@ public class ScoreManager : MonoBehaviour
             scoreWriter.WriteLine(scoresSet.scores[1].name + "," + scoresSet.scores[1].points);
             scoreWriter.Close();
             ScoreName.scoreIndex = 0;
-            SceneManager.LoadScene("HighScores");
+            decayTime = true;
+            GameObject.Find("Crossfade").GetComponent<SceneTransition>().LoadLevelTransition(7, "");
+            //SceneManager.LoadScene("HighScores");
         }
         else if (currentScore > scoresSet.scores[1].points)
         {
@@ -68,7 +85,9 @@ public class ScoreManager : MonoBehaviour
             scoreWriter.WriteLine(scoresSet.scores[1].name + "," + scoresSet.scores[1].points);
             scoreWriter.Close();
             ScoreName.scoreIndex = 1;
-            SceneManager.LoadScene("HighScores");
+            decayTime = true;
+            GameObject.Find("Crossfade").GetComponent<SceneTransition>().LoadLevelTransition(7, "");
+            //SceneManager.LoadScene("HighScores");
         }
         else if(currentScore > scoresSet.scores[2].points)
         {
@@ -78,12 +97,16 @@ public class ScoreManager : MonoBehaviour
             scoreWriter.WriteLine("NEW GUY," + currentScore);
             scoreWriter.Close();
             ScoreName.scoreIndex = 2;
-            SceneManager.LoadScene("HighScores");
+            decayTime = true;
+            GameObject.Find("Crossfade").GetComponent<SceneTransition>().LoadLevelTransition(7, "");
+            //SceneManager.LoadScene("HighScores");
         }
         // when the player loses and does get a new high score
         else 
         {
-            SceneManager.LoadScene("GameOver");
+            decayTime = true;
+            GameObject.Find("Crossfade").GetComponent<SceneTransition>().LoadLevelTransition(6, "");
+            //SceneManager.LoadScene("GameOver");
         }
     }
 

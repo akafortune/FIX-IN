@@ -35,7 +35,7 @@ public class SceneTransition : MonoBehaviour
             Debug.Log(canvas.name);
             Debug.Log(load.name);
             StartCoroutine(DelayLoad(canvas, load));
-            StartCoroutine(LoadLevelTransitionCR(scene, 3f));
+            StartCoroutine(LoadLevelTransitionCR(scene, 2f));
         }
         
     }
@@ -54,6 +54,7 @@ public class SceneTransition : MonoBehaviour
     {
         yield return new WaitForSeconds(time);
 
+        Time.timeScale = 1;
         SceneManager.LoadScene(scene);
     }
 }
