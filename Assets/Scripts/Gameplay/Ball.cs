@@ -364,7 +364,7 @@ public class Ball : MonoBehaviour
 
     public void NewRound(float round)
     {
-        if (((round - 1) % 2) == 0)
+        if ((round % 2) == 0)
         {
             augment += 0.04f;
         }
