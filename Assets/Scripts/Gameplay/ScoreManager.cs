@@ -22,10 +22,9 @@ public class ScoreManager : MonoBehaviour
     void Start()
     {
         audioSource = GetComponent<AudioSource>();
-        string scoreDataPath = Application.persistentDataPath + "/SaveData/Scores";
+        string scoreDataPath = Application.persistentDataPath + "/SaveData/Scores.txt";
         if (!File.Exists(scoreDataPath))
         {
-            File.Create(scoreDataPath);
             StreamWriter scoreWriter = new StreamWriter(scoreDataPath);
             scoreWriter.WriteLine("GRN GUY,000");
             scoreWriter.WriteLine("FRK GUY,000");
@@ -39,6 +38,7 @@ public class ScoreManager : MonoBehaviour
         inputs[0] = scoreReader.ReadLine();
         inputs[1] = scoreReader.ReadLine();
         inputs[2] = scoreReader.ReadLine();
+        scoreReader.Close();
     }
 
     // Update is called once per frame
