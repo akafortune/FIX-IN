@@ -264,6 +264,7 @@ public class BaseBuilding : MonoBehaviour
         paddle.SetActive(false);
         ball.SetActive(false);
         roundCount++;
+        scoreManager.GetSpecialBricks();
 
         //Resources for score
         float scoreDiff = greenGuy.score - scoreLast;
@@ -279,7 +280,6 @@ public class BaseBuilding : MonoBehaviour
             resources += gainI;
         }
         scoreLast = greenGuy.score;
-        scoreManager.GetSpecialBricks();
     }
 
     public void SkipBuild()

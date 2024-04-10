@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 5742842384887440597}
   - component: {fileID: 4994463462511583047}
   - component: {fileID: 3989211088814304025}
+  - component: {fileID: 6156759633951945068}
   m_Layer: 8
   m_Name: Mine
   m_TagString: Brick
@@ -199,6 +200,22 @@ MonoBehaviour:
   associatedBrick: {fileID: 0}
   index: 0
   breakIndicator: {fileID: 584802601080026572}
+  row: 0
+--- !u!114 &6156759633951945068
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 900775377911562965}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 942fc277daf331b4698cdf90ef58cac0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  destroyTime: 1
+  yOffset: 0
+  floatingText: {fileID: 0}
 --- !u!1 &3131708711144545439
 GameObject:
   m_ObjectHideFlags: 0

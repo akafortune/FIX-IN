@@ -8,14 +8,14 @@ public class FloatingText : MonoBehaviour
     public float yOffset;
     private Animator anim;
     public GameObject floatingText;
-    public GameObject greenGuy;
+    //public GameObject greenGuy;
 
     // Start is called before the first frame update
     void Start()
     {
         floatingText = (GameObject)Resources.Load("FloatingTextParent");
         yOffset = 0.5f;
-        greenGuy = GameObject.Find("GreenGuy");
+        //greenGuy = GameObject.Find("GreenGuy");
         //Destroy(floatingText, destroyTime);
         //transform.localPosition += new Vector3(0, yOffset, 0);
     }

@@ -177,6 +177,7 @@ MonoBehaviour:
   associatedBrick: {fileID: 0}
   index: 0
   breakIndicator: {fileID: 584802601080026572}
+  row: 0
 --- !u!95 &8819867557045964035
 Animator:
   serializedVersion: 5
