@@ -27,6 +27,12 @@ public class SceneTransition : MonoBehaviour
             transition.SetTrigger("Start");
             StartCoroutine(LoadLevelTransitionCR(scene, 1f));
         }
+        else if (arg == "time")
+        {
+            transition.updateMode = AnimatorUpdateMode.UnscaledTime;
+            transition.SetTrigger("Start");
+            StartCoroutine(LoadLevelTransitionCRTimed(scene, 1f));
+        }
         else if (arg == "load")
         {
             Debug.Log("Got Arg");
@@ -53,6 +59,14 @@ public class SceneTransition : MonoBehaviour
     IEnumerator LoadLevelTransitionCR(int scene, float time)
     {
         yield return new WaitForSeconds(time);
+
+        Time.timeScale = 1;
+        SceneManager.LoadScene(scene);
+    }
+
+    IEnumerator LoadLevelTransitionCRTimed(int scene, float time)
+    {
+        yield return new WaitForSecondsRealtime(time);
 
         Time.timeScale = 1;
         SceneManager.LoadScene(scene);

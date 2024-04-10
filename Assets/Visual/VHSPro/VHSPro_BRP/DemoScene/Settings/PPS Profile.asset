@@ -126,11 +126,11 @@ MonoBehaviour:
   paletteCustomName: 
   paletteCustomInit: 0
   bleedOn:
-    overrideState: 0
-    value: 0
+    overrideState: 1
+    value: 1
   crtMode:
     overrideState: 1
-    value: 0
+    value: 1
   bleedAmount:
     overrideState: 0
     value: 1
@@ -186,11 +186,11 @@ MonoBehaviour:
     overrideState: 1
     value: 5
   linesFloatOn:
-    overrideState: 0
+    overrideState: 1
     value: 0
   linesFloatSpeed:
-    overrideState: 0
-    value: -0.74
+    overrideState: 1
+    value: -1.75
   stretchOn:
     overrideState: 0
     value: 0
