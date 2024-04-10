@@ -11,7 +11,7 @@ using TMPro;
 public class MainMenu : MonoBehaviour
 {
     public GameObject canvas;
-    private GameObject loadScreen;
+    public GameObject loadScreen;
     public float buffer = 0f;
     public bool buttonPressed;
     public bool sceneChange;
@@ -24,9 +24,12 @@ public class MainMenu : MonoBehaviour
     public TextMeshProUGUI pointValueText;
     int scoreStart = 0;
 
+    GameObject crossfade;
+
     // Start is called before the first frame update
     void Start()
     {
+        crossfade = GameObject.Find("Crossfade");
         buttonPressed = false;
         sceneChange = false;
         buffer = 0f;
@@ -54,7 +57,6 @@ public class MainMenu : MonoBehaviour
         {
             print("Button has been pressed");
             buffer += Time.unscaledDeltaTime;
-            print(buffer);
         }
         if (buffer >= 0.4f)
         {
@@ -87,12 +89,19 @@ public class MainMenu : MonoBehaviour
             print("Change scene now");
             if (scene == 3)
             {
-                canvas.SetActive(false);
-                loadScreen.SetActive(true);
-                loadScreen.gameObject.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 1);
+                Debug.Log("CrossfadeStart");
+                crossfade.GetComponent<SceneTransition>().LoadLevelTransition(scene, "load");
+                //canvas.SetActive(false);
+                //loadScreen.SetActive(true);
+                //loadScreen.gameObject.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 1);
             }
-            SceneManager.LoadScene(scene);
+            //SceneManager.LoadScene(scene);
+            else
+            {
+                crossfade.GetComponent<SceneTransition>().LoadLevelTransition(scene, "");
+            }
             sceneChange = false;
+
         }
     }
 

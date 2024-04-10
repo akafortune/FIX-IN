@@ -19,6 +19,7 @@ public class HowToPlay : MonoBehaviour
     [SerializeField] private string helpText3;
     [TextArea(10,10)]
     [SerializeField] private string helpText4;
+    [TextArea(10,10)]
 
 
 
@@ -33,6 +34,11 @@ public class HowToPlay : MonoBehaviour
 
     private VideoPlayer[][] HelpVideo;
 
+    [SerializeField] private GameObject PNG1;
+    [SerializeField] private GameObject PNG2;
+    [SerializeField] private GameObject RI1;
+    [SerializeField] private GameObject RI2;
+
     [SerializeField] private GameObject videoHolder1;
     [SerializeField] private GameObject videoHolder2;
     [SerializeField] private GameObject videoHolder3;
@@ -46,6 +52,8 @@ public class HowToPlay : MonoBehaviour
 
     [SerializeField] private Image brick;
 
+    [SerializeField] private GameObject Controls;
+
     // Start is called before the first frame update
     void Awake()
     {
@@ -58,6 +66,7 @@ public class HowToPlay : MonoBehaviour
         //helpVideo4 =  new VideoPlayer[] {videoHolder4.transform.GetChild(0).GetComponent<VideoPlayer>(), videoHolder4.transform.GetChild(1).GetComponent<VideoPlayer>()};
         HelpVideo = new VideoPlayer[][] {helpVideo1, helpVideo2, helpVideo3};
         brick.color = new Color(0f, 0f, 255f, 1f);
+        Controls.SetActive(false);
     }
 
     // Update is called once per frame
@@ -69,9 +78,9 @@ public class HowToPlay : MonoBehaviour
     public void SwapPage(int newPage)
     {
         page += newPage;
-        if (page < 0 || page > 2)
+        if (page < 0 || page > 3)
         {
-            GameObject.Find("Crossfade").GetComponent<SceneTransition>().LoadLevelTransition(0);
+            GameObject.Find("Crossfade").GetComponent<SceneTransition>().LoadLevelTransition(0, "");
         }
         else
         {
@@ -83,32 +92,51 @@ public class HowToPlay : MonoBehaviour
                     v.targetTexture = null;
                 }
             }
-            bool first = true;
-            foreach(VideoPlayer v in HelpVideo[page])
+            if (page == 3)
             {
-                if (first)
+                PNG1.SetActive(false);
+                PNG2.SetActive(false);
+                Controls.SetActive(true);
+                RI1.SetActive(false);
+                RI2.SetActive(false);
+                modeUI.text = "";
+                brick.color = new Color(0.754717f, 0.754717f, 0.754717f, 1f);
+            }
+            else
+            {
+                PNG1.SetActive(true);
+                PNG2.SetActive(true);
+                RI1.SetActive(true);
+                RI2.SetActive(true);
+                Controls.SetActive(false);
+                bool first = true;
+                foreach(VideoPlayer v in HelpVideo[page])
                 {
-                    v.time = 0;
-                    v.targetTexture = videoTexture1;
-                    first = false;
+                    if (first)
+                    {
+                        v.time = 0;
+                        v.targetTexture = videoTexture1;
+                        first = false;
+                    }
+                    else
+                    {
+                        v.time = 0;
+                        v.targetTexture = videoTexture2;
+                    }
                 }
-                else
+
+                if (page < 2) //if build phase
                 {
-                    v.time = 0;
-                    v.targetTexture = videoTexture2;
+                    brick.color = new Color(0f, 0f, 1f, 1f);
+                    modeUI.text = "Build Phase";
+                }
+                else if (page == 2) //if defend phase
+                {
+                    brick.color = new Color(1f, 0f, 0f, 1f);
+                    modeUI.text = "Defend Phase";
                 }
             }
 
-            if (page < 2) //if build phase
-            {
-                brick.color = new Color(0f, 0f, 255f, 1f);
-                modeUI.text = "Build Phase";
-            }
-            else //if defend phase
-            {
-                brick.color = new Color(255f, 0f, 0f, 1f);
-                modeUI.text = "Defend Phase";
-            }
         }
 
     }
