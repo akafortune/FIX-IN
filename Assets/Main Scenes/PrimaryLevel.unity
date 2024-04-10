@@ -2664,7 +2664,7 @@ MonoBehaviour:
   - {fileID: 21300000, guid: b0f2ee207cb27564bb2c91a629e35fe7, type: 3}
   - {fileID: 21300000, guid: 9b17e7c0fb2abea4d98370dacb8a9bc1, type: 3}
   - {fileID: 21300000, guid: 49f8026d4aef2ec4e81d22d8731d7f88, type: 3}
-  specialBrickAmounts: 000000000000000000000000640000000000000064000000
+  specialBrickAmounts: 000000000000000000000000000000000000000000000000
   score: 0
   scoreManager: {fileID: 0}
   materialText: {fileID: 1109373953}
@@ -11029,7 +11029,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 459891926141384103, guid: 37443d1e0dee345469bd4843b0a9fa9b, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0.000011444092
+      value: 0.0000076293945
       objectReference: {fileID: 0}
     - target: {fileID: 468260968267483104, guid: 37443d1e0dee345469bd4843b0a9fa9b, type: 3}
       propertyPath: m_AnchorMax.x
@@ -11169,6 +11169,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4046259516346684312, guid: 37443d1e0dee345469bd4843b0a9fa9b, type: 3}
       propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4046259516346684312, guid: 37443d1e0dee345469bd4843b0a9fa9b, type: 3}
+      propertyPath: m_AnchorMin.y
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4166494419582709869, guid: 37443d1e0dee345469bd4843b0a9fa9b, type: 3}

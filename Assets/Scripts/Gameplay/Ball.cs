@@ -316,7 +316,18 @@ public class Ball : MonoBehaviour
             Debug.Log("brick");
         }
     }
-
+    public void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.name.Equals("Wall9PatchBottom"))
+        {
+            //Time.timeScale = 0f;
+            //gameOverMenu.SetActive(true);
+            //audioSource.PlayOneShot(bottomWallBounce);
+            songSource.Pause();
+            // when the player loses and does not get a new high score
+            scoreManager.GameOver();
+        }
+    }
     void RampSpeed()
     {
         if (gameTimer > 30)

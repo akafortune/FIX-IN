@@ -62,7 +62,7 @@ public class BaseBuilding : MonoBehaviour
         firstRound = true;
         canRebuild = true;
         Bricks = getBrickArray();
-        resources = 4500;
+        resources = 45;
         GameMode = Mode.build;
         ball = GameObject.Find("Ball");
         ball.gameObject.SetActive(false);

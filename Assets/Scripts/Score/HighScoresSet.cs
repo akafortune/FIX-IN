@@ -24,7 +24,7 @@ public class HighScoresSet : MonoBehaviour
             StreamWriter scoreWriter = new StreamWriter(scoreDataPath);
             scoreWriter.WriteLine("FRK GUY,9000");
             scoreWriter.WriteLine("GRN GUY,5000");
-            scoreWriter.WriteLine("DEV GUY,1");
+            scoreWriter.WriteLine("DEV GUY,10");
             scoreWriter.Close();
         }
 
