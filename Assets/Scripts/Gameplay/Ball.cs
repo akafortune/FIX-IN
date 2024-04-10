@@ -3,7 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Rendering.PostProcessing;
 using UnityEngine.SceneManagement;
+using VladStorm;
 using Random = UnityEngine.Random;
 
 public class Ball : MonoBehaviour
@@ -28,7 +30,7 @@ public class Ball : MonoBehaviour
     public AudioSource audioSource, songSource;
     public AudioClip wallBounce, paddleBounce, ggBounce, bottomWallBounce, countDownSound, launchSound, ballExplode, defendSong;
     public TextMeshProUGUI TestVersion;
-
+    private VHSPro processVolume;
     private int minAngle, maxAngle, ballAngle;
 
     public GameObject pauseMenu;
@@ -45,6 +47,7 @@ public class Ball : MonoBehaviour
     private Animator animator;
 
     public ScoreManager scoreManager;
+    bool bleeding;
 
     // Start is called before the first frame update
     void Awake()
@@ -71,6 +74,8 @@ public class Ball : MonoBehaviour
         countDownSound = (AudioClip) Resources.Load("SFX/Countdown");
         launchSound = (AudioClip) Resources.Load("SFX/Launch");
         animator = gameObject.GetComponentInChildren<Animator>();
+        GameObject.Find("CRTCam").GetComponent<PostProcessVolume>().profile.TryGetSettings<VHSPro>(out VHSPro vhp);
+        processVolume = vhp;
         //TestVersion = GameObject.Find("TestVersionText").GetComponent<TextMeshProUGUI>();
         //pauseMenu = GameObject.Find("PauseMenu");
         if (SceneManager.GetActiveScene() == SceneManager.GetSceneByBuildIndex(3) || SceneManager.GetActiveScene() == SceneManager.GetSceneByBuildIndex(4))
@@ -249,6 +254,7 @@ public class Ball : MonoBehaviour
                 explodingParticle.SetActive(true);
                 audioSource.PlayOneShot(ballExplode);
                 particleLocation = transform.position;
+                StartCoroutine(floatingLines());
                 LaunchSequence();
                 //firstLaunch = false;
                 break;
@@ -304,6 +310,8 @@ public class Ball : MonoBehaviour
         {
             rb.velocity *= 100;
             audioSource.PlayOneShot(ggBounce);
+            if(!bleeding)
+                StartCoroutine(bleed());
         }
         else if (collision.gameObject.name.Equals("Shield"))
         {
@@ -313,6 +321,7 @@ public class Ball : MonoBehaviour
         else if(collision.gameObject.name.Contains("Brick"))
         {
             rb.velocity *= 100;
+            //StartCoroutine(bleed());
             Debug.Log("brick");
         }
     }
@@ -355,17 +364,11 @@ public class Ball : MonoBehaviour
 
     public void NewRound(float round)
     {
-        if (round > 1 && round < 6)
+        if (((round - 1) % 2) == 0)
         {
-            augment += 0.02f;
+            augment += 0.04f;
         }
-        else if (round > 5)
-        {
-            if (((round - 1) % 2) == 0)
-            {
-                augment += 0.04f;
-            }
-        }
+
         gameTimer = 0f;
         GreenGuy.stunTime = 1.7f / augment;
         animator.SetTrigger("Reset");
@@ -381,5 +384,22 @@ public class Ball : MonoBehaviour
     public void WinGrace()
     {
         augment -= 0.12f;
+    }
+
+    private IEnumerator bleed()
+    {
+        bleeding = true;
+        processVolume.bleedOn.value = true;
+        yield return new WaitForSeconds(.2f);
+        processVolume.bleedOn.value = false;
+        yield return new WaitForSeconds(.3f);
+        bleeding = false;
+    }
+
+    private IEnumerator floatingLines()
+    {
+        processVolume.linesFloatOn.value = true;
+        yield return new WaitForSeconds(.5f);
+        processVolume.linesFloatOn.value = false;
     }
 }
