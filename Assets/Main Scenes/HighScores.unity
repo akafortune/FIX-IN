@@ -3590,6 +3590,7 @@ GameObject:
   - component: {fileID: 1740818496}
   - component: {fileID: 1740818498}
   - component: {fileID: 1740818497}
+  - component: {fileID: 1740818499}
   m_Layer: 5
   m_Name: BG
   m_TagString: Untagged
@@ -3654,6 +3655,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1740818495}
   m_CullTransparentMesh: 1
+--- !u!114 &1740818499
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1740818495}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cd25a57f801630143bc51069bfa0e3fa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ballCage: {fileID: 5369069285326741942, guid: f160ee7f4acca014e99341032736859b, type: 3}
 --- !u!1 &1824321341
 GameObject:
   m_ObjectHideFlags: 0
