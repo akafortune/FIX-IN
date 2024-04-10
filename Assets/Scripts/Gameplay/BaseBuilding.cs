@@ -65,7 +65,7 @@ public class BaseBuilding : MonoBehaviour
         resources = 4500;
         GameMode = Mode.build;
         ball = GameObject.Find("Ball");
-        ball.SetActive(false);
+        ball.gameObject.SetActive(false);
         paddle = GameObject.Find("Paddle");
         paddle.SetActive(false);
         BuildUI = GameObject.Find("BuildUI");

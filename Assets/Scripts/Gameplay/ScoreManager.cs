@@ -17,45 +17,16 @@ public class ScoreManager : MonoBehaviour
     public SpecialTile[] sTiles;
     public AudioSource audioSource;
     public AudioClip bonusPoints;
-    private Score[] scores;
     // Start is called before the first frame update
     void Start()
     {
         audioSource = GetComponent<AudioSource>();
-        string scoreDataPath = Application.persistentDataPath + "/SaveData/Scores.txt";
-        if (!File.Exists(scoreDataPath))
-        {
-            StreamWriter scoreWriter = new StreamWriter(scoreDataPath);
-            scoreWriter.WriteLine("GRN GUY,000");
-            scoreWriter.WriteLine("FRK GUY,000");
-            scoreWriter.WriteLine("DEV GUY,000");
-            scoreWriter.Close();
-        }
-
-        StreamReader scoreReader = new StreamReader(scoreDataPath);
-        string[] inputs = new string[3];
-        inputs[0] = scoreReader.ReadLine();
-        inputs[1] = scoreReader.ReadLine();
-        inputs[2] = scoreReader.ReadLine();
-        scoreReader.Close();
-
-        int index = 0;
-        scores = new Score[3];
-
-        foreach(string input in inputs)
-        {
-            string[] splitInput = input.Split(',');
-            scores[index].name = splitInput[0];
-            scores[index].points = Convert.ToInt32(splitInput[1]);
-        }
     }
 
     // Update is called once per frame
     void Update()
     {
         scoreText.text = ((int)scoreToGrow).ToString();
-
-        highScoreText.text = PlayerPrefs.GetInt("HighScore").ToString();
         highScoreValue = PlayerPrefs.GetInt("HighScore");
 
         if (scoreToGrow != currentScore && scoreToGrow < currentScore)
@@ -78,14 +49,41 @@ public class ScoreManager : MonoBehaviour
     {
         GameStats.playerScore = currentScore;
         GameStats.roundsLasted = BaseBuilding.getRoundCount();
-        if (currentScore <= highScoreValue)
+        HighScoresSet scoresSet = GameObject.FindAnyObjectByType<HighScoresSet>();
+        if (currentScore > scoresSet.scores[0].points)
         {
-            SceneManager.LoadScene("GameOver");
+            StreamWriter scoreWriter = new StreamWriter(Application.persistentDataPath + "/SaveData/Scores.txt");
+            scoreWriter.WriteLine("NEW GUY," + currentScore);
+            scoreWriter.WriteLine(scoresSet.scores[0].name + "," + scoresSet.scores[0].points);
+            scoreWriter.WriteLine(scoresSet.scores[1].name + "," + scoresSet.scores[1].points);
+            scoreWriter.Close();
+            ScoreName.scoreIndex = 0;
+            SceneManager.LoadScene("HighScores");
+        }
+        else if (currentScore > scoresSet.scores[1].points)
+        {
+            StreamWriter scoreWriter = new StreamWriter(Application.persistentDataPath + "/SaveData/Scores.txt");
+            scoreWriter.WriteLine(scoresSet.scores[0].name + "," + scoresSet.scores[0].points);
+            scoreWriter.WriteLine("NEW GUY," + currentScore);
+            scoreWriter.WriteLine(scoresSet.scores[1].name + "," + scoresSet.scores[1].points);
+            scoreWriter.Close();
+            ScoreName.scoreIndex = 1;
+            SceneManager.LoadScene("HighScores");
+        }
+        else if(currentScore > scoresSet.scores[2].points)
+        {
+            StreamWriter scoreWriter = new StreamWriter(Application.persistentDataPath + "/SaveData/Scores.txt");
+            scoreWriter.WriteLine(scoresSet.scores[0].name + "," + scoresSet.scores[0].points);
+            scoreWriter.WriteLine(scoresSet.scores[1].name + "," + scoresSet.scores[1].points);
+            scoreWriter.WriteLine("NEW GUY," + currentScore);
+            scoreWriter.Close();
+            ScoreName.scoreIndex = 2;
+            SceneManager.LoadScene("HighScores");
         }
         // when the player loses and does get a new high score
         else 
         {
-            SceneManager.LoadScene("HighScores");
+            SceneManager.LoadScene("GameOver");
         }
     }
 
