@@ -127,7 +127,7 @@ MonoBehaviour:
   paletteCustomInit: 0
   bleedOn:
     overrideState: 1
-    value: 0
+    value: 1
   crtMode:
     overrideState: 1
     value: 1

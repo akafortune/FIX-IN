@@ -357,11 +357,7 @@ public class BaseBuilding : MonoBehaviour
             }
             //GameObject flText = Instantiate(FloatingText, Vector3.zero, Quaternion.identity);
             //flText.GetComponentInChildren<TextMesh>().text = "" + 1000;
-            floatingText.ShowFloatingText("+1000", ggT);
-            songSource.PlayOneShot(winJingle);
-            resources = 45;
-            //greenGuy.currentScore += 10000;
-            scoreManager.IncreaseScore(1000);
+            
 
             StartCoroutine(Prestige());
             return true;
@@ -390,9 +386,12 @@ public class BaseBuilding : MonoBehaviour
         //GameObject flText = Instantiate(FloatingText, Vector3.zero, Quaternion.identity);
         //flText.GetComponentInChildren<TextMesh>().text = "" + 1000;
         songSource.PlayOneShot(winJingle);
+        floatingText.ShowFloatingText("+2500", ggT);
+        songSource.PlayOneShot(winJingle);
         resources += 45;
-        greenGuy.score += 1000;
         greenGuy.zeroSpecialResources();
+        //greenGuy.currentScore += 10000;
+        scoreManager.IncreaseScore(2500);
         ball.GetComponent<Ball>().WinGrace();
     }
 }
