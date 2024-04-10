@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
@@ -16,16 +17,14 @@ public class ScoreManager : MonoBehaviour
     public SpecialTile[] sTiles;
     public AudioSource audioSource;
     public AudioClip bonusPoints;
-    KeyValuePair<string, int>[] topScores;
-
+    private Score[] scores;
     // Start is called before the first frame update
     void Start()
     {
         audioSource = GetComponent<AudioSource>();
-        string scoreDataPath = Application.persistentDataPath + "/SaveData/Scores";
+        string scoreDataPath = Application.persistentDataPath + "/SaveData/Scores.txt";
         if (!File.Exists(scoreDataPath))
         {
-            File.Create(scoreDataPath);
             StreamWriter scoreWriter = new StreamWriter(scoreDataPath);
             scoreWriter.WriteLine("GRN GUY,000");
             scoreWriter.WriteLine("FRK GUY,000");
@@ -33,22 +32,28 @@ public class ScoreManager : MonoBehaviour
             scoreWriter.Close();
         }
 
-        topScores = new KeyValuePair<string, int>[3];
         StreamReader scoreReader = new StreamReader(scoreDataPath);
         string[] inputs = new string[3];
         inputs[0] = scoreReader.ReadLine();
         inputs[1] = scoreReader.ReadLine();
         inputs[2] = scoreReader.ReadLine();
+        scoreReader.Close();
+
+        int index = 0;
+        scores = new Score[3];
+
+        foreach(string input in inputs)
+        {
+            string[] splitInput = input.Split(',');
+            scores[index].name = splitInput[0];
+            scores[index].points = Convert.ToInt32(splitInput[1]);
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
         scoreText.text = ((int)scoreToGrow).ToString();
-        if (currentScore > PlayerPrefs.GetInt("HighScore", 0))
-        {
-            PlayerPrefs.SetInt("HighScore", (int)scoreToGrow);
-        }
 
         highScoreText.text = PlayerPrefs.GetInt("HighScore").ToString();
         highScoreValue = PlayerPrefs.GetInt("HighScore");
@@ -75,11 +80,13 @@ public class ScoreManager : MonoBehaviour
         GameStats.roundsLasted = BaseBuilding.getRoundCount();
         if (currentScore <= highScoreValue)
         {
-            print("High Score is higher than current score");
             SceneManager.LoadScene("GameOver");
         }
         // when the player loses and does get a new high score
-        //else { }
+        else 
+        {
+            SceneManager.LoadScene("HighScores");
+        }
     }
 
     public void GetSpecialBricks()
