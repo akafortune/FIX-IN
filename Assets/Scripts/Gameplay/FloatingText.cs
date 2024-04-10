@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class FloatingText : MonoBehaviour
 {
-    public float destroyTime = 1f;
+    float destroyTime = 1.5f;
     public float yOffset;
     private Animator anim;
     public GameObject floatingText;
