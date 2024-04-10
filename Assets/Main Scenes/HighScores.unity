@@ -745,6 +745,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   canvas: {fileID: 340457637}
+  loadScreen: {fileID: 0}
   buffer: 0
   buttonPressed: 0
   sceneChange: 0
@@ -2104,6 +2105,11 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1459538144 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2110409089704849248, guid: 0a5992637b5bf294ca037dea28a36344, type: 3}
+  m_PrefabInstance: {fileID: 713802044}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1592386459
 GameObject:
   m_ObjectHideFlags: 0
@@ -2154,7 +2160,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 76c392e42b5098c458856cdf6ecaaaa1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_FirstSelected: {fileID: 0}
+  m_FirstSelected: {fileID: 1459538144}
   m_sendNavigationEvents: 1
   m_DragThreshold: 10
 --- !u!4 &1592386462

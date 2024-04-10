@@ -7,7 +7,7 @@ using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Windows;
-using File = UnityEngine.Windows.File;
+using File = System.IO.File;
 
 public class HighScoresSet : MonoBehaviour
 {

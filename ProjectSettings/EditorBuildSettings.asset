@@ -6,7 +6,7 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Menu.unity
+    path: Assets/Main Scenes/Menu.unity
     guid: 4147431fd9e89ee49b33e87f6865e58c
   - enabled: 1
     path: Assets/Depricated Scenes/MainGame.unity
@@ -18,7 +18,7 @@ EditorBuildSettings:
     path: Assets/Main Scenes/PrimaryLevel.unity
     guid: 1b2f63d123b6dc44cb3f99c32831973e
   - enabled: 1
-    path: Assets/Main Scenes/AlternateLevel.unity
+    path: Assets/Depricated Scenes/AlternateLevel.unity
     guid: 61f629484765cac4ea41c78373a36faa
   - enabled: 1
     path: Assets/Resources/HowToPlay.unity
@@ -27,9 +27,9 @@ EditorBuildSettings:
     path: Assets/TwistHowToPlay.unity
     guid: a99d802b0f2a47741b93fb254e91980f
   - enabled: 1
-    path: Assets/GameOver.unity
+    path: Assets/Main Scenes/GameOver.unity
     guid: b27179165b14eed4c9d3d8a724200dca
   - enabled: 1
-    path: Assets/HighScores.unity
+    path: Assets/Main Scenes/HighScores.unity
     guid: 22ce1f61fabbc24489bec478f9a1f3e1
   m_configObjects: {}
