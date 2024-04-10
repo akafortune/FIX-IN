@@ -32,7 +32,7 @@ public class MainMenu : MonoBehaviour
         buffer = 0f;
         audioSource = GetComponentInParent<AudioSource>();
         //hammerIndicator = GameObject.Find("Indicator").GetComponent<GameObject>();
-        if (SceneManager.GetActiveScene() == SceneManager.GetSceneByBuildIndex(0) || SceneManager.GetActiveScene() == SceneManager.GetSceneByBuildIndex(6))
+        if (SceneManager.GetActiveScene() == SceneManager.GetSceneByBuildIndex(0) || SceneManager.GetActiveScene() == SceneManager.GetSceneByBuildIndex(6) || SceneManager.GetActiveScene() == SceneManager.GetSceneByBuildIndex(7))
         {
             canvas = GameObject.Find("Canvas");
             loadScreen = GameObject.Find("Load");
