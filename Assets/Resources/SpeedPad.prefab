@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 1780141847519410253}
   - component: {fileID: 6712648192011269174}
   - component: {fileID: 6547581765653362142}
+  - component: {fileID: 1844027668645430781}
   m_Layer: 8
   m_Name: SpeedPad
   m_TagString: Brick
@@ -167,8 +168,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6af47d000dee12f43909ed0b37e61d93, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Brick: {fileID: 0}
+  associatedBrick: {fileID: 0}
   index: 0
+  breakIndicator: {fileID: 0}
+  row: 0
 --- !u!50 &6547581765653362142
 Rigidbody2D:
   serializedVersion: 4
@@ -196,6 +199,21 @@ Rigidbody2D:
   m_SleepingMode: 0
   m_CollisionDetection: 0
   m_Constraints: 7
+--- !u!114 &1844027668645430781
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3747684032518093627}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 942fc277daf331b4698cdf90ef58cac0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  destroyTime: 1
+  yOffset: 0
+  floatingText: {fileID: 0}
 --- !u!1 &4717947638550917908
 GameObject:
   m_ObjectHideFlags: 0

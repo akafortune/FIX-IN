@@ -41,6 +41,7 @@ public class BaseBuilding : MonoBehaviour
     private GameObject RebuildButton;
     private GameObject FloatingText;
     private GreenGuy greenGuy;
+    private Transform ggT;
     private ScoreManager scoreManager;
     private FloatingText floatingText;
     public int scoreLast;
@@ -105,6 +106,7 @@ public class BaseBuilding : MonoBehaviour
         floatingText = GameObject.Find("ScoreManager").GetComponent<FloatingText>();
         //Comment out for build
         //spawnBubble();
+        ggT = GameObject.Find("GreenGuy").GetComponent<Transform>();
     }
 
     private GameObject[] getBrickArray()
@@ -262,6 +264,7 @@ public class BaseBuilding : MonoBehaviour
         paddle.SetActive(false);
         ball.SetActive(false);
         roundCount++;
+        scoreManager.GetSpecialBricks();
 
         //Resources for score
         float scoreDiff = greenGuy.score - scoreLast;
@@ -277,7 +280,6 @@ public class BaseBuilding : MonoBehaviour
             resources += gainI;
         }
         scoreLast = greenGuy.score;
-        
     }
 
     public void SkipBuild()
@@ -355,7 +357,7 @@ public class BaseBuilding : MonoBehaviour
             }
             //GameObject flText = Instantiate(FloatingText, Vector3.zero, Quaternion.identity);
             //flText.GetComponentInChildren<TextMesh>().text = "" + 1000;
-            floatingText.ShowFloatingText("+1000");
+            floatingText.ShowFloatingText("+1000", ggT);
             songSource.PlayOneShot(winJingle);
             resources = 45;
             //greenGuy.currentScore += 10000;
@@ -385,8 +387,8 @@ public class BaseBuilding : MonoBehaviour
             else
                 BrickScript.cancelBrick();
         }
-        GameObject flText = Instantiate(FloatingText, Vector3.zero, Quaternion.identity);
-        flText.GetComponentInChildren<TextMesh>().text = "" + 1000;
+        //GameObject flText = Instantiate(FloatingText, Vector3.zero, Quaternion.identity);
+        //flText.GetComponentInChildren<TextMesh>().text = "" + 1000;
         songSource.PlayOneShot(winJingle);
         resources += 45;
         greenGuy.score += 1000;

@@ -366,7 +366,7 @@ public class GreenGuy : MonoBehaviour
                 // Trigger floating text here
                 if (floatingText != null)
                 {
-                    floatingText.ShowFloatingText("+10");
+                    floatingText.ShowFloatingText("+10", this.transform);
                 }
             }
             else if(specialWhack)
@@ -573,7 +573,7 @@ public class GreenGuy : MonoBehaviour
                 {
                     specialWhack = true;
                     mine.doAction();
-                    floatingText.ShowFloatingText("+Resource");
+                    floatingText.ShowFloatingText("+Resource", this.transform);
                     animator.SetTrigger("Fix");
                     animator.SetBool("Swinging", true);
                     pickaxe.SetActive(true);
@@ -607,7 +607,7 @@ public class GreenGuy : MonoBehaviour
         if (collision.gameObject.layer == 6 && !building)
         {
             scoreManager.IncreaseScore(5);
-            floatingText.ShowFloatingText("+5");
+            floatingText.ShowFloatingText("+5", this.transform);
         }
     }
 

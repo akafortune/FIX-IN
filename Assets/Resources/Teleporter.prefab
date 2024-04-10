@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 3574441993309224861}
   - component: {fileID: 4390465446306821194}
   - component: {fileID: 2863525053103119549}
+  - component: {fileID: 3728731747827085288}
   m_Layer: 8
   m_Name: Teleporter
   m_TagString: Brick
@@ -174,6 +175,7 @@ MonoBehaviour:
   associatedBrick: {fileID: 0}
   index: 0
   breakIndicator: {fileID: 0}
+  row: 0
   portalParticles:
   - {fileID: 5894340081882608983}
   - {fileID: 7553527761309913872}
@@ -206,6 +208,21 @@ Rigidbody2D:
   m_SleepingMode: 0
   m_CollisionDetection: 0
   m_Constraints: 7
+--- !u!114 &3728731747827085288
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1217669116338727567}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 942fc277daf331b4698cdf90ef58cac0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  destroyTime: 1
+  yOffset: 0
+  floatingText: {fileID: 0}
 --- !u!1 &3135208460374470145
 GameObject:
   m_ObjectHideFlags: 0

@@ -99,7 +99,7 @@ TextMesh:
   m_Font: {fileID: 12800000, guid: 59ac9f1663741544cb943571fc379b0c, type: 3}
   m_Color:
     serializedVersion: 2
-    rgba: 4294967295
+    rgba: 4278247669
 --- !u!95 &8648161430649085704
 Animator:
   serializedVersion: 5
@@ -135,6 +135,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   destroyTime: 1
   yOffset: 50
+  floatingText: {fileID: 0}
+  greenGuy: {fileID: 0}
 --- !u!210 &1288552053954532116
 SortingGroup:
   m_ObjectHideFlags: 0
