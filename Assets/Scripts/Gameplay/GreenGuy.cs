@@ -260,7 +260,7 @@ public class GreenGuy : MonoBehaviour
                     animator.SetBool("Walking", false);
                 }
             }
-            if ((Input.GetKeyDown(KeyCode.W)||Input.GetKeyDown("joystick button 0") && canJump && rb.velocity.y < .25 && rb.velocity.y > -.25 && !(Input.GetKey(KeyCode.S)|| verticalMovementVal < -.1f)))
+            if (((Input.GetKeyDown(KeyCode.W)||Input.GetKeyDown("joystick button 0")) && canJump && rb.velocity.y < .25 && rb.velocity.y > -.25 && !(Input.GetKey(KeyCode.S)|| verticalMovementVal < -.1f)))
             {
                 float bounceMod = 1;
                 if (touchingBouncePad)
