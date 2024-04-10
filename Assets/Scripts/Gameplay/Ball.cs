@@ -98,6 +98,8 @@ public class Ball : MonoBehaviour
     public void Start()
     {
         scoreManager = GameObject.Find("ScoreManager").GetComponent<ScoreManager>();
+        bleeding = false;
+        processVolume.bleedOn.value = false;
     }
 
     public void LaunchSequence()
@@ -254,7 +256,7 @@ public class Ball : MonoBehaviour
                 explodingParticle.SetActive(true);
                 audioSource.PlayOneShot(ballExplode);
                 particleLocation = transform.position;
-                StartCoroutine(floatingLines());
+                //StartCoroutine(floatingLines());
                 LaunchSequence();
                 //firstLaunch = false;
                 break;
