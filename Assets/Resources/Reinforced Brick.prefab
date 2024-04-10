@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 4994463462511583047}
   - component: {fileID: 1304266651876884201}
   - component: {fileID: 8819867557045964035}
+  - component: {fileID: 1184754630000656650}
   m_Layer: 8
   m_Name: Reinforced Brick
   m_TagString: Brick
@@ -199,6 +200,21 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &1184754630000656650
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 900775377911562965}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 942fc277daf331b4698cdf90ef58cac0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  destroyTime: 1
+  yOffset: 0
+  floatingText: {fileID: 0}
 --- !u!1 &3276741552570935295
 GameObject:
   m_ObjectHideFlags: 0
