@@ -66,9 +66,12 @@ public class ScoreManager : MonoBehaviour
         sTiles = GameObject.FindObjectsByType<SpecialTile>(FindObjectsSortMode.None);
         foreach(SpecialTile tile in sTiles)
         {
-            FloatingText fltText = tile.GetComponent<FloatingText>();
-            fltText.ShowFloatingText("+3", tile.GetComponent<Transform>());
-            IncreaseScore(3);
+            if (tile.GetType() != typeof(Reinforced))
+            {
+                FloatingText fltText = tile.GetComponent<FloatingText>();
+                fltText.ShowFloatingText("+3", tile.GetComponent<Transform>());
+                IncreaseScore(3);
+            }
         }
         //for(int i = 0; i < sTiles.Length; i++)
         //{
