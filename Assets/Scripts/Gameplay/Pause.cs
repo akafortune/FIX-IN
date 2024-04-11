@@ -47,7 +47,7 @@ public class Pause : MonoBehaviour
     // Update is called once per frame
     public void Update()
     {
-        if ((Input.GetKeyDown(KeyCode.Escape)||Input.GetKeyDown("joystick button 7"))&&!settingsOpen)
+        if ((Input.GetKeyDown(KeyCode.Escape)||Input.GetKeyDown("joystick button 7")|| Input.GetKeyDown("joystick button 4")) &&!settingsOpen)
         {
             if (pauseMenu.activeSelf)
             {
