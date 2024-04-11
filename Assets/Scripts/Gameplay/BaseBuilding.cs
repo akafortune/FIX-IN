@@ -152,7 +152,7 @@ public class BaseBuilding : MonoBehaviour
             
         }
         roundText.text = roundCount.ToString();
-        if (GameMode == Mode.build && Time.timeScale != 0 && Input.GetKeyDown(KeyCode.R)||Input.GetKeyDown("joystick button 6"))
+        if (GameMode == Mode.build && Time.timeScale != 0 && Input.GetKeyDown(KeyCode.R)||Input.GetKeyDown("joystick button 6")|| Input.GetKeyDown("joystick button 5"))
         {
             BeginRound();
         }
