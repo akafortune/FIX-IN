@@ -173,7 +173,7 @@ public class BaseBuilding : MonoBehaviour
         {
             BeginRound();
         }
-        if(GameMode == Mode.build && firstRound && canRebuild && Time.timeScale != 0 &&  Input.GetKeyDown("f")||Input.GetKeyDown("joystick button 3"))
+        if(GameMode == Mode.build && firstRound && canRebuild && Time.timeScale != 0 &&  (Input.GetKeyDown("f")||Input.GetKeyDown("joystick button 3")))
         {
             BuildLast();
             canRebuild = false;
