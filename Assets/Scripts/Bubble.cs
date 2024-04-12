@@ -68,10 +68,13 @@ public class Bubble : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+
         if (collision.gameObject.name.Equals("HeadBox") && BaseBuilding.resources - cost >= 0)
         {
             collision.transform.parent.SendMessage("addSpecialResources", brickInd);
             BaseBuilding.resources -= cost;
+
+            BaseBuilding.justGot = true;
 
             StartCoroutine(Pop());
         }

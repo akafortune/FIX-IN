@@ -48,6 +48,11 @@ public class BaseBuilding : MonoBehaviour
     public Sprite[] hatArray;
     public SpriteRenderer hatSprite;
     private int prestigeAmt = 0;
+    public SpriteRenderer blueGuy;
+    public AudioSource blueGuyVoice;
+    public AudioClip[] blueGuyLines;
+    public static bool justGot = false;
+    private bool firstDef = true;
 
     // Start is called before the first frame update
     void Start()
@@ -141,6 +146,14 @@ public class BaseBuilding : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
+        if (justGot)
+        {
+            blueGuyVoice.clip = blueGuyLines[2];
+            blueGuyVoice.Play();
+            justGot = false;
+        }
+
         resourcesText.text = Convert.ToString(resources);
 
         if(GameMode == Mode.defend)
@@ -197,6 +210,7 @@ public class BaseBuilding : MonoBehaviour
 
     public void BeginRound()
     {
+        
         if(firstRound)
         {
             StreamWriter sw = new StreamWriter(Application.persistentDataPath + "/SaveData/lastRound1.txt");
@@ -221,6 +235,7 @@ public class BaseBuilding : MonoBehaviour
                 brick.SetActive(false);
             }
         }
+        StartCoroutine(FadeOut());
         GameMode = Mode.defend;
         DefendUI.SetActive(true);
         BuildUI.SetActive(false);
@@ -233,6 +248,7 @@ public class BaseBuilding : MonoBehaviour
 
     public void BeginBuild()
     {
+        StartCoroutine(FadeIn());
         Reinforced[] reinforcedTiles = GameObject.FindObjectsByType<Reinforced>(FindObjectsSortMode.None);
         
         foreach(Reinforced tile in reinforcedTiles)
@@ -403,4 +419,49 @@ public class BaseBuilding : MonoBehaviour
         }
         hatSprite.sprite = hatArray[prestigeAmt];
     }
+
+    private IEnumerator FadeIn()
+    {
+        blueGuyVoice.clip = blueGuyLines[0];
+        blueGuyVoice.Play();
+
+        float a = blueGuy.color.a;
+        Color temp = blueGuy.color;
+
+        while(blueGuy.color.a < 1)
+        {
+            a += .01f;
+            temp.a = a;
+            blueGuy.color = temp;
+
+            yield return new WaitForSeconds(0.01f);
+        }
+    }
+
+    private IEnumerator FadeOut()
+    {
+        if (!firstDef)
+        {
+            blueGuyVoice.clip = blueGuyLines[1];
+            blueGuyVoice.Play();
+        } else
+        {
+            firstDef = false;
+        }
+        
+
+        float a = blueGuy.color.a;
+        Color temp = blueGuy.color;
+
+        while (blueGuy.color.a > 0)
+        {
+            a -= .01f;
+            temp.a = a;
+            blueGuy.color = temp;
+
+            yield return new WaitForSeconds(0.01f);
+        }
+    }
+
+   
 }
