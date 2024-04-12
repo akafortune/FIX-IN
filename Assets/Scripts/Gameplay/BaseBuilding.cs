@@ -45,6 +45,9 @@ public class BaseBuilding : MonoBehaviour
     private ScoreManager scoreManager;
     private FloatingText floatingText;
     public int scoreLast;
+    public Sprite[] hatArray;
+    public SpriteRenderer hatSprite;
+    private int prestigeAmt = 0;
 
     // Start is called before the first frame update
     void Start()
@@ -107,6 +110,7 @@ public class BaseBuilding : MonoBehaviour
         //Comment out for build
         //spawnBubble();
         ggT = GameObject.Find("GreenGuy").GetComponent<Transform>();
+        hatSprite.sprite = hatArray[prestigeAmt];
     }
 
     private GameObject[] getBrickArray()
@@ -393,5 +397,10 @@ public class BaseBuilding : MonoBehaviour
         //greenGuy.currentScore += 10000;
         scoreManager.IncreaseScore(2500);
         ball.GetComponent<Ball>().WinGrace();
+        if(prestigeAmt < 10)
+        {
+            prestigeAmt++;
+        }
+        hatSprite.sprite = hatArray[prestigeAmt];
     }
 }

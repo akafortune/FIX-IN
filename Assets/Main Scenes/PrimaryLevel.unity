@@ -669,6 +669,90 @@ MonoBehaviour:
   colorMatB: {fileID: 0}
   bricks: {fileID: 900775377911562965, guid: 48e9e960b5c283046ac3e12ae11524e8, type: 3}
   brickValue: 5
+--- !u!1 &216173638
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 216173639}
+  - component: {fileID: 216173640}
+  m_Layer: 0
+  m_Name: HatSprite
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &216173639
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 216173638}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.745, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 612270119}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!212 &216173640
+SpriteRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 216173638}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 0
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 7
+  m_Sprite: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_FlipX: 0
+  m_FlipY: 0
+  m_DrawMode: 0
+  m_Size: {x: 1, y: 1}
+  m_AdaptiveModeThreshold: 0.5
+  m_SpriteTileMode: 0
+  m_WasSpriteAssigned: 0
+  m_MaskInteraction: 0
+  m_SpriteSortPoint: 0
 --- !u!1 &230490524
 GameObject:
   m_ObjectHideFlags: 0
@@ -1436,6 +1520,19 @@ MonoBehaviour:
   bubble1Item: 0
   bubble2Item: 0
   scoreLast: 0
+  hatArray:
+  - {fileID: 0}
+  - {fileID: 21300000, guid: 3ced104bee924944bb8880d2710b4ccb, type: 3}
+  - {fileID: 21300000, guid: 42ba065512283ff4fb9aaa894d9d6a23, type: 3}
+  - {fileID: 21300000, guid: d7f44a129874f6d409383f1da54ed03b, type: 3}
+  - {fileID: 21300000, guid: b4f7968209c4012449185c0776ee9d2d, type: 3}
+  - {fileID: 21300000, guid: 977895f9adca45640bf6453831008db2, type: 3}
+  - {fileID: 21300000, guid: beadc276b7153bb439f79a57dd2cd9c7, type: 3}
+  - {fileID: 21300000, guid: 09207c0110a3f0049aeb36fed1fe7799, type: 3}
+  - {fileID: 21300000, guid: d89f07bf4f97c8e4a9042ba927653103, type: 3}
+  - {fileID: 21300000, guid: 1aef0e739e2d5164c8750053f4370a5e, type: 3}
+  - {fileID: 21300000, guid: fd269994f7b880144bd5eed20438b776, type: 3}
+  hatSprite: {fileID: 216173640}
 --- !u!1 &397082733
 GameObject:
   m_ObjectHideFlags: 0
@@ -2756,6 +2853,7 @@ Transform:
   - {fileID: 616866757}
   - {fileID: 1170903780}
   - {fileID: 473241443}
+  - {fileID: 216173639}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &612270120
@@ -11033,7 +11131,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 459891926141384103, guid: 37443d1e0dee345469bd4843b0a9fa9b, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0.000011444092
+      value: 0.000005722046
       objectReference: {fileID: 0}
     - target: {fileID: 468260968267483104, guid: 37443d1e0dee345469bd4843b0a9fa9b, type: 3}
       propertyPath: m_AnchorMax.x
