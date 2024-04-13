@@ -385,7 +385,7 @@ public class Ball : MonoBehaviour
 
     public void WinGrace()
     {
-        augment -= 0.12f;
+        augment -= 0.08f;
     }
 
     private IEnumerator bleed()

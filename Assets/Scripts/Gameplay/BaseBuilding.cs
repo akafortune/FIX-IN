@@ -287,7 +287,7 @@ public class BaseBuilding : MonoBehaviour
         scoreManager.GetSpecialBricks();
 
         //Resources for score
-        float scoreDiff = greenGuy.score - scoreLast;
+        float scoreDiff = scoreManager.currentScore - scoreLast;
         Debug.Log("Score Diff: "+scoreDiff);
         if (scoreDiff > 0) 
         {
@@ -299,7 +299,9 @@ public class BaseBuilding : MonoBehaviour
             gainI *= 2;
             resources += gainI;
         }
-        scoreLast = greenGuy.score;
+        Debug.Log("Score Last Before:" + scoreLast);
+        scoreLast = scoreManager.currentScore;
+        Debug.Log("Score Last After:" + scoreLast);
     }
 
     public void SkipBuild()

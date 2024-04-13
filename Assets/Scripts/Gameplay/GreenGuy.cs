@@ -447,10 +447,10 @@ public class GreenGuy : MonoBehaviour
         switch (parentBrick) //getting the material value of the targeted brick
         {
             case "Layer 1":
-                brickValue = 5;
+                brickValue = 3;
                 break;
             case "Layer 2":
-                brickValue = 3;
+                brickValue = 2;
                 break;
             case "Layer 3":
                 brickValue = 1;
@@ -501,6 +501,7 @@ public class GreenGuy : MonoBehaviour
                 {
                     if (BaseBuilding.resources - BrickValue() >= 0)
                     {
+                        
                         BaseBuilding.resources -= BrickValue();
                         fixRay.collider.gameObject.SendMessage("fixBrick");
                     }
