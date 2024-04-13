@@ -4,6 +4,9 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
 using UnityEngine.Audio;
+using UnityEngine.Rendering.PostProcessing;
+using UnityEngine.SceneManagement;
+using VladStorm;
 
 public class SettingsManager : MonoBehaviour
 {
@@ -18,6 +21,7 @@ public class SettingsManager : MonoBehaviour
     public Toggle fullscreenToggle;
     public Toggle BXToggle;
     public bool BXisToggled;
+    public bool CRTtoggle;
     bool codeChange = false;
     public void SetFullcreen(bool isFullscreen)
     {
@@ -69,6 +73,7 @@ public class SettingsManager : MonoBehaviour
         
         checkFullscreen();
         checkBXSwap();
+        CheckCRTtoggle();
         resolutions = Screen.resolutions;
         int buffer = -1;
         ResolutionDropdown.ClearOptions();
@@ -183,6 +188,34 @@ public class SettingsManager : MonoBehaviour
     {
         BXisToggled = isSwapped;
         PlayerPrefs.SetString("BXSwap", "" + isSwapped);
+    }
+    public void SetCRTtoggle()
+    {
+        CRTtoggle = !CRTtoggle;
+        if (CRTtoggle) { PlayerPrefs.SetInt("CRT", 1); }
+        else { PlayerPrefs.SetInt("CRT", 0); }
+        CheckCRTtoggle();
+    }
+    public void CheckCRTtoggle()
+    {
+        if (PlayerPrefs.HasKey("CRT"))
+        {
+            if (PlayerPrefs.GetInt("CRT") == 1) { CRTtoggle = true; }
+            else { CRTtoggle = false; }
+            if (SceneManager.GetActiveScene() == SceneManager.GetSceneByBuildIndex(3))
+            {
+                GameObject.Find("CRTCam").GetComponent<PostProcessVolume>().profile.TryGetSettings<VHSPro>(out VHSPro vhp);
+                vhp.enabled.value = CRTtoggle;
+                GameObject.Find("CRTCam").GetComponent<PostProcessVolume>().profile.TryGetSettings<LensDistortion>(out LensDistortion ld);
+                ld.enabled.value = CRTtoggle;
+            }
+        }
+        else
+        {
+            CRTtoggle = true;
+            PlayerPrefs.SetInt("CRT", 1);
+            CheckCRTtoggle();
+        }
     }
     // Update is called once per frame
     void Update()
