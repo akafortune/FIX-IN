@@ -12,6 +12,8 @@ public class HowToPlay : MonoBehaviour
 {
     //Strings
     [TextArea(10,10)]
+    [SerializeField] private string helpText0;
+    [TextArea(10,10)]
     [SerializeField] private string helpText1;
     [TextArea(10,10)]
     [SerializeField] private string helpText2;
@@ -19,7 +21,7 @@ public class HowToPlay : MonoBehaviour
     [SerializeField] private string helpText3;
     [TextArea(10,10)]
     [SerializeField] private string helpText4;
-    [TextArea(10,10)]
+    private string helpText5 = "";
 
 
 
@@ -27,6 +29,7 @@ public class HowToPlay : MonoBehaviour
 
     [SerializeField] int page = 0;
 
+    private static VideoPlayer[] helpVideo0;
     private static VideoPlayer[] helpVideo1;
     private static VideoPlayer[] helpVideo2;
     private static VideoPlayer[] helpVideo3;
@@ -39,6 +42,7 @@ public class HowToPlay : MonoBehaviour
     [SerializeField] private GameObject RI1;
     [SerializeField] private GameObject RI2;
 
+    [SerializeField] private GameObject videoHolder0;
     [SerializeField] private GameObject videoHolder1;
     [SerializeField] private GameObject videoHolder2;
     [SerializeField] private GameObject videoHolder3;
@@ -57,14 +61,16 @@ public class HowToPlay : MonoBehaviour
     // Start is called before the first frame update
     void Awake()
     {
-        HelpText = new string[] {helpText1, helpText2, helpText3, helpText4};
+        HelpText = new string[] {helpText0, helpText1, helpText2, helpText3, helpText4, helpText5};
         page = 0;
         helpTextUI.text = HelpText[page];
-        helpVideo1 =  new VideoPlayer[] {videoHolder1.transform.GetChild(0).GetComponent<VideoPlayer>(), videoHolder1.transform.GetChild(1).GetComponent<VideoPlayer>()};   
+        helpVideo0 =  new VideoPlayer[] {videoHolder0.transform.GetChild(0).GetComponent<VideoPlayer>(), videoHolder0.transform.GetChild(1).GetComponent<VideoPlayer>()};   
+        helpVideo1 =  new VideoPlayer[] {videoHolder1.transform.GetChild(0).GetComponent<VideoPlayer>(), videoHolder1.transform.GetChild(1).GetComponent<VideoPlayer>()};
         helpVideo2 =  new VideoPlayer[] {videoHolder2.transform.GetChild(0).GetComponent<VideoPlayer>(), videoHolder2.transform.GetChild(1).GetComponent<VideoPlayer>()};
         helpVideo3 =  new VideoPlayer[] {videoHolder3.transform.GetChild(0).GetComponent<VideoPlayer>(), videoHolder3.transform.GetChild(1).GetComponent<VideoPlayer>()};
-        //helpVideo4 =  new VideoPlayer[] {videoHolder4.transform.GetChild(0).GetComponent<VideoPlayer>(), videoHolder4.transform.GetChild(1).GetComponent<VideoPlayer>()};
-        HelpVideo = new VideoPlayer[][] {helpVideo1, helpVideo2, helpVideo3};
+        helpVideo4 =  new VideoPlayer[] {videoHolder4.transform.GetChild(0).GetComponent<VideoPlayer>(), videoHolder4.transform.GetChild(1).GetComponent<VideoPlayer>()};
+
+        HelpVideo = new VideoPlayer[][] {helpVideo0, helpVideo1, helpVideo2, helpVideo3, helpVideo4};
         brick.color = new Color(0f, 0f, 255f, 1f);
         Controls.SetActive(false);
     }
@@ -78,7 +84,7 @@ public class HowToPlay : MonoBehaviour
     public void SwapPage(int newPage)
     {
         page += newPage;
-        if (page < 0 || page > 3)
+        if (page < 0 || page > 5)
         {
             GameObject.Find("Crossfade").GetComponent<SceneTransition>().LoadLevelTransition(0, "");
         }
@@ -90,9 +96,10 @@ public class HowToPlay : MonoBehaviour
                 foreach (VideoPlayer v in vp)
                 {
                     v.targetTexture = null;
+                    v.time = 0;
                 }
             }
-            if (page == 3)
+            if (page == 5)
             {
                 PNG1.SetActive(false);
                 PNG2.SetActive(false);
@@ -125,12 +132,12 @@ public class HowToPlay : MonoBehaviour
                     }
                 }
 
-                if (page < 2) //if build phase
+                if (page < 3) //if build phase
                 {
                     brick.color = new Color(0f, 0f, 1f, 1f);
                     modeUI.text = "Build Phase";
                 }
-                else if (page == 2) //if defend phase
+                else if (page == 3 || page == 4) //if defend phase
                 {
                     brick.color = new Color(1f, 0f, 0f, 1f);
                     modeUI.text = "Defend Phase";
