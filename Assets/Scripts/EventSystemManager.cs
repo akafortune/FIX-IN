@@ -6,39 +6,45 @@ using UnityEngine.UI;
 
 public class EventSystemManager : MonoBehaviour
 {
-    public GameObject pauseMenu;
-    public GameObject gameOverMenu;
-    public GameObject pauseEventSystem;
-    public GameObject gameOverEventSystem;
+    //public GameObject otherMenu;
+    public GameObject settingsMenu;
+    public GameObject otherEventSystem;
+    public GameObject settingsEventSystem;
     //public Button selectedButton;
     //public EventSystem pauseES;
 
     // Start is called before the first frame update
     void Start()
     {
-        //gameOverEventSystem.SetActive(false);
+        settingsMenu.SetActive(false);
     }
 
     private void Awake()
     {
-        pauseMenu = GameObject.Find("PauseMenu");
-        pauseEventSystem = GameObject.Find("PauseEventSystem");
-        //pauseES = pauseEventSystem.GetComponent<EventSystem>();
+        settingsMenu = GameObject.Find("SettingsMenu");
+        settingsEventSystem = GameObject.Find("OptionsEventSystem");
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(pauseMenu.activeInHierarchy)
+        if(settingsMenu.activeInHierarchy)
         {
-            pauseEventSystem.SetActive(true);
+            otherEventSystem.SetActive(false);
+            settingsEventSystem.SetActive(true);
             //gameOverEventSystem.SetActive(false);
+        }
+        else
+        {
+            settingsEventSystem.SetActive(false);
+            otherEventSystem.SetActive(true);
+            //settingsMenu.SetActive(false);
         }
     }
 
     private void FixedUpdate()
     {
-        if (pauseEventSystem.activeInHierarchy)
+        if (otherEventSystem.activeInHierarchy)
         {
             //pauseES = GameObject.Find("PauseEventSystem").GetComponent<EventSystem>();
             //pauseES.SetSelectedGameObject(selectedButton.gameObject);
