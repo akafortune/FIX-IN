@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Security.Cryptography;
 using UnityEngine;
 
 public class Shield : SpecialTile
@@ -29,6 +30,7 @@ public class Shield : SpecialTile
         lever = transform.GetChild(2).GetComponent<Animator>();
         ShieldIndicator = transform.GetChild(3).GetComponent<SpriteRenderer>();
         ShieldIndicator.enabled = false;
+        StartCoroutine(Preview());
     }
     protected override void OnTriggerStay2D(Collider2D collision)
     {
@@ -141,5 +143,18 @@ public class Shield : SpecialTile
         {
             ShieldIndicator.enabled = true;
         }
+    }
+
+    protected IEnumerator Preview()
+    {
+        yield return new WaitForSeconds(.2f);
+        ShieldAnimator.speed = .5f;
+        ShieldAnimator.SetBool("Stop", false);
+        ShieldAnimator.SetTrigger("Start");
+        yield return new WaitForSeconds(.5f);
+        ShieldAnimator.speed = .1f;
+        ShieldAnimator.SetBool("Stop", true);
+        yield return new WaitForSeconds(.4f);
+        animator.speed = 1;
     }
 }

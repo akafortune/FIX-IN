@@ -256,7 +256,7 @@ public class Ball : MonoBehaviour
                 explodingParticle.SetActive(true);
                 audioSource.PlayOneShot(ballExplode);
                 particleLocation = transform.position;
-                //StartCoroutine(floatingLines());
+                StartCoroutine(floatingLines());
                 LaunchSequence();
                 //firstLaunch = false;
                 break;
@@ -400,8 +400,8 @@ public class Ball : MonoBehaviour
 
     private IEnumerator floatingLines()
     {
-        processVolume.linesFloatOn.value = true;
+        processVolume.linesFloatSpeed.value = -1.75f;
         yield return new WaitForSeconds(.5f);
-        processVolume.linesFloatOn.value = false;
+        processVolume.linesFloatSpeed.value = 0;
     }
 }

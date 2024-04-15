@@ -187,10 +187,10 @@ MonoBehaviour:
     value: 5
   linesFloatOn:
     overrideState: 1
-    value: 0
+    value: 1
   linesFloatSpeed:
     overrideState: 1
-    value: -1.75
+    value: 0
   stretchOn:
     overrideState: 0
     value: 0
