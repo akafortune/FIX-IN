@@ -1,5 +1,5 @@
 {
-    "name": "DefaultInputActions",
+    "name": "UpdatedInputActions",
     "maps": [
         {
             "name": "Player",
@@ -631,6 +631,17 @@
                     "name": "",
                     "id": "55b95e73-f81e-4dbb-bd6b-27a954147c31",
                     "path": "<HID::DragonRise Inc.   Generic   USB  Joystick  >/trigger",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Submit",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "d7d2361e-bb93-4152-93a8-c9b68ef4e17a",
+                    "path": "<Keyboard>/space",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
