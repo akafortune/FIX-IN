@@ -73,6 +73,15 @@ public class HowToPlay : MonoBehaviour
         HelpVideo = new VideoPlayer[][] {helpVideo0, helpVideo1, helpVideo2, helpVideo3, helpVideo4};
         brick.color = new Color(0f, 0f, 255f, 1f);
         Controls.SetActive(false);
+        foreach (VideoPlayer[] vp in HelpVideo)
+        {
+            foreach (VideoPlayer v in vp)
+            {
+                v.gameObject.SetActive(false);
+            }
+        }
+        helpVideo0[0].gameObject.SetActive(true);
+        helpVideo0[1].gameObject.SetActive(true);
     }
 
     // Update is called once per frame
@@ -91,14 +100,6 @@ public class HowToPlay : MonoBehaviour
         else
         {
             helpTextUI.text = HelpText[page];
-            foreach(VideoPlayer[] vp in HelpVideo)
-            {
-                foreach (VideoPlayer v in vp)
-                {
-                    v.targetTexture = null;
-                    v.time = 0;
-                }
-            }
             if (page == 5)
             {
                 PNG1.SetActive(false);
@@ -116,21 +117,17 @@ public class HowToPlay : MonoBehaviour
                 RI1.SetActive(true);
                 RI2.SetActive(true);
                 Controls.SetActive(false);
-                bool first = true;
-                foreach(VideoPlayer v in HelpVideo[page])
+                foreach (VideoPlayer v in HelpVideo[(page - newPage)])
                 {
-                    if (first)
-                    {
-                        v.time = 0;
-                        v.targetTexture = videoTexture1;
-                        first = false;
-                    }
-                    else
-                    {
-                        v.time = 0;
-                        v.targetTexture = videoTexture2;
-                    }
+                    v.Stop();
+                    v.gameObject.SetActive(false);
                 }
+                foreach (VideoPlayer v in HelpVideo[page])
+                {
+                    v.gameObject.SetActive(true);
+                    v.Play();
+                }
+
 
                 if (page < 3) //if build phase
                 {
