@@ -17,6 +17,7 @@ public class MainMenu : MonoBehaviour
     public bool sceneChange;
     public int sceneNumber;
     public GameObject SettingsMenu;
+    SettingsManager s;
     private AudioSource audioSource;
     public AudioClip gameOverSound, risingPoints;
 
@@ -29,6 +30,8 @@ public class MainMenu : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        s = SettingsMenu.GetComponent<SettingsManager>();
+        s.init();
         crossfade = GameObject.Find("Crossfade");
         buttonPressed = false;
         sceneChange = false;

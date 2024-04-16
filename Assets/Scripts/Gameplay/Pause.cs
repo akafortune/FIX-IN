@@ -23,11 +23,16 @@ public class Pause : MonoBehaviour
     public bool pauseStart;
     bool sceneStart;
     public GameObject SettingsMenu;
+    SettingsManager s;
     public bool settingsOpen;
 
     // Start is called before the first frame update
     void Awake()
     {
+        s=SettingsMenu.GetComponent<SettingsManager>();
+        s.init();
+        SettingsMenu.SetActive(true);
+        SettingsMenu.SetActive(false);
         songSource = GameObject.Find("SongSource").GetComponent<AudioSource>();
         pauseMenu = GameObject.Find("PauseMenu");
         StartButton = GameObject.Find("Start Button");

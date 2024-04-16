@@ -20,6 +20,7 @@ public class SettingsManager : MonoBehaviour
 
     public Toggle fullscreenToggle;
     public Toggle BXToggle;
+    public Toggle CRTFilterToggle;
     public bool BXisToggled;
     public bool CRTtoggle;
     bool codeChange = false;
@@ -40,13 +41,24 @@ public class SettingsManager : MonoBehaviour
     }
     public void checkBXSwap()
     {
-        if (PlayerPrefs.HasKey("BXSwap")&&PlayerPrefs.GetString("BXSwap").Equals("True"))
+        if (PlayerPrefs.HasKey("BXSwap") && PlayerPrefs.GetString("BXSwap").Equals("True"))
         {
             BXToggle.isOn = true;
         }
         else
         {
             BXToggle.isOn = false;
+        }
+    }
+    public void checkCRTToggle()
+    {
+        if (PlayerPrefs.HasKey("CRT") && PlayerPrefs.GetInt("CRT")==1)
+        {
+            CRTFilterToggle.isOn = true;
+        }
+        else
+        {
+            CRTFilterToggle.isOn = false;
         }
     }
     public void SetResolution(int resIndex)
@@ -58,9 +70,8 @@ public class SettingsManager : MonoBehaviour
             Screen.SetResolution(res.width, res.height, Screen.fullScreen);
         }
     }
-    void Start()
+    public void init()
     {
-        codeChange = true;
         CheckMusic();
 
         SetMusicVolume();
@@ -70,10 +81,18 @@ public class SettingsManager : MonoBehaviour
         CheckMaster();
 
         SetMasterVolume();
-        
+
         checkFullscreen();
         checkBXSwap();
+        
         CheckCRTtoggle();
+        checkCRTToggle();
+    }
+    void Start()
+    {
+        codeChange = true;
+        
+        
         resolutions = Screen.resolutions;
         int buffer = -1;
         ResolutionDropdown.ClearOptions();
@@ -111,7 +130,7 @@ public class SettingsManager : MonoBehaviour
 
         ResolutionDropdown.RefreshShownValue();
         codeChange = false;
-        this.gameObject.SetActive(false);
+        //this.gameObject.SetActive(false);
 
     }
 
@@ -189,9 +208,11 @@ public class SettingsManager : MonoBehaviour
         BXisToggled = isSwapped;
         PlayerPrefs.SetString("BXSwap", "" + isSwapped);
     }
-    public void SetCRTtoggle()
+    public void SetCRTtoggle(bool isToggled)
     {
-        CRTtoggle = !CRTtoggle;
+        
+            CRTtoggle = isToggled;
+        
         if (CRTtoggle) { PlayerPrefs.SetInt("CRT", 1); }
         else { PlayerPrefs.SetInt("CRT", 0); }
         CheckCRTtoggle();
@@ -200,8 +221,19 @@ public class SettingsManager : MonoBehaviour
     {
         if (PlayerPrefs.HasKey("CRT"))
         {
-            if (PlayerPrefs.GetInt("CRT") == 1) { CRTtoggle = true; }
-            else { CRTtoggle = false; }
+            if (PlayerPrefs.GetInt("CRT") == 1)
+            {
+                CRTtoggle = true;
+                //CRTFilterToggle.isOn = CRTtoggle;
+                
+            }
+            else
+            {
+                //CRTFilterToggle.isOn = false;
+                CRTtoggle = false;
+                
+                
+            }
             if (SceneManager.GetActiveScene() == SceneManager.GetSceneByBuildIndex(3))
             {
                 GameObject.Find("CRTCam").GetComponent<PostProcessVolume>().profile.TryGetSettings<VHSPro>(out VHSPro vhp);
