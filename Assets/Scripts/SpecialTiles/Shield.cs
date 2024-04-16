@@ -112,6 +112,7 @@ public class Shield : SpecialTile
 
     public void StartShield()
     {
+        animator.speed = 1;
         timeStart = Time.time;
         IEnumerator coroutine = waitToStartShield();
         StartCoroutine(coroutine);
@@ -147,14 +148,17 @@ public class Shield : SpecialTile
 
     protected IEnumerator Preview()
     {
-        yield return new WaitForSeconds(.2f);
-        ShieldAnimator.speed = .5f;
-        ShieldAnimator.SetBool("Stop", false);
-        ShieldAnimator.SetTrigger("Start");
-        yield return new WaitForSeconds(.5f);
-        ShieldAnimator.speed = .1f;
-        ShieldAnimator.SetBool("Stop", true);
-        yield return new WaitForSeconds(.4f);
-        animator.speed = 1;
+        if (!transform.parent.parent.name.Contains("Bubble"))
+        {
+            yield return new WaitForSeconds(.2f);
+            ShieldAnimator.speed = .5f;
+            ShieldAnimator.SetBool("Stop", false);
+            ShieldAnimator.SetTrigger("Start");
+            yield return new WaitForSeconds(.5f);
+            ShieldAnimator.speed = .1f;
+            ShieldAnimator.SetBool("Stop", true);
+            yield return new WaitForSeconds(.4f);
+            ShieldAnimator.speed = 1;
+        }
     }
 }
