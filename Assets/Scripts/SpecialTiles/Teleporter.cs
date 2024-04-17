@@ -14,6 +14,7 @@ public class Teleporter : SpecialTile
      ParticleSystem[] ps;
     protected ParticleSystem[] otherTeleporterPS;
     public static int brokenPortals;
+
     // Start is called before the first frame update
     protected override void Start()
     {
@@ -24,7 +25,7 @@ public class Teleporter : SpecialTile
         assignTeleporter();
         platforms = GameObject.Find("Platforms").GetComponentsInChildren<BoxCollider2D>();
         brokenPortals = 0;
-}
+    }
 
     protected override void Update()
     {
@@ -38,6 +39,23 @@ public class Teleporter : SpecialTile
         if (!spriteRenderer.enabled && ps[0].particleCount == 0)
         {
             Destroy(gameObject);
+        }
+
+        if (!effectActive && otherTeleporter != null && !broken)
+        {
+            foreach (ParticleSystem p in ps)
+            {
+                var e = p.emission;
+                e.rateOverTime = 1000f;
+            }
+        }
+        else
+        {
+            foreach (ParticleSystem p in ps)
+            {
+                var e = p.emission;
+                e.rateOverTime = 0;
+            }
         }
     }
 
@@ -80,7 +98,7 @@ public class Teleporter : SpecialTile
                 otherTeleporterPS = otherTeleporter.GetComponentsInChildren<ParticleSystem>();
                 teleporter.otherTeleporter = this.transform;
                 teleporter.otherTeleporterPS = this.GetComponentsInChildren<ParticleSystem>();
-
+                effectActive = otherTeleporter.GetComponent<Teleporter>().effectActive;
                 foreach (ParticleSystem p in ps)
                 {
                     var e = p.emission;
