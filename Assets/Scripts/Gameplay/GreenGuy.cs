@@ -447,19 +447,19 @@ public class GreenGuy : MonoBehaviour
         switch (parentBrick) //getting the material value of the targeted brick
         {
             case "Layer 1":
-                brickValue = 3;
+                brickValue = 5;
                 break;
             case "Layer 2":
-                brickValue = 2;
+                brickValue = 3;
                 break;
             case "Layer 3":
                 brickValue = 1;
                 break;
             case "Layer 4":
-                brickValue = 3;
+                brickValue = 2;
                 break;
             case "Layer 5":
-                brickValue = 5;
+                brickValue = 3;
                 break;
         }
         return brickValue;

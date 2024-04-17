@@ -11239,7 +11239,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 459891926141384103, guid: 37443d1e0dee345469bd4843b0a9fa9b, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0.0000076293945
+      value: 0.00001335144
       objectReference: {fileID: 0}
     - target: {fileID: 468260968267483104, guid: 37443d1e0dee345469bd4843b0a9fa9b, type: 3}
       propertyPath: m_AnchorMax.x
@@ -15658,19 +15658,19 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: '5
-
-
-    3
-
-
-    1
+  m_text: '3
 
 
     2
 
 
-    3'
+    1
+
+
+    3
+
+
+    5'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 4ad620d3dcf9ac841be4135ff9e36539, type: 2}
   m_sharedMaterial: {fileID: 9051377406654761677, guid: 4ad620d3dcf9ac841be4135ff9e36539, type: 2}
