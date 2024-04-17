@@ -383,10 +383,10 @@ public class Ball : MonoBehaviour
         firstLaunch = fLaunch;
     }
 
-    public void WinGrace()
+    /*public void WinGrace()
     {
         augment -= 0.08f;
-    }
+    }*/
 
     private IEnumerator bleed()
     {

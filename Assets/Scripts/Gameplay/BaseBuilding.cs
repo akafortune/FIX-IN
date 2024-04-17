@@ -414,7 +414,7 @@ public class BaseBuilding : MonoBehaviour
         greenGuy.zeroSpecialResources();
         //greenGuy.currentScore += 10000;
         scoreManager.IncreaseScore(2500);
-        ball.GetComponent<Ball>().WinGrace();
+        //ball.GetComponent<Ball>().WinGrace();
         if(prestigeAmt < 10)
         {
             prestigeAmt++;
