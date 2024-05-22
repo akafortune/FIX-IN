@@ -13,10 +13,15 @@ public class Bubble : MonoBehaviour
     public int cost;
     public TextMeshPro text;
     protected static int previousBrickInd = -1;
+    public FloatingText floatingText;
+    public Transform resourcesTextTransform;
 
     void Start()
     {
-        if(parent.transform.parent.name.Equals("Bubble 1"))
+        floatingText = GameObject.Find("ScoreManager").GetComponent<FloatingText>();
+        resourcesTextTransform = GameObject.Find("ResourcesGameSpace").GetComponent<Transform>();
+
+        if (parent.transform.parent.name.Equals("Bubble 1"))
         {
             otherBubble = GameObject.Find("Bubble 2").transform.GetChild(0).gameObject;
         }
@@ -73,7 +78,7 @@ public class Bubble : MonoBehaviour
         {
             collision.transform.parent.SendMessage("addSpecialResources", brickInd);
             BaseBuilding.resources -= cost;
-
+            floatingText.ShowV2FloatingText("-" + cost.ToString(), resourcesTextTransform);
             BaseBuilding.justGot = true;
 
             StartCoroutine(Pop());

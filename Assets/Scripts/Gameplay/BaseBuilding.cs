@@ -12,6 +12,7 @@ public class BaseBuilding : MonoBehaviour
 
     public static int resources;
     public TextMeshProUGUI resourcesText;
+    public Transform resourcesTextTransform;
     public enum Mode { build, defend };
     public float roundTime;
     private static float roundCount = 0;
@@ -116,6 +117,7 @@ public class BaseBuilding : MonoBehaviour
         //spawnBubble();
         ggT = GameObject.Find("GreenGuy").GetComponent<Transform>();
         hatSprite.sprite = hatArray[prestigeAmt];
+        resourcesTextTransform = GameObject.Find("ResourcesGameSpace").GetComponent<Transform>();
     }
 
     private GameObject[] getBrickArray()
@@ -278,6 +280,7 @@ public class BaseBuilding : MonoBehaviour
         songSource.clip = buildSong;
         songSource.Play();
         resources += 15;
+        //floatingText.ShowV2FloatingText("+15", resourcesTextTransform);
         GameMode = Mode.build;
         DefendUI.SetActive(false);
         BuildUI.SetActive(true);
@@ -298,6 +301,7 @@ public class BaseBuilding : MonoBehaviour
             //*2
             gainI *= 2;
             resources += gainI;
+            floatingText.ShowV2FloatingText("+" + (/*(int)*/(15 + gainI)).ToString(), resourcesTextTransform);
         }
         Debug.Log("Score Last Before:" + scoreLast);
         scoreLast = scoreManager.currentScore;
@@ -411,6 +415,7 @@ public class BaseBuilding : MonoBehaviour
         floatingText.ShowFloatingText("+2500", ggT);
         songSource.PlayOneShot(winJingle);
         resources += 45;
+        floatingText.ShowV2FloatingText("+45", resourcesTextTransform);
         greenGuy.zeroSpecialResources();
         //greenGuy.currentScore += 10000;
         scoreManager.IncreaseScore(2500);

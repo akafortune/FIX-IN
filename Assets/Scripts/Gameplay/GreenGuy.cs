@@ -64,6 +64,7 @@ public class GreenGuy : MonoBehaviour
 
     //public float yOffset;
     public FloatingText floatingText;
+    public Transform resourcesTextTransform;
     public BoxCollider2D headBox;
 
     public BoxCollider2D checkBox;
@@ -129,6 +130,7 @@ public class GreenGuy : MonoBehaviour
         //scoreToGrow = 0;
         //highScoreValue = 0;
         floatingText = GameObject.Find("ScoreManager").GetComponent<FloatingText>();
+        resourcesTextTransform = GameObject.Find("ResourcesGameSpace").GetComponent<Transform>();
         score = 0;
 
         if (PlayerPrefs.HasKey("BXSwap"))
@@ -504,6 +506,7 @@ public class GreenGuy : MonoBehaviour
                         
                         BaseBuilding.resources -= BrickValue();
                         fixRay.collider.gameObject.SendMessage("fixBrick");
+                        floatingText.ShowV2FloatingText("-" + BrickValue().ToString(), resourcesTextTransform);
                     }
                     else
                     {
@@ -549,6 +552,7 @@ public class GreenGuy : MonoBehaviour
                 canMove = false;
                 audioSource.PlayOneShot(brickBreak);
                 BaseBuilding.resources += BrickValue();
+                floatingText.ShowV2FloatingText("+" + BrickValue().ToString(), resourcesTextTransform);
             }
             else if(BaseBuilding.GameMode == BaseBuilding.Mode.defend && fixRay.collider.name.StartsWith("Shield"))
             {
