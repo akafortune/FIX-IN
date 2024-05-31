@@ -9,6 +9,10 @@ public class TimeInGame : MonoBehaviour
 
     float currentTime;
     public TextMeshProUGUI timeText;
+    public Renderer timerRend;
+    public Color regularColor = Color.white;
+    public Color thirtySeconds;
+    public Color tenSeconds;
 
     //private float oneSecond = 1f;
     //public float score;
@@ -18,6 +22,7 @@ public class TimeInGame : MonoBehaviour
     void Start()
     {
         currentTime = 60f;
+        //thirtySeconds = (253f, 150f, 0f, 1f);
     }
 
     // Update is called once per frame
@@ -31,7 +36,18 @@ public class TimeInGame : MonoBehaviour
             time = TimeSpan.FromSeconds(currentTime);
             timeText.text = time.ToString(@"mm\:ss");
             if (currentTime <= 0f)
+            {
                 currentTime = 60f;
+            }
+            //timeText.alpha = 1f;
+            if (currentTime <= 30f && currentTime > 10f)
+                timeText.color = thirtySeconds;
+            else if (currentTime <= 10f)
+                timeText.color = tenSeconds;
+            else
+            {
+                timeText.color = regularColor;
+            }
         }
     }
     void FixedUpdate()

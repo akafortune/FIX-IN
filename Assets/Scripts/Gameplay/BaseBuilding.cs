@@ -171,7 +171,7 @@ public class BaseBuilding : MonoBehaviour
             
         }
         roundText.text = roundCount.ToString();
-        if ((GameMode == Mode.build) && Time.timeScale != 0 && Input.GetKeyDown(KeyCode.R)|| GameMode == Mode.build && Input.GetKeyDown("joystick button 6")|| GameMode == Mode.build && Input.GetKeyDown("joystick button 5"))
+        if ((GameMode == Mode.build) && Time.timeScale != 0 && Input.GetKeyDown(KeyCode.Return)|| GameMode == Mode.build && Input.GetKeyDown("joystick button 6")|| GameMode == Mode.build && Input.GetKeyDown("joystick button 5"))
         {
             BeginRound();
         }
@@ -416,7 +416,7 @@ public class BaseBuilding : MonoBehaviour
         songSource.PlayOneShot(winJingle);
         resources += 45;
         floatingText.ShowV2FloatingText("+45", resourcesTextTransform);
-        greenGuy.zeroSpecialResources();
+        //greenGuy.zeroSpecialResources();
         //greenGuy.currentScore += 10000;
         scoreManager.IncreaseScore(2500);
         //ball.GetComponent<Ball>().WinGrace();

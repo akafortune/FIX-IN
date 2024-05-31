@@ -22,9 +22,9 @@ public class HighScoresSet : MonoBehaviour
         if (!File.Exists(scoreDataPath))
         {
             StreamWriter scoreWriter = new StreamWriter(scoreDataPath);
-            scoreWriter.WriteLine("FRK GUY,9000");
-            scoreWriter.WriteLine("GRN GUY,5000");
-            scoreWriter.WriteLine("DEV GUY,10");
+            scoreWriter.WriteLine("FRK GUY,500");
+            scoreWriter.WriteLine("GRN GUY,250");
+            scoreWriter.WriteLine("DEV GUY,50");
             scoreWriter.Close();
         }
 

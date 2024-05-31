@@ -66,6 +66,7 @@ public class GreenGuy : MonoBehaviour
     public FloatingText floatingText;
     public Transform resourcesTextTransform;
     public BoxCollider2D headBox;
+    public TextMeshProUGUI[] costTexts;
 
     public BoxCollider2D checkBox;
 
@@ -489,6 +490,54 @@ public class GreenGuy : MonoBehaviour
                 building = false;
             }
         }
+        switch(collision.gameObject.name)
+        {
+            case "PlatformLower":
+                for (int i = 0; i < costTexts.Length; i++)
+                {
+                    if (i != 4)
+                        costTexts[i].color = Color.white;
+                    else
+                        costTexts[i].color = Color.yellow;
+                }
+                break;
+            case "PlatformUpper":
+                for (int i = 0; i < costTexts.Length; i++)
+                {
+                    if (i != 3)
+                        costTexts[i].color = Color.white;
+                    else
+                        costTexts[i].color = Color.yellow;
+                }
+                break;
+            case "PlatformUpper (1)":
+                for (int i = 0; i < costTexts.Length; i++)
+                {
+                    if (i != 2)
+                        costTexts[i].color = Color.white;
+                    else
+                        costTexts[i].color = Color.yellow;
+                }
+                break;
+            case "PlatformUpper (2)":
+                for (int i = 0; i < costTexts.Length; i++)
+                {
+                    if (i != 1)
+                        costTexts[i].color = Color.white;
+                    else
+                        costTexts[i].color = Color.yellow;
+                }
+                break;
+            case "PlatformUpper (3)":
+                for (int i = 0; i < costTexts.Length; i++)
+                {
+                    if (i != 0)
+                        costTexts[i].color = Color.white;
+                    else
+                        costTexts[i].color = Color.yellow;
+                }
+                break;
+        }
     }
 
     public void checkCollider()
@@ -681,6 +730,4 @@ public class GreenGuy : MonoBehaviour
         for (int i = 0; i < specialBrickAmounts.Length; i++)
             specialBrickAmounts[i] = 0;
     }
-
-    
 }

@@ -54,25 +54,26 @@ public class Pause : MonoBehaviour
     {
         if ((Input.GetKeyDown(KeyCode.Escape)||Input.GetKeyDown("joystick button 7")|| Input.GetKeyDown("joystick button 4")) &&!settingsOpen)
         {
-            if (pauseMenu.activeSelf)
-            {
-                pauseMenu.SetActive(false);
-                //StartButton.SetActive(true);
-                if(rebuildActive)
-                    RebuildButton.SetActive(true);
-                Time.timeScale = 1f;
-                songSource.Play();
-            }
-            else
-            {
-                pauseMenu.SetActive(true);
-                //StartButton.SetActive(false);
-                rebuildActive = RebuildButton.activeInHierarchy;
-                RebuildButton.SetActive(false);
-                Time.timeScale = 0f;
-                songSource.Pause();
-                //pauseStart = true;
-            }
+            PauseActivate();
+            //if (pauseMenu.activeSelf)
+            //{
+            //    pauseMenu.SetActive(false);
+            //    //StartButton.SetActive(true);
+            //    if(rebuildActive)
+            //        RebuildButton.SetActive(true);
+            //    Time.timeScale = 1f;
+            //    songSource.Play();
+            //}
+            //else
+            //{
+            //    pauseMenu.SetActive(true);
+            //    //StartButton.SetActive(false);
+            //    rebuildActive = RebuildButton.activeInHierarchy;
+            //    RebuildButton.SetActive(false);
+            //    Time.timeScale = 0f;
+            //    songSource.Pause();
+            //    //pauseStart = true;
+            //}
         }
         if (pressRestart || pressQuit)
         {
@@ -123,6 +124,33 @@ public class Pause : MonoBehaviour
         {
             SettingsMenu.SetActive(false);
             settingsOpen = false;
+        }
+    }
+
+    public void PauseActivate()
+    {
+        if (pauseMenu.activeSelf)
+        {
+            pauseMenu.SetActive(false);
+            //StartButton.SetActive(true);
+            StartButton.SetActive(true);
+            if (rebuildActive)
+            {
+                RebuildButton.SetActive(true);
+            }
+            Time.timeScale = 1f;
+            songSource.Play();
+        }
+        else
+        {
+            pauseMenu.SetActive(true);
+            //StartButton.SetActive(false);
+            rebuildActive = RebuildButton.activeInHierarchy;
+            StartButton.SetActive(false);
+            RebuildButton.SetActive(false);
+            Time.timeScale = 0f;
+            songSource.Pause();
+            //pauseStart = true;
         }
     }
 
