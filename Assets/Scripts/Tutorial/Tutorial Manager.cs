@@ -23,6 +23,13 @@ public class TutorialManager : MonoBehaviour
     private bool stepping;
     [SerializeField]
     private TextMeshProUGUI textBox;
+
+    private GameObject score;
+    private GameObject head;
+    private GameObject resources;
+    private GameObject cost;
+    private GameObject current_Material;
+    private GameObject current_Material_Label;
     // Start is called before the first frame update
     void Start()
     {
@@ -38,13 +45,24 @@ public class TutorialManager : MonoBehaviour
             BlueGuy.SetActive(true);
             BlueGuyFade(true);
             firstFrame = false;
-            GameObject.Find("Cost").SetActive(false);
-            GameObject.Find("Current_Material").SetActive(false);
-            GameObject.Find("Current_Material_Label").SetActive(false);
+            
             GameObject.Find("Start Button").SetActive(false);
-            GameObject.Find("Resources").SetActive(false);
             GameObject.Find("RoundCounter").SetActive(false);
             GameObject.Find("HighScores").SetActive(false);
+            
+            resources = GameObject.Find("Resources");
+            resources.SetActive(false);
+            cost = GameObject.Find("Cost");
+            cost.SetActive(false);
+            current_Material = GameObject.Find("Current_Material");
+            current_Material.SetActive(false);
+            current_Material_Label = GameObject.Find("Current_Material_Label");
+            current_Material_Label.SetActive(false);
+            score = GameObject.Find("ScoreText");
+            score.SetActive(false);
+            head = GameObject.Find("HeadBox");
+            head.SetActive(false);
+
             GameObject rebuild = GameObject.Find("Rebuild Button");
             if (rebuild != null)
             {
@@ -57,7 +75,6 @@ public class TutorialManager : MonoBehaviour
             GameObject.Find("Layer 3").SetActive(false);
             GameObject.Find("Layer 4").SetActive(false);
             GameObject.Find("Layer 5").SetActive(false);
-            GreenGuy.canMove = false;
             step = 1;
         }
         switch (step)
@@ -66,7 +83,14 @@ public class TutorialManager : MonoBehaviour
                 if (!stepping)
                 {
                     stepping = true;
-                    StartCoroutine(Step1Text());
+                    StartCoroutine(Step1());
+                }
+                break;
+            case 2:
+                if (!stepping)
+                {
+                    stepping = true;
+                    StartCoroutine(Step2());
                 }
                 break;
             default: break;
@@ -123,38 +147,86 @@ public class TutorialManager : MonoBehaviour
             yield return new WaitForSeconds(0.01f);
         }
     }
-    private IEnumerator TextOutput(string s)
-    {
-        for (int n = 0; n < s.Length; n++)
-        {
-            textBox.text += s[n];
-            yield return new WaitForSeconds(0.1f);
-        }
-    }
+
+
 
     //called when ball has been caught by box, dictates how to progress when ball is caught 
     public void BallCaught()
-    {}
+    {
+        switch (step)
+        {
+            case 1:
+                    step = 2;
+                    ball.gameObject.SetActive(false);
+                    stepping = false;
+                break;
+                case 2:
+                    ball.ResetBall();
+                break;
+            default: break;
+        }
+    }
+
+    public void HeadbuttTrigger()
+    {
+        if (step == 2)
+        {
+            StartCoroutine(Step2Half());
+        }
+    }
+
+
 
 
 
 
     // Step 1: have Blue Guy introduce and run ball WITHOUT bricks ONCE
-    void Step1()
+    private IEnumerator Step1()
     {
+        string[] lines = File.ReadAllLines(Path.Combine(Application.streamingAssetsPath, "Tutorial Text/Opening.txt"));
+        yield return StartCoroutine(StepText(lines));
+        BlueGuyFade(false);
         ball.gameObject.SetActive(true);
         ball.LaunchSequence();
         paddle.SetActive(true);
     }
-
-    private IEnumerator Step1Text()
+    //Step 2: have player hit ball 
+    private IEnumerator Step2()
     {
-        string[] lines = File.ReadAllLines(Path.Combine(Application.streamingAssetsPath, "Tutorial Text/Opening.txt"));
+        BlueGuyFade(true);
+        head.SetActive(true);
+        string[] lines = File.ReadAllLines(Path.Combine(Application.streamingAssetsPath, "Tutorial Text/Explain Headbutt.txt"));
+        yield return StartCoroutine(StepText(lines));
+        ball.gameObject.SetActive(true);
+        ball.LaunchSequence();
+        BlueGuyFade(false);
+    }
+        private IEnumerator Step2Half()
+    {
+        yield return new WaitForSeconds(1);
+        ball.gameObject.SetActive(false);
+        BlueGuyFade(true);
+        score.SetActive(true);
+        string[] lines = File.ReadAllLines(Path.Combine(Application.streamingAssetsPath, "Tutorial Text/Explain Score.txt"));
+        yield return StartCoroutine(StepText(lines));
+    }
+
+    private IEnumerator StepText(string[] lines)
+    {
         for (int i = 0; i < lines.Length; i++)
         {
             textBox.text = "";
             yield return StartCoroutine(TextOutput(lines[i]));
-            yield return new WaitForSeconds(5);
+            yield return new WaitForSeconds(2);
+        }
+        textBox.text = "";
+    }
+        private IEnumerator TextOutput(string s)
+    {
+        for (int n = 0; n < s.Length; n++)
+        {
+            textBox.text += s[n];
+            yield return new WaitForSeconds(0.1f);
         }
     }
 }
