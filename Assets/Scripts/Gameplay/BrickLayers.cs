@@ -134,8 +134,8 @@ public class BrickLayers : MonoBehaviour
         mats[1] = Resources.Load<Material>("BrickMats/BrickRed");
         mats[2] = Resources.Load<Material>("BrickMats/BrickTeal");
         mats[3] = Resources.Load<Material>("BrickMats/BrickMuavePink");
-        mats[4] = Resources.Load<Material>("BrickMats/BrickViolet");
-        mats[5] = Resources.Load<Material>("BrickMats/BrickYellow");
+        mats[4] = Resources.Load<Material>("BrickMats/BrickViolet"); //8631FF
+        mats[5] = Resources.Load<Material>("BrickMats/BrickYellow"); //FFC603
         mats[6] = Resources.Load<Material>("BrickMats/BrickLightBlue");
         mats[7] = Resources.Load<Material>("BrickMats/BrickOrange");
         mats[8] = Resources.Load<Material>("BrickMats/BrickLightGreen");
