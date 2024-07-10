@@ -351,6 +351,7 @@ public class RoundManager : MonoBehaviour
         DefendUI.SetActive(false);
         BuildUI.SetActive(true);
         paddle.SetActive(false);
+        ball.GetComponent<Ball>().RestFilters();
         ball.SetActive(false);
         roundCount++;
         scoreManager.GetSpecialBricks();
