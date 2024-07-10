@@ -15,7 +15,7 @@ public class RoundManager : MonoBehaviour
     public TextMeshProUGUI resourcesText;
     public Transform resourcesTextTransform;
     public enum Mode { build, defend };
-    public enum RoundType { IronBall, BombBlitz, HeadRush, Portals, WreckingBall}
+    public enum RoundType { Normal, IronBall, HeadRush, WreckingBall, Portals, BombBlitz}
     public float roundTime;
     private static float roundCount = 0;
     public TextMeshProUGUI roundText;
@@ -30,7 +30,7 @@ public class RoundManager : MonoBehaviour
     private AudioSource songSource;
     private AudioClip buildSong, defendSong, winJingle, freakSong, freakyLaugh;
     private Animator brickAnimator;
-    public GameObject ball, ironBall;
+    public GameObject ball, ironBall, bouncyBall;
     public GameObject paddle;
     private Paddle paddleScript;
     public GameObject[] Bricks;
@@ -90,6 +90,8 @@ public class RoundManager : MonoBehaviour
         ball.gameObject.SetActive(false);
         ironBall = GameObject.Find("IronBall").transform.GetChild(0).gameObject;
         ironBall.SetActive(false);
+        bouncyBall = GameObject.Find("BouncyBall").transform.GetChild(0).gameObject;
+        bouncyBall.gameObject.SetActive(false);
         paddle = GameObject.Find("Paddle");
         paddleScript = paddle.GetComponent<Paddle>();
         paddle.SetActive(false);
@@ -301,8 +303,8 @@ public class RoundManager : MonoBehaviour
         }
         freakyText.SetActive(true);
         yield return new WaitForSeconds(1);
-        //FreakyType = (RoundType)Random.Range(0, 5);
-        FreakyType = 0;
+        FreakyType = (RoundType)Random.Range(1, 3);
+        //FreakyType = (RoundType)3;
         ModeSet = true;
         yield return new WaitUntil(() => CycleDone);
         yield return new WaitForSeconds(.75f);
@@ -319,6 +321,7 @@ public class RoundManager : MonoBehaviour
             case RoundType.BombBlitz:
                 break;
             case RoundType.HeadRush:
+                HeadRushStart();
                 break;
             case RoundType.Portals:
                 break;
@@ -331,7 +334,7 @@ public class RoundManager : MonoBehaviour
     private IEnumerator FreakyTextCycle()
     {
         CycleDone = false;
-        RoundType type = 0;
+        RoundType type = (RoundType)1;
         freakTypeText.gameObject.SetActive(true);
         freakTypeText.color = Color.white;
         while(!ModeSet || (ModeSet && type != FreakyType))
@@ -339,8 +342,8 @@ public class RoundManager : MonoBehaviour
             freakTypeText.text = type.ToSafeString();
             yield return new WaitForSeconds(.2f);
             type += 1;
-            if ((int)type > 4)
-                type = 0;
+            if ((int)type > 5)
+                type = (RoundType)1;
         }
         freakTypeText.text = type.ToSafeString();
         freakTypeText.color = Color.red;
@@ -367,11 +370,30 @@ public class RoundManager : MonoBehaviour
     private void IronBallStart()
     {
         ironBall.SetActive(true);
+        ironBall.transform.position = new Vector3(0, ironBall.transform.position.y);
         paddle.SetActive(true);
         paddle.transform.position = new Vector3(ironBall.transform.position.x, paddle.transform.position.y);
         paddleScript.Target = ironBall.transform;
         ironBall.GetComponent<IronBall>().LaunchSequence();
         ironBall.GetComponent<Ball>().NewRound(roundCount);
+    }
+
+    private void HeadRushStart()
+    {
+        GreenGuy.speedMod = 1.5f;
+        GreenGuy.SetSpeeding(true);
+        GreenGuy.SetInvulnerable(true);
+        foreach(GameObject brick in Bricks)
+        {
+            brick.SetActive(false);
+        }
+        bouncyBall.SetActive(true);
+        bouncyBall.transform.position = new Vector3(0, bouncyBall.transform.position.y);
+        paddle.SetActive(true);
+        paddle.transform.position = new Vector3(bouncyBall.transform.position.x, paddle.transform.position.y);
+        paddleScript.Target = bouncyBall.transform;
+        bouncyBall.GetComponent<Ball>().LaunchSequence();
+        bouncyBall.GetComponent<Ball>().NewRound(roundCount);
     }
     public void BeginBuild()
     {
@@ -397,11 +419,15 @@ public class RoundManager : MonoBehaviour
             if (!brick.activeInHierarchy)
             {
                 brick.SetActive(true);
-                Animator brickAnim = brick.GetComponent<Animator>();
-                brickAnim.SetBool("IsBroken", true);
-                brickAnim.Play("BrokenBrick", 0, 0);
+                if (brick.GetComponent<Brick>().bc.isTrigger)
+                {
+                    Animator brickAnim = brick.GetComponent<Animator>();
+                    brickAnim.SetBool("IsBroken", true);
+                    brickAnim.Play("BrokenBrick", 0, 0);
+                }
             }
         }
+        FreakyType = RoundType.Normal;
         songSource.clip = buildSong;
         songSource.Play();
         resources += 15;
@@ -413,6 +439,7 @@ public class RoundManager : MonoBehaviour
         ball.GetComponent<Ball>().RestFilters();
         ball.SetActive(false);
         ironBall.SetActive(false);
+        bouncyBall.SetActive(false);
         roundCount++;
         scoreManager.GetSpecialBricks();
 

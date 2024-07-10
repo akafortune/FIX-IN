@@ -8,7 +8,7 @@ using UnityEngine;
 public class Brick : MonoBehaviour
 {
     Animator animator;
-    BoxCollider2D bc; 
+    public BoxCollider2D bc; 
     public AudioSource audioSource;
     public AudioClip brickBreak;
     private SpriteRenderer spriteRenderer;

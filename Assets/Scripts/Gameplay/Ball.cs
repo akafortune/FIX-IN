@@ -52,9 +52,7 @@ public class Ball : MonoBehaviour
     // Start is called before the first frame update
     protected void Awake()
     {
-        //roundTimer = GameObject.Find("TimerText").GetComponent<TextMeshProUGUI>();
         firstLaunch = true;
-        roundTimer.SetActive(false);
         songSource = GameObject.Find("SongSource").GetComponent<AudioSource>();
         defendSong = (AudioClip) Resources.Load("SFX/UpdatedDefendSong");
         countDownAudioPlayed = new bool[3];
@@ -97,6 +95,8 @@ public class Ball : MonoBehaviour
 
     public void Start()
     {
+        //ImportData();
+        roundTimer.SetActive(false);
         scoreManager = GameObject.Find("ScoreManager").GetComponent<ScoreManager>();
         bleeding = false;
         processVolume.bleedOn.value = false;
@@ -316,7 +316,8 @@ public class Ball : MonoBehaviour
         else if (collision.gameObject.name.Equals("GreenGuy"))
         {
             rb.velocity *= 100;
-            audioSource.PlayOneShot(ggBounce);
+            if(!GreenGuy.GetInvulnerable())
+                audioSource.PlayOneShot(ggBounce);
             if(!bleeding)
                 StartCoroutine(bleed());
         }

@@ -18,7 +18,7 @@ public class GreenGuy : MonoBehaviour
     public LayerMask layersToHit;
     public Transform rayOrigin;
     public float bouncePadValue;
-    static private bool touchingBouncePad, speeding;
+    static private bool touchingBouncePad, speeding, invulnerable;
     private bool specialWhack;
 
     public GameObject floorRay;
@@ -104,6 +104,7 @@ public class GreenGuy : MonoBehaviour
         horizontalSpeed = 3;
         speedMod = 1;
         speeding = false;
+        invulnerable = false;
         stunTime = 1.7f;
         //yOffset = .5f;
         //highScoreText.text = PlayerPrefs.GetInt("HighScore").ToString();
@@ -476,7 +477,7 @@ public class GreenGuy : MonoBehaviour
             animator.SetTrigger("Grounded");
         }*/
 
-        if (collision.gameObject.layer == 6) //ball
+        if (collision.gameObject.layer == 6 && !invulnerable) //ball
         {
             canMove = false;
             stunClock = -.5f;
@@ -691,10 +692,20 @@ public class GreenGuy : MonoBehaviour
         speeding = value;
     }
 
+    public static void SetInvulnerable(bool value)
+    {
+        invulnerable = value;
+    }
+
     public static bool GetSpeeding()
     {
         return speeding;
     }
+    public static bool GetInvulnerable()
+    {
+        return invulnerable;
+    }
+
 
     public static void SetBounce(bool value)
     {
