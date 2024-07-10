@@ -293,7 +293,8 @@ public class Ball : MonoBehaviour
         else if (collision.gameObject.name.Equals("Paddle"))
         {
             hits = 0;
-            animator.SetTrigger("Reset");
+            if(name.Equals("Ball"))
+                animator.SetTrigger("Reset");
             if (LastXVelocity < 0.5f * mapSizeAugment && LastXVelocity > -0.5f * mapSizeAugment)
             {
                 //Debug.Log("Fixed X");
@@ -328,7 +329,7 @@ public class Ball : MonoBehaviour
         {
             rb.velocity *= 100;
             //StartCoroutine(bleed());
-            Debug.Log("brick");
+            //Debug.Log("brick");
         }
     }
     public void OnTriggerEnter2D(Collider2D collision)
@@ -379,7 +380,7 @@ public class Ball : MonoBehaviour
         gameTimer = 0f;
         GreenGuy.stunTime = 1.7f / augment;
         if(name.Equals("Ball"))
-        animator.SetTrigger("Reset");
+            animator.SetTrigger("Reset");
         FinalspeedMultiplier = StaticspeedMultiplier*augment;
         //Debug.Log(FinalspeedMultiplier);
     }
@@ -419,7 +420,7 @@ public class Ball : MonoBehaviour
 
     protected void ImportData()
     {
-        Ball standard = GameObject.Find("RegularBall").GetComponentInChildren<Ball>();
+        Ball standard = GameObject.Find("StandardBall").transform.GetChild(0).GetComponent<Ball>();
         roundTimer = standard.roundTimer;
         gameOverMenu = standard.gameOverMenu;
         audioSource = standard.audioSource;
