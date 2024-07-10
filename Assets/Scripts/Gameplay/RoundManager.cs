@@ -24,14 +24,15 @@ public class RoundManager : MonoBehaviour
     public static Mode GameMode;
     public static RoundType FreakyType;
     public static bool lastBrickBuilt;
-    private bool firstRound, canRebuild;
+    private bool firstRound, canRebuild, countingDown;
     private float roundClock = 0;
 
     private AudioSource songSource;
     private AudioClip buildSong, defendSong, winJingle, freakSong, freakyLaugh;
     private Animator brickAnimator;
-    public GameObject ball;
+    public GameObject ball, ironBall;
     public GameObject paddle;
+    private Paddle paddleScript;
     public GameObject[] Bricks;
     public GameObject[] brickTypes;
 
@@ -81,12 +82,16 @@ public class RoundManager : MonoBehaviour
         FloatingText = (GameObject)Resources.Load("FloatingTextParent");
         firstRound = true;
         canRebuild = true;
+        countingDown = true;
         Bricks = getBrickArray();
         resources = 45;
         GameMode = Mode.build;
         ball = GameObject.Find("Ball");
         ball.gameObject.SetActive(false);
+        ironBall = GameObject.Find("IronBall").transform.GetChild(0).gameObject;
+        ironBall.SetActive(false);
         paddle = GameObject.Find("Paddle");
+        paddleScript = paddle.GetComponent<Paddle>();
         paddle.SetActive(false);
         BuildUI = GameObject.Find("BuildUI");
         DefendUI = GameObject.Find("DefendUI");
@@ -175,7 +180,8 @@ public class RoundManager : MonoBehaviour
 
         if(GameMode == Mode.defend)
         {
-            roundClock += Time.deltaTime;
+            if(countingDown)
+                roundClock += Time.deltaTime;
 
             if(roundClock >= roundTime)
             {
@@ -264,6 +270,7 @@ public class RoundManager : MonoBehaviour
         }
 
         paddle.SetActive(true);
+        paddleScript.Target = ball.transform;
         ball.SetActive(true);
         ball.GetComponent<Ball>().LaunchSequence();
         ball.GetComponent<Ball>().NewRound(roundCount);
@@ -273,6 +280,7 @@ public class RoundManager : MonoBehaviour
     public bool CycleDone;
     public IEnumerator GetFreaky()
     {
+        countingDown = false;
         yield return new WaitForSeconds(.25f);
         songSource.clip = freakyLaugh;
         songSource.Play();
@@ -282,7 +290,8 @@ public class RoundManager : MonoBehaviour
         ModeSet = false;
         //cue freak guy entrance
         freakyText.SetActive(true);
-        StartCoroutine(FreakyCycle());
+        freakyText.GetComponent<TextMeshProUGUI>().color = Color.white;
+        StartCoroutine(FreakyTextCycle());
         for (int i = 0; i < 4; i++)
         {
             freakyText.SetActive(true);
@@ -291,17 +300,40 @@ public class RoundManager : MonoBehaviour
             yield return new WaitForSeconds(.5f);
         }
         freakyText.SetActive(true);
-        FreakyType = (RoundType)Random.Range(0, 5);
+        yield return new WaitForSeconds(1);
+        //FreakyType = (RoundType)Random.Range(0, 5);
+        FreakyType = 0;
         ModeSet = true;
         yield return new WaitUntil(() => CycleDone);
+        yield return new WaitForSeconds(.75f);
+        StartCoroutine(FreakyTextFade());
+        yield return new WaitForSeconds(1.75f);
+        freakyText.SetActive(false);
+        freakTypeText.gameObject.SetActive(false);
         
+        switch(FreakyType)
+        {
+            case RoundType.IronBall:
+                IronBallStart();
+                break;
+            case RoundType.BombBlitz:
+                break;
+            case RoundType.HeadRush:
+                break;
+            case RoundType.Portals:
+                break;
+            case RoundType.WreckingBall:
+                break;
+        }    
+        countingDown = true;
     }
 
-    private IEnumerator FreakyCycle()
+    private IEnumerator FreakyTextCycle()
     {
         CycleDone = false;
         RoundType type = 0;
         freakTypeText.gameObject.SetActive(true);
+        freakTypeText.color = Color.white;
         while(!ModeSet || (ModeSet && type != FreakyType))
         {
             freakTypeText.text = type.ToSafeString();
@@ -310,10 +342,37 @@ public class RoundManager : MonoBehaviour
             if ((int)type > 4)
                 type = 0;
         }
+        freakTypeText.text = type.ToSafeString();
         freakTypeText.color = Color.red;
         CycleDone = true;
     }
 
+    private IEnumerator FreakyTextFade()
+    {
+        TextMeshProUGUI freakyTextMesh = freakyText.GetComponent<TextMeshProUGUI>();
+        float a = freakyTextMesh.color.a;
+        Color temp1 = freakyTextMesh.color;
+        Color temp2 = freakTypeText.color;
+
+        while (freakyTextMesh.color.a > 0)
+        {
+            a -= .01f;
+            temp1.a = a;
+            temp2.a = a;
+            freakyTextMesh.color = temp1;
+            freakTypeText.color = temp2;
+            yield return new WaitForSeconds(0.01f);
+        }
+    }
+    private void IronBallStart()
+    {
+        ironBall.SetActive(true);
+        paddle.SetActive(true);
+        paddle.transform.position = new Vector3(ironBall.transform.position.x, paddle.transform.position.y);
+        paddleScript.Target = ironBall.transform;
+        ironBall.GetComponent<IronBall>().LaunchSequence();
+        ironBall.GetComponent<Ball>().NewRound(roundCount);
+    }
     public void BeginBuild()
     {
         StartCoroutine(FadeIn());
@@ -353,6 +412,7 @@ public class RoundManager : MonoBehaviour
         paddle.SetActive(false);
         ball.GetComponent<Ball>().RestFilters();
         ball.SetActive(false);
+        ironBall.SetActive(false);
         roundCount++;
         scoreManager.GetSpecialBricks();
 
@@ -514,7 +574,7 @@ public class RoundManager : MonoBehaviour
 
     private IEnumerator FadeOut()
     {
-        if (!firstDef)
+        if (!firstDef && roundCount % 5 != 0)
         {
             blueGuyVoice.clip = blueGuyLines[1];
             blueGuyVoice.Play();

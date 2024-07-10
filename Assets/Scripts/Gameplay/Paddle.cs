@@ -5,14 +5,12 @@ using UnityEngine.SceneManagement;
 
 public class Paddle : MonoBehaviour
 {
-    Transform Ball;
+    public Transform Target;
     public Animator Anim;
     float Xclamp;
     // Start is called before the first frame update
     void Start()
     {
-        Ball = GameObject.Find("Ball").GetComponent<Transform>();
-
         if (SceneManager.GetActiveScene() == SceneManager.GetSceneByBuildIndex(3) || SceneManager.GetActiveScene() == SceneManager.GetSceneByBuildIndex(4))
         {
             Xclamp = 4.25f;
@@ -26,7 +24,7 @@ public class Paddle : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        float x = Ball.position.x;
+        float x = Target.position.x;
         x = Mathf.Clamp(x, -Xclamp, Xclamp);
         transform.position = new Vector3(x, 4.25f, 0);
     }

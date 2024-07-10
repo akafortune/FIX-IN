@@ -39,7 +39,7 @@ public class Ball : MonoBehaviour
 
     private int bricksBroken;
 
-    private TrailRenderer trail;
+    protected TrailRenderer trail;
     public static int hits;
     private GameObject explodingParticle;
     private Vector3 particleLocation;
@@ -50,7 +50,7 @@ public class Ball : MonoBehaviour
     bool bleeding;
 
     // Start is called before the first frame update
-    void Awake()
+    protected void Awake()
     {
         //roundTimer = GameObject.Find("TimerText").GetComponent<TextMeshProUGUI>();
         firstLaunch = true;
@@ -65,11 +65,11 @@ public class Ball : MonoBehaviour
         particleLocation = transform.position;
         gameTimer = 0f;
         rb = GetComponent<Rigidbody2D>();
-        explodingParticle = GameObject.Find("BallPop");
+        explodingParticle = transform.parent.GetChild(1).gameObject;
         explodingParticle.SetActive(false);
-        arrow = GameObject.Find("Pointer");
+        arrow = transform.GetChild(2).gameObject;
         arrow.SetActive(false);
-        trail = GameObject.Find("BallTrail").GetComponent<TrailRenderer>();
+        trail = transform.GetChild(1).GetComponent<TrailRenderer>();
         countdownText = GameObject.Find("Countdown").GetComponent<TextMeshProUGUI>();
         countDownSound = (AudioClip) Resources.Load("SFX/Countdown");
         launchSound = (AudioClip) Resources.Load("SFX/Launch");
@@ -122,7 +122,8 @@ public class Ball : MonoBehaviour
         explodingParticle.transform.position = particleLocation;
         trail.Clear();
         transform.eulerAngles = new Vector3(0, 0, 180);
-        animator.SetTrigger("Reset");
+        if(name.Equals("Ball"))
+            animator.SetTrigger("Reset");
     } //Puts the ball back where it started
 
     public void Rotate()
@@ -136,7 +137,7 @@ public class Ball : MonoBehaviour
         transform.Rotate(0, 0, ballAngle);
     } //Sets the ball to random angle
 
-    void Countdown()
+    protected void Countdown()
     {
         if(firstLaunch)
         {
@@ -183,7 +184,7 @@ public class Ball : MonoBehaviour
         }
     } //Begins launch countdown and activates indicator arrow
 
-    public void Launch()
+    protected void Launch()
     {
         roundTimer.SetActive(true); // round timer begins
         songSource.clip = defendSong;
@@ -202,11 +203,14 @@ public class Ball : MonoBehaviour
         canRotate = true;
     } //Makes the ball start
 
-    void FixedUpdate() //physics fuckery
+    protected void FixedUpdate() //physics fuckery
     {
-        animator.ResetTrigger("Reset");
-        animator.ResetTrigger("Hit2");
-        animator.ResetTrigger("Hit3");
+        if (gameObject.name == "Ball")
+        {
+            animator.ResetTrigger("Reset");
+            animator.ResetTrigger("Hit2");
+            animator.ResetTrigger("Hit3");
+        }
         LastXVelocity = rb.velocity.x;
         //Debug.Log(rb.velocity.x);
         rb.velocity *= 10;
@@ -227,7 +231,7 @@ public class Ball : MonoBehaviour
         }
     }
 
-    void Update() // Countdown and Trail color changes
+    protected void Update() // Countdown and Trail color changes
     {
         if (countingDown)
         {
@@ -264,7 +268,7 @@ public class Ball : MonoBehaviour
         trail.startColor = tailColor;
     }
 
-    private void OnCollisionEnter2D(Collision2D collision) // all of these checks are to keep the ball from bouncing in straight lines
+    protected void OnCollisionEnter2D(Collision2D collision) // all of these checks are to keep the ball from bouncing in straight lines
     {
         if (collision.gameObject.name.Equals("Wall9PatchRight"))
         {
@@ -374,6 +378,7 @@ public class Ball : MonoBehaviour
 
         gameTimer = 0f;
         GreenGuy.stunTime = 1.7f / augment;
+        if(name.Equals("Ball"))
         animator.SetTrigger("Reset");
         FinalspeedMultiplier = StaticspeedMultiplier*augment;
         //Debug.Log(FinalspeedMultiplier);
@@ -410,5 +415,23 @@ public class Ball : MonoBehaviour
     {
         processVolume.linesFloatSpeed.value = 0;
         bleeding = false;
+    }
+
+    protected void ImportData()
+    {
+        Ball standard = GameObject.Find("RegularBall").GetComponentInChildren<Ball>();
+        roundTimer = standard.roundTimer;
+        gameOverMenu = standard.gameOverMenu;
+        audioSource = standard.audioSource;
+        songSource = standard.songSource;
+        wallBounce = standard.wallBounce;
+        paddleBounce = standard.paddleBounce;
+        ggBounce = standard.ggBounce;
+        bottomWallBounce = standard.bottomWallBounce;
+        countDownSound = standard.countDownSound;
+        launchSound = standard.launchSound;
+        ballExplode = standard.ballExplode;
+        defendSong = (AudioClip)Resources.Load("SFX/FreakyFella");
+        pauseMenu = standard.pauseMenu;
     }
 }

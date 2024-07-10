@@ -479,7 +479,7 @@ public class GreenGuy : MonoBehaviour
         if (collision.gameObject.layer == 6) //ball
         {
             canMove = false;
-            stunClock = 0;
+            stunClock = -.5f;
             animator.SetBool("Stun", true);
             animator.SetTrigger("StunStart");
             stunned = true;
