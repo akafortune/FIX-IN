@@ -10,9 +10,9 @@ using UnityEngine.EventSystems;
 public class Pause : MonoBehaviour
 {
     public GameObject pauseMenu;
-    private GameObject StartButton, RebuildButton;
+    private GameObject StartButton, RebuildButton, FreakUI;
     public AudioSource songSource;
-    public bool rebuildActive;
+    public bool rebuildActive, freakActive;
     //public bool buttonPressed;
     public float buffer = 0f;
     public bool restartGame;
@@ -37,6 +37,7 @@ public class Pause : MonoBehaviour
         pauseMenu = GameObject.Find("PauseMenu");
         StartButton = GameObject.Find("Start Button");
         RebuildButton = GameObject.Find("Rebuild Button");
+        FreakUI = GameObject.Find("FreakyModeUI");
         GameObject.Find("MusicSource");
         //buttonPressed = false;
         restartGame = false;
@@ -138,6 +139,7 @@ public class Pause : MonoBehaviour
             {
                 RebuildButton.SetActive(true);
             }
+            FreakUI.SetActive(true);
             Time.timeScale = 1f;
             songSource.Play();
         }
@@ -146,6 +148,7 @@ public class Pause : MonoBehaviour
             pauseMenu.SetActive(true);
             //StartButton.SetActive(false);
             rebuildActive = RebuildButton.activeInHierarchy;
+            FreakUI.SetActive(false);
             StartButton.SetActive(false);
             RebuildButton.SetActive(false);
             Time.timeScale = 0f;
