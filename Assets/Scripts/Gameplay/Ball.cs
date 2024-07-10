@@ -190,7 +190,7 @@ public class Ball : MonoBehaviour
         songSource.Play();
         explodingParticle.transform.position = transform.position;
         explodingParticle.SetActive(false);
-        BaseBuilding.lastBrickBuilt = true;
+        RoundManager.lastBrickBuilt = true;
         //transform.Rotate(0, 0, -HorzForce);
         arrow.SetActive(false);
         //GreenGuy.speedMod *= augment;
@@ -404,5 +404,11 @@ public class Ball : MonoBehaviour
         processVolume.linesFloatSpeed.value = -1.75f;
         yield return new WaitForSeconds(.5f);
         processVolume.linesFloatSpeed.value = 0;
+    }
+
+    public void RestFilters()
+    {
+        processVolume.linesFloatSpeed.value = 0;
+        bleeding = false;
     }
 }

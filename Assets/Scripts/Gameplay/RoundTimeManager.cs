@@ -15,7 +15,7 @@ public class RoundTimeManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(BaseBuilding.GameMode == BaseBuilding.Mode.build)
+        if(RoundManager.GameMode == RoundManager.Mode.build)
         {
             ball.SetFirstLaunch(true);
         }

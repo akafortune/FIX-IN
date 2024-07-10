@@ -65,7 +65,7 @@ public class Bubble : MonoBehaviour
 
     private void Update()
     {
-        if(BaseBuilding.GameMode == BaseBuilding.Mode.defend)
+        if(RoundManager.GameMode == RoundManager.Mode.defend)
         {
             //StartCoroutine(Pop());
         }
@@ -74,12 +74,12 @@ public class Bubble : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
 
-        if (collision.gameObject.name.Equals("HeadBox") && BaseBuilding.resources - cost >= 0)
+        if (collision.gameObject.name.Equals("HeadBox") && RoundManager.resources - cost >= 0)
         {
             collision.transform.parent.SendMessage("addSpecialResources", brickInd);
-            BaseBuilding.resources -= cost;
+            RoundManager.resources -= cost;
             floatingText.ShowV2FloatingText("-" + cost.ToString(), resourcesTextTransform);
-            BaseBuilding.justGot = true;
+            RoundManager.justGot = true;
 
             StartCoroutine(Pop());
         }

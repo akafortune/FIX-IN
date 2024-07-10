@@ -17,7 +17,7 @@ public class Mine : SpecialTile
     }
     public new void doAction()
     {
-        BaseBuilding.resources += 1;
+        RoundManager.resources += 1;
         canMine = false;
         ps.Play();
         IEnumerator coroutine = waitToMine();

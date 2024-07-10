@@ -28,7 +28,7 @@ public class TimeInGame : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (timeText.IsActive() && BaseBuilding.GameMode == BaseBuilding.Mode.defend)
+        if (timeText.IsActive() && RoundManager.GameMode == RoundManager.Mode.defend)
         {
             TimeSpan time;
             //Debug.Log("Time: " + currentTime);
@@ -52,7 +52,7 @@ public class TimeInGame : MonoBehaviour
     }
     void FixedUpdate()
     {
-        if (BaseBuilding.GameMode == BaseBuilding.Mode.defend)
+        if (RoundManager.GameMode == RoundManager.Mode.defend)
         {
             //score += oneSecond * Time.fixedDeltaTime;
             //scoreText.text = ((int)score).ToString();

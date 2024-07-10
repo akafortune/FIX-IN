@@ -83,7 +83,7 @@ public class BrickLayers : MonoBehaviour
 
         int rowNumber = name.ToCharArray()[name.Length - 1] - 48; //correcting for weird char shenanigans
 
-        roundCount = BaseBuilding.getRoundCount();
+        roundCount = RoundManager.getRoundCount();
         int roundCountLastDigit = roundCount % roundsUntilChange;
         //print(roundCountLastDigit);
 

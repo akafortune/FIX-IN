@@ -19,7 +19,7 @@ public class Brick : MonoBehaviour
     public static bool canBreak;
     public bool replaced;
     private GreenGuy GreenGuy;
-    BaseBuilding baseBuilding;
+    RoundManager baseBuilding;
     // Start is called before the first frame update
     void Awake()
     {
@@ -33,7 +33,7 @@ public class Brick : MonoBehaviour
         breakIndicator.enabled = false;
         GreenGuy = GameObject.Find("GreenGuy").GetComponent<GreenGuy>();
         replaced = false;
-        baseBuilding = GameObject.FindAnyObjectByType<BaseBuilding>();
+        baseBuilding = GameObject.FindAnyObjectByType<RoundManager>();
     }
 
     // Update is called once per frame

@@ -64,7 +64,7 @@ public class ScoreManager : MonoBehaviour
     public void GameOver()
     {
         GameStats.playerScore = currentScore;
-        GameStats.roundsLasted = BaseBuilding.getRoundCount();
+        GameStats.roundsLasted = RoundManager.getRoundCount();
         HighScoresSet scoresSet = GameObject.FindAnyObjectByType<HighScoresSet>();
         if (currentScore > scoresSet.scores[0].points)
         {

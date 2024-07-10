@@ -47,7 +47,7 @@ public class GreenGuy : MonoBehaviour
     public Sprite[] iconArray;
     public int[] specialBrickAmounts;
 
-    BaseBuilding BaseBuilding;
+    RoundManager BaseBuilding;
 
     public int score;
 
@@ -93,7 +93,7 @@ public class GreenGuy : MonoBehaviour
     void Start()
     {
         Debug.Log(this.gameObject.name);
-        BaseBuilding = GameObject.FindAnyObjectByType<BaseBuilding>();
+        BaseBuilding = GameObject.FindAnyObjectByType<RoundManager>();
         platforms = GameObject.Find("Platforms").GetComponentsInChildren<BoxCollider2D>();
         SwingDustTransform = GameObject.Find("SwingDust").GetComponent<Transform>();
         materialIcon = GameObject.Find("SelectedIcon").GetComponent<RawImage>();
@@ -293,7 +293,7 @@ public class GreenGuy : MonoBehaviour
                 }
             }
 
-            if(BaseBuilding.GameMode == BaseBuilding.Mode.build)
+            if(RoundManager.GameMode == RoundManager.Mode.build)
             {
                 if (Input.GetKeyDown(KeyCode.E) ||  (BXSwap && Input.GetKeyDown("joystick button 1") || !BXSwap && Input.GetKeyDown("joystick button 2")))
                 {
@@ -363,7 +363,7 @@ public class GreenGuy : MonoBehaviour
             canMove = true;
             animator.SetBool("Swinging", false);
             building = false;
-            if (BaseBuilding.GameMode != BaseBuilding.Mode.build && BaseBuilding.lastBrickBuilt &&!specialWhack)
+            if (RoundManager.GameMode != RoundManager.Mode.build && RoundManager.lastBrickBuilt &&!specialWhack)
             {
                 scoreManager.IncreaseScore(10);
                 // Trigger floating text here
@@ -393,33 +393,33 @@ public class GreenGuy : MonoBehaviour
         {
             if (fixRay.collider.isTrigger)
             {
-                if (BaseBuilding.GameMode == BaseBuilding.Mode.defend || (BaseBuilding.GameMode == BaseBuilding.Mode.build && (BaseBuilding.resources - BrickValue() >= 0)) || brickType != 0)
+                if (RoundManager.GameMode == RoundManager.Mode.defend || (RoundManager.GameMode == RoundManager.Mode.build && (RoundManager.resources - BrickValue() >= 0)) || brickType != 0)
                 {
                     fixRay.collider.SendMessage("ShowFixIndicator");
                 }
             }
             if (fixRay.collider.gameObject.name.Contains("ShieldGenerator"))
             {
-                if (BaseBuilding.GameMode == BaseBuilding.Mode.defend)
+                if (RoundManager.GameMode == RoundManager.Mode.defend)
                 {
                     fixRay.collider.SendMessage("ShowShieldIndicator");
                 }
             }
             else if (fixRay.collider.gameObject.name.Contains("Mine"))
             {
-                if (BaseBuilding.GameMode == BaseBuilding.Mode.defend)
+                if (RoundManager.GameMode == RoundManager.Mode.defend)
                 {
                     fixRay.collider.SendMessage("ShowMine");
                 }
             }
             else if (fixRay.collider.gameObject.name.Contains("Reinforced"))
             {
-                if (BaseBuilding.GameMode == BaseBuilding.Mode.defend)
+                if (RoundManager.GameMode == RoundManager.Mode.defend)
                 {
                     fixRay.collider.SendMessage("ShowRepair");
                 }
             }
-            if (!fixRay.collider.isTrigger && BaseBuilding.GameMode == BaseBuilding.Mode.build )//&& fixRay.collider.gameObject.name.Contains("Brick"))
+            if (!fixRay.collider.isTrigger && RoundManager.GameMode == RoundManager.Mode.build )//&& fixRay.collider.gameObject.name.Contains("Brick"))
             {
                 fixRay.collider.SendMessage("ShowBreakIndicator");
             }
@@ -546,14 +546,14 @@ public class GreenGuy : MonoBehaviour
         {
             string parentBrick = fixRay.collider.transform.parent.gameObject.name;
 
-            if (BaseBuilding.GameMode == BaseBuilding.Mode.build)
+            if (RoundManager.GameMode == RoundManager.Mode.build)
             {
                 if(brickType == 0)
                 {
-                    if (BaseBuilding.resources - BrickValue() >= 0)
+                    if (RoundManager.resources - BrickValue() >= 0)
                     {
                         
-                        BaseBuilding.resources -= BrickValue();
+                        RoundManager.resources -= BrickValue();
                         fixRay.collider.gameObject.SendMessage("fixBrick");
                         floatingText.ShowV2FloatingText("-" + BrickValue().ToString(), resourcesTextTransform);
                     }
@@ -575,7 +575,7 @@ public class GreenGuy : MonoBehaviour
                 }
             }
 
-            if(BaseBuilding.GameMode == BaseBuilding.Mode.defend)
+            if(RoundManager.GameMode == RoundManager.Mode.defend)
             {
                 fixRay.collider.gameObject.SendMessage("fixBrick");
             }
@@ -590,7 +590,7 @@ public class GreenGuy : MonoBehaviour
         }
         else
         {
-            if (BaseBuilding.GameMode == BaseBuilding.Mode.build) //destroying bricks in build mode
+            if (RoundManager.GameMode == RoundManager.Mode.build) //destroying bricks in build mode
             {
                 fixRay.collider.gameObject.SendMessage("cancelBrick");
                 animator.SetTrigger("Fix");
@@ -600,10 +600,10 @@ public class GreenGuy : MonoBehaviour
                 buildClock = 0;
                 canMove = false;
                 audioSource.PlayOneShot(brickBreak);
-                BaseBuilding.resources += BrickValue();
+                RoundManager.resources += BrickValue();
                 floatingText.ShowV2FloatingText("+" + BrickValue().ToString(), resourcesTextTransform);
             }
-            else if(BaseBuilding.GameMode == BaseBuilding.Mode.defend && fixRay.collider.name.StartsWith("Shield"))
+            else if(RoundManager.GameMode == RoundManager.Mode.defend && fixRay.collider.name.StartsWith("Shield"))
             {
                 Shield shield = fixRay.collider.GetComponent<Shield>();
                 if (shield.CanStart())
@@ -620,7 +620,7 @@ public class GreenGuy : MonoBehaviour
                     shield.StartShield();
                 }
             }
-            else if (BaseBuilding.GameMode == BaseBuilding.Mode.defend && fixRay.collider.name.StartsWith("Mine") && !building)
+            else if (RoundManager.GameMode == RoundManager.Mode.defend && fixRay.collider.name.StartsWith("Mine") && !building)
             {
                 Mine mine = fixRay.collider.GetComponent<Mine>();
                 if (mine.getMineable())
@@ -637,7 +637,7 @@ public class GreenGuy : MonoBehaviour
                     audioSource.PlayOneShot(brickBreak);
                 }
             }
-            else if (BaseBuilding.GameMode == BaseBuilding.Mode.defend && fixRay.collider.name.StartsWith("Reinforced") && !building)
+            else if (RoundManager.GameMode == RoundManager.Mode.defend && fixRay.collider.name.StartsWith("Reinforced") && !building)
             {
                 Reinforced tile = fixRay.collider.GetComponent<Reinforced>();
                 if(tile.canRepair())
