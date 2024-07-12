@@ -14,6 +14,6 @@ public class ModelVisuals : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        this.transform.Rotate(spinXDelta, spinYDelta, spinZDelta);
+        this.transform.Rotate(spinXDelta * Time.deltaTime, spinYDelta * Time.deltaTime, spinZDelta * Time.deltaTime);
     }
 }
