@@ -20,9 +20,9 @@ public class ImposterCollider : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.layer == 6 && !building)
+        if (collision.gameObject.layer == 6)
         {
-            tm.
+            tm.HeadbuttTrigger();
         }
     }
 }

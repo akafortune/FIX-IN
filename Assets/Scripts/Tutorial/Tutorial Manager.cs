@@ -26,10 +26,14 @@ public class TutorialManager : MonoBehaviour
 
     private GameObject score;
     private GameObject head;
-    private GameObject resources;
+    private GameObject resourcesBox;
     private GameObject cost;
+    private GameObject costAmounts;
     private GameObject current_Material;
     private GameObject current_Material_Label;
+
+    [SerializeField]
+    private GameObject[] Layers;
     // Start is called before the first frame update
     void Start()
     {
@@ -50,10 +54,12 @@ public class TutorialManager : MonoBehaviour
             GameObject.Find("RoundCounter").SetActive(false);
             GameObject.Find("HighScores").SetActive(false);
             
-            resources = GameObject.Find("Resources");
-            resources.SetActive(false);
+            resourcesBox = GameObject.Find("Resources");
+            resourcesBox.SetActive(false);
             cost = GameObject.Find("Cost");
             cost.SetActive(false);
+            costAmounts = GameObject.Find("Resource Values");
+            costAmounts.SetActive(false);
             current_Material = GameObject.Find("Current_Material");
             current_Material.SetActive(false);
             current_Material_Label = GameObject.Find("Current_Material_Label");
@@ -68,7 +74,6 @@ public class TutorialManager : MonoBehaviour
             {
                 rebuild.SetActive(false);
             }
-            GameObject.Find("Resource Values").SetActive(false);
             GameObject.Find("SelectedIcon").SetActive(false);
             GameObject.Find("Layer 1").SetActive(false);
             GameObject.Find("Layer 2").SetActive(false);
@@ -93,6 +98,33 @@ public class TutorialManager : MonoBehaviour
                     StartCoroutine(Step2());
                 }
                 break;
+            case 3:
+                if (!stepping)
+                {
+                    stepping = true;
+                    StartCoroutine(Step3());
+                }
+                break;
+            case 4:
+                if (!stepping)
+                {
+                    BoxCollider2D[] bricks =  Layers[0].GetComponentsInChildren<BoxCollider2D>();
+                    int i = 0;
+                    foreach(BoxCollider2D b in bricks)
+                    {
+                        if (b.isTrigger == false)
+                        {
+                            i++;
+                        }
+                    } 
+                    if (i >= 10)
+                    {
+                        Debug.Log("Step 4");
+                        stepping = true;
+                        StartCoroutine(Step4());
+                    }
+                }
+                break;
             default: break;
         }
     }
@@ -113,6 +145,36 @@ public class TutorialManager : MonoBehaviour
              StartCoroutine(FadeOut());
         }
             
+    }
+
+    void ShowOnlyBottomRow()
+    {
+        Layers[0].SetActive(true);
+        Transform[] Bricks = Layers[0].GetComponentsInChildren<Transform>();
+        for (int i = 0; i < Bricks.Length; i++)
+        {
+            if (Bricks[i].name == "Brick(Clone)")
+            {
+                Animator b = Bricks[i].gameObject.GetComponent<Animator>();
+                b.SetBool("IsBroken", true);
+                b.Play("BrokenBrick", 0, 0);
+            }
+        }
+        for (int i = 1; i < Layers.Length; i++)
+        {
+            Layers[i].SetActive(true);
+            Transform[] HiddenBricks = Layers[i].GetComponentsInChildren<Transform>();
+            for (int j = 0; j < HiddenBricks.Length; j++)
+            {
+                if (HiddenBricks[j].name == "Brick(Clone)")
+                {
+                    Animator b = HiddenBricks[i].gameObject.GetComponent<Animator>();
+                    b.SetBool("IsBroken", true);
+                    b.Play("BrokenBrick", 0, 0);
+                    HiddenBricks[j].GetComponent<SpriteRenderer>().enabled = false;
+                }
+            }
+        }
     }
 
     private IEnumerator FadeIn()
@@ -162,6 +224,7 @@ public class TutorialManager : MonoBehaviour
                 break;
                 case 2:
                     ball.ResetBall();
+                    ball.LaunchSequence();
                 break;
             default: break;
         }
@@ -207,10 +270,38 @@ public class TutorialManager : MonoBehaviour
         ball.gameObject.SetActive(false);
         BlueGuyFade(true);
         score.SetActive(true);
+        ScoreManager sm = GameObject.Find("ScoreManager").GetComponent<ScoreManager>();
+        sm.currentScore = 5;
+        sm.scoreText.text = sm.currentScore.ToString();
         string[] lines = File.ReadAllLines(Path.Combine(Application.streamingAssetsPath, "Tutorial Text/Explain Score.txt"));
         yield return StartCoroutine(StepText(lines));
+        yield return new WaitForSeconds(1);
+        step = 3;
+        stepping = false;
     }
 
+    private IEnumerator Step3()
+    {
+        ShowOnlyBottomRow();
+        resourcesBox.SetActive(true);
+        cost.SetActive(true);
+        costAmounts.SetActive(true);
+        BaseBuilding bb = GameObject.Find("Bricks").GetComponent<BaseBuilding>();
+        BaseBuilding.resources = 0;
+        bb.resourcesText.text = "0";
+        string[] lines = File.ReadAllLines(Path.Combine(Application.streamingAssetsPath, "Tutorial Text/Explain Building.txt"));
+        yield return StartCoroutine(StepText(lines));
+        BaseBuilding.resources = 50;
+        bb.resourcesText.text = "50";
+        step = 4;
+        stepping = false;
+    }
+    private IEnumerator Step4()
+    {
+        string[] lines = File.ReadAllLines(Path.Combine(Application.streamingAssetsPath, "Tutorial Text/Bricks Part 2.txt"));
+        yield return StartCoroutine(StepText(lines));
+        
+    }
     private IEnumerator StepText(string[] lines)
     {
         for (int i = 0; i < lines.Length; i++)
@@ -226,7 +317,8 @@ public class TutorialManager : MonoBehaviour
         for (int n = 0; n < s.Length; n++)
         {
             textBox.text += s[n];
-            yield return new WaitForSeconds(0.1f);
+            if (s[n] == '.') {yield return new WaitForSeconds(0.5f);}
+            else {yield return new WaitForSeconds(0.07f);}
         }
     }
 }

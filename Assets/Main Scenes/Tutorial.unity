@@ -2715,6 +2715,12 @@ MonoBehaviour:
   ball: {fileID: 290909472}
   paddle: {fileID: 471462421}
   textBox: {fileID: 1622083541}
+  Layers:
+  - {fileID: 212860256}
+  - {fileID: 1110097097}
+  - {fileID: 155089205}
+  - {fileID: 1676614987}
+  - {fileID: 1256650242}
 --- !u!4 &582355819
 Transform:
   m_ObjectHideFlags: 0
@@ -11983,6 +11989,7 @@ GameObject:
   - component: {fileID: 1338826221}
   - component: {fileID: 1338826223}
   - component: {fileID: 1338826222}
+  - component: {fileID: 1338826224}
   m_Layer: 0
   m_Name: HeadBox
   m_TagString: Untagged
@@ -12102,6 +12109,19 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &1338826224
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1338826220}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e0595b6a0ee074b45b588e8f89c76dfb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tm: {fileID: 582355818}
 --- !u!1 &1368084165 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2110409089704849248, guid: 0a5992637b5bf294ca037dea28a36344, type: 3}
