@@ -21,6 +21,8 @@ public class TutorialManager : MonoBehaviour
 
     private int step;
     private bool stepping;
+    private bool survived;
+    private float timer;
     [SerializeField]
     private TextMeshProUGUI textBox;
 
@@ -39,6 +41,8 @@ public class TutorialManager : MonoBehaviour
     {
         step = 0;
         firstFrame = true;
+        survived = false;
+        timer = 60f;
     }
 
     // Update is called once per frame
@@ -123,6 +127,20 @@ public class TutorialManager : MonoBehaviour
                         stepping = true;
                         StartCoroutine(Step4());
                     }
+                }
+                break;
+            case 5:
+                timer -= Time.deltaTime;
+                if (timer <= 0)
+                {
+                    step = 6;
+                }
+                break;
+            case 6:
+                if (!stepping)
+                {
+                    stepping = true;
+                    StartCoroutine(Step6());
                 }
                 break;
             default: break;
@@ -222,11 +240,17 @@ public class TutorialManager : MonoBehaviour
                     ball.gameObject.SetActive(false);
                     stepping = false;
                 break;
-                case 2:
+            case 2:
                     ball.ResetBall();
                     ball.LaunchSequence();
                 break;
             default: break;
+            case 5:
+                ball.ResetBall();
+                ball.gameObject.SetActive(false);
+                survived = false;
+                step = 6;
+                break;
         }
     }
 
@@ -300,7 +324,19 @@ public class TutorialManager : MonoBehaviour
     {
         string[] lines = File.ReadAllLines(Path.Combine(Application.streamingAssetsPath, "Tutorial Text/Bricks Part 2.txt"));
         yield return StartCoroutine(StepText(lines));
+        GameObject.Find("Bricks").GetComponent<BaseBuilding>().BeginRound();
+        step = 5;
+        stepping = false;
         
+    }
+    private IEnumerator Step6()
+    {
+        if (timer > 0)
+        {
+            
+        }
+        string[] lines = File.ReadAllLines(Path.Combine(Application.streamingAssetsPath, "Tutorial Text/Bricks Part 2.txt"));
+        yield return StartCoroutine(StepText(lines));
     }
     private IEnumerator StepText(string[] lines)
     {
