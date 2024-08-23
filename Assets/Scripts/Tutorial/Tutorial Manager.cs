@@ -36,13 +36,17 @@ public class TutorialManager : MonoBehaviour
 
     [SerializeField]
     private GameObject[] Layers;
+
+    [SerializeField]
+    private SceneTransition ST; // to exit tutorial at end
+
     // Start is called before the first frame update
     void Start()
     {
         step = 0;
         firstFrame = true;
         survived = false;
-        timer = 60f;
+        timer = 33.5f;
     }
 
     // Update is called once per frame
@@ -129,9 +133,9 @@ public class TutorialManager : MonoBehaviour
                     }
                 }
                 break;
-            case 5:
-                timer -= Time.deltaTime;
-                if (timer <= 0)
+            case 5:     ///NOAH HERE IS THE TIMER///
+                timer -= Time.deltaTime;    ///NOAH HERE IS THE TIMER///
+                if (timer <= 0)    ///NOAH HERE IS THE TIMER///
                 {
                     step = 6;
                 }
@@ -262,6 +266,15 @@ public class TutorialManager : MonoBehaviour
         }
     }
 
+    public void SimulatedRound()
+    {
+        BlueGuyFade(false);
+        ball.gameObject.SetActive(true);
+        ball.ResetBall();
+        ball.LaunchSequence();
+        //BaseBuilding.GameMode = BaseBuilding.Mode.defend; //Need a variable in BaseBuilding that tells Update if in there to NOT act as normal
+    }
+
 
 
 
@@ -288,7 +301,8 @@ public class TutorialManager : MonoBehaviour
         ball.LaunchSequence();
         BlueGuyFade(false);
     }
-        private IEnumerator Step2Half()
+    //Step 2.5, explain after having player hit ball
+    private IEnumerator Step2Half()
     {
         yield return new WaitForSeconds(1);
         ball.gameObject.SetActive(false);
@@ -303,7 +317,7 @@ public class TutorialManager : MonoBehaviour
         step = 3;
         stepping = false;
     }
-
+    // Step 3, let player build
     private IEnumerator Step3()
     {
         ShowOnlyBottomRow();
@@ -320,31 +334,50 @@ public class TutorialManager : MonoBehaviour
         step = 4;
         stepping = false;
     }
+    //Simulate a round
     private IEnumerator Step4()
     {
         string[] lines = File.ReadAllLines(Path.Combine(Application.streamingAssetsPath, "Tutorial Text/Bricks Part 2.txt"));
         yield return StartCoroutine(StepText(lines));
-        GameObject.Find("Bricks").GetComponent<BaseBuilding>().BeginRound();
+        SimulatedRound();
         step = 5;
         stepping = false;
         
     }
+    //finish up
     private IEnumerator Step6()
     {
-        if (timer > 0)
+        BlueGuyFade(true);
+        ball.gameObject.SetActive(false);
+        string[] lines;
+        if (!survived)
         {
-            
+            lines = File.ReadAllLines(Path.Combine(Application.streamingAssetsPath, "Tutorial Text/Test Round Loss.txt"));
+            yield return StartCoroutine(StepText(lines));
         }
-        string[] lines = File.ReadAllLines(Path.Combine(Application.streamingAssetsPath, "Tutorial Text/Bricks Part 2.txt"));
+        else
+        {
+            lines = File.ReadAllLines(Path.Combine(Application.streamingAssetsPath, "Tutorial Text/Test Round Win.txt"));
+            yield return StartCoroutine(StepText(lines));
+        }
+        yield return new WaitForSeconds(2);
+        lines = File.ReadAllLines(Path.Combine(Application.streamingAssetsPath, "Tutorial Text/Final.txt"));
         yield return StartCoroutine(StepText(lines));
+        yield return new WaitForSeconds(2);
+        
+        ST.LoadLevelTransition(0, "");
     }
+
+
+
+
     private IEnumerator StepText(string[] lines)
     {
         for (int i = 0; i < lines.Length; i++)
         {
             textBox.text = "";
             yield return StartCoroutine(TextOutput(lines[i]));
-            yield return new WaitForSeconds(2);
+            yield return new WaitForSeconds(1);
         }
         textBox.text = "";
     }
@@ -353,8 +386,8 @@ public class TutorialManager : MonoBehaviour
         for (int n = 0; n < s.Length; n++)
         {
             textBox.text += s[n];
-            if (s[n] == '.') {yield return new WaitForSeconds(0.5f);}
-            else {yield return new WaitForSeconds(0.07f);}
+            if (s[n] == '.') {yield return new WaitForSeconds(0.01f);}
+            else {yield return new WaitForSeconds(0.01f);}
         }
     }
 }
