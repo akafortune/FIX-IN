@@ -1,0 +1,10 @@
+Look to the bottom
+I've given you a layer of bricks to build
+Very useful for blocking balls
+but they can be pretty fragile...
+In Build Phase you can use resources to build bricks
+Look to the top right
+You can see how many resources you have to build with
+Each Row has different costs for building
+You can see this on the right side of each row
+I'll be nice and give you enough to build out that bottom row
