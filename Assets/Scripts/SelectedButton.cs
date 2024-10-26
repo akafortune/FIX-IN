@@ -63,8 +63,11 @@ public class SelectedButton : MonoBehaviour, ISelectHandler, IDeselectHandler
 
     public void OnSelect(BaseEventData eData)
     {
-        isSelected = true;
-        audioSource.PlayOneShot(buttonChange);
+        if (!isSelected)
+        {
+            isSelected = true;
+            audioSource.PlayOneShot(buttonChange);
+        }
     }
 
     public void OnDeselect(BaseEventData eData) 
