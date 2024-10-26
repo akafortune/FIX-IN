@@ -25,14 +25,14 @@ public class MainMenu : MonoBehaviour
     public TextMeshProUGUI pointValueText;
     int scoreStart = 0;
 
-    GameObject crossfade;
+    public GameObject crossfade;
 
     // Start is called before the first frame update
     void Start()
     {
         s = SettingsMenu.GetComponent<SettingsManager>();
         s.init();
-        crossfade = GameObject.Find("Crossfade");
+        //crossfade = GameObject.Find("Crossfade");
         buttonPressed = false;
         sceneChange = false;
         buffer = 0f;
