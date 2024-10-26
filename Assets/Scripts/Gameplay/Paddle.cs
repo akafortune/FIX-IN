@@ -11,14 +11,7 @@ public class Paddle : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        if (SceneManager.GetActiveScene() == SceneManager.GetSceneByBuildIndex(3) || SceneManager.GetActiveScene() == SceneManager.GetSceneByBuildIndex(4))
-        {
-            Xclamp = 4.25f;
-        }
-        else
-        {
-            Xclamp = 2.25f;
-        }
+        Xclamp = 4.25f;
     }
 
     // Update is called once per frame

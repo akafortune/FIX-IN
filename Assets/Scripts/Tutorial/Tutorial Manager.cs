@@ -22,7 +22,6 @@ public class TutorialManager : MonoBehaviour
     private int step;
     private bool stepping;
     private bool survived;
-    private float timer;
     [SerializeField]
     private TextMeshProUGUI textBox;
 
@@ -35,7 +34,8 @@ public class TutorialManager : MonoBehaviour
     private GameObject current_Material_Label;
 
     private AudioSource songSource;
-     private AudioClip buildSong;
+    private AudioClip buildSong;
+    private Paddle paddleScript;
 
     
 
@@ -52,10 +52,10 @@ public class TutorialManager : MonoBehaviour
     {
         songSource = GameObject.Find("SongSource").GetComponent<AudioSource>();
         buildSong = (AudioClip) Resources.Load("SFX/BuildMusic");
+        paddleScript = paddle.GetComponent<Paddle>();
         step = 0;
         firstFrame = true;
         survived = false;
-        timer = 33.5f;
     }
 
     // Update is called once per frame
@@ -144,9 +144,8 @@ public class TutorialManager : MonoBehaviour
                     }
                 }
                 break;
-            case 5:     ///NOAH HERE IS THE TIMER///
-                //timer -= Time.deltaTime;    ///NOAH HERE IS THE TIMER///
-                if (RoundManager.GameMode == RoundManager.Mode.build)    ///NOAH HERE IS THE TIMER///
+            case 5:     
+                if (RoundManager.GameMode == RoundManager.Mode.build)  
                 {
                     step = 6;
                 }
@@ -297,6 +296,7 @@ public class TutorialManager : MonoBehaviour
         ball.gameObject.SetActive(true);
         ball.LaunchSequence();
         paddle.SetActive(true);
+        paddleScript.Target = ball.transform;
     }
     //Step 2: have player hit ball 
     private IEnumerator Step2()
