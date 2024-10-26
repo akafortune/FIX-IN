@@ -88,19 +88,25 @@ public class RoundManager : MonoBehaviour
         GameMode = Mode.build;
         ball = GameObject.Find("Ball");
         ball.gameObject.SetActive(false);
-        ironBall = GameObject.Find("IronBall").transform.GetChild(0).gameObject;
-        ironBall.SetActive(false);
-        bouncyBall = GameObject.Find("BouncyBall").transform.GetChild(0).gameObject;
-        bouncyBall.gameObject.SetActive(false);
+        if (GameObject.Find("Tutorial Manager") == null)
+        {    
+            ironBall = GameObject.Find("IronBall").transform.GetChild(0).gameObject;
+            ironBall.SetActive(false);
+            bouncyBall = GameObject.Find("BouncyBall").transform.GetChild(0).gameObject;
+            bouncyBall.gameObject.SetActive(false);
+        }
         paddle = GameObject.Find("Paddle");
         paddleScript = paddle.GetComponent<Paddle>();
         paddle.SetActive(false);
         BuildUI = GameObject.Find("BuildUI");
         DefendUI = GameObject.Find("DefendUI");
         freakyText = GameObject.Find("FreakyText");
-        freakyText.SetActive(false);
-        freakTypeText = GameObject.Find("FreakType").GetComponent<TextMeshProUGUI>();
-        freakTypeText.gameObject.SetActive(false);
+        if (freakyText != null) 
+        {
+            freakyText.SetActive(false);
+            freakTypeText = GameObject.Find("FreakType").GetComponent<TextMeshProUGUI>();
+            freakTypeText.gameObject.SetActive(false);
+        }
         RebuildButton = GameObject.Find("Rebuild Button");
         DefendUI.SetActive(false);
         lastBrickBuilt = false;
@@ -235,47 +241,62 @@ public class RoundManager : MonoBehaviour
 
     public void BeginRound()
     {
-        
-        if(firstRound)
+        if (GameObject.Find("Tutorial Manager") == null)
         {
-            StreamWriter sw = new StreamWriter(Application.persistentDataPath + "/SaveData/lastRound1.txt");
-            sw.WriteLine(resources);
+            if(firstRound)
+            {
+                StreamWriter sw = new StreamWriter(Application.persistentDataPath + "/SaveData/lastRound1.txt");
+                sw.WriteLine(resources);
+                foreach (GameObject brick in Bricks)
+                {
+                    sw.Write(brick.GetComponent<Brick>().isBuilt() + ",");
+                }
+                sw.Close();
+                firstRound = false;
+                RebuildButton.SetActive(false);
+            }
+
+            if (BubbleOne != null)
+                BubbleOne.transform.GetChild(0).SendMessage("StartPop");
+
             foreach (GameObject brick in Bricks)
             {
-                sw.Write(brick.GetComponent<Brick>().isBuilt() + ",");
+                //brick.GetComponent<Animator>().SetFloat("FixMultiplier",.65f);
+                if (brick.GetComponent<Collider2D>().isTrigger)
+                {
+                    brick.SetActive(false);
+                }
             }
-            sw.Close();
-            firstRound = false;
-            RebuildButton.SetActive(false);
-        }
+            StartCoroutine(FadeOut());
+            GameMode = Mode.defend;
+            DefendUI.SetActive(true);
+            BuildUI.SetActive(false);
 
-        if (BubbleOne != null)
-            BubbleOne.transform.GetChild(0).SendMessage("StartPop");
-
-        foreach (GameObject brick in Bricks)
-        {
-            //brick.GetComponent<Animator>().SetFloat("FixMultiplier",.65f);
-            if (brick.GetComponent<Collider2D>().isTrigger)
+            if (roundCount % 5 == 0)
             {
-                brick.SetActive(false);
+                StartCoroutine(GetFreaky());
+                return;
             }
-        }
-        StartCoroutine(FadeOut());
-        GameMode = Mode.defend;
-        DefendUI.SetActive(true);
-        BuildUI.SetActive(false);
 
-        if (roundCount % 5 == 0)
+            paddle.SetActive(true);
+            paddleScript.Target = ball.transform;
+            ball.SetActive(true);
+            ball.GetComponent<Ball>().LaunchSequence();
+            ball.GetComponent<Ball>().NewRound(roundCount);
+        }
+        if (GameObject.Find("Tutorial Manager") != null)
         {
-            StartCoroutine(GetFreaky());
-            return;
+            Debug.Log("Starting tutorial round");
+            StartCoroutine(FadeOut());
+            GameMode = Mode.defend;
+            DefendUI.SetActive(true);
+            BuildUI.SetActive(false);
+            paddle.SetActive(true);
+            paddleScript.Target = ball.transform;
+            ball.SetActive(true);
+            ball.GetComponent<Ball>().LaunchSequence();
+            ball.GetComponent<Ball>().NewRound(roundCount);
         }
-
-        paddle.SetActive(true);
-        paddleScript.Target = ball.transform;
-        ball.SetActive(true);
-        ball.GetComponent<Ball>().LaunchSequence();
-        ball.GetComponent<Ball>().NewRound(roundCount);
     }
 
     public bool ModeSet;
@@ -397,69 +418,84 @@ public class RoundManager : MonoBehaviour
     }
     public void BeginBuild()
     {
-        StartCoroutine(FadeIn());
-        Reinforced[] reinforcedTiles = GameObject.FindObjectsByType<Reinforced>(FindObjectsSortMode.None);
-        
-        foreach(Reinforced tile in reinforcedTiles)
+        if (GameObject.Find("Tutorial Manager") == null)
         {
-            tile.ResetHits();
-        }
-
-        if (Teleporter.brokenPortals %2 == 1)
-        {
-            greenGuy.specialBrickAmounts[3]++;
-        }
-        Teleporter.brokenPortals = 0;
-
-        spawnBubble();
-
-        Countdown.text = "";
-        foreach(GameObject brick in Bricks)
-        {
-            if (!brick.activeInHierarchy)
+            StartCoroutine(FadeIn());
+            Reinforced[] reinforcedTiles = GameObject.FindObjectsByType<Reinforced>(FindObjectsSortMode.None);
+            
+            foreach(Reinforced tile in reinforcedTiles)
             {
-                brick.SetActive(true);
-                if (brick.GetComponent<Brick>().bc.isTrigger)
+                tile.ResetHits();
+            }
+
+            if (Teleporter.brokenPortals %2 == 1)
+            {
+                greenGuy.specialBrickAmounts[3]++;
+            }
+            Teleporter.brokenPortals = 0;
+
+            spawnBubble();
+
+            Countdown.text = "";
+            foreach(GameObject brick in Bricks)
+            {
+                if (!brick.activeInHierarchy)
                 {
-                    Animator brickAnim = brick.GetComponent<Animator>();
-                    brickAnim.SetBool("IsBroken", true);
-                    brickAnim.Play("BrokenBrick", 0, 0);
+                    brick.SetActive(true);
+                    if (brick.GetComponent<Brick>().bc.isTrigger)
+                    {
+                        Animator brickAnim = brick.GetComponent<Animator>();
+                        brickAnim.SetBool("IsBroken", true);
+                        brickAnim.Play("BrokenBrick", 0, 0);
+                    }
                 }
             }
-        }
-        FreakyType = RoundType.Normal;
-        songSource.clip = buildSong;
-        songSource.Play();
-        resources += 15;
-        //floatingText.ShowV2FloatingText("+15", resourcesTextTransform);
-        GameMode = Mode.build;
-        DefendUI.SetActive(false);
-        BuildUI.SetActive(true);
-        paddle.SetActive(false);
-        ball.GetComponent<Ball>().RestFilters();
-        ball.SetActive(false);
-        ironBall.SetActive(false);
-        bouncyBall.SetActive(false);
-        roundCount++;
-        scoreManager.GetSpecialBricks();
+            FreakyType = RoundType.Normal;
+            songSource.clip = buildSong;
+            songSource.Play();
+            resources += 15;
+            //floatingText.ShowV2FloatingText("+15", resourcesTextTransform);
+            GameMode = Mode.build;
+            DefendUI.SetActive(false);
+            BuildUI.SetActive(true);
+            paddle.SetActive(false);
+            ball.GetComponent<Ball>().RestFilters();
+            ball.SetActive(false);
+            ironBall.SetActive(false);
+            bouncyBall.SetActive(false);
+            roundCount++;
+            scoreManager.GetSpecialBricks();
 
-        //Resources for score
-        float scoreDiff = scoreManager.currentScore - scoreLast;
-        Debug.Log("Score Diff: "+scoreDiff);
-        if (scoreDiff > 0) 
-        {
-            //divide by 100 and round up
-            float gainF = scoreDiff / 100f;
-            gainF += 0.5f;
-            int gainI = Mathf.RoundToInt(gainF);
-            //*2
-            gainI *= 2;
-            resources += gainI;
-            floatingText.ShowV2FloatingText("+" + (/*(int)*/(15 + gainI)).ToString(), resourcesTextTransform);
+            //Resources for score
+            float scoreDiff = scoreManager.currentScore - scoreLast;
+            Debug.Log("Score Diff: "+scoreDiff);
+            if (scoreDiff > 0) 
+            {
+                //divide by 100 and round up
+                float gainF = scoreDiff / 100f;
+                gainF += 0.5f;
+                int gainI = Mathf.RoundToInt(gainF);
+                //*2
+                gainI *= 2;
+                resources += gainI;
+                floatingText.ShowV2FloatingText("+" + (/*(int)*/(15 + gainI)).ToString(), resourcesTextTransform);
+            }
+            Debug.Log("Score Last Before:" + scoreLast);
+            scoreLast = scoreManager.currentScore;
+            Debug.Log("Score Last After:" + scoreLast);
         }
-        Debug.Log("Score Last Before:" + scoreLast);
-        scoreLast = scoreManager.currentScore;
-        Debug.Log("Score Last After:" + scoreLast);
+        if (GameObject.Find("Tutorial Manager") != null)
+        {
+            Debug.Log("Ending tutorial round");
+            StartCoroutine(FadeIn());
+            songSource.clip = buildSong;
+            songSource.Play();
+            DefendUI.SetActive(false);
+            BuildUI.SetActive(true);
+            paddle.SetActive(false);
+            ball.GetComponent<Ball>().RestFilters();
+            ball.SetActive(false);
+        }
     }
 
     public void SkipBuild()

@@ -34,15 +34,24 @@ public class TutorialManager : MonoBehaviour
     private GameObject current_Material;
     private GameObject current_Material_Label;
 
+    private AudioSource songSource;
+     private AudioClip buildSong;
+
+    
+
     [SerializeField]
     private GameObject[] Layers;
 
     [SerializeField]
     private SceneTransition ST; // to exit tutorial at end
+    [SerializeField]
+    private RoundManager RM; // to exit tutorial at end
 
     // Start is called before the first frame update
     void Start()
     {
+        songSource = GameObject.Find("SongSource").GetComponent<AudioSource>();
+        buildSong = (AudioClip) Resources.Load("SFX/BuildMusic");
         step = 0;
         firstFrame = true;
         survived = false;
@@ -95,6 +104,8 @@ public class TutorialManager : MonoBehaviour
             case 1:
                 if (!stepping)
                 {
+                    songSource.clip = buildSong;
+                    songSource.Play();
                     stepping = true;
                     StartCoroutine(Step1());
                 }
@@ -134,8 +145,8 @@ public class TutorialManager : MonoBehaviour
                 }
                 break;
             case 5:     ///NOAH HERE IS THE TIMER///
-                timer -= Time.deltaTime;    ///NOAH HERE IS THE TIMER///
-                if (timer <= 0)    ///NOAH HERE IS THE TIMER///
+                //timer -= Time.deltaTime;    ///NOAH HERE IS THE TIMER///
+                if (RoundManager.GameMode == RoundManager.Mode.build)    ///NOAH HERE IS THE TIMER///
                 {
                     step = 6;
                 }
@@ -250,8 +261,8 @@ public class TutorialManager : MonoBehaviour
                 break;
             default: break;
             case 5:
-                ball.ResetBall();
-                ball.gameObject.SetActive(false);
+                RoundManager.GameMode = RoundManager.Mode.build;
+                RM.BeginBuild();
                 survived = false;
                 step = 6;
                 break;
@@ -268,11 +279,8 @@ public class TutorialManager : MonoBehaviour
 
     public void SimulatedRound()
     {
-        BlueGuyFade(false);
-        ball.gameObject.SetActive(true);
-        ball.ResetBall();
-        ball.LaunchSequence();
-        //BaseBuilding.GameMode = BaseBuilding.Mode.defend; //Need a variable in BaseBuilding that tells Update if in there to NOT act as normal
+       RoundManager.GameMode = RoundManager.Mode.defend;
+       RM.BeginRound();
     }
 
 
@@ -386,8 +394,8 @@ public class TutorialManager : MonoBehaviour
         for (int n = 0; n < s.Length; n++)
         {
             textBox.text += s[n];
-            if (s[n] == '.') {yield return new WaitForSeconds(0.01f);}
-            else {yield return new WaitForSeconds(0.01f);}
+            if (s[n] == '.') {yield return new WaitForSeconds(0.08f);}
+            else {yield return new WaitForSeconds(0.05f);}
         }
     }
 }

@@ -370,6 +370,13 @@ MonoBehaviour:
   colorMatB: {fileID: 0}
   bricks: {fileID: 900775377911562965, guid: 48e9e960b5c283046ac3e12ae11524e8, type: 3}
   brickValue: 3
+  roundCount: 0
+  mats: []
+  color1: 0
+  color2: 0
+  roundsUntilChange: 0
+  canChangeMaterial: 0
+  materialHasChanged: 0
 --- !u!1 &160389582
 GameObject:
   m_ObjectHideFlags: 0
@@ -669,6 +676,13 @@ MonoBehaviour:
   colorMatB: {fileID: 0}
   bricks: {fileID: 900775377911562965, guid: 48e9e960b5c283046ac3e12ae11524e8, type: 3}
   brickValue: 5
+  roundCount: 0
+  mats: []
+  color1: 0
+  color2: 0
+  roundsUntilChange: 0
+  canChangeMaterial: 0
+  materialHasChanged: 0
 --- !u!1 &216173638
 GameObject:
   m_ObjectHideFlags: 0
@@ -1507,9 +1521,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   resourcesText: {fileID: 2122397061}
+  resourcesTextTransform: {fileID: 0}
   roundTime: 6
-  roundText: {fileID: 0}
+  roundText: {fileID: 699673090}
+  freakyText: {fileID: 0}
+  freakTypeText: {fileID: 0}
   ball: {fileID: 290909468}
+  ironBall: {fileID: 0}
+  bouncyBall: {fileID: 0}
   paddle: {fileID: 471462421}
   Bricks: []
   brickTypes: []
@@ -1540,6 +1559,8 @@ MonoBehaviour:
   - {fileID: 8300000, guid: e20eb60bf9380264c80e791a74deef31, type: 3}
   - {fileID: 8300000, guid: eabc94b76fbc5c64bb2c5cd2a3130838, type: 3}
   - {fileID: 8300000, guid: 7dc234d45061a264b9ceabb7d74ba3a7, type: 3}
+  ModeSet: 0
+  CycleDone: 0
 --- !u!82 &342432821
 AudioSource:
   m_ObjectHideFlags: 0
@@ -2002,6 +2023,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 24675d4d490b4e84889ee31598a7db50, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Target: {fileID: 290909470}
   Anim: {fileID: 471462426}
 --- !u!61 &471462425
 BoxCollider2D:
@@ -2451,6 +2473,7 @@ MonoBehaviour:
   pauseMenu: {fileID: 1646893067}
   songSource: {fileID: 0}
   rebuildActive: 0
+  freakActive: 0
   buffer: 0
   restartGame: 0
   pressRestart: 0
@@ -2473,6 +2496,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   timeText: {fileID: 959180447}
+  timerRend: {fileID: 0}
+  regularColor: {r: 1, g: 1, b: 1, a: 1}
+  thirtySeconds: {r: 0, g: 0, b: 0, a: 0}
+  tenSeconds: {r: 0, g: 0, b: 0, a: 0}
 --- !u!114 &549752044
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2933,7 +2960,9 @@ MonoBehaviour:
   materialText: {fileID: 1109373953}
   materialIcon: {fileID: 0}
   floatingText: {fileID: 0}
+  resourcesTextTransform: {fileID: 0}
   headBox: {fileID: 0}
+  costTexts: []
   checkBox: {fileID: 0}
   audioSource: {fileID: 1236842747}
   walk: {fileID: 0}
@@ -5743,6 +5772,13 @@ MonoBehaviour:
   colorMatB: {fileID: 0}
   bricks: {fileID: 900775377911562965, guid: 48e9e960b5c283046ac3e12ae11524e8, type: 3}
   brickValue: 4
+  roundCount: 0
+  mats: []
+  color1: 0
+  color2: 0
+  roundsUntilChange: 0
+  canChangeMaterial: 0
+  materialHasChanged: 0
 --- !u!4 &1132557280 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2905456087885855107, guid: ca760b86ea0973d45b504c6383d3febe, type: 3}
@@ -11009,6 +11045,13 @@ MonoBehaviour:
   colorMatB: {fileID: 0}
   bricks: {fileID: 900775377911562965, guid: 48e9e960b5c283046ac3e12ae11524e8, type: 3}
   brickValue: 1
+  roundCount: 0
+  mats: []
+  color1: 0
+  color2: 0
+  roundsUntilChange: 0
+  canChangeMaterial: 0
+  materialHasChanged: 0
 --- !u!1001 &1259053909
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -11159,6 +11202,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   yOffset: 0
   floatingText: {fileID: 0}
+  floatingTextV2: {fileID: 0}
 --- !u!82 &1259636391
 AudioSource:
   m_ObjectHideFlags: 0
@@ -14316,6 +14360,13 @@ MonoBehaviour:
   colorMatB: {fileID: 0}
   bricks: {fileID: 900775377911562965, guid: 48e9e960b5c283046ac3e12ae11524e8, type: 3}
   brickValue: 2
+  roundCount: 0
+  mats: []
+  color1: 0
+  color2: 0
+  roundsUntilChange: 0
+  canChangeMaterial: 0
+  materialHasChanged: 0
 --- !u!1 &1680106070
 GameObject:
   m_ObjectHideFlags: 0
