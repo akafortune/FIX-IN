@@ -519,19 +519,23 @@ public class RoundManager : MonoBehaviour
     public void BuildLast()
     {
         StreamReader sr = new StreamReader(Application.persistentDataPath + "/SaveData/lastRound1.txt");
-        resources = Convert.ToInt32(sr.ReadLine());
-        string[] brickArrangement = sr.ReadLine().Split(',');
-        int index = 0;
-        foreach(GameObject brick in Bricks)
+
+        int readResources = Convert.ToInt32(sr.ReadLine());
+        if(readResources != 45)
         {
-            if (Convert.ToBoolean(brickArrangement[index]))
-                brick.GetComponent<Brick>().fixBrick();
-            else
-                brick.GetComponent<Brick>().cancelBrick();
-            index++;
+            string[] brickArrangement = sr.ReadLine().Split(',');
+            int index = 0;
+            foreach (GameObject brick in Bricks)
+            {
+                if (Convert.ToBoolean(brickArrangement[index]))
+                    brick.GetComponent<Brick>().fixBrick();
+                else
+                    brick.GetComponent<Brick>().cancelBrick();
+                index++;
+            }
+            sr.Close();
+            RebuildButton.SetActive(false);
         }
-        sr.Close();
-        RebuildButton.SetActive(false);
     }
 
     protected void spawnBubble()
