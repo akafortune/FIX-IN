@@ -1997,7 +1997,7 @@ MonoBehaviour:
   risingPoints: {fileID: 0}
   roundCountText: {fileID: 0}
   pointValueText: {fileID: 0}
-  crossfade: {fileID: 1322682403}
+  crossfade: {fileID: 0}
 --- !u!82 &1028547512
 AudioSource:
   m_ObjectHideFlags: 0
@@ -2441,11 +2441,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!1 &1322682403 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 7817342135059991122, guid: 0eda7a1e0d664f1448c9987930aa12d1, type: 3}
-  m_PrefabInstance: {fileID: 1909219242}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1328196984
 GameObject:
   m_ObjectHideFlags: 0
@@ -4190,7 +4185,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 246, y: -110}
+  m_AnchoredPosition: {x: 246, y: -109.99997}
   m_SizeDelta: {x: -524.56, y: -246.12}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1880486573
@@ -4955,7 +4950,7 @@ GameObject:
   - component: {fileID: 2085422476}
   - component: {fileID: 2085422475}
   m_Layer: 5
-  m_Name: ScoresText
+  m_Name: HighScores
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

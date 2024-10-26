@@ -251,62 +251,62 @@ public class RoundManager : MonoBehaviour
     public void BeginRound()
     {
         if (GameObject.Find("Tutorial Manager") == null)
-        //roundTM.roundTime = 60f;
-        if(firstRound)
-        {
-            if(firstRound)
+            //roundTM.roundTime = 60f;
+            if (firstRound)
             {
-                StreamWriter sw = new StreamWriter(Application.persistentDataPath + "/SaveData/lastRound1.txt");
-                sw.WriteLine(resources);
+                if (firstRound)
+                {
+                    StreamWriter sw = new StreamWriter(Application.persistentDataPath + "/SaveData/lastRound1.txt");
+                    sw.WriteLine(resources);
+                    foreach (GameObject brick in Bricks)
+                    {
+                        sw.Write(brick.GetComponent<Brick>().isBuilt() + ",");
+                    }
+                    sw.Close();
+                    firstRound = false;
+                    RebuildButton.SetActive(false);
+                }
+
+                if (BubbleOne != null)
+                    BubbleOne.transform.GetChild(0).SendMessage("StartPop");
+
                 foreach (GameObject brick in Bricks)
                 {
-                    sw.Write(brick.GetComponent<Brick>().isBuilt() + ",");
+                    //brick.GetComponent<Animator>().SetFloat("FixMultiplier",.65f);
+                    if (brick.GetComponent<Collider2D>().isTrigger)
+                    {
+                        brick.SetActive(false);
+                    }
                 }
-                sw.Close();
-                firstRound = false;
-                RebuildButton.SetActive(false);
-            }
-
-            if (BubbleOne != null)
-                BubbleOne.transform.GetChild(0).SendMessage("StartPop");
-
-            foreach (GameObject brick in Bricks)
-            {
-                //brick.GetComponent<Animator>().SetFloat("FixMultiplier",.65f);
-                if (brick.GetComponent<Collider2D>().isTrigger)
+                StartCoroutine(FadeOut());
+                GameMode = Mode.defend;
+                DefendUI.SetActive(true);
+                BuildUI.SetActive(false);
+                if (RoundTimeManager.roundCount % 5 == 0)
                 {
-                    brick.SetActive(false);
+                    StartCoroutine(GetFreaky());
+                    return;
                 }
+                paddle.SetActive(true);
+                paddleScript.Target = ball.transform;
+                ball.SetActive(true);
+                ball.GetComponent<Ball>().LaunchSequence();
+                ball.GetComponent<Ball>().NewRound(RoundTimeManager.roundCount);
             }
-            StartCoroutine(FadeOut());
-            GameMode = Mode.defend;
-            DefendUI.SetActive(true);
-            BuildUI.SetActive(false);
-
-            if (roundCount % 5 == 0)
-            {
-                StartCoroutine(GetFreaky());
-                return;
-            }
-            paddle.SetActive(true);
-            paddleScript.Target = ball.transform;
-            ball.SetActive(true);
-            ball.GetComponent<Ball>().LaunchSequence();
-            ball.GetComponent<Ball>().NewRound(roundCount);
-        }
         if (GameObject.Find("Tutorial Manager") != null)
-        if (RoundTimeManager.roundCount % 5 == 0)
-        {
-            Debug.Log("Starting tutorial round");
-            StartCoroutine(FadeOut());
-            GameMode = Mode.defend;
-            DefendUI.SetActive(true);
-            BuildUI.SetActive(false);
-            paddle.SetActive(true);
-            paddleScript.Target = ball.transform;
-            ball.SetActive(true);
-            ball.GetComponent<Ball>().LaunchSequence(60f);
-            ball.GetComponent<Ball>().NewRound(RoundTimeManager.roundCount);
+            if (RoundTimeManager.roundCount % 5 == 0)
+            {
+                Debug.Log("Starting tutorial round");
+                StartCoroutine(FadeOut());
+                GameMode = Mode.defend;
+                DefendUI.SetActive(true);
+                BuildUI.SetActive(false);
+                paddle.SetActive(true);
+                paddleScript.Target = ball.transform;
+                ball.SetActive(true);
+                ball.GetComponent<Ball>().LaunchSequence(60f);
+                ball.GetComponent<Ball>().NewRound(RoundTimeManager.roundCount);
+            }
     }
 
     public bool ModeSet;
