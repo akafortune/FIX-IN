@@ -17,7 +17,7 @@ public class HighScoresSet : MonoBehaviour
     // Start is called before the first frame update
     void Awake()
     {
-        highScoreText = GameObject.Find("HighScores").GetComponent<TextMeshProUGUI>();
+        highScoreText = GameObject.Find("ScoresText").GetComponent<TextMeshProUGUI>();
         string scoreDataPath = Application.persistentDataPath + "/SaveData/Scores.txt";
         if (!File.Exists(scoreDataPath))
         {

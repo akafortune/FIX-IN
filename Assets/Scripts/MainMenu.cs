@@ -111,12 +111,18 @@ public class MainMenu : MonoBehaviour
     {
         if(!SettingsMenu.activeInHierarchy)
         {
-            SettingsMenu.SetActive(true);
+            StartCoroutine(waitToToggleSettings());
         }
         else
         {
             SettingsMenu.SetActive(false);
         }
+    }
+
+    private IEnumerator waitToToggleSettings()
+    {
+        yield return new WaitForSeconds(.25f);
+        SettingsMenu.SetActive(true);
     }
 
     public void Quit()
