@@ -46,12 +46,13 @@ public class HighScoresSet : MonoBehaviour
             scores[index] = new Score(Convert.ToInt32(splitInput[1]), splitInput[0]);
             index++;
         }
+        highScoreText.text = "High\nScores\n\n" + scores[0].toString() + "\n" + scores[1].toString() + "\n" + scores[2].toString();
     }
 
     // Update is called once per frame
     void Update()
     {
-        highScoreText.text = "High Scores\n\n" + scores[0].toString() + "\n" + scores[1].toString() + "\n" + scores[2].toString();    
+        
     }
 
     
