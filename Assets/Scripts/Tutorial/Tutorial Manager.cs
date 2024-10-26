@@ -324,12 +324,12 @@ public class TutorialManager : MonoBehaviour
         resourcesBox.SetActive(true);
         cost.SetActive(true);
         costAmounts.SetActive(true);
-        BaseBuilding bb = GameObject.Find("Bricks").GetComponent<BaseBuilding>();
-        BaseBuilding.resources = 0;
+        RoundManager bb = GameObject.Find("Bricks").GetComponent<RoundManager>();
+        RoundManager.resources = 0;
         bb.resourcesText.text = "0";
         string[] lines = File.ReadAllLines(Path.Combine(Application.streamingAssetsPath, "Tutorial Text/Explain Building.txt"));
         yield return StartCoroutine(StepText(lines));
-        BaseBuilding.resources = 50;
+        RoundManager.resources = 50;
         bb.resourcesText.text = "50";
         step = 4;
         stepping = false;
