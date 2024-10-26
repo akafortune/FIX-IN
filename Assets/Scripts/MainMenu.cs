@@ -12,12 +12,13 @@ public class MainMenu : MonoBehaviour
 {
     public GameObject canvas;
     public GameObject loadScreen;
+    public static GameObject greenGuy;
     public float buffer = 0f;
     public bool buttonPressed;
     public bool sceneChange;
     public int sceneNumber;
     public GameObject SettingsMenu;
-    SettingsManager s;
+    SettingsManager settingsManager;
     private AudioSource audioSource;
     public AudioClip gameOverSound, risingPoints;
 
@@ -30,8 +31,8 @@ public class MainMenu : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        s = SettingsMenu.GetComponent<SettingsManager>();
-        s.init();
+        settingsManager = SettingsMenu.GetComponent<SettingsManager>();
+        settingsManager.init();
         //crossfade = GameObject.Find("Crossfade");
         buttonPressed = false;
         sceneChange = false;
@@ -52,6 +53,7 @@ public class MainMenu : MonoBehaviour
             roundCountText.text = GameStats.roundsLasted.ToString();
             pointValueText.text = scoreStart.ToString();
         }
+        greenGuy = GameObject.Find("GreenGent");
     }
 
     public void Update()
@@ -95,9 +97,6 @@ public class MainMenu : MonoBehaviour
             {
                 Debug.Log("CrossfadeStart");
                 crossfade.GetComponent<SceneTransition>().LoadLevelTransition(scene, "load");
-                //canvas.SetActive(false);
-                //loadScreen.SetActive(true);
-                //loadScreen.gameObject.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 1);
             }
             //SceneManager.LoadScene(scene);
             else
@@ -105,7 +104,6 @@ public class MainMenu : MonoBehaviour
                 crossfade.GetComponent<SceneTransition>().LoadLevelTransition(scene, "");
             }
             sceneChange = false;
-
         }
     }
 

@@ -1132,6 +1132,12 @@ MonoBehaviour:
   risingPoints: {fileID: 0}
   roundCountText: {fileID: 0}
   pointValueText: {fileID: 0}
+  crossfade: {fileID: 353809909}
+--- !u!1 &353809909 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7817342135059991122, guid: 0eda7a1e0d664f1448c9987930aa12d1, type: 3}
+  m_PrefabInstance: {fileID: 458661047}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &381602697
 GameObject:
   m_ObjectHideFlags: 0

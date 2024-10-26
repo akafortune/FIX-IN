@@ -21,6 +21,9 @@ public class SelectedButton : MonoBehaviour, ISelectHandler, IDeselectHandler
         isSelected = false;
         audioSource = GetComponentInParent<AudioSource>();
         hammerAnims = hammerIndicatorParent.GetComponentsInChildren<Animator>();
+        buttonChange = (AudioClip) Resources.Load("SFX/MenuNav");
+        buttonPress = (AudioClip)Resources.Load("SFX/MenuConfirm");
+
         //if (this.gameObject.name == "RestartButton")
         //{
         //    BackupSelect();
