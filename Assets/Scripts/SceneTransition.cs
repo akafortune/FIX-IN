@@ -52,6 +52,7 @@ public class SceneTransition : MonoBehaviour
         yield return new WaitForSeconds(1f);
         canvas.SetActive(false);
         load.SetActive(true);
+        MainMenu.greenGuy.SetActive(false);
         load.gameObject.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 1);
         transition.gameObject.GetComponent<Canvas>().enabled = false;
     }
