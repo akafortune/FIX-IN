@@ -2,23 +2,28 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Rendering.PostProcessing;
 using UnityEngine.SceneManagement;
 using VladStorm;
+using static RoundManager;
 using Random = UnityEngine.Random;
 
 public class Ball : MonoBehaviour
 {
     Rigidbody2D rb;
     public float StaticspeedMultiplier;
-    private float ctdTimer;
-    private bool countingDown;
+    //private float ctdTimer;
+    //private bool countingDown;
     private bool[] countDownAudioPlayed;
     private bool canRotate;
-    private TextMeshProUGUI countdownText;
-    public GameObject roundTimer;
+
+    public RoundTimeManager roundTM; // round timer manager 
+    //private TextMeshProUGUI countdownText;
+    //public GameObject roundTimer;
     public static bool firstLaunch;
+
     public float RampspeedMultiplier; //multiplier applies to static
 
     public float FinalspeedMultiplier;
@@ -68,7 +73,7 @@ public class Ball : MonoBehaviour
         arrow = transform.GetChild(2).gameObject;
         arrow.SetActive(false);
         trail = transform.GetChild(1).GetComponent<TrailRenderer>();
-        countdownText = GameObject.Find("Countdown").GetComponent<TextMeshProUGUI>();
+        //countdownText = GameObject.Find("Countdown").GetComponent<TextMeshProUGUI>();
         countDownSound = (AudioClip) Resources.Load("SFX/Countdown");
         launchSound = (AudioClip) Resources.Load("SFX/Launch");
         animator = gameObject.GetComponentInChildren<Animator>();
@@ -88,15 +93,18 @@ public class Ball : MonoBehaviour
             minAngle = 15;
             maxAngle = 45;
         }
-        ctdTimer = 3.0f;
+        //ctdTimer = 3.0f;
         GreenGuy.stunTime /= augment;
         FinalspeedMultiplier = StaticspeedMultiplier * augment;
+
+        roundTM = GameObject.Find("TimeManager").GetComponent<RoundTimeManager>();
     }
 
     public void Start()
     {
         //ImportData();
-        roundTimer.SetActive(false);
+        //roundTimer.SetActive(false);
+        roundTM.ToggleRoundTimer(false);
         scoreManager = GameObject.Find("ScoreManager").GetComponent<ScoreManager>();
         bleeding = false;
         processVolume.bleedOn.value = false;
@@ -104,12 +112,30 @@ public class Ball : MonoBehaviour
 
     public void LaunchSequence()
     {
+        roundTM.currentTime = roundTM.roundTime;
         songSource.Pause();
         ResetBall();
         Rotate();
-        countingDown = true;
-        ctdTimer = 3.5f;
+        //countingDown = true;
+        roundTM.countingDown = true;
+        //ctdTimer = 3.5f;
+        roundTM.ctdTimer = 3.5f;
     } //Sets the following 4 methods in motion
+
+
+    // overrided to allow to set the round time
+    public void LaunchSequence(float rt)
+    {
+        roundTM.roundTime = rt;
+        roundTM.currentTime = roundTM.roundTime;
+        songSource.Pause();
+        ResetBall();
+        Rotate();
+        //countingDown = true;
+        roundTM.countingDown = true;
+        //ctdTimer = 3.5f;
+        roundTM.ctdTimer = 3.5f;
+    }
 
     public void ResetBall()
     {
@@ -141,13 +167,16 @@ public class Ball : MonoBehaviour
     {
         if(firstLaunch)
         {
-            roundTimer.SetActive(false);
+            //roundTimer.SetActive(false);
+            roundTM.ToggleRoundTimer(false);
         }
-        if (ctdTimer > 3)
+        //if (ctdTimer > 3)
+        if(roundTM.ctdTimer > 3)
         {
             //waiting a second to play audio
         }
-        else if (ctdTimer > 2)
+        //else if (ctdTimer > 2)
+        else if(roundTM.ctdTimer > 2)
         {
             if (!countDownAudioPlayed[0])
             {
@@ -155,30 +184,32 @@ public class Ball : MonoBehaviour
                 audioSource.PlayOneShot(countDownSound);
                 countDownAudioPlayed[0] = true;
             }
-            countdownText.text = "3";
+            roundTM.countdownText.text = "3";
         }
-        else if (ctdTimer > 1)
+        // else if (ctdTimer > 1)
+        else if (roundTM.ctdTimer > 1)
         {
             if (!countDownAudioPlayed[1])
             {
                 audioSource.PlayOneShot(countDownSound);
                 countDownAudioPlayed[1] = true;
             }
-            countdownText.text = "2";
+            roundTM.countdownText.text = "2";
         }
-        else if (ctdTimer > 0)
+        //else if (ctdTimer > 0)
+        else if(roundTM.ctdTimer > 0)
         {
             if (!countDownAudioPlayed[2])
             {
                 audioSource.PlayOneShot(countDownSound);
                 countDownAudioPlayed[2] = true;
             }
-            countdownText.text = "1";
+            roundTM.countdownText.text = "1";
         }
         else
         {
-            countdownText.text = "";
-            countingDown = false;
+            roundTM.countdownText.text = "";
+            roundTM.countingDown = false;
             Launch();
             firstLaunch = false;
         }
@@ -186,7 +217,8 @@ public class Ball : MonoBehaviour
 
     protected void Launch()
     {
-        roundTimer.SetActive(true); // round timer begins
+        //roundTimer.SetActive(true); // round timer begins
+        roundTM.ToggleRoundTimer(true);
         songSource.clip = defendSong;
         songSource.Play();
         explodingParticle.transform.position = transform.position;
@@ -233,9 +265,11 @@ public class Ball : MonoBehaviour
 
     protected void Update() // Countdown and Trail color changes
     {
-        if (countingDown)
+        //if (countingDown)
+        if(roundTM.countingDown)
         {
-            ctdTimer -= Time.deltaTime;
+            //ctdTimer -= Time.deltaTime;
+            roundTM.ctdTimer -= Time.deltaTime;
             Countdown();
         }
         Color tailColor = trail.startColor;
@@ -422,7 +456,8 @@ public class Ball : MonoBehaviour
     protected void ImportData()
     {
         Ball standard = GameObject.Find("StandardBall").transform.GetChild(0).GetComponent<Ball>();
-        roundTimer = standard.roundTimer;
+        //roundTimer = standard.roundTimer;
+        roundTM.timerText = standard.roundTM.timerText;
         gameOverMenu = standard.gameOverMenu;
         audioSource = standard.audioSource;
         songSource = standard.songSource;

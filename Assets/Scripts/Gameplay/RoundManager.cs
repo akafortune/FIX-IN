@@ -16,16 +16,21 @@ public class RoundManager : MonoBehaviour
     public Transform resourcesTextTransform;
     public enum Mode { build, defend };
     public enum RoundType { Normal, IronBall, HeadRush, WreckingBall, Portals, BombBlitz}
-    public float roundTime;
-    private static float roundCount = 0;
-    public TextMeshProUGUI roundText;
+
+    // round timer shenanigans
+    public RoundTimeManager roundTM;
+
+    //public float roundTime;
+    //public TextMeshProUGUI roundText;
+    private float roundClock = 0;
+
+    //private static float roundCount = 0;
     public GameObject freakyText;
     public TextMeshProUGUI freakTypeText;
     public static Mode GameMode;
     public static RoundType FreakyType;
     public static bool lastBrickBuilt;
     private bool firstRound, canRebuild, countingDown;
-    private float roundClock = 0;
 
     private AudioSource songSource;
     private AudioClip buildSong, defendSong, winJingle, freakSong, freakyLaugh;
@@ -111,8 +116,11 @@ public class RoundManager : MonoBehaviour
         DefendUI.SetActive(false);
         lastBrickBuilt = false;
         GreenGuy.buildTimer = 0.65f;
-        roundTime = 63.5f;
-        roundCount = 5;
+        //roundTime = 63.5f;
+
+        roundTM = GameObject.Find("TimeManager").GetComponent<RoundTimeManager>();
+        //roundTM.currentTime = 60;
+        //RoundTimeManager.roundCount = 5;
         scoreLast = 0;
 
         B1Transform = GameObject.Find("Bubble 1").GetComponent<Transform>();
@@ -137,7 +145,7 @@ public class RoundManager : MonoBehaviour
         {
             RebuildButton.SetActive(false);
         }
-        roundText = GameObject.Find("RoundNumberText").GetComponent<TextMeshProUGUI>();
+        //roundText = GameObject.Find("RoundNumberText").GetComponent<TextMeshProUGUI>();
 
         scoreManager = GameObject.Find("ScoreManager").GetComponent<ScoreManager>();
         floatingText = GameObject.Find("ScoreManager").GetComponent<FloatingText>();
@@ -186,20 +194,21 @@ public class RoundManager : MonoBehaviour
 
         resourcesText.text = Convert.ToString(resources);
 
-        if(GameMode == Mode.defend)
-        {
-            if(countingDown)
-                roundClock += Time.deltaTime;
+        //if(GameMode == Mode.defend)
+        //{
+        //    if(countingDown)
+        //        roundClock += Time.deltaTime;
 
-            if(roundClock >= roundTime)
-            {
-                BeginBuild();
-                roundClock = 0;
-            }
+        //    //if(roundClock >= roundTime)
+        //    if(roundClock > roundTM.currentTime)
+        //    {
+        //        BeginBuild();
+        //        roundClock = 0;
+        //    }
 
             
-        }
-        roundText.text = roundCount.ToString();
+        //}
+        //roundText.text = roundCount.ToString();
         if ((GameMode == Mode.build) && Time.timeScale != 0 && Input.GetKeyDown(KeyCode.Return)|| GameMode == Mode.build && Input.GetKeyDown("joystick button 6")|| GameMode == Mode.build && Input.GetKeyDown("joystick button 5"))
         {
             BeginRound();
@@ -242,6 +251,8 @@ public class RoundManager : MonoBehaviour
     public void BeginRound()
     {
         if (GameObject.Find("Tutorial Manager") == null)
+        //roundTM.roundTime = 60f;
+        if(firstRound)
         {
             if(firstRound)
             {
@@ -277,7 +288,6 @@ public class RoundManager : MonoBehaviour
                 StartCoroutine(GetFreaky());
                 return;
             }
-
             paddle.SetActive(true);
             paddleScript.Target = ball.transform;
             ball.SetActive(true);
@@ -285,6 +295,7 @@ public class RoundManager : MonoBehaviour
             ball.GetComponent<Ball>().NewRound(roundCount);
         }
         if (GameObject.Find("Tutorial Manager") != null)
+        if (RoundTimeManager.roundCount % 5 == 0)
         {
             Debug.Log("Starting tutorial round");
             StartCoroutine(FadeOut());
@@ -294,9 +305,8 @@ public class RoundManager : MonoBehaviour
             paddle.SetActive(true);
             paddleScript.Target = ball.transform;
             ball.SetActive(true);
-            ball.GetComponent<Ball>().LaunchSequence();
-            ball.GetComponent<Ball>().NewRound(roundCount);
-        }
+            ball.GetComponent<Ball>().LaunchSequence(60f);
+            ball.GetComponent<Ball>().NewRound(RoundTimeManager.roundCount);
     }
 
     public bool ModeSet;
@@ -395,8 +405,9 @@ public class RoundManager : MonoBehaviour
         paddle.SetActive(true);
         paddle.transform.position = new Vector3(ironBall.transform.position.x, paddle.transform.position.y);
         paddleScript.Target = ironBall.transform;
-        ironBall.GetComponent<IronBall>().LaunchSequence();
-        ironBall.GetComponent<Ball>().NewRound(roundCount);
+        ironBall.GetComponent<IronBall>().LaunchSequence(roundTM.IronRndTime);
+        ironBall.GetComponent<Ball>().NewRound(RoundTimeManager.roundCount);
+        //roundTM.roundTime = roundTM.IronRndTime;
     }
 
     private void HeadRushStart()
@@ -413,9 +424,11 @@ public class RoundManager : MonoBehaviour
         paddle.SetActive(true);
         paddle.transform.position = new Vector3(bouncyBall.transform.position.x, paddle.transform.position.y);
         paddleScript.Target = bouncyBall.transform;
-        bouncyBall.GetComponent<Ball>().LaunchSequence();
-        bouncyBall.GetComponent<Ball>().NewRound(roundCount);
+        bouncyBall.GetComponent<Ball>().LaunchSequence(roundTM.HeadRndTime);
+        bouncyBall.GetComponent<Ball>().NewRound(RoundTimeManager.roundCount);
+        //roundTM.roundTime = roundTM.HeadRndTime;
     }
+
     public void BeginBuild()
     {
         if (GameObject.Find("Tutorial Manager") == null)
@@ -463,9 +476,9 @@ public class RoundManager : MonoBehaviour
             ball.SetActive(false);
             ironBall.SetActive(false);
             bouncyBall.SetActive(false);
-            roundCount++;
+            RoundTimeManager.roundCount++;
             scoreManager.GetSpecialBricks();
-
+            
             //Resources for score
             float scoreDiff = scoreManager.currentScore - scoreLast;
             Debug.Log("Score Diff: "+scoreDiff);
@@ -588,7 +601,7 @@ public class RoundManager : MonoBehaviour
 
     public static int getRoundCount()
     {
-        return (int)roundCount;
+        return (int)RoundTimeManager.roundCount;
     }
 
     IEnumerator Prestige()
@@ -641,7 +654,7 @@ public class RoundManager : MonoBehaviour
 
     private IEnumerator FadeOut()
     {
-        if (!firstDef && roundCount % 5 != 0)
+        if (!firstDef && RoundTimeManager.roundCount % 5 != 0)
         {
             blueGuyVoice.clip = blueGuyLines[1];
             blueGuyVoice.Play();
