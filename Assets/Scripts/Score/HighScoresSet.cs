@@ -15,7 +15,7 @@ public class HighScoresSet : MonoBehaviour
     private TextMeshProUGUI highScoreText;
     bool firstFrame;
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         highScoreText = GameObject.Find("HighScores").GetComponent<TextMeshProUGUI>();
         string scoreDataPath = Application.persistentDataPath + "/SaveData/Scores.txt";

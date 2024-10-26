@@ -1910,6 +1910,11 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 899290687}
   m_CullTransparentMesh: 1
+--- !u!1 &984364732 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1052318330738887143, guid: 37443d1e0dee345469bd4843b0a9fa9b, type: 3}
+  m_PrefabInstance: {fileID: 1845475250}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1028547506
 GameObject:
   m_ObjectHideFlags: 0
@@ -2042,7 +2047,7 @@ MonoBehaviour:
   buttonPressed: 0
   sceneChange: 0
   sceneNumber: 0
-  SettingsMenu: {fileID: 322159186}
+  SettingsMenu: {fileID: 984364732}
   gameOverSound: {fileID: 0}
   risingPoints: {fileID: 0}
   roundCountText: {fileID: 0}
@@ -3605,7 +3610,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 459891926141384103, guid: 37443d1e0dee345469bd4843b0a9fa9b, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -0.000011444092
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 468260968267483104, guid: 37443d1e0dee345469bd4843b0a9fa9b, type: 3}
       propertyPath: m_AnchorMax.x
