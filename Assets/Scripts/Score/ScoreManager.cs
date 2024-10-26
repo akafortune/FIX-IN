@@ -43,7 +43,7 @@ public class ScoreManager : MonoBehaviour
         if (decayTime == true && timescaledecay > 0)
         {
             timescaledecay = Mathf.Exp((-5f)*timescaledecay);
-            Debug.Log(timescaledecay);
+            //Debug.Log(timescaledecay);
             Time.timeScale = timescaledecay;
         }
         

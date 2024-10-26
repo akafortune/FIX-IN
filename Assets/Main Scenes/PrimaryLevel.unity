@@ -6238,7 +6238,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   StaticspeedMultiplier: 1.5
-  roundTimer: {fileID: 959180445}
+  roundTM: {fileID: 0}
   RampspeedMultiplier: 1
   FinalspeedMultiplier: 0
   augment: 1.3
@@ -6522,8 +6522,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   resourcesText: {fileID: 2122397061}
   resourcesTextTransform: {fileID: 0}
-  roundTime: 6
-  roundText: {fileID: 0}
+  roundTM: {fileID: 0}
   freakyText: {fileID: 0}
   freakTypeText: {fileID: 0}
   ball: {fileID: 290909468}
@@ -7773,11 +7772,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 39214b8c5b568f04a9838025b48a2d25, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  currentTime: 0
   timeText: {fileID: 959180447}
   timerRend: {fileID: 0}
-  regularColor: {r: 1, g: 1, b: 1, a: 1}
-  thirtySeconds: {r: 0.99215686, g: 0.5882353, b: 0, a: 1}
-  tenSeconds: {r: 0.9716981, g: 0.16429679, b: 0, a: 1}
+  regularColor:
+    r: 1
+    g: 1
+    b: 1
+    a: 1
+  thirtySeconds:
+    r: 0.99215686
+    g: 0.5882353
+    b: 0
+    a: 1
+  tenSeconds:
+    r: 0.9716981
+    g: 0.16429679
+    b: 0
+    a: 1
 --- !u!114 &549752044
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8097,7 +8109,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   StaticspeedMultiplier: 0
-  roundTimer: {fileID: 959180445}
+  roundTM: {fileID: 0}
   RampspeedMultiplier: 0
   FinalspeedMultiplier: 0
   augment: 0
@@ -10788,7 +10800,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   StaticspeedMultiplier: 0
-  roundTimer: {fileID: 0}
+  roundTM: {fileID: 0}
   RampspeedMultiplier: 0
   FinalspeedMultiplier: 0
   augment: 0
@@ -26226,6 +26238,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ball: {fileID: 0}
+  ctdTimer: 0
+  countingDown: 0
+  countdownText: {fileID: 0}
+  currentTime: 0
+  roundTime: 60
+  timerText: {fileID: 0}
+  IronRndTime: 0
+  HeadRndTime: 0
+  regularColor: {r: 1, g: 1, b: 1, a: 1}
+  thirtySeconds: {r: 0.99215686, g: 0.5882353, b: 0, a: 1}
+  tenSeconds: {r: 0.972549, g: 0.16470589, b: 0, a: 1}
+  roundCountText: {fileID: 0}
+  rndmng: {fileID: 0}
 --- !u!4 &1694200700
 Transform:
   m_ObjectHideFlags: 0
@@ -29475,10 +29500,10 @@ SceneRoots:
   - {fileID: 1176014345}
   - {fileID: 612270119}
   - {fileID: 194610250}
+  - {fileID: 1694200700}
   - {fileID: 549752040}
   - {fileID: 1167635746}
   - {fileID: 160389585}
-  - {fileID: 1694200700}
   - {fileID: 1083398839}
   - {fileID: 1259636389}
   - {fileID: 1792865624}
