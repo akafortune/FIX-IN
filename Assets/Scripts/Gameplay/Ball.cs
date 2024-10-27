@@ -110,9 +110,10 @@ public class Ball : MonoBehaviour
         processVolume.bleedOn.value = false;
     }
 
+    // for when the ball gets relaunched
     public void LaunchSequence()
     {
-        roundTM.currentTime = roundTM.roundTime;
+        //roundTM.currentTime = roundTM.roundTime;
         songSource.Pause();
         ResetBall();
         Rotate();
