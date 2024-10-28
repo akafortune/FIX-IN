@@ -110,9 +110,10 @@ public class Ball : MonoBehaviour
         processVolume.bleedOn.value = false;
     }
 
+    // for when the ball gets relaunched after its broken
     public void LaunchSequence()
     {
-        roundTM.currentTime = roundTM.roundTime;
+        //roundTM.currentTime = roundTM.roundTime; //makes the round timer reset on relaunch
         songSource.Pause();
         ResetBall();
         Rotate();

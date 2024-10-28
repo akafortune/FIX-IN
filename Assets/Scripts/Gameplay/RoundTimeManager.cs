@@ -27,7 +27,7 @@ public class RoundTimeManager : MonoBehaviour
     public Color thirtySeconds;
     public Color tenSeconds;
 
-    // round
+    // round count stuff
     public TextMeshProUGUI roundCountText;
     public static float roundCount = 0;
 
@@ -77,6 +77,7 @@ public class RoundTimeManager : MonoBehaviour
             }
 
             //timeText.alpha = 1f;
+            // Changes the color when it reaches a certain number of time
             if (currentTime <= roundTime / 2 && currentTime > roundTime / 6)
             {
                 timerText.color = thirtySeconds;
