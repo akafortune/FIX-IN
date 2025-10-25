@@ -1004,6 +1004,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0eda7a1e0d664f1448c9987930aa12d1, type: 3}
+--- !u!1 &466986928 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7817342135059991122, guid: 0eda7a1e0d664f1448c9987930aa12d1, type: 3}
+  m_PrefabInstance: {fileID: 466986927}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &523065843
 GameObject:
   m_ObjectHideFlags: 0
@@ -1228,6 +1233,7 @@ MonoBehaviour:
   risingPoints: {fileID: 0}
   roundCountText: {fileID: 0}
   pointValueText: {fileID: 0}
+  crossfade: {fileID: 466986928}
 --- !u!224 &620985054 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 9109050585263648620, guid: 0a5992637b5bf294ca037dea28a36344, type: 3}

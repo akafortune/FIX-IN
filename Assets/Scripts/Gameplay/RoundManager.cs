@@ -251,49 +251,49 @@ public class RoundManager : MonoBehaviour
     public void BeginRound()
     {
         if (GameObject.Find("Tutorial Manager") == null)
-            //roundTM.roundTime = 60f;
+        {
+            roundTM.roundTime = 60f;
+            roundTM.currentTime = 60f;
             if (firstRound)
             {
-                if (firstRound)
-                {
-                    StreamWriter sw = new StreamWriter(Application.persistentDataPath + "/SaveData/lastRound1.txt");
-                    sw.WriteLine(resources);
-                    foreach (GameObject brick in Bricks)
-                    {
-                        sw.Write(brick.GetComponent<Brick>().isBuilt() + ",");
-                    }
-                    sw.Close();
-                    firstRound = false;
-                    RebuildButton.SetActive(false);
-                }
-
-                if (BubbleOne != null)
-                    BubbleOne.transform.GetChild(0).SendMessage("StartPop");
-
+                StreamWriter sw = new StreamWriter(Application.persistentDataPath + "/SaveData/lastRound1.txt");
+                sw.WriteLine(resources);
                 foreach (GameObject brick in Bricks)
                 {
-                    //brick.GetComponent<Animator>().SetFloat("FixMultiplier",.65f);
-                    if (brick.GetComponent<Collider2D>().isTrigger)
-                    {
-                        brick.SetActive(false);
-                    }
+                    sw.Write(brick.GetComponent<Brick>().isBuilt() + ",");
                 }
-                StartCoroutine(FadeOut());
-                GameMode = Mode.defend;
-                DefendUI.SetActive(true);
-                BuildUI.SetActive(false);
-                if (RoundTimeManager.roundCount % 5 == 0)
-                {
-                    StartCoroutine(GetFreaky());
-                    return;
-                }
-                paddle.SetActive(true);
-                paddleScript.Target = ball.transform;
-                ball.SetActive(true);
-                ball.GetComponent<Ball>().LaunchSequence();
-                ball.GetComponent<Ball>().NewRound(RoundTimeManager.roundCount);
+                sw.Close();
+                firstRound = false;
+                RebuildButton.SetActive(false);
             }
-        if (GameObject.Find("Tutorial Manager") != null)
+
+            if (BubbleOne != null)
+                BubbleOne.transform.GetChild(0).SendMessage("StartPop");
+
+            foreach (GameObject brick in Bricks)
+            {
+                //brick.GetComponent<Animator>().SetFloat("FixMultiplier",.65f);
+                if (brick.GetComponent<Collider2D>().isTrigger)
+                {
+                    brick.SetActive(false);
+                }
+            }
+            StartCoroutine(FadeOut());
+            GameMode = Mode.defend;
+            DefendUI.SetActive(true);
+            BuildUI.SetActive(false);
+            if (RoundTimeManager.roundCount % 5 == 0)
+            {
+                StartCoroutine(GetFreaky());
+                return;
+            }
+            paddle.SetActive(true);
+            paddleScript.Target = ball.transform;
+            ball.SetActive(true);
+            ball.GetComponent<Ball>().LaunchSequence();
+            ball.GetComponent<Ball>().NewRound(RoundTimeManager.roundCount);
+        }
+        else if (GameObject.Find("Tutorial Manager") != null)
             if (RoundTimeManager.roundCount % 5 == 0)
             {
                 Debug.Log("Starting tutorial round");

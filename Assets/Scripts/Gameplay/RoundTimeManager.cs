@@ -38,13 +38,13 @@ public class RoundTimeManager : MonoBehaviour
     {
         ball = GameObject.Find("Ball").GetComponent<Ball>();
         timerText = GameObject.Find("TimerText").GetComponent<TextMeshProUGUI>();
-        //roundTime = 60f;
+        roundTime = 60f;
         currentTime = roundTime;
         ctdTimer = 3.5f;
         countdownText = GameObject.Find("Countdown").GetComponent<TextMeshProUGUI>();
         roundCountText = GameObject.Find("RoundNumberText").GetComponent<TextMeshProUGUI>();
         rndmng = GameObject.Find("Bricks").GetComponent<RoundManager>();
-        roundCount = 5;
+        roundCount = 1;
 
         IronRndTime = 30f;
         HeadRndTime = 30f;
@@ -102,6 +102,7 @@ public class RoundTimeManager : MonoBehaviour
 
     public void ToggleRoundTimer(bool tf)
     {
+        currentTime = roundTime;
         timerText.gameObject.SetActive(tf);
     }
 
